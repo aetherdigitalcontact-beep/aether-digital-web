@@ -1,0 +1,524 @@
+const translations = {
+    es: {
+        "nav-home": "Inicio",
+        "nav-services": "Servicios",
+        "nav-portfolio": "Portfolio",
+        "nav-expertise": "Filosofía",
+        "nav-faq": "FAQ",
+        "nav-start": "Empezar",
+        "nav-login": "Cliente",
+        "hero-title": "Transformamos <span class='text-gradient'>Complejidad</span> en Excelencia",
+        "hero-subtitle": "Diseño web de alta gama y automatización inteligente. Creamos las herramientas que tu negocio necesita para escalar sin límites.",
+        "btn-services": "Nuestros Servicios",
+        "btn-expertise": "Ver Expertise",
+        "services-title": "Soluciones que impulsan resultados",
+        "service-1-title": "Diseño Web Premium",
+        "service-1-desc": "Landing pages y aplicaciones web con estética de primer nivel y experiencia de usuario optimizada para la conversión.",
+        "service-2-title": "Automatización con Python",
+        "service-2-desc": "Elimina tareas repetitivas. Creamos scripts inteligentes que ahorran tiempo y reducen errores en tu flujo de trabajo.",
+        "service-3-title": "Sistemas a Medida",
+        "service-3-desc": "Desarrollo de software específico para resolver problemas únicos. Si puedes imaginarlo, podemos programarlo.",
+        "expertise-title": "Nuestra Filosofía",
+        "expertise-desc": "En Aether Digital no solo escribimos código; diseñamos soluciones. Combinamos el perfeccionismo visual con la eficiencia algorítmica.",
+        "check-1": "Interfaces que enamoran a primera vista.",
+        "check-2": "Lógica robusta escalable.",
+        "check-3": "Soporte técnico especializado.",
+        "portfolio-title": "Casos de Éxito",
+        "lbl-reto": "El Reto:",
+        "lbl-solucion": "La Solución:",
+        "lbl-impacto": "El Impacto:",
+        "case-1-title": "Nexus Data Flow",
+        "case-1-metric": "Eficiencia Operativa",
+        "case-1-reto": "El cliente invertía 25h/semana procesando datos financieros manualmente.",
+        "case-1-sol": "Bot en Python para extracción, limpieza y volcado automático a base de datos segura.",
+        "case-1-impacto": "Reducción del 95% del trabajo manual. Ahorro estimado de $1,500 mensuales.",
+        "case-2-title": "Lumina Holdings",
+        "case-2-metric": "Tasa de Conversión B2B",
+        "case-2-reto": "Landing page genérica que no transmitía confianza a grandes inversores institucionales.",
+        "case-2-sol": "Rediseño total con UI/UX moderno, micro-interacciones, dark-mode y optimización de velocidad.",
+        "case-2-impacto": "Aumento masivo del cierre de prospectos de alto valor.",
+        "case-3-title": "Aether Support Desk",
+        "case-3-metric": "Cobertura Automática",
+        "case-3-reto": "Saturación del equipo humano respondiendo tickets de soporte de nivel básico y repetitivo.",
+        "case-3-sol": "Asistente conversacional de Python entrenado con el historial de FAQs e integrado a la web.",
+        "case-3-impacto": "Resolución autónoma del 78% de consultas sin intervención humana. Escalamiento ilimitado.",
+        "founder-tag": "Liderazgo",
+        "founder-name": "Exequiel Gutierrez Nicolas",
+        "founder-role": "Fundador & Lead Developer",
+        "founder-bio-1": "La tecnología no debería ser un gasto, sino la palanca de crecimiento más potente de tu negocio. Fundé Aether Digital al notar cómo empresas brillantes perdían miles de dólares mensuales operando con procesos ineficientes y tecnología obsoleta.",
+        "founder-bio-2": "Mi enfoque es quirúrgico: combino la estética del diseño web premium con la brutal eficiencia de la automatización en Python. No te ofrezco simplemente \"crear código\"; te construyo un ecosistema digital diseñado para dominar tu mercado.",
+        "faq-title": "Preguntas Frecuentes",
+        "faq-q1": "¿Cómo empezamos a trabajar?",
+        "faq-a1": "Agendamos una breve llamada para entender tus necesidades y luego te enviamos una propuesta detallada.",
+        "faq-q2": "¿Qué tecnologías utilizan?",
+        "faq-a2": "Principalmente Python para el backend y automatización, y CSS/JS moderno para el frontend.",
+        "cta-title": "Automatiza tu escalabilidad hoy mismo.",
+        "cta-desc": "Tu tiempo es demasiado valioso como para gastarlo en micro-gestión. Envíame un mensaje directo y analicemos tu caso por chat sin compromisos ni presiones.",
+        "cta-perk1": "Respuesta Inmediata",
+        "cta-perk2": "Evaluación Gratuita",
+        "cta-perk3": "Comunicación Asíncrona",
+        "cal-placeholder-title": "Hablar directo con el Fundador",
+        "cal-placeholder-desc": "Click aquí para abrir chat seguro vía WhatsApp. También disponible en Telegram.",
+        "whatsapp-btn": "Abrir WhatsApp",
+        "telegram-btn": "Abrir Telegram",
+        "footer-tagline": "Excelencia digital guiando tu éxito.",
+        "footer-nav-title": "Navegación",
+        "footer-contact-title": "Contacto",
+        "footer-rights": "&copy; 2026 Aether Digital. Todos los derechos reservados.",
+        "modal-login-title": "Acceso a Proyecto",
+        "modal-login-desc": "Portal interno exclusivo para clientes de Aether Digital.",
+        "modal-id-placeholder": "ID de Proyecto (Ej: AD-8492)",
+        "modal-key-placeholder": "Clave de Acceso",
+        "modal-login-btn": "Ingresar al Sistema",
+        "modal-roi-badge": "PARA NUEVOS CLIENTES",
+        "modal-roi-title": "¿Aún no eres parte de la red? Descubre cuánto pierdes por no automatizar",
+        "modal-roi-hours": "Horas semanales en tareas manuales",
+        "modal-roi-value": "Valor de tu hora (USD)",
+        "modal-roi-btn": "Calcular Pérdida Mensual",
+        "modal-roi-result-text": "Al mes, estás perdiendo aproximadamente:",
+        "modal-roi-cta": "Aether Digital puede automatizar este proceso por una fracción del costo.",
+        "modal-roi-contact-btn": "Hablar con un Experto",
+        "planes-title": "Inversión",
+        "plan-period": "/proyecto",
+        "plan-btn": "Comenzar Ahora",
+        "plan-badge": "MÁS ELEGIDO",
+        "plan-1-name": "Digital Presence",
+        "plan-1-desc": "Ideal para negocios que necesitan establecer su autoridad digital rápidamente.",
+        "plan-1-f1": "Landing Page Premium (One-page)",
+        "plan-1-f2": "Optimización SEO Básica",
+        "plan-1-f3": "Integración con WhatsApp/Email",
+        "plan-1-f4": "Diseño Responsivo Total",
+        "plan-2-name": "Growth Automator",
+        "plan-2-desc": "El ecosistema completo para empresas que buscan escalar y automatizar procesos.",
+        "plan-2-f1": "Web Multi-página (Hasta 5 sec.)",
+        "plan-2-f2": "Portal de Clientes Personalizado",
+        "plan-2-f3": "1 Bot de Automatización Python",
+        "plan-2-f4": "Integración con Bases de Datos",
+        "plan-2-f5": "Dashboard de Métricas (Básico)",
+        "plan-3-name": "Enterprise Custom",
+        "plan-3-price": "A medida",
+        "plan-3-desc": "Soluciones a medida para corporaciones con lógicas de negocio complejas.",
+        "plan-3-f1": "Arquitectura de Software Completa",
+        "plan-3-f2": "Múltiples Bots & APIs Integradas",
+        "plan-3-f3": "Modelos de IA aplicados",
+        "plan-3-f4": "Soporte y Mantenimiento 24/7",
+        "plan-3-btn": "Agendar Llamada"
+    },
+    en: {
+        "nav-home": "Home",
+        "nav-services": "Services",
+        "nav-portfolio": "Portfolio",
+        "nav-expertise": "Philosophy",
+        "nav-faq": "FAQ",
+        "nav-start": "Start Now",
+        "nav-login": "Client Portal",
+        "hero-title": "Transforming <span class='text-gradient'>Complexity</span> into Excellence",
+        "hero-subtitle": "High-end web design and intelligent automation. We build the tools your business needs to scale without limits.",
+        "btn-services": "Our Services",
+        "btn-expertise": "View Expertise",
+        "services-title": "Solutions that drive results",
+        "service-1-title": "Premium Web Design",
+        "service-1-desc": "Landing pages and web apps with top-tier aesthetics and user experience optimized for conversion.",
+        "service-2-title": "Python Automation",
+        "service-2-desc": "Eliminate repetitive tasks. We create intelligent scripts that save time and reduce errors in your workflow.",
+        "service-3-title": "Custom Systems",
+        "service-3-desc": "Specific software development to solve unique problems. If you can imagine it, we can code it.",
+        "expertise-title": "Our Philosophy",
+        "expertise-desc": "At Aether Digital we don't just write code; we design solutions. We combine visual perfectionism with algorithmic efficiency.",
+        "check-1": "Interfaces that fall in love at first sight.",
+        "check-2": "Robust and scalable logic.",
+        "check-3": "Specialized technical support.",
+        "portfolio-title": "Case Studies",
+        "lbl-reto": "The Challenge:",
+        "lbl-solucion": "The Solution:",
+        "lbl-impacto": "The Impact:",
+        "case-1-title": "Nexus Data Flow",
+        "case-1-metric": "Operational Efficiency",
+        "case-1-reto": "Client spent 25h/week processing financial data manually.",
+        "case-1-sol": "Python bot for automated extraction, cleaning, and secure database mapping.",
+        "case-1-impacto": "95% reduction in manual work. Estimated savings of $1,500 monthly.",
+        "case-2-title": "Lumina Holdings",
+        "case-2-metric": "B2B Conversion Rate",
+        "case-2-reto": "Generic landing page failing to build trust with large institutional investors.",
+        "case-2-sol": "Total redesign with modern UI/UX, micro-interactions, dark-mode, and speed optimization.",
+        "case-2-impacto": "Massive increase in high-value prospect closing.",
+        "case-3-title": "Aether Support Desk",
+        "case-3-metric": "Automated Coverage",
+        "case-3-reto": "Human team saturated responding to basic, repetitive support tickets.",
+        "case-3-sol": "Conversational Python assistant trained on FAQ history and integrated into the web.",
+        "case-3-impacto": "Autonomous resolution of 78% of queries without human intervention. Infinite scaling.",
+        "founder-tag": "Leadership",
+        "founder-name": "Exequiel Gutierrez Nicolas",
+        "founder-role": "Founder & Lead Developer",
+        "founder-bio-1": "Technology shouldn't be an expense, but the most powerful growth lever for your business. I founded Aether Digital after noticing how brilliant companies lost thousands of dollars monthly operating with inefficient processes and obsolete technology.",
+        "founder-bio-2": "My approach is surgical: I combine the aesthetics of premium web design with the brutal efficiency of Python automation. I don't just offer you to \"create code\"; I build a digital ecosystem designed to dominate your market.",
+        "faq-title": "Frequently Asked Questions",
+        "faq-q1": "How do we start working together?",
+        "faq-a1": "We schedule a brief discovery call to understand your needs and then provide a detailed proposal.",
+        "faq-q2": "What technologies do you use?",
+        "faq-a2": "Mainly Python for backend and automation, and modern CSS/JS for frontend.",
+        "cta-title": "Automate your scalability today.",
+        "cta-desc": "Your time is too valuable to spend on micro-management. Send me a direct message and let's analyze your case via chat with no commitments or pressure.",
+        "cta-perk1": "Immediate Response",
+        "cta-perk2": "Free Evaluation",
+        "cta-perk3": "Asynchronous Communication",
+        "cal-placeholder-title": "Talk directly with the Founder",
+        "cal-placeholder-desc": "Click here to open a secure chat via WhatsApp. Telegram also available.",
+        "whatsapp-btn": "Open WhatsApp",
+        "telegram-btn": "Open Telegram",
+        "footer-tagline": "Digital excellence driving your success.",
+        "footer-nav-title": "Navigation",
+        "footer-contact-title": "Contact",
+        "footer-rights": "&copy; 2026 Aether Digital. All rights reserved.",
+        "modal-login-title": "Project Access",
+        "modal-login-desc": "Exclusive internal portal for Aether Digital clients.",
+        "modal-id-placeholder": "Project ID (E.g. AD-8492)",
+        "modal-key-placeholder": "Access Key",
+        "modal-login-btn": "Enter System",
+        "modal-roi-badge": "FOR NEW CLIENTS",
+        "modal-roi-title": "Not part of the network yet? Discover how much you lose by not automating",
+        "modal-roi-hours": "Weekly hours on manual tasks",
+        "modal-roi-value": "Your hourly rate (USD)",
+        "modal-roi-btn": "Calculate Monthly Loss",
+        "modal-roi-result-text": "Per month, you are losing approximately:",
+        "modal-roi-cta": "Aether Digital can automate this process for a fraction of the cost.",
+        "modal-roi-contact-btn": "Talk to an Expert",
+        "planes-title": "Investment",
+        "plan-period": "/project",
+        "plan-btn": "Start Now",
+        "plan-badge": "MOST POPULAR",
+        "plan-1-name": "Digital Presence",
+        "plan-1-desc": "Ideal for businesses that need to establish their digital authority quickly.",
+        "plan-1-f1": "Premium Landing Page (One-page)",
+        "plan-1-f2": "Basic SEO Optimization",
+        "plan-1-f3": "WhatsApp/Email Integration",
+        "plan-1-f4": "Fully Responsive Design",
+        "plan-2-name": "Growth Automator",
+        "plan-2-desc": "The complete ecosystem for companies looking to scale and automate processes.",
+        "plan-2-f1": "Multi-page Web (Up to 5 sec.)",
+        "plan-2-f2": "Custom Client Portal",
+        "plan-2-f3": "1 Python Automation Bot",
+        "plan-2-f4": "Database Integration",
+        "plan-2-f5": "Metrics Dashboard (Basic)",
+        "plan-3-name": "Enterprise Custom",
+        "plan-3-price": "Custom",
+        "plan-3-desc": "Tailor-made solutions for corporations with complex business logic.",
+        "plan-3-f1": "Complete Software Architecture",
+        "plan-3-f2": "Multiple Bots & Integrated APIs",
+        "plan-3-f3": "Applied AI Models",
+        "plan-3-f4": "24/7 Support and Maintenance",
+        "plan-3-btn": "Schedule Call"
+    },
+    pt: {
+        "nav-home": "Início",
+        "nav-services": "Serviços",
+        "nav-portfolio": "Portfólio",
+        "nav-expertise": "Filosofia",
+        "nav-faq": "FAQ",
+        "nav-start": "Começar",
+        "nav-login": "Entrar",
+        "hero-title": "Transformamos <span class='text-gradient'>Complexidade</span> em Excelencia",
+        "hero-subtitle": "Design web de alta gama e automação inteligente. Criamos las ferramentas que seu negócio precisa para escalar sem limites.",
+        "btn-services": "Nossos Serviços",
+        "btn-expertise": "Ver Expertise",
+        "services-title": "Soluções que impulsionam resultados",
+        "service-1-title": "Design Web Premium",
+        "service-1-desc": "Landing pages e aplicações web com estética de primeiro nível e experiência do usuário otimizada para conversão.",
+        "service-2-title": "Automação com Python",
+        "service-2-desc": "Elimine tarefas repetitivas. Criamos scripts inteligentes que economizam tempo e reduzem erros no seu fluxo de trabalho.",
+        "service-3-title": "Sistemas Sob Medida",
+        "service-3-desc": "Desenvolvimento de software específico para resolver problemas únicos. Se você pode imaginar, nós podemos programar.",
+        "expertise-title": "Nossa Filosofia",
+        "expertise-desc": "Na Aether Digital não apenas escrevemos código; projetamos soluções. Combinamos o perfeccionismo visual com a eficiência algorítmica.",
+        "check-1": "Interfaces que encantam à primeira vista.",
+        "check-2": "Lógica robusta e escalável.",
+        "check-3": "Suporte técnico especializado.",
+        "portfolio-title": "Casos de Sucesso",
+        "lbl-reto": "O Desafio:",
+        "lbl-solucion": "A Solucão:",
+        "lbl-impacto": "O Impacto:",
+        "case-1-title": "Nexus Data Flow",
+        "case-1-metric": "Eficiência Operacional",
+        "case-1-reto": "O cliente gastava 25h/semana processando dados financeiros manualmente.",
+        "case-1-sol": "Bot em Python para extração, limpeza e sincronização com banco de dados seguro.",
+        "case-1-impacto": "Redução de 95% do trabalho manual. Economia estimada de $1.500 mensais.",
+        "case-2-title": "Lumina Holdings",
+        "case-2-metric": "Taxa de Conversão B2B",
+        "case-2-reto": "Landing page genérica que não transmitia confiança a grandes investidores.",
+        "case-2-sol": "Redesenho total com UI/UX moderno, micro-interações, dark-mode e alta velocidade.",
+        "case-2-impacto": "Aumento massivo no fechamento de contatos de alto valor.",
+        "case-3-title": "Aether Support Desk",
+        "case-3-metric": "Cobertura Automática",
+        "case-3-reto": "Equipe humana saturada respondendo tickets de suporte básicos e repetitivos.",
+        "case-3-sol": "Assistente conversacional Python treinado com histórico de FAQs e integrado à web.",
+        "case-3-impacto": "Resolução autônoma de 78% das consultas sem intervenção. Escala ilimitada.",
+        "founder-tag": "Liderança",
+        "founder-name": "Exequiel Gutierrez Nicolas",
+        "founder-role": "Fundador & Lead Developer",
+        "founder-bio-1": "A tecnologia não deve ser um gasto, mas a alavanca de crescimento mais poderosa do seu negócio. Fundei a Aether Digital ao notar como empresas brilhantes perdiam milhares de dólares mensais operando com processos ineficientes e tecnologia obsoleta.",
+        "founder-bio-2": "Minha abordagem é cirúrgica: combino a estética do web design premium com a eficiência brutal da automação em Python. Não ofereço apenas \"criar código\"; construo um ecossistema digital projetado para dominar seu mercado.",
+        "faq-title": "Perguntas Frequentes",
+        "faq-q1": "Como começamos a trabalhar?",
+        "faq-a1": "Agendamos uma breve chamada para entender suas necessidades e depois enviamos uma proposta detalhada.",
+        "faq-q2": "Quais tecnologias vocês utilizam?",
+        "faq-a2": "Principalmente Python para backend e automação, e CSS/JS moderno para o frontend.",
+        "cta-title": "Automatize sua escalabilidade hoje mesmo.",
+        "cta-desc": "Seu tempo é muito valioso para gastar com micro-gerenciamento. Envie-me uma mensagem direta e vamos analisar seu caso por chat sem compromissos ou pressões.",
+        "cta-perk1": "Resposta Imediata",
+        "cta-perk2": "Avaliação Gratuita",
+        "cta-perk3": "Comunicação Assíncrona",
+        "cal-placeholder-title": "Fale direto com o Fundador",
+        "cal-placeholder-desc": "Clique aqui para abrir um chat seguro via WhatsApp. Telegram também disponível.",
+        "whatsapp-btn": "Abrir WhatsApp",
+        "telegram-btn": "Abrir Telegram",
+        "footer-tagline": "Excelência digital guiando seu sucesso.",
+        "footer-nav-title": "Navegação",
+        "footer-contact-title": "Contato",
+        "footer-rights": "&copy; 2026 Aether Digital. Todos os direitos reservados.",
+        "modal-login-title": "Acesso ao Projeto",
+        "modal-login-desc": "Portal interno exclusivo para clientes da Aether Digital.",
+        "modal-id-placeholder": "ID do Projeto (Ex: AD-8492)",
+        "modal-key-placeholder": "Chave de Acesso",
+        "modal-login-btn": "Entrar no Sistema",
+        "modal-roi-badge": "PARA NOVOS CLIENTES",
+        "modal-roi-title": "Ainda não faz parte da rede? Descubra o quanto você perde por não automatizar",
+        "modal-roi-hours": "Horas semanais em tarefas manuais",
+        "modal-roi-value": "Valor da sua hora (USD)",
+        "modal-roi-btn": "Calcular Perda Mensal",
+        "modal-roi-result-text": "Por mês, você está perdendo aproximadamente:",
+        "modal-roi-cta": "A Aether Digital pode automatizar esse processo por uma fração do custo.",
+        "modal-roi-contact-btn": "Falar com um Especialista",
+        "planes-title": "Investimento",
+        "plan-period": "/projeto",
+        "plan-btn": "Começar Agora",
+        "plan-badge": "MAIS ESCOLHIDO",
+        "plan-1-name": "Digital Presence",
+        "plan-1-desc": "Ideal para negócios que precisam estabelecer sua autoridade digital rapidamente.",
+        "plan-1-f1": "Landing Page Premium (One-page)",
+        "plan-1-f2": "Otimização SEO Básica",
+        "plan-1-f3": "Integração com WhatsApp/Email",
+        "plan-1-f4": "Design Totalmente Responsivo",
+        "plan-2-name": "Growth Automator",
+        "plan-2-desc": "O ecossistema completo para empresas que buscam escalar e automatizar processos.",
+        "plan-2-f1": "Web Multi-página (Até 5 sec.)",
+        "plan-2-f2": "Portal de Clientes Personalizado",
+        "plan-2-f3": "1 Bot de Automação Python",
+        "plan-2-f4": "Integração com Banco de Dados",
+        "plan-2-f5": "Dashboard de Métricas (Básico)",
+        "plan-3-name": "Enterprise Custom",
+        "plan-3-price": "Sob medida",
+        "plan-3-desc": "Soluções sob medida para corporações com lógicas de negócios complexas.",
+        "plan-3-f1": "Arquitetura de Software Completa",
+        "plan-3-f2": "Múltiplos Bots & APIs Integradas",
+        "plan-3-f3": "Modelos de IA aplicados",
+        "plan-3-f4": "Suporte e Manutenção 24/7",
+        "plan-3-btn": "Agendar Chamada"
+    }
+};
+
+// Initialize Lucide Icons
+lucide.createIcons();
+
+// Language Switching Logic
+const langBtns = document.querySelectorAll('.lang-btn');
+const translatableElements = document.querySelectorAll('[data-i18n]');
+
+const setLanguage = (lang) => {
+    localStorage.setItem('language', lang);
+    langBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+
+    translatableElements.forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+            el.innerHTML = translations[lang][key];
+        }
+    });
+
+    const translatablePlaceholders = document.querySelectorAll('[data-i18n-placeholder]');
+    translatablePlaceholders.forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (translations[lang][key]) {
+            el.setAttribute('placeholder', translations[lang][key]);
+        }
+    });
+};
+
+langBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-lang');
+        setLanguage(lang);
+    });
+});
+
+// Load saved language or default to ES
+const savedLang = localStorage.getItem('language') || 'es';
+setLanguage(savedLang);
+
+// Theme Switching Logic
+const checkbox = document.getElementById('checkbox');
+const body = document.body;
+
+// Check for saved theme
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme) {
+    body.className = currentTheme;
+    if (currentTheme === 'light-theme') {
+        checkbox.checked = false;
+    } else {
+        checkbox.checked = true;
+    }
+} else {
+    // Default is dark-theme as per initial HTML
+    body.classList.add('dark-theme');
+    checkbox.checked = true;
+}
+
+checkbox.addEventListener('change', () => {
+    if (checkbox.checked) {
+        body.classList.replace('light-theme', 'dark-theme');
+        localStorage.setItem('theme', 'dark-theme');
+    } else {
+        body.classList.replace('dark-theme', 'light-theme');
+        localStorage.setItem('theme', 'light-theme');
+    }
+});
+
+// Scroll Reveal Animation (Intersection Observer)
+const revealElements = document.querySelectorAll('.reveal, .reveal-delay, .reveal-delay-2, .service-card');
+
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            // Optimization: unobserve after revealing
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+});
+
+revealElements.forEach(el => {
+    // Add default reveal class if not present
+    if (!el.classList.contains('reveal')) {
+        el.classList.add('reveal');
+    }
+    revealObserver.observe(el);
+});
+
+// Smooth Scrolling for nav links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            window.scrollTo({
+                top: target.offsetTop - 80, // Offset for nav height
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// Modal and ROI Calculator Logic
+const modalOverlay = document.getElementById('client-modal');
+const closeBtn = document.getElementById('close-modal');
+const loginBtns = document.querySelectorAll('.btn-login');
+
+if (modalOverlay) {
+    loginBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        });
+    });
+
+    closeBtn.addEventListener('click', () => {
+        modalOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+
+    modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
+    // ROI Calculator Logic
+    const roiForm = document.getElementById('roi-form');
+    const roiResult = document.getElementById('roi-result');
+    const loader = roiResult.querySelector('.loader');
+    const resultContent = roiResult.querySelector('.result-content');
+    const lossAmount = document.getElementById('roi-loss-amount');
+
+    // Login Fake Terminal Logic
+    const loginForm = document.getElementById('login-form');
+    const loginTerminal = document.getElementById('login-terminal');
+    const loginOutput = document.getElementById('login-terminal-output');
+
+    if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const idVal = document.getElementById('login-id').value;
+            const submitBtn = loginForm.querySelector('button[type="submit"]');
+
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.5';
+
+            loginTerminal.classList.remove('hidden');
+            loginOutput.innerHTML = ''; // clear any previous messages
+
+            const messages = [
+                `> Initiating secure connection...`,
+                `> Resolving project ID: <span style="color:var(--accent)">${idVal}</span>...`,
+                `> Validating credentials...`,
+                `<span style="color: #ef4444; font-weight: bold;">[ACCESS ERROR]</span> Digital signature not recognized.`,
+                `> The Aether Network is an exclusive ecosystem.`,
+                `<br><a href="https://wa.me/543425502817" target="_blank" style="color: var(--accent); text-decoration: underline; font-weight:bold;">Request Network Access →</a>`
+            ];
+
+            let delay = 0;
+            messages.forEach((msg, index) => {
+                setTimeout(() => {
+                    const line = document.createElement('div');
+                    line.style.marginBottom = '5px';
+                    line.innerHTML = msg;
+                    loginOutput.appendChild(line);
+                    loginOutput.scrollTop = loginOutput.scrollHeight;
+
+                    if (index === messages.length - 1) {
+                        submitBtn.disabled = false;
+                        submitBtn.style.opacity = '1';
+                    }
+                }, delay += (index === 0 ? 300 : Math.random() * 800 + 400));
+            });
+        });
+    }
+
+    roiForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const hours = parseFloat(document.getElementById('roi-hours').value) || 0;
+        const rate = parseFloat(document.getElementById('roi-value').value) || 0;
+
+        // Calculate monthly loss (assuming 4 weeks/month)
+        const monthlyLoss = hours * rate * 4;
+
+        // UI Feedback
+        roiResult.classList.remove('hidden');
+        loader.classList.remove('hidden');
+        resultContent.classList.add('hidden');
+
+        // Simulate processing
+        setTimeout(() => {
+            loader.classList.add('hidden');
+            lossAmount.textContent = `-$${monthlyLoss.toLocaleString('en-US')} USD`;
+            resultContent.classList.remove('hidden');
+        }, 1200);
+    });
+}

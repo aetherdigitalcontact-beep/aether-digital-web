@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aether Digital</title>
+    <!-- Favicon Icon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <meta name="description"
+        content="Aether Digital: Diseño web de lujo y automatización inteligente con Python para llevar tu negocio al siguiente nivel.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Sora:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dark-theme">
+    <!-- Theme Toggle -->
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" checked />
+            <div class="slider round">
+                <i data-lucide="sun" class="sun-icon"></i>
+                <i data-lucide="moon" class="moon-icon"></i>
+            </div>
+        </label>
+    </div>
+
+    <nav class="glass-nav">
+        <div class="container nav-content">
+            <div class="nav-left">
+                <a href="index.html" class="logo">
+                    <span class="logo-accent">AETHER</span> DIGITAL
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#inicio" data-i18n="nav-home">Inicio</a></li>
+                <li><a href="#servicios" data-i18n="nav-services">Servicios</a></li>
+                <li><a href="#portfolio" data-i18n="nav-portfolio">Portfolio</a></li>
+                <li><a href="#proyectos" data-i18n="nav-expertise">Filosofía</a></li>
+                <li><a href="#faq" data-i18n="nav-faq">FAQ</a></li>
+                <li><a href="#contacto" class="btn-primary-sm" data-i18n="nav-start">Empezar</a></li>
+                <li><a href="#" class="btn-login" data-i18n="nav-login">Cliente</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="es">ES</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="pt">PT</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header id="inicio" class="hero">
+        <div class="hero-background">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+        </div>
+        <div class="container hero-content">
+            <h1 class="reveal" data-i18n="hero-title">Transformamos <span class="text-gradient">Complejidad</span> en
+                Excelencia</h1>
+            <p class="reveal-delay" data-i18n="hero-subtitle">Diseño web de alta gama y automatización inteligente.
+                Creamos las herramientas que tu negocio necesita para escalar sin límites.</p>
+            <div class="hero-actions reveal-delay-2">
+                <a href="#servicios" class="btn-primary" data-i18n="btn-services">Nuestros Servicios</a>
+                <a href="#proyectos" class="btn-secondary" data-i18n="btn-expertise">Ver Expertise</a>
+            </div>
+        </div>
+    </header>
+    <section id="servicios" class="services">
+        <div class="container text-center">
+            <h2 class="section-title" data-i18n="services-title">Soluciones que impulsan resultados</h2>
+            <div class="services-grid">
+                <div class="service-card glass">
+                    <div class="service-icon"><i data-lucide="layout"></i></div>
+                    <h3 data-i18n="service-1-title">Diseño Web Premium</h3>
+                    <p data-i18n="service-1-desc">Landing pages y aplicaciones web con estética de primer nivel y
+                        experiencia de usuario optimizada
+                        para la conversión.</p>
+                </div>
+                <div class="service-card glass">
+                    <div class="service-icon"><i data-lucide="code-2"></i></div>
+                    <h3 data-i18n="service-2-title">Automatización con Python</h3>
+                    <p data-i18n="service-2-desc">Elimina tareas repetitivas. Creamos scripts inteligentes que ahorran
+                        tiempo y reducen errores en
+                        tu flujo de trabajo.</p>
+                </div>
+                <div class="service-card glass">
+                    <div class="service-icon"><i data-lucide="cpu"></i></div>
+                    <h3 data-i18n="service-3-title">Sistemas a Medida</h3>
+                    <p data-i18n="service-3-desc">Desarrollo de software específico para resolver problemas únicos. Si
+                        puedes imaginarlo, podemos
+                        programarlo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio / Casos de Éxito Section -->
+    <section id="portfolio" class="portfolio-section reveal">
+        <div class="container">
+            <h2 class="section-title text-center" data-i18n="portfolio-title">Casos de Éxito</h2>
+            <div class="portfolio-grid">
+
+                <!-- Project 1 -->
+                <div class="portfolio-item glass case-study-card">
+                    <div class="case-header">
+                        <span class="badge">Automatización Backend</span>
+                        <h3 data-i18n="case-1-title">Nexus Data Flow</h3>
+                    </div>
+                    <div class="case-body">
+                        <div class="case-metric">
+                            <span class="metric-value text-gradient">+300%</span>
+                            <span class="metric-label" data-i18n="case-1-metric">Eficiencia Operativa</span>
+                        </div>
+                        <div class="case-details">
+                            <p><strong data-i18n="lbl-reto">El Reto:</strong> <span data-i18n="case-1-reto">El cliente
+                                    invertía 25h/semana procesando datos financieros manualmente.</span></p>
+                            <p><strong data-i18n="lbl-solucion">La Solución:</strong> <span data-i18n="case-1-sol">Bot
+                                    en Python para extracción, limpieza y volcado automático a base de datos
+                                    segura.</span></p>
+                            <p><strong data-i18n="lbl-impacto">El Impacto:</strong> <span
+                                    data-i18n="case-1-impacto">Reducción del 95% del trabajo manual. Ahorro estimado de
+                                    $1,500 mensuales.</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="portfolio-item glass case-study-card">
+                    <div class="case-header">
+                        <span class="badge">Web Design Premium</span>
+                        <h3 data-i18n="case-2-title">Lumina Holdings</h3>
+                    </div>
+                    <div class="case-body">
+                        <div class="case-metric">
+                            <span class="metric-value text-gradient">2.5x</span>
+                            <span class="metric-label" data-i18n="case-2-metric">Tasa de Conversión B2B</span>
+                        </div>
+                        <div class="case-details">
+                            <p><strong data-i18n="lbl-reto">El Reto:</strong> <span data-i18n="case-2-reto">Landing page
+                                    genérica que no transmitía confianza a grandes inversores institucionales.</span>
+                            </p>
+                            <p><strong data-i18n="lbl-solucion">La Solución:</strong> <span
+                                    data-i18n="case-2-sol">Rediseño total con UI/UX moderno, micro-interacciones,
+                                    dark-mode y optimización de velocidad.</span></p>
+                            <p><strong data-i18n="lbl-impacto">El Impacto:</strong> <span
+                                    data-i18n="case-2-impacto">Aumento masivo del cierre de prospectos de alto
+                                    valor.</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="portfolio-item glass case-study-card">
+                    <div class="case-header">
+                        <span class="badge">Sistemas + IA</span>
+                        <h3 data-i18n="case-3-title">Aether Support Desk</h3>
+                    </div>
+                    <div class="case-body">
+                        <div class="case-metric">
+                            <span class="metric-value text-gradient">24/7</span>
+                            <span class="metric-label" data-i18n="case-3-metric">Cobertura Automática</span>
+                        </div>
+                        <div class="case-details">
+                            <p><strong data-i18n="lbl-reto">El Reto:</strong> <span data-i18n="case-3-reto">Saturación
+                                    del equipo humano respondiendo tickets de soporte de nivel básico y
+                                    repetitivo.</span></p>
+                            <p><strong data-i18n="lbl-solucion">La Solución:</strong> <span
+                                    data-i18n="case-3-sol">Asistente conversacional de Python entrenado con el historial
+                                    de FAQs e integrado a la web.</span></p>
+                            <p><strong data-i18n="lbl-impacto">El Impacto:</strong> <span
+                                    data-i18n="case-3-impacto">Resolución autónoma del 78% de consultas sin intervención
+                                    humana. Escalamiento ilimitado.</span></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="proyectos" class="expertise reveal">
+        <div class="container">
+            <div class="expertise-wrap glass">
+                <div class="expertise-text">
+                    <h2 class="section-title text-left" data-i18n="expertise-title">Nuestra Filosofía</h2>
+                    <p data-i18n="expertise-desc">En Aether Digital no solo escribimos código; diseñamos soluciones.
+                        Combinamos el perfeccionismo
+                        visual con la eficiencia algorítmica.</p>
+                    <ul class="check-list">
+                        <li><i data-lucide="check-circle-2"></i> <span data-i18n="check-1">Interfaces que enamoran a
+                                primera vista.</span></li>
+                        <li><i data-lucide="check-circle-2"></i> <span data-i18n="check-2">Lógica robusta
+                                escalable.</span></li>
+                        <li><i data-lucide="check-circle-2"></i> <span data-i18n="check-3">Soporte técnico
+                                especializado.</span></li>
+                    </ul>
+                </div>
+                <div class="expertise-visual">
+                    <div class="terminal-mockup">
+                        <div class="terminal-header">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                        </div>
+                        <div class="terminal-body">
+                            <p class="t-line"><span class="t-p">#</span> Initializing Aether Intelligence...</p>
+                            <p class="t-line"><span class="t-p">>>></span> from aether import Automator</p>
+                            <p class="t-line"><span class="t-p">>>></span> bot = Automator(perfection=True)</p>
+                            <p class="t-line"><span class="t-p">>>></span> bot.optimize_business("Global Scale")</p>
+                            <p class="t-line green-text">[SUCCESS] Workflow efficiency +300%</p>
+                            <p class="t-line"><span class="t-p">>>></span> _</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Planes Section -->
+    <section id="planes" class="planes-section reveal">
+        <div class="container">
+            <h2 class="section-title text-center" data-i18n="planes-title">Inversión</h2>
+            <div class="planes-grid">
+
+                <!-- Plan 1 -->
+                <div class="plan-card glass">
+                    <div class="plan-header">
+                        <h3 data-i18n="plan-1-name">Digital Presence</h3>
+                        <div class="plan-price"><span class="currency">$</span>500<span class="period"
+                                data-i18n="plan-period">/project</span></div>
+                        <p class="plan-desc" data-i18n="plan-1-desc">Ideal para negocios que necesitan establecer su
+                            autoridad digital rápidamente.</p>
+                    </div>
+                    <ul class="plan-features">
+                        <li><i data-lucide="check"></i> <span data-i18n="plan-1-f1">Landing Page Premium
+                                (One-page)</span></li>
+                        <li><i data-lucide="check"></i> <span data-i18n="plan-1-f2">Optimización SEO Básica</span></li>
+                        <li><i data-lucide="check"></i> <span data-i18n="plan-1-f3">Integración con
+                                WhatsApp/Email</span></li>
+                        <li><i data-lucide="check"></i> <span data-i18n="plan-1-f4">Diseño Responsivo Total</span></li>
+                    </ul>
+                    <a href="#contacto" class="btn-outline plan-btn" data-i18n="plan-btn">Comenzar Ahora</a>
+                </div>
+
+                <!-- Plan 2 -->
+                <div class="plan-card glass popular">
+                    <div class="popular-badge" data-i18n="plan-badge">MÁS ELEGIDO</div>
+                    <div class="plan-header">
+                        <h3 data-i18n="plan-2-name">Growth Automator</h3>
+                        <div class="plan-price"><span class="currency">$</span>1,500<span class="period"
+                                data-i18n="plan-period">/project</span></div>
+                        <p class="plan-desc" data-i18n="plan-2-desc">El ecosistema completo para empresas que buscan
+                            escalar y automatizar procesos.</p>
+                    </div>
+                    <ul class="plan-features">
+                        <li><i data-lucide="check"></i> <span data-i18n="plan-2-f1">Web Multi-página (Hasta 5
+                                sec.)</span></li>
+                        <li><i data-lucide="check"></i> <span data-i18n="plan-2-f2">Portal de Clientes
+                                Personalizado</span></li>
+                        <li><i data-lucide="check"></i> <span data-i18n="plan-2-f3">1 Bot de Automatización
+                                Python</span></li>
+                        <li><i data-lucide="check"></i> <span data-i18n="plan-2-f4">Integración con Bases de
+                                Datos</span></li>
+                        <li><i data-lucide="check"></i> <span data-i18n="plan-2-f5">Dashboard de Métricas
+                                (Básico)</span></li>
+                    </ul>
+                    <a href="#contacto" class="btn-primary plan-btn" data-i18n="plan-btn">Comenzar Ahora</a>
+                </div>
+
+                <!-- Plan 3 -->
+                <div class="plan-card glass">
+                    <div class="plan-header">
+                        <h3 data-i18n="plan-3-name">Enterprise Custom</h3>
+                        <div class="plan-price" data-i18n="plan-3-price">Custom</div>
+                        <p class="plan-desc" data-i18n="plan-3-desc">Soluciones a medida para corporaciones con lógicas
+                            de negocio complejas.</p>
+                    </div>
+                    <ul class="plan-features">
+                        <li><i data-lucide="check"></i> <span data-i18n="plan-3-f1">Arquitectura de Software
+                                Completa</span></li>
+                        <li><i data-lucide="check"></i> <span data-i18n="plan-3-f2">Múltiples Bots & APIs
+                                Integradas</span></li>
+                        <li><i data-lucide="check"></i> <span data-i18n="plan-3-f3">Modelos de IA aplicados</span></li>
+                        <li><i data-lucide="check"></i> <span data-i18n="plan-3-f4">Soporte y Mantenimiento 24/7</span>
+                        </li>
+                    </ul>
+                    <a href="#contacto" class="btn-outline plan-btn" data-i18n="plan-3-btn">Agendar Llamada</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Founder Section -->
+    <section id="founder" class="founder-section reveal">
+        <div class="container">
+            <div class="founder-card glass">
+                <div class="founder-img-wrapper">
+                    <img src="images/f9a0e0f0-bc61-4327-9a54-4ce10f8bc12d.png" alt="Exequiel Gutierrez Nicolas"
+                        class="founder-img"
+                        onerror="this.src='https://via.placeholder.com/400x500/1e293b/ffffff?text=Founder+Image'">
+                </div>
+                <div class="founder-content">
+                    <span class="badge" data-i18n="founder-tag">Liderazgo</span>
+                    <h2 class="founder-name" data-i18n="founder-name">Exequiel Gutierrez Nicolas</h2>
+                    <h4 class="founder-role text-gradient" data-i18n="founder-role">Fundador & Lead Developer</h4>
+                    <div class="founder-bio">
+                        <p data-i18n="founder-bio-1">La tecnología no debería ser un gasto, sino la palanca de
+                            crecimiento más potente de tu negocio. Fundé Aether Digital al notar cómo empresas
+                            brillantes perdían miles de dólares mensuales operando con procesos ineficientes y
+                            tecnología obsoleta.</p>
+                        <p data-i18n="founder-bio-2">Mi enfoque es quirúrgico: combino la estética del diseño web
+                            premium con la brutal eficiencia de la automatización en Python. No te ofrezco simplemente
+                            "crear código"; te construyo un ecosistema digital diseñado para dominar tu mercado.</p>
+                    </div>
+                    <div class="founder-signature">
+                        <span class="signature-text">Exequiel G. Nicolas</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA & Calendly Section -->
+    <section id="contacto" class="cta-section">
+        <div class="container">
+            <div class="cta-grid">
+                <div class="cta-text-side">
+                    <h2 data-i18n="cta-title">Automatiza tu escalabilidad hoy mismo.</h2>
+                    <p data-i18n="cta-desc">Tu tiempo es demasiado valioso como para gastarlo en micro-gestión. Agenda
+                        una llamada de descubrimiento de 15 minutos en nuestro calendario para evaluar tu caso
+                        completamente gratis.</p>
+
+                    <div class="cta-perks">
+                        <div class="perk"><i data-lucide="zap"></i> <span data-i18n="cta-perk1">Respuesta
+                                Inmediata</span></div>
+                        <div class="perk"><i data-lucide="shield-check"></i> <span data-i18n="cta-perk2">Evaluación
+                                Gratuita</span></div>
+                        <div class="perk"><i data-lucide="briefcase"></i> <span data-i18n="cta-perk3">Propuesta 100%
+                                Personalizada</span></div>
+                    </div>
+                </div>
+
+                <div class="contact-chat-side glass">
+                    <div class="chat-placeholder">
+                        <i data-lucide="message-square-text"></i>
+                        <h3 data-i18n="cal-placeholder-title">Hablar directo con el Fundador</h3>
+                        <p data-i18n="cal-placeholder-desc">Click aquí para abrir chat seguro vía WhatsApp. También
+                            disponible en Telegram.</p>
+
+                        <div class="chat-buttons">
+                            <a href="https://wa.me/543425502817" class="btn-whatsapp" target="_blank">
+                                <i data-lucide="message-circle"></i> <span data-i18n="whatsapp-btn">Abrir
+                                    WhatsApp</span>
+                            </a>
+                            <a href="https://t.me/+543425502817" class="btn-telegram" target="_blank">
+                                <i data-lucide="send"></i> <span data-i18n="telegram-btn">Abrir Telegram</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section reveal">
+        <div class="container">
+            <h2 class="section-title text-center" data-i18n="faq-title">Preguntas Frecuentes</h2>
+            <div class="faq-grid">
+                <div class="faq-item glass">
+                    <h3 data-i18n="faq-q1">¿Cómo empezamos a trabajar?</h3>
+                    <p data-i18n="faq-a1">Agendamos una breve llamada para entender tus necesidades y luego te enviamos
+                        una propuesta detallada.</p>
+                </div>
+                <div class="faq-item glass">
+                    <h3 data-i18n="faq-q2">¿Qué tecnologías utilizan?</h3>
+                    <p data-i18n="faq-a2">Principalmente Python para el backend y automatización, y CSS/JS moderno para
+                        el frontend.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Marquee (Moved to Bottom) -->
+    <div class="tech-marquee-wrapper">
+        <div class="tech-marquee">
+            <div class="tech-item"><i data-lucide="file-code"></i> Python</div>
+            <div class="tech-item"><i data-lucide="database"></i> PostgreSQL</div>
+            <div class="tech-item"><i data-lucide="layout"></i> JavaScript</div>
+            <div class="tech-item"><i data-lucide="box"></i> WebGL</div>
+            <div class="tech-item"><i data-lucide="cpu"></i> AI & ML</div>
+            <div class="tech-item"><i data-lucide="github"></i> Git</div>
+            <div class="tech-item"><i data-lucide="cloud"></i> Amazon Web Services</div>
+            <div class="tech-item"><i data-lucide="code"></i> HTML5/CSS3</div>
+            <!-- Duplicate for infinite scroll loop -->
+            <div class="tech-item"><i data-lucide="file-code"></i> Python</div>
+            <div class="tech-item"><i data-lucide="database"></i> PostgreSQL</div>
+            <div class="tech-item"><i data-lucide="layout"></i> JavaScript</div>
+            <div class="tech-item"><i data-lucide="box"></i> WebGL</div>
+            <div class="tech-item"><i data-lucide="cpu"></i> AI & ML</div>
+            <div class="tech-item"><i data-lucide="github"></i> Git</div>
+            <div class="tech-item"><i data-lucide="cloud"></i> Amazon Web Services</div>
+            <div class="tech-item"><i data-lucide="code"></i> HTML5/CSS3</div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-info">
+                <div class="logo"><span class="logo-accent">AETHER</span> DIGITAL</div>
+                <p data-i18n="footer-tagline">Excelencia digital guiando tu éxito.</p>
+            </div>
+            <div class="footer-links">
+                <h4 data-i18n="footer-nav-title">Navegación</h4>
+                <ul>
+                    <li><a href="#inicio" data-i18n="nav-home">Inicio</a></li>
+                    <li><a href="#servicios" data-i18n="nav-services">Servicios</a></li>
+                    <li><a href="#proyectos" data-i18n="nav-expertise">Experiencia</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4 data-i18n="footer-contact-title">Contacto</h4>
+                <a href="mailto:aetherdigital.contact@gmail.com" class="footer-link">aetherdigital.contact@gmail.com</a>
+                <div class="social-icons">
+                    <i data-lucide="linkedin"></i>
+                    <i data-lucide="github"></i>
+                    <i data-lucide="instagram"></i>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom text-center">
+            <p data-i18n="footer-rights">&copy; 2026 Aether Digital. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Client Overlay Modal -->
+    <div id="client-modal" class="modal-overlay">
+        <div class="modal-content glass">
+            <button id="close-modal" class="close-btn"><i data-lucide="x"></i></button>
+
+            <div class="modal-grid">
+                <!-- Login Side -->
+                <div class="modal-login">
+                    <h3 data-i18n="modal-login-title">Acceso a Proyecto</h3>
+                    <p data-i18n="modal-login-desc" class="text-muted">Portal interno exclusivo para clientes de Aether
+                        Digital.</p>
+                    <form id="login-form" class="login-form">
+                        <div class="input-group">
+                            <i data-lucide="hash"></i>
+                            <input type="text" id="login-id" data-i18n-placeholder="modal-id-placeholder"
+                                placeholder="ID de Proyecto (Ej: AD-8492)" required>
+                        </div>
+                        <div class="input-group">
+                            <i data-lucide="key"></i>
+                            <input type="password" id="login-key" data-i18n-placeholder="modal-key-placeholder"
+                                placeholder="Clave de Acceso" required>
+                        </div>
+                        <button type="submit" class="btn-primary-sm" style="width: 100%;" data-i18n="modal-login-btn">
+                            Ingresar al Sistema
+                        </button>
+                    </form>
+
+                    <div id="login-terminal" class="terminal-fake hidden"
+                        style="margin-top: 1rem; border-radius: 8px; font-size: 0.8rem; height: 160px; background: rgba(15, 23, 42, 0.8); border: 1px solid var(--glass-border); overflow: hidden;">
+                        <div class="terminal-header">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                            <span class="terminal-title">Aether OS // SecLog</span>
+                        </div>
+                        <div class="terminal-body" id="login-terminal-output"
+                            style="padding: 10px; height: calc(100% - 30px); overflow-y: auto;">
+                            <!-- Output injected via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ROI Side -->
+                <div class="modal-roi">
+                    <div class="roi-badge" data-i18n="modal-roi-badge">PARA NUEVOS CLIENTES</div>
+                    <h3 data-i18n="modal-roi-title" class="roi-title">¿Aún no eres parte de la red? Descubre cuánto
+                        pierdes por no automatizar</h3>
+
+                    <form id="roi-form" class="roi-form">
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label data-i18n="modal-roi-hours">Horas semanales en tareas manuales</label>
+                                <input type="number" id="roi-hours" value="10" min="1" required>
+                            </div>
+                            <div class="input-group">
+                                <label data-i18n="modal-roi-value">Valor de tu hora (USD)</label>
+                                <input type="number" id="roi-value" value="20" min="1" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary" style="width: 100%;"
+                            data-i18n="modal-roi-btn">Calcular Pérdida Mensual</button>
+                    </form>
+
+                    <div id="roi-result" class="roi-result hidden">
+                        <div class="loader hidden"></div>
+                        <div class="result-content hidden">
+                            <p data-i18n="modal-roi-result-text">Al mes, estás perdiendo aproximadamente:</p>
+                            <h4 id="roi-loss-amount" class="text-danger">-$800 USD</h4>
+                            <p data-i18n="modal-roi-cta" class="roi-subtext">Aether Digital puede automatizar este
+                                proceso por una fracción del costo.</p>
+                            <a href="https://wa.me/543425502817" target="_blank" class="btn-primary-sm"
+                                style="display: block; text-align: center; margin-top: 15px;"
+                                data-i18n="modal-roi-contact-btn">Hablar con un Experto</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
