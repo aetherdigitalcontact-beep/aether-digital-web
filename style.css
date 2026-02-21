@@ -1317,8 +1317,15 @@ input:checked+.slider:before {
     display: flex;
     gap: 1rem;
     margin-top: 1.5rem;
+}
+
+.social-icons a {
     color: var(--text-muted);
-    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: var(--accent);
 }
 
 .footer-bottom {
