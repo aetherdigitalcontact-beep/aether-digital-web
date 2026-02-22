@@ -865,7 +865,17 @@ if (easterEggOverlay && hackerInput) {
             case '':
                 return;
             default:
-                response = `bash: ${cmd}: command not found. Type 'help' for options.`;
+                const snarkyResponses = [
+                    `bash: ${cmd}: command not found. Nice try though.`,
+                    `Access Denied. Did you really think '${cmd}' would work?`,
+                    `Oh, look at the cute human trying to type '${cmd}'.`,
+                    `Error 418: I'm a teapot. And '${cmd}' makes no sense.`,
+                    `SECURITY ALERT: Unauthorized attempt logged. Just kidding, but '${cmd}' is not a command.`,
+                    `bash: ${cmd}: command not found. You're not very good at this, are you?`,
+                    `System: Stop mashing the keyboard.`,
+                    `Let me guess, you saw this in a movie? '${cmd}' is invalid. Type 'help'.`
+                ];
+                response = snarkyResponses[Math.floor(Math.random() * snarkyResponses.length)];
         }
 
         const resLine = document.createElement('div');
