@@ -459,7 +459,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                     top: target.offsetTop - 80, // Offset for nav height
                     behavior: 'smooth'
                 });
-            }, 50); // Small delay to let overflow:hidden be removed before scrolling
+            }, 350); // Wait for menu fade-out and DOM reflow
         }
     });
 });
