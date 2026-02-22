@@ -1240,7 +1240,23 @@ body.light-theme #neural-canvas {
 
 /* Casos de Éxito / Portfolio Section */
 .portfolio-section {
-    padding: 100px 0;
+    padding: 120px 0;
+    position: relative;
+    background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2064&auto=format&fit=crop') center/cover fixed;
+    z-index: 1;
+}
+
+.portfolio-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, var(--bg-primary) 0%, rgba(15, 23, 42, 0.85) 50%, var(--bg-primary) 100%);
+    z-index: -1;
+    transition: background 0.4s ease;
+}
+
+body.light-theme .portfolio-section::before {
+    background: linear-gradient(180deg, var(--bg-primary) 0%, rgba(240, 244, 248, 0.85) 50%, var(--bg-primary) 100%);
 }
 
 .portfolio-grid {

@@ -748,12 +748,15 @@ const AetherSound = (function () {
 
     return {
         init,
-        // Soft, high-pitched blip for hoving over elements
-        hover: () => playTone(800, null, 'sine', 0.1, 0.015),
-        // Sharp metallic tap for clicking buttons
-        click: () => playTone(1200, 400, 'sine', 0.15, 0.04),
-        // Deeper mechanical sound for dragging/toggling
-        toggle: () => playTone(500, 300, 'triangle', 0.2, 0.03)
+        // Ultra-short, quiet high pitch tick for hover
+        hover: () => playTone(2000, null, 'sine', 0.03, 0.01),
+        // Clean, dry, solid click for buttons (no pitch drop = no "pew" sound)
+        click: () => playTone(600, null, 'square', 0.04, 0.02),
+        // Fast technical double tone for toggle
+        toggle: () => {
+            playTone(400, null, 'triangle', 0.05, 0.02);
+            setTimeout(() => playTone(600, null, 'triangle', 0.05, 0.02), 50);
+        }
     };
 })();
 
