@@ -576,45 +576,8 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// 2. Custom Magnetic Cursor (Desktop Only)
-const cursorDot = document.getElementById('cursor-dot');
-const cursorOutline = document.getElementById('cursor-outline');
+// Custom Magnetic Cursor Removed
 
-if (window.innerWidth > 768 && cursorDot && cursorOutline) {
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-    let outlineX = mouseX;
-    let outlineY = mouseY;
-
-    window.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-
-        // Dot follows instantly
-        cursorDot.style.left = `${mouseX}px`;
-        cursorDot.style.top = `${mouseY}px`;
-    });
-
-    // Outline follows with delay (interpolation)
-    const renderCursor = () => {
-        const delay = 0.15; // Smoothness factor
-        outlineX += (mouseX - outlineX) * delay;
-        outlineY += (mouseY - outlineY) * delay;
-
-        cursorOutline.style.left = `${outlineX}px`;
-        cursorOutline.style.top = `${outlineY}px`;
-
-        requestAnimationFrame(renderCursor);
-    };
-    renderCursor(); // Start animation loop
-
-    // Magnetic Expansion on Hover
-    const interactables = document.querySelectorAll('a, button, input, .portfolio-item, .service-card, .floating-cta, .lang-btn, label.theme-switch');
-    interactables.forEach(el => {
-        el.addEventListener('mouseenter', () => cursorOutline.classList.add('hovering'));
-        el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hovering'));
-    });
-}
 
 // 3. Neural Network Canvas (Hero Section)
 const canvas = document.getElementById('neural-canvas');
@@ -697,8 +660,7 @@ if (canvas) {
 
     const animateCanvas = () => {
         ctx.clearRect(0, 0, width, height);
-
-        const accentColorRGB = window.getComputedStyle(document.body).classList.contains('light-theme') ? '59, 130, 246' : '56, 189, 248'; // Adjust line colors based on theme heuristically.
+        const accentColorRGB = document.body.classList.contains('light-theme') ? '59, 130, 246' : '56, 189, 248'; // Adjust line colors based on theme heuristically.
 
         for (let i = 0; i < particles.length; i++) {
             particles[i].update();
