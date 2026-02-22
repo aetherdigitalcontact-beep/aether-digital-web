@@ -1,14 +1,19 @@
 :root {
     /* Light Theme Tokens */
-    --bg-primary: #f8fafc;
-    --bg-secondary: #ffffff;
+    --bg-primary: #f0f4f8;
+    /* Softer, less blinding background */
+    --bg-secondary: #f8fafc;
+    /* Not pure white */
     --text-main: #1e293b;
-    --text-muted: #64748b;
+    --text-muted: #475569;
+    /* Slightly darker for better contrast on new bg */
     --accent: #3b82f6;
     --accent-glow: rgba(59, 130, 246, 0.3);
-    --glass-bg: rgba(255, 255, 255, 0.7);
-    --glass-border: rgba(255, 255, 255, 0.4);
-    --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+    --glass-bg: rgba(255, 255, 255, 0.6);
+    /* Slightly more transparent */
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+    /* Slightly stronger shadow */
     --gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
     --gradient-fast: linear-gradient(90deg, #3b82f6, #8b5cf6, #3b82f6);
     --nav-height: 80px;
