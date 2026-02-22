@@ -1448,6 +1448,14 @@ input:checked+.slider:before {
         padding: 2rem;
     }
 
+    .expertise-text .section-title {
+        font-size: 2.2rem;
+    }
+
+    .expertise-text p {
+        font-size: 1rem;
+    }
+
     .footer-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
