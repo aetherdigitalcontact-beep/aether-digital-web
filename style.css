@@ -2071,3 +2071,100 @@ body.light-theme .portfolio-section::before {
     outline: none;
     caret-color: #4ade80;
 }
+
+/* Infrastructure Animated Slider Section */
+.infrastructure-section {
+    position: relative;
+    width: 100%;
+    height: 70vh;
+    min-height: 500px;
+    margin: 6rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.infrastructure-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.infrastructure-slider .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    animation: crossfadeKenBurns 18s ease-in-out infinite;
+}
+
+/* 3 slides -> 18s total. Each slide visible for 6s. */
+.infrastructure-slider .slide-1 {
+    background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop');
+    animation-delay: 0s;
+}
+
+.infrastructure-slider .slide-2 {
+    background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop');
+    animation-delay: 6s;
+}
+
+.infrastructure-slider .slide-3 {
+    background-image: url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop');
+    animation-delay: 12s;
+}
+
+@keyframes crossfadeKenBurns {
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    23% {
+        opacity: 1;
+    }
+
+    33% {
+        opacity: 0;
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.1);
+    }
+}
+
+.infrastructure-overlay {
+    position: relative;
+    z-index: 2;
+    padding: 3rem;
+    max-width: 650px;
+    text-align: center;
+    margin: 0 1rem;
+    background: rgba(15, 23, 42, 0.4);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+    border-radius: 24px;
+}
+
+.infrastructure-overlay p {
+    color: var(--text-muted);
+    font-size: 1.15rem;
+    margin-top: 1rem;
+}
+
+body.light-theme .infrastructure-overlay {
+    background: rgba(255, 255, 255, 0.5);
+}
