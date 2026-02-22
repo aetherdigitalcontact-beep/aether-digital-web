@@ -454,10 +454,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-            window.scrollTo({
-                top: target.offsetTop - 80, // Offset for nav height
-                behavior: 'smooth'
-            });
+            setTimeout(() => {
+                window.scrollTo({
+                    top: target.offsetTop - 80, // Offset for nav height
+                    behavior: 'smooth'
+                });
+            }, 50); // Small delay to let overflow:hidden be removed before scrolling
         }
     });
 });
