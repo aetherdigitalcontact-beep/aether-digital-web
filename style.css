@@ -1649,6 +1649,16 @@ body.light-theme .portfolio-section::before {
         grid-template-columns: 1fr;
     }
 
+    .infrastructure-overlay {
+        padding: 2rem 1.5rem;
+        margin: 0 1rem;
+    }
+
+    .nav-right .btn-primary-sm {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+    }
+
     .case-study-card {
         padding: 1.5rem;
     }
