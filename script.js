@@ -429,11 +429,10 @@ if (mobileMenuBtn) {
         document.body.classList.toggle('menu-open');
 
         // Update Lucide icon
-        const icon = mobileMenuBtn.querySelector('i');
         if (mobileMenuBtn.classList.contains('active')) {
-            icon.setAttribute('data-lucide', 'x');
+            mobileMenuBtn.innerHTML = '<i data-lucide="x"></i>';
         } else {
-            icon.setAttribute('data-lucide', 'menu');
+            mobileMenuBtn.innerHTML = '<i data-lucide="menu"></i>';
         }
         lucide.createIcons();
     });
@@ -448,7 +447,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             mobileMenuBtn.classList.remove('active');
             navLinksContainer.classList.remove('active');
             document.body.classList.remove('menu-open');
-            mobileMenuBtn.querySelector('i').setAttribute('data-lucide', 'menu');
+            mobileMenuBtn.innerHTML = '<i data-lucide="menu"></i>';
             lucide.createIcons();
         }
 
