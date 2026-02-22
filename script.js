@@ -419,9 +419,39 @@ revealElements.forEach(el => {
 });
 
 // Smooth Scrolling for nav links
+const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+const navLinksContainer = document.querySelector('.nav-links');
+
+if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', () => {
+        mobileMenuBtn.classList.toggle('active');
+        navLinksContainer.classList.toggle('active');
+        document.body.classList.toggle('menu-open');
+
+        // Update Lucide icon
+        const icon = mobileMenuBtn.querySelector('i');
+        if (mobileMenuBtn.classList.contains('active')) {
+            icon.setAttribute('data-lucide', 'x');
+        } else {
+            icon.setAttribute('data-lucide', 'menu');
+        }
+        lucide.createIcons();
+    });
+}
+
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
+
+        // Close mobile menu if open
+        if (navLinksContainer.classList.contains('active')) {
+            mobileMenuBtn.classList.remove('active');
+            navLinksContainer.classList.remove('active');
+            document.body.classList.remove('menu-open');
+            mobileMenuBtn.querySelector('i').setAttribute('data-lucide', 'menu');
+            lucide.createIcons();
+        }
+
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
             window.scrollTo({
