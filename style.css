@@ -1615,7 +1615,9 @@ input:checked+.slider:before {
     position: relative;
     max-width: 900px;
     width: 90%;
-    background: var(--bg-main);
+    max-height: 90vh;
+    overflow-y: auto;
+    background: var(--bg-secondary);
     border-radius: 24px;
     padding: 3rem;
     border: 1px solid var(--glass-border);
@@ -1779,6 +1781,10 @@ input:checked+.slider:before {
 }
 
 @media (max-width: 768px) {
+    .modal-content {
+        padding: 2rem 1.5rem;
+    }
+
     .modal-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
