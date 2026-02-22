@@ -1,6 +1,9 @@
 const translations = {
     es: {
         "nav-home": "Inicio",
+        "page-title-home": "Aether Digital | Arquitectura Web y Sistemas IA",
+        "page-title-priv": "Política de Privacidad | Aether Digital",
+        "page-title-terms": "Términos de Servicio | Aether Digital",
         "nav-services": "Servicios",
         "nav-portfolio": "Portfolio",
         "nav-expertise": "Filosofía",
@@ -144,6 +147,9 @@ const translations = {
     },
     en: {
         "nav-home": "Home",
+        "page-title-home": "Aether Digital | Premium Web Architecture & AI Systems",
+        "page-title-priv": "Privacy Policy | Aether Digital",
+        "page-title-terms": "Terms of Service | Aether Digital",
         "nav-services": "Services",
         "nav-portfolio": "Portfolio",
         "nav-expertise": "Philosophy",
@@ -287,6 +293,9 @@ const translations = {
     },
     pt: {
         "nav-home": "Início",
+        "page-title-home": "Aether Digital | Arquitetura Web e Sistemas de IA",
+        "page-title-priv": "Política de Privacidade | Aether Digital",
+        "page-title-terms": "Termos de Serviço | Aether Digital",
         "nav-services": "Serviços",
         "nav-portfolio": "Portfólio",
         "nav-expertise": "Filosofia",
