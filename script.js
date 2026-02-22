@@ -562,3 +562,80 @@ if (modalOverlay) {
         }, 1200);
     });
 }
+
+// ====== UI Sound System (Micro-interactions) ======
+// Web Audio API used to generate premium, subtle artificial sounds
+const AetherSound = (function () {
+    let audioCtx = null;
+    let enabled = false;
+
+    // Unlock AudioContext on first user interaction (Browser policy)
+    const init = () => {
+        if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            enabled = true;
+        }
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+    };
+
+    const playTone = (freq, endFreq, type, duration, vol) => {
+        if (!enabled || !audioCtx) return;
+
+        const osc = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        if (endFreq) {
+            osc.frequency.exponentialRampToValueAtTime(endFreq, audioCtx.currentTime + duration);
+        }
+
+        gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+        gainNode.gain.linearRampToValueAtTime(vol, audioCtx.currentTime + 0.02);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+
+        osc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+    };
+
+    return {
+        init,
+        // Soft, high-pitched blip for hoving over elements
+        hover: () => playTone(800, null, 'sine', 0.1, 0.015),
+        // Sharp metallic tap for clicking buttons
+        click: () => playTone(1200, 400, 'sine', 0.15, 0.04),
+        // Deeper mechanical sound for dragging/toggling
+        toggle: () => playTone(500, 300, 'triangle', 0.2, 0.03)
+    };
+})();
+
+// Attach event listeners for audio
+document.addEventListener('DOMContentLoaded', () => {
+    // Wait for the first interaction to "boot up" the sound engine
+    const bootAudio = () => {
+        AetherSound.init();
+        document.removeEventListener('click', bootAudio);
+        document.removeEventListener('touchstart', bootAudio);
+    };
+    document.addEventListener('click', bootAudio);
+    document.addEventListener('touchstart', bootAudio);
+
+    // Attach to interactive elements
+    const interactables = document.querySelectorAll('a, button, .portfolio-item, .lang-btn, .mobile-menu-btn, input[type="radio"]');
+
+    interactables.forEach(el => {
+        el.addEventListener('mouseenter', () => AetherSound.hover());
+        el.addEventListener('click', () => AetherSound.click());
+    });
+
+    // Special sound for the theme switch
+    const themeSwitch = document.querySelector('.theme-switch input');
+    if (themeSwitch) {
+        themeSwitch.addEventListener('change', () => AetherSound.toggle());
+    }
+});
