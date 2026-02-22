@@ -563,6 +563,187 @@ if (modalOverlay) {
     });
 }
 
+// ====== Premium Visual Effects (Cursor, Laser Scroll, Neural Canvas) ======
+
+// 1. Laser Scroll Progress
+const scrollProgress = document.getElementById('scroll-progress');
+window.addEventListener('scroll', () => {
+    if (scrollProgress) {
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollPercentage = (scrollTop / scrollHeight) * 100;
+        scrollProgress.style.width = scrollPercentage + '%';
+    }
+});
+
+// 2. Custom Magnetic Cursor (Desktop Only)
+const cursorDot = document.getElementById('cursor-dot');
+const cursorOutline = document.getElementById('cursor-outline');
+
+if (window.innerWidth > 768 && cursorDot && cursorOutline) {
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let outlineX = mouseX;
+    let outlineY = mouseY;
+
+    window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+
+        // Dot follows instantly
+        cursorDot.style.left = `${mouseX}px`;
+        cursorDot.style.top = `${mouseY}px`;
+    });
+
+    // Outline follows with delay (interpolation)
+    const renderCursor = () => {
+        const delay = 0.15; // Smoothness factor
+        outlineX += (mouseX - outlineX) * delay;
+        outlineY += (mouseY - outlineY) * delay;
+
+        cursorOutline.style.left = `${outlineX}px`;
+        cursorOutline.style.top = `${outlineY}px`;
+
+        requestAnimationFrame(renderCursor);
+    };
+    renderCursor(); // Start animation loop
+
+    // Magnetic Expansion on Hover
+    const interactables = document.querySelectorAll('a, button, input, .portfolio-item, .service-card, .floating-cta, .lang-btn, label.theme-switch');
+    interactables.forEach(el => {
+        el.addEventListener('mouseenter', () => cursorOutline.classList.add('hovering'));
+        el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hovering'));
+    });
+}
+
+// 3. Neural Network Canvas (Hero Section)
+const canvas = document.getElementById('neural-canvas');
+if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight || 800; // fallback if hero takes screen height
+
+    // Resize handler
+    window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = document.querySelector('.hero').offsetHeight;
+        createParticles();
+    });
+
+    const particles = [];
+    const connectionDistance = 120;
+    const particleCount = window.innerWidth > 768 ? 70 : 30; // Fewer particles on mobile
+
+    // Mouse coords scaled for canvas
+    let mousePos = { x: width / 2, y: height / 2 };
+
+    // Update mouse for canvas interact
+    window.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        // Check if mouse is within hero area approximately
+        if (e.clientY <= rect.bottom) {
+            mousePos.x = e.clientX;
+            mousePos.y = e.clientY - rect.top;
+        } else {
+            mousePos.x = -1000; // Mouse is too far down, detach connections
+        }
+    });
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            // Slow, floating movement
+            this.vx = (Math.random() - 0.5) * 0.8;
+            this.vy = (Math.random() - 0.5) * 0.8;
+            this.radius = Math.random() * 2 + 1;
+        }
+
+        update() {
+            // Magnetic attraction to mouse
+            const dx = mousePos.x - this.x;
+            const dy = mousePos.y - this.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 200) {
+                // Subtle pull towards cursor
+                this.x += dx * 0.005;
+                this.y += dy * 0.005;
+            }
+
+            this.x += this.vx;
+            this.y += this.vy;
+
+            // Bounce off edges
+            if (this.x < 0 || this.x > width) this.vx *= -1;
+            if (this.y < 0 || this.y > height) this.vy *= -1;
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            // Color based on theme is hard, we use accent color
+            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#38bdf8';
+            ctx.fill();
+        }
+    }
+
+    const createParticles = () => {
+        particles.length = 0;
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+    };
+
+    const animateCanvas = () => {
+        ctx.clearRect(0, 0, width, height);
+
+        const accentColorRGB = window.getComputedStyle(document.body).classList.contains('light-theme') ? '59, 130, 246' : '56, 189, 248'; // Adjust line colors based on theme heuristically.
+
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+
+            // Draw lines
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < connectionDistance) {
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    const opacity = 1 - (distance / connectionDistance);
+                    ctx.strokeStyle = `rgba(${accentColorRGB}, ${opacity * 0.5})`; // Connect other particles
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+
+            // Draw line to mouse
+            const dxMouse = particles[i].x - mousePos.x;
+            const dyMouse = particles[i].y - mousePos.y;
+            const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+            if (distMouse < 150) {
+                ctx.beginPath();
+                ctx.moveTo(particles[i].x, particles[i].y);
+                ctx.lineTo(mousePos.x, mousePos.y);
+                ctx.strokeStyle = `rgba(${accentColorRGB}, ${(1 - distMouse / 150) * 0.8})`;
+                ctx.stroke();
+            }
+        }
+        requestAnimationFrame(animateCanvas);
+    };
+
+    // Initialize
+    setTimeout(() => {
+        height = canvas.height = document.querySelector('.hero').offsetHeight;
+        createParticles();
+        animateCanvas();
+    }, 100);
+}
+
 // ====== UI Sound System (Micro-interactions) ======
 // Web Audio API used to generate premium, subtle artificial sounds
 const AetherSound = (function () {
