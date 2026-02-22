@@ -1413,21 +1413,27 @@ input:checked+.slider:before {
     }
 
     .logo {
-        font-size: 1rem;
+        font-size: 0.85rem;
     }
 
     .nav-right {
-        gap: 0.5rem !important;
+        gap: 0.25rem !important;
     }
 
     .btn-login {
-        padding: 0.3rem 0.7rem;
-        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.6rem;
+    }
+
+    .lang-switcher {
+        gap: 0.1rem;
+        padding: 2px;
     }
 
     .lang-btn {
-        padding: 3px 5px;
-        font-size: 0.65rem;
+        padding: 2px 4px;
+        font-size: 0.55rem;
+        border-radius: 6px;
     }
 
     .mobile-menu-btn {
