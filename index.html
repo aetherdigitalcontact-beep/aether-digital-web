@@ -556,6 +556,27 @@
     <i data-lucide="message-circle"></i>
 </a>
 
+<!-- Easter Egg Hacker Terminal -->
+<div id="easter-egg-terminal" class="easter-egg-overlay hidden">
+    <div class="hacker-terminal">
+        <div class="hacker-terminal-header">
+            <span class="dot red" id="close-easter-egg"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="terminal-title">admin@aether:~</span>
+        </div>
+        <div class="hacker-terminal-body" id="hacker-output">
+            <div>Aether Digital Secure Terminal <span style="color:#f59e0b">v1.2.4</span></div>
+            <div>Authentication bypassed... <span style="color:#38bdf8">SUCCESS</span></div>
+            <div>Type 'help' to see available commands.</div>
+        </div>
+        <div class="hacker-terminal-input-line">
+            <span class="prompt">admin@aether:~$</span>
+            <input type="text" id="hacker-input" autocomplete="off" spellcheck="false" autofocus />
+        </div>
+    </div>
+</div>
+
 <script src="script.js"></script>
 </body>
 

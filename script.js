@@ -782,3 +782,96 @@ document.addEventListener('DOMContentLoaded', () => {
         themeSwitch.addEventListener('change', () => AetherSound.toggle());
     }
 });
+
+// ====== 4. Easter Egg Hacker Terminal ======
+const correctSequence = ['a', 'e', 't', 'h', 'e', 'r'];
+let typedSequence = [];
+
+const easterEggOverlay = document.getElementById('easter-egg-terminal');
+const closeEasterEgg = document.getElementById('close-easter-egg');
+const hackerInput = document.getElementById('hacker-input');
+const hackerOutput = document.getElementById('hacker-output');
+
+if (easterEggOverlay && hackerInput) {
+    window.addEventListener('keydown', (e) => {
+        // Only track if modal is NOT open and we are not typing in an input
+        if (easterEggOverlay.classList.contains('active') || e.target.tagName.toLowerCase() === 'input' || e.target.tagName.toLowerCase() === 'textarea') return;
+
+        typedSequence.push(e.key.toLowerCase());
+
+        // Keep array same length as target sequence
+        if (typedSequence.length > correctSequence.length) {
+            typedSequence.shift();
+        }
+
+        if (typedSequence.join('') === correctSequence.join('')) {
+            // Activate Easter Egg
+            easterEggOverlay.classList.remove('hidden');
+
+            // short delay for display block to apply before transition
+            setTimeout(() => {
+                easterEggOverlay.classList.add('active');
+                hackerInput.focus();
+                if (typeof AetherSound !== 'undefined') AetherSound.toggle(); // Play a sound
+            }, 50);
+        }
+    });
+
+    closeEasterEgg.addEventListener('click', () => {
+        easterEggOverlay.classList.remove('active');
+        setTimeout(() => easterEggOverlay.classList.add('hidden'), 500);
+        typedSequence = [];
+    });
+
+    // Hacker Terminal Logic
+    hackerInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const command = hackerInput.value.trim().toLowerCase();
+            hackerInput.value = '';
+
+            const line = document.createElement('div');
+            line.innerHTML = `<span style="color:#38bdf8">admin@aether:~$</span> <span style="color:#f8fafc">${command}</span>`;
+            hackerOutput.appendChild(line);
+
+            processCommand(command);
+        }
+    });
+
+    const processCommand = (cmd) => {
+        let response = '';
+        switch (cmd) {
+            case 'help':
+                response = `Available commands:<br>- <span style="color:#fff">whoami</span>: Displays current user profile.<br>- <span style="color:#fff">sudo contact</span>: Initializes direct secure protocol to the founders.<br>- <span style="color:#fff">clear</span>: Clears terminal output.<br>- <span style="color:#fff">exit</span>: Terminates secure session.`;
+                break;
+            case 'whoami':
+                response = `User: <span style="color:#f59e0b">GUEST</span> (Elevated privileges required for core access).`;
+                break;
+            case 'sudo contact':
+                response = `[+] Initiating secure WhatsApp handshake...<br>Redirecting...`;
+                setTimeout(() => window.open('https://wa.me/543425502817', '_blank'), 1500);
+                break;
+            case 'clear':
+                hackerOutput.innerHTML = '';
+                // Restore headers after clear
+                hackerOutput.innerHTML = `<div>Aether Digital Secure Terminal <span style="color:#f59e0b">v1.2.4</span></div>
+            <div>Authentication bypassed... <span style="color:#38bdf8">SUCCESS</span></div>`;
+                return;
+            case 'exit':
+                easterEggOverlay.classList.remove('active');
+                setTimeout(() => easterEggOverlay.classList.add('hidden'), 500);
+                typedSequence = [];
+                response = `Session terminated.`;
+                break;
+            case '':
+                return;
+            default:
+                response = `bash: ${cmd}: command not found. Type 'help' for options.`;
+        }
+
+        const resLine = document.createElement('div');
+        resLine.style.color = '#fff';
+        resLine.innerHTML = response;
+        hackerOutput.appendChild(resLine);
+        hackerOutput.scrollTop = hackerOutput.scrollHeight;
+    };
+}
