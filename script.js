@@ -105,7 +105,9 @@ const translations = {
         "plan-3-f2": "Múltiples Bots & APIs Integradas",
         "plan-3-f3": "Modelos de IA aplicados",
         "plan-3-f4": "Soporte y Mantenimiento 24/7",
-        "plan-3-btn": "Agendar Llamada"
+        "plan-3-btn": "Agendar Llamada",
+        "infra-title": "Espacios que Inspiran Excelencia",
+        "infra-desc": "Un vistazo a nuestro entorno operativo: donde la destreza arquitectónica alberga la ingeniería de software más avanzada."
     },
     en: {
         "nav-home": "Home",
@@ -213,7 +215,9 @@ const translations = {
         "plan-3-f2": "Multiple Bots & Integrated APIs",
         "plan-3-f3": "Applied AI Models",
         "plan-3-f4": "24/7 Support and Maintenance",
-        "plan-3-btn": "Schedule Call"
+        "plan-3-btn": "Schedule Call",
+        "infra-title": "Spaces That Inspire Excellence",
+        "infra-desc": "A glimpse into our operational environment: where architectural prowess houses the most advanced software engineering."
     },
     pt: {
         "nav-home": "Início",
@@ -321,7 +325,9 @@ const translations = {
         "plan-3-f2": "Múltiplos Bots & APIs Integradas",
         "plan-3-f3": "Modelos de IA aplicados",
         "plan-3-f4": "Suporte e Manutenção 24/7",
-        "plan-3-btn": "Agendar Chamada"
+        "plan-3-btn": "Agendar Chamada",
+        "infra-title": "Espaços que Inspiram Excelência",
+        "infra-desc": "Um vislumbre do nosso ambiente operacional: onde a destreza arquitetônica abriga a engenharia de software mais avançada."
     }
 };
 
