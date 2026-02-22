@@ -1307,7 +1307,7 @@ input:checked+.slider:before {
 }
 
 .case-details strong {
-    color: white;
+    color: var(--text-main);
     display: inline-block;
     margin-right: 0.25rem;
 }
@@ -1598,6 +1598,26 @@ input:checked+.slider:before {
     .footer-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .case-study-card {
+        padding: 1.5rem;
+    }
+
+    .case-metric {
+        padding: 1rem;
+    }
+
+    .case-metric .metric-value {
+        font-size: 2.8rem;
+    }
+
+    .case-header h3 {
+        font-size: 1.5rem;
     }
 
     .theme-switch-wrapper {
