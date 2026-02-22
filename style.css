@@ -1650,8 +1650,19 @@ body.light-theme .portfolio-section::before {
     }
 
     .infrastructure-overlay {
-        padding: 2rem 1.5rem;
+        padding: 1.5rem;
         margin: 0 1rem;
+        width: 90%;
+    }
+
+    .infrastructure-overlay .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem !important;
+    }
+
+    .infrastructure-overlay p {
+        font-size: 0.95rem;
+        margin-top: 0.5rem;
     }
 
     .nav-right .btn-primary-sm {
