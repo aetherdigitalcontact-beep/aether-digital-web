@@ -351,11 +351,14 @@
         body,
         body.dark-theme,
         body.light-theme {
-            --bg-primary: #ffffff !important;
-            --bg-secondary: #f8fafc !important;
+            --bg-primary: #f7f6f2 !important;
+            /* Premium Ivory/Bone background */
+            --bg-secondary: #efefea !important;
             --text-main: #0f172a !important;
             --text-muted: #475569 !important;
             background: var(--bg-primary) !important;
+            background-image: radial-gradient(#d5d4cd 1px, transparent 1px) !important;
+            background-size: 30px 30px !important;
             color: var(--text-main) !important;
         }
 
@@ -391,8 +394,16 @@
     <nav class="glass-nav luxury-nav">
         <div class="container nav-content">
             <div class="nav-left">
-                <a href="index.html" class="logo" style="text-decoration: none; color: var(--text-main);">
-                    <span class="logo-accent" style="color: var(--brand-gold);">SKYLINE</span> ESTATES
+                <a href="index.html" class="logo"
+                    style="text-decoration: none; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+                    <svg width="24" height="28" viewBox="0 0 24 28" fill="none" stroke="var(--brand-gold)"
+                        stroke-width="2" stroke-linejoin="round">
+                        <path d="M12 2L4 8v18h16V8L12 2z" />
+                        <path d="M12 2v24" />
+                        <path d="M8 12h8" />
+                        <path d="M8 18h8" />
+                    </svg>
+                    <div><span class="logo-accent" style="color: var(--brand-gold);">SKYLINE</span> ESTATES</div>
                 </a>
             </div>
             <ul class="nav-links">
@@ -407,16 +418,19 @@
                     <button class="lang-btn lang-btn-s" data-lang="pt">PT</button>
                 </div>
                 <a href="index.html#expertise"
-                    style="padding: 0.5rem 1rem; border: 1px solid var(--brand-gold); border-radius: 50px; font-size: 0.65rem; font-weight: 800; color: var(--brand-gold); letter-spacing: 1px; margin-right: 15px; text-decoration: none; transition: 0.3s; display: inline-block;"
-                    onmouseover="this.style.background='rgba(197, 160, 89, 0.1)'"
-                    onmouseout="this.style.background='transparent'">
-                    TECHNICAL SHOWCASE</a>
+                    style="position: relative; padding: 0.6rem 1.2rem; border-radius: 5px; font-size: 0.7rem; font-weight: 800; color: #fff; background: linear-gradient(135deg, #1e293b, #0f172a); letter-spacing: 1.5px; margin-right: 15px; text-decoration: none; transition: 0.4s; overflow: hidden; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid rgba(197, 160, 89, 0.3);"
+                    onmouseover="this.style.boxShadow='0 8px 25px rgba(197, 160, 89, 0.2)'; this.style.borderColor='var(--brand-gold)'; this.style.transform='translateY(-2px)';"
+                    onmouseout="this.style.boxShadow='0 4px 15px rgba(0,0,0,0.1)'; this.style.borderColor='rgba(197, 160, 89, 0.3)'; this.style.transform='translateY(0)';">
+                    <i data-lucide="code" style="width: 14px; color: var(--brand-gold);"></i> TECHNICAL SHOWCASE
+                </a>
                 <a href="https://wa.me/?text=Hello%20Aether%20Digital,%20I'm%20very%20interested%20in%20your%20development%20and%20automation%20services%20after%20seeing%20the%20Skyline%20Showcase."
                     target="_blank" class="btn-primary-sm"
-                    style="background: var(--brand-gold); color: #000; border-radius: 50px; font-weight: 800; padding: 0.6rem 1.8rem; text-decoration: none; transition: 0.3s; border: none; display: inline-block;"
-                    onmouseover="this.style.boxShadow='0 10px 20px rgba(197,160,89,0.4)'; this.style.transform='translateY(-2px)';"
-                    onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)';"
-                    data-i18n="skyline-btn-contact">Contact Agent</a>
+                    style="position: relative; background: linear-gradient(135deg, #d4af37, #aa8222); color: #fff; border-radius: 5px; font-weight: 800; padding: 0.7rem 1.8rem; text-decoration: none; transition: 0.4s; border: none; display: flex; align-items: center; gap: 8px; box-shadow: 0 10px 20px rgba(197, 160, 89, 0.3);"
+                    onmouseover="this.style.boxShadow='0 15px 30px rgba(197,160,89,0.5)'; this.style.transform='translateY(-2px)'; this.style.filter='brightness(1.1)';"
+                    onmouseout="this.style.boxShadow='0 10px 20px rgba(197, 160, 89, 0.3)'; this.style.transform='translateY(0)'; this.style.filter='brightness(1)';"
+                    data-i18n="skyline-btn-contact">
+                    <i data-lucide="key" style="width: 16px;"></i> Request Access
+                </a>
             </div>
         </div>
     </nav>
@@ -475,13 +489,63 @@
     </header>
 
     <!-- Trust Bar -->
-    <div class="trust-bar" style="background: var(--brand-light); border-bottom: 1px solid #e2e8f0; padding: 4rem 0;">
+    <div class="trust-bar"
+        style="background: var(--brand-light); border-bottom: 2px solid var(--brand-gold); padding: 4rem 0;">
         <div class="container brand-logos"
-            style="display: flex; justify-content: space-between; align-items: center; color: #94a3b8; font-weight: 700; font-size: 0.85rem; letter-spacing: 2.5px; opacity: 0.5;">
+            style="display: flex; justify-content: space-between; align-items: center; color: #94a3b8; font-weight: 700; font-size: 0.85rem; letter-spacing: 2.5px; opacity: 0.6;">
             <span>SOTHEBY'S REALTY</span>
             <span>ARCHITECTURAL DIGEST</span>
             <span>VOGUE LIVING</span>
             <span>MANSION GLOBAL</span>
+        </div>
+    </div>
+
+    <!-- Aether Digital Case Study Banner -->
+    <div
+        style="background: linear-gradient(135deg, #1e293b, #0f172a); color: white; padding: 5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden;">
+        <!-- Background Grid Decoration -->
+        <div
+            style="position: absolute; inset: 0; background-image: radial-gradient(rgba(197,160,89,0.1) 1px, transparent 1px); background-size: 20px 20px; z-index: 0;">
+        </div>
+
+        <div class="container"
+            style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 3rem; position: relative; z-index: 1;">
+            <div style="flex: 1.5; min-width: 300px;">
+                <span class="tagline" style="color: var(--brand-gold); letter-spacing: 4px; font-size: 0.75rem;"><i
+                        data-lucide="award"
+                        style="width: 14px; margin-right: 5px; display: inline-block; vertical-align: middle;"></i>
+                    AETHER DIGITAL SHOWCASE</span>
+                <h2 style="font-size: 2.2rem; margin: 1rem 0; font-weight: 800; text-transform: uppercase;">Engineering
+                    The Pinnacle <br>of <span
+                        style="color: var(--brand-gold); font-style: italic; text-transform: none;">Digital Real
+                        Estate</span></h2>
+                <p style="color: #94a3b8; font-size: 1.05rem; line-height: 1.8; max-width: 600px;">
+                    This portfolio was meticulously engineered by <strong style="color: white; font-weight: 600;">Aether
+                        Digital</strong> as an exclusive design and automation study for top-tier real estate groups. It
+                    highlights bespoke web architecture, dynamic UI/UX, and python-driven property valuation integration
+                    tailored to transcend the ordinary.
+                </p>
+            </div>
+            <div style="flex: 1; min-width: 300px; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; cursor: default;"
+                    onmouseover="this.style.borderColor='var(--brand-gold)'; this.style.background='rgba(197,160,89,0.05)';"
+                    onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'; this.style.background='rgba(255,255,255,0.03)';">
+                    <i data-lucide="zap" style="color: var(--brand-gold); width: 24px; margin-bottom: 15px;"></i>
+                    <h4 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">
+                        Fluid Reactivity</h4>
+                    <p style="color: #64748b; font-size: 0.85rem;">Optimized for instantaneous global rendering and
+                        zero-latency filtering.</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; cursor: default;"
+                    onmouseover="this.style.borderColor='var(--brand-gold)'; this.style.background='rgba(197,160,89,0.05)';"
+                    onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'; this.style.background='rgba(255,255,255,0.03)';">
+                    <i data-lucide="cpu" style="color: var(--brand-gold); width: 24px; margin-bottom: 15px;"></i>
+                    <h4 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">
+                        Automated Logic</h4>
+                    <p style="color: #64748b; font-size: 0.85rem;">Script-driven dynamic asset valuation formatting
+                        logic integrated.</p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -556,6 +620,74 @@
                             style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 1.5rem;">
                             <div class="price-tag" style="font-size: 1.8rem; font-weight: 800; color: #0f172a;">
                                 $25,250,000</div>
+                            <button class="btn-outline view-details-btn"
+                                style="border-radius: 50px; border: 1px solid #e2e8f0; color: #2d3748; padding: 0.6rem 1.6rem; cursor: pointer; font-weight: 600;">Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROPERTY 4 -->
+                <div class="property-card" data-location="marbella" data-type="penthouse" data-price="18.5">
+                    <div class="property-image-container">
+                        <img src="images/c8a1d808-9ddd-4684-afad-829a64d6973a.png" alt="Oceanside Horizon"
+                            class="property-img">
+                        <div class="image-overlay"></div>
+                    </div>
+                    <div class="property-info">
+                        <div class="ai-status-badge"><i data-lucide="shield-check" style="width:14px;"></i> AE-Verified
+                        </div>
+                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #0f172a;">Oceanside Horizon</h3>
+                        <p class="text-muted"><i data-lucide="map-pin" style="width:14px; margin-right:5px;"></i>
+                            Diamond Coast, Marbella</p>
+                        <div
+                            style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 1.5rem;">
+                            <div class="price-tag" style="font-size: 1.8rem; font-weight: 800; color: #0f172a;">
+                                $18,500,000</div>
+                            <button class="btn-outline view-details-btn"
+                                style="border-radius: 50px; border: 1px solid #e2e8f0; color: #2d3748; padding: 0.6rem 1.6rem; cursor: pointer; font-weight: 600;">Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROPERTY 5 -->
+                <div class="property-card" data-location="london" data-type="villa" data-price="32.0">
+                    <div class="property-image-container">
+                        <img src="images/a6c72dcc-8b04-4753-ac0d-3f237f913401.png" alt="The Royal Estate"
+                            class="property-img">
+                        <div class="image-overlay"></div>
+                    </div>
+                    <div class="property-info">
+                        <div class="ai-status-badge"><i data-lucide="trending-up" style="width:14px;"></i> +18% ROI
+                        </div>
+                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #0f172a;">The Royal Estate</h3>
+                        <p class="text-muted"><i data-lucide="map-pin" style="width:14px; margin-right:5px;"></i>
+                            Kensington, London</p>
+                        <div
+                            style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 1.5rem;">
+                            <div class="price-tag" style="font-size: 1.8rem; font-weight: 800; color: #0f172a;">
+                                $32,000,000</div>
+                            <button class="btn-outline view-details-btn"
+                                style="border-radius: 50px; border: 1px solid #e2e8f0; color: #2d3748; padding: 0.6rem 1.6rem; cursor: pointer; font-weight: 600;">Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROPERTY 6 -->
+                <div class="property-card" data-location="malibu" data-type="penthouse" data-price="9.2">
+                    <div class="property-image-container">
+                        <img src="images/f9a0e0f0-bc61-4327-9a54-4ce10f8bc12d.png" alt="Sunset Tower Suite"
+                            class="property-img">
+                        <div class="image-overlay"></div>
+                    </div>
+                    <div class="property-info">
+                        <div class="ai-status-badge"><i data-lucide="cpu" style="width:14px;"></i> Level 4 AI</div>
+                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #0f172a;">Sunset Tower Suite</h3>
+                        <p class="text-muted"><i data-lucide="map-pin" style="width:14px; margin-right:5px;"></i>
+                            Pacific Coast, CA</p>
+                        <div
+                            style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 1.5rem;">
+                            <div class="price-tag" style="font-size: 1.8rem; font-weight: 800; color: #0f172a;">
+                                $9,200,000</div>
                             <button class="btn-outline view-details-btn"
                                 style="border-radius: 50px; border: 1px solid #e2e8f0; color: #2d3748; padding: 0.6rem 1.6rem; cursor: pointer; font-weight: 600;">Details</button>
                         </div>
