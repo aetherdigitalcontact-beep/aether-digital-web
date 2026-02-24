@@ -435,14 +435,16 @@
         </div>
     </nav>
 
-    <header class="showcase-hero">
+    <header class="showcase-hero" style="position: relative; overflow: hidden;">
         <div class="hero-slider">
-            <div class="slide active" style="background-image: url('images/slider_luxury_1.png');"></div>
-            <div class="slide" style="background-image: url('images/a6c72dcc-8b04-4753-ac0d-3f237f913401.png');"></div>
-            <div class="slide" style="background-image: url('images/c8a1d808-9ddd-4684-afad-829a64d6973a.png');"></div>
+            <div class="slide active" style="background-image: url('SKYLINE%20ESTATES/slider_luxury_1.png');"></div>
+            <div class="slide"
+                style="background-image: url('SKYLINE%20ESTATES/a6c72dcc-8b04-4753-ac0d-3f237f913401.png');"></div>
+            <div class="slide"
+                style="background-image: url('SKYLINE%20ESTATES/c8a1d808-9ddd-4684-afad-829a64d6973a.png');"></div>
         </div>
         <div class="hero-overlay"></div>
-        <div class="container" style="padding-bottom: 60px; color: white;">
+        <div class="container" style="padding-bottom: 80px; color: white;">
             <span class="tagline" style="color: var(--brand-gold); letter-spacing: 6px;"
                 data-i18n="skyline-hero-tag">PRIVATE COLLECTION 2026</span>
             <h1 class="hero-title-main" data-i18n="skyline-hero-title">Architectural <span
@@ -452,8 +454,10 @@
                 Curating the world's most exclusive real estate assets with precision and tech-driven valuation.</p>
         </div>
 
-        <div class="search-container">
-            <div class="search-bar">
+        <div class="search-container"
+            style="position: absolute; bottom: 40px; transform: translateX(-50%); width: 90%; max-width: 1000px; z-index: 100;">
+            <div class="search-bar"
+                style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.4);">
                 <div class="search-group">
                     <label data-i18n="skyline-search-loc">Location</label>
                     <select id="filter-location">
@@ -562,7 +566,8 @@
                 <!-- PROPERTY 1 -->
                 <div class="property-card" data-location="london" data-type="penthouse" data-price="8.4">
                     <div class="property-image-container">
-                        <img src="images/property_card_1.png" alt="Sterling Penthouse" class="property-img">
+                        <img src="SKYLINE%20ESTATES/a6c72dcc-8b04-4753-ac0d-3f237f913401.png" alt="Sterling Penthouse"
+                            class="property-img">
                         <div class="image-overlay"></div>
                     </div>
                     <div class="property-info">
@@ -585,7 +590,8 @@
                 <!-- PROPERTY 2 -->
                 <div class="property-card" data-location="marbella" data-type="villa" data-price="12.8">
                     <div class="property-image-container">
-                        <img src="images/skyline estates.png" alt="Flagship Residence" class="property-img">
+                        <img src="SKYLINE%20ESTATES/skyline%20estates.png" alt="Flagship Residence"
+                            class="property-img">
                         <div class="image-overlay"></div>
                     </div>
                     <div class="property-info">
@@ -607,7 +613,7 @@
                 <!-- PROPERTY 3 -->
                 <div class="property-card" data-location="malibu" data-type="villa" data-price="25.2">
                     <div class="property-image-container">
-                        <img src="images/5fb21786-b89c-46d7-8cd2-7779d62bf007.png" alt="Cliffs of Malibu"
+                        <img src="SKYLINE%20ESTATES/5fb21786-b89c-46d7-8cd2-7779d62bf007.png" alt="Cliffs of Malibu"
                             class="property-img">
                         <div class="image-overlay"></div>
                     </div>
@@ -629,7 +635,7 @@
                 <!-- PROPERTY 4 -->
                 <div class="property-card" data-location="marbella" data-type="penthouse" data-price="18.5">
                     <div class="property-image-container">
-                        <img src="images/c8a1d808-9ddd-4684-afad-829a64d6973a.png" alt="Oceanside Horizon"
+                        <img src="SKYLINE%20ESTATES/c8a1d808-9ddd-4684-afad-829a64d6973a.png" alt="Oceanside Horizon"
                             class="property-img">
                         <div class="image-overlay"></div>
                     </div>
@@ -652,8 +658,7 @@
                 <!-- PROPERTY 5 -->
                 <div class="property-card" data-location="london" data-type="villa" data-price="32.0">
                     <div class="property-image-container">
-                        <img src="images/a6c72dcc-8b04-4753-ac0d-3f237f913401.png" alt="The Royal Estate"
-                            class="property-img">
+                        <img src="SKYLINE%20ESTATES/property_card_3.png" alt="The Royal Estate" class="property-img">
                         <div class="image-overlay"></div>
                     </div>
                     <div class="property-info">
@@ -675,8 +680,7 @@
                 <!-- PROPERTY 6 -->
                 <div class="property-card" data-location="malibu" data-type="penthouse" data-price="9.2">
                     <div class="property-image-container">
-                        <img src="images/f9a0e0f0-bc61-4327-9a54-4ce10f8bc12d.png" alt="Sunset Tower Suite"
-                            class="property-img">
+                        <img src="SKYLINE%20ESTATES/slider_luxury_1.png" alt="Sunset Tower Suite" class="property-img">
                         <div class="image-overlay"></div>
                     </div>
                     <div class="property-info">
@@ -697,38 +701,79 @@
         </div>
     </section>
 
-    <!-- Amenities Section -->
-    <section class="services section-reveal" style="background: #fdfdfd; padding: 10rem 0;">
-        <div class="container">
-            <div style="text-align: center; margin-bottom: 5rem;">
-                <h2 class="section-title aesthetic-underline" data-i18n="skyline-amenities-title">Unparalleled Standards
+    <!-- Cinematic Amenities Section -->
+    <section class="services section-reveal"
+        style="position: relative; background: #020617; padding: 12rem 0; overflow: hidden; color: white;">
+        <!-- Cinematic dark image overlay -->
+        <div
+            style="position: absolute; inset: 0; background-image: url('SKYLINE%20ESTATES/5fb21786-b89c-46d7-8cd2-7779d62bf007.png'); background-size: cover; background-position: center; opacity: 0.15; z-index: 0; filter: grayscale(100%) contrast(1.2);">
+        </div>
+        <!-- Gradient masking to fade into the background -->
+        <div
+            style="position: absolute; inset: 0; background: linear-gradient(to bottom, #f7f6f2 0%, transparent 10%, #020617 50%, transparent 90%, #0a0a0a 100%); z-index: 0;">
+        </div>
+
+        <div class="container" style="position: relative; z-index: 1;">
+            <div style="text-align: center; margin-bottom: 6rem;">
+                <span
+                    style="color: var(--brand-gold); letter-spacing: 4px; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 1rem; display: block;">The
+                    Skyline Promise</span>
+                <h2 style="font-size: 3rem; color: #ffffff !important; margin-bottom: 1.5rem; font-weight: 800;"
+                    data-i18n="skyline-amenities-title">Unparalleled Standards
                 </h2>
-                <p class="text-muted" data-i18n="skyline-amenities-desc">Standard features for every property in our
-                    collection.</p>
+                <p style="color: #94a3b8; font-size: 1.1rem; max-width: 600px; margin: 0 auto;"
+                    data-i18n="skyline-amenities-desc">Standard features for every property in our collection.</p>
             </div>
-            <div class="amenities-grid">
-                <div class="amenity-card">
-                    <i data-lucide="shield-check"></i>
-                    <h3 data-i18n="skyline-amenity-1-title">Blockchain Security</h3>
-                    <p class="text-muted" style="font-size: 0.95rem; line-height: 1.6;">Immutable property records and
+
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2.5rem; position: relative;">
+
+                <!-- Glowing Decoration behind cards -->
+                <div
+                    style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; height: 50%; background: var(--brand-gold); filter: blur(150px); opacity: 0.05; z-index: -1;">
+                </div>
+
+                <div style="background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); padding: 3.5rem 2.5rem; border-radius: 20px; text-align: center; transition: 0.4s; cursor: crosshair; box-shadow: 0 20px 40px rgba(0,0,0,0.5);"
+                    onmouseover="this.style.transform='translateY(-15px)'; this.style.borderColor='var(--brand-gold)'; this.style.boxShadow='0 30px 60px rgba(197,160,89,0.15)';"
+                    onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.05)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.5)';">
+                    <i data-lucide="shield-check"
+                        style="color: var(--brand-gold); width: 40px; height: 40px; margin-bottom: 1.5rem;"></i>
+                    <h3 style="color: white !important; font-size: 1.2rem; margin-bottom: 1rem;"
+                        data-i18n="skyline-amenity-1-title">Blockchain Security</h3>
+                    <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6;">Immutable property records and
                         smart contracts integrated for instant liquidation.</p>
                 </div>
-                <div class="amenity-card">
-                    <i data-lucide="wind"></i>
-                    <h3 data-i18n="skyline-amenity-2-title">Smart Climate</h3>
-                    <p class="text-muted" style="font-size: 0.95rem; line-height: 1.6;">AI-controlled atmospheric
+
+                <div style="background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); padding: 3.5rem 2.5rem; border-radius: 20px; text-align: center; transition: 0.4s; cursor: crosshair; box-shadow: 0 20px 40px rgba(0,0,0,0.5);"
+                    onmouseover="this.style.transform='translateY(-15px)'; this.style.borderColor='var(--brand-gold)'; this.style.boxShadow='0 30px 60px rgba(197,160,89,0.15)';"
+                    onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.05)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.5)';">
+                    <i data-lucide="wind"
+                        style="color: var(--brand-gold); width: 40px; height: 40px; margin-bottom: 1.5rem;"></i>
+                    <h3 style="color: white !important; font-size: 1.2rem; margin-bottom: 1rem;"
+                        data-i18n="skyline-amenity-2-title">Smart Climate</h3>
+                    <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6;">AI-controlled atmospheric
                         optimization based on inhabitant biometrics.</p>
                 </div>
-                <div class="amenity-card">
-                    <i data-lucide="eye"></i>
-                    <h3 data-i18n="skyline-amenity-3-title">Privacy Shield</h3>
-                    <p class="text-muted" style="font-size: 0.95rem; line-height: 1.6;">Quantum-encrypted communication
-                        and biometric perimeter access.</p>
+
+                <div style="background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); padding: 3.5rem 2.5rem; border-radius: 20px; text-align: center; transition: 0.4s; cursor: crosshair; box-shadow: 0 20px 40px rgba(0,0,0,0.5);"
+                    onmouseover="this.style.transform='translateY(-15px)'; this.style.borderColor='var(--brand-gold)'; this.style.boxShadow='0 30px 60px rgba(197,160,89,0.15)';"
+                    onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.05)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.5)';">
+                    <i data-lucide="eye"
+                        style="color: var(--brand-gold); width: 40px; height: 40px; margin-bottom: 1.5rem;"></i>
+                    <h3 style="color: white !important; font-size: 1.2rem; margin-bottom: 1rem;"
+                        data-i18n="skyline-amenity-3-title">Privacy Shield</h3>
+                    <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6;">Quantum-encrypted communication and
+                        biometric perimeter access.</p>
                 </div>
-                <div class="amenity-card">
-                    <i data-lucide="zap"></i>
-                    <h3 data-i18n="skyline-amenity-4-title">Energy Autonomy</h3>
-                    <p class="text-muted" style="font-size: 0.95rem; line-height: 1.6;">Zero-grid dependency with
+
+                <div style="background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); padding: 3.5rem 2.5rem; border-radius: 20px; text-align: center; transition: 0.4s; cursor: crosshair; box-shadow: 0 20px 40px rgba(0,0,0,0.5);"
+                    onmouseover="this.style.transform='translateY(-15px)'; this.style.borderColor='var(--brand-gold)'; this.style.boxShadow='0 30px 60px rgba(197,160,89,0.15)';"
+                    onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.05)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.5)';">
+                    <i data-lucide="zap"
+                        style="color: var(--brand-gold); width: 40px; height: 40px; margin-bottom: 1.5rem;"></i>
+                    <h3 style="color: white !important; font-size: 1.2rem; margin-bottom: 1rem;"
+                        data-i18n="skyline-amenity-4-title">Energy Autonomy</h3>
+                    <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6;">Zero-grid dependency with
                         integrated fusion-ready solar management.</p>
                 </div>
             </div>
