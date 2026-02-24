@@ -197,12 +197,14 @@
             background-size: cover;
             background-position: center;
             opacity: 0;
-            transition: opacity 2s ease-in-out;
-            animation: kenBurns 25s linear infinite;
+            transition: opacity 2.5s ease-in-out;
+            animation: kenBurns 28s linear infinite;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             transform-origin: center;
             image-rendering: -webkit-optimize-contrast;
+            filter: contrast(1.05) brightness(1.02);
+            will-change: transform, opacity;
         }
 
         .slide.active {
@@ -215,7 +217,7 @@
             }
 
             50% {
-                transform: scale(1.04) translate3d(10px, 5px, 0);
+                transform: scale(1.015) translate3d(5px, 2px, 0);
             }
 
             100% {
@@ -464,6 +466,28 @@
             transform: scale(0.95);
         }
 
+        /* Ultra-Sharpening for High-End Displays */
+        .property-img,
+        .slide,
+        #analytics>div:first-child,
+        #modal-img {
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+            -webkit-font-smoothing: antialiased;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        .property-image-container {
+            overflow: hidden;
+            background: #f1f5f9;
+            /* Skeleton background */
+        }
+
+        .property-card:hover .property-img {
+            transform: scale(1.05) translateZ(0);
+        }
+
         /* Section Layouts */
         .stats-grid {
             display: grid;
@@ -550,7 +574,8 @@
             <div class="slide active" style="background-image: url('SKYLINE ESTATES/slider_luxury_1.png');"></div>
             <div class="slide"
                 style="background-image: url('SKYLINE ESTATES/real_estate_luxury_hero_1771954275746.png');"></div>
-            <div class="slide" style="background-image: url('SKYLINE ESTATES/property_card_1.png');"></div>
+            <div class="slide"
+                style="background-image: url('SKYLINE ESTATES/ca7121c5-895a-4f4a-9c17-96d2ff50d41b.png');"></div>
         </div>
         <div class="hero-overlay"></div>
         <div class="container" style="padding-bottom: 80px; color: white;">
@@ -571,17 +596,21 @@
                     <label data-i18n="skyline-search-loc">Location</label>
                     <select id="filter-location">
                         <option value="all">All Locations</option>
-                        <option value="london">London, UK</option>
-                        <option value="marbella">Marbella, Spain</option>
-                        <option value="malibu">Malibu, CA</option>
+                        <option value="mayfair">Mayfair, London</option>
+                        <option value="kensington">Kensington, London</option>
+                        <option value="hampstead">Hampstead, London</option>
+                        <option value="marbella">Diamond Coast, Marbella</option>
+                        <option value="malibu">Pacific Coast, Malibu</option>
                     </select>
                 </div>
                 <div class="search-group">
-                    <label data-i18n="skyline-search-type">Property Type</label>
+                    <label data-i18n="skyline-search-type">Asset Type</label>
                     <select id="filter-type">
                         <option value="all">Any Type</option>
-                        <option value="villa" data-i18n="skyline-opt-villa">Luxury Villa</option>
-                        <option value="penthouse" data-i18n="skyline-opt-pent">Penthouse</option>
+                        <option value="villa">Luxury Villa</option>
+                        <option value="penthouse">Signature Penthouse</option>
+                        <option value="estate">Royal Estate</option>
+                        <option value="residence">Coastal Residence</option>
                     </select>
                 </div>
                 <div class="search-group">
@@ -594,9 +623,10 @@
                     </select>
                 </div>
                 <button class="btn-primary" id="apply-filters"
-                    style="padding: 1.2rem 2.5rem; border-radius: 14px; background: var(--brand-gold); color: #000; font-weight:800; cursor: pointer; border:none; transition: 0.3s;"
-                    onmouseover="this.style.boxShadow='0 10px 20px rgba(197,160,89,0.3)'"
-                    onmouseout="this.style.boxShadow='none'" data-i18n="skyline-btn-explore">Explore Assets</button>
+                    style="padding: 1.2rem 2.5rem; border-radius: 14px; background: var(--brand-gold); color: #000; font-weight:800; cursor: pointer; border:none; transition: 0.3s; width: 100%; max-width: 250px;"
+                    onmouseover="this.style.boxShadow='0 10px 30px rgba(197,160,89,0.4)'; this.style.transform='translateY(-2px)';"
+                    onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)';"
+                    data-i18n="skyline-btn-explore">Explore Assets</button>
             </div>
         </div>
     </header>
@@ -673,7 +703,7 @@
 
             <div class="property-grid" id="main-property-grid">
                 <!-- PROPERTY 1 -->
-                <div class="property-card" data-location="london" data-type="penthouse" data-price="8.4">
+                <div class="property-card" data-location="mayfair" data-type="penthouse" data-price="8.4">
                     <div class="property-image-container">
                         <img src="SKYLINE ESTATES/bd169766-4f69-4760-815f-8d09199d2a1a.png" alt="Sterling Penthouse"
                             class="property-img">
@@ -761,7 +791,7 @@
                 </div>
 
                 <!-- PROPERTY 5 -->
-                <div class="property-card" data-location="london" data-type="villa" data-price="32.0">
+                <div class="property-card" data-location="kensington" data-type="estate" data-price="32.0">
                     <div class="property-image-container">
                         <img src="SKYLINE ESTATES/20cb54d0-c1a0-4512-a230-42ce92ddfde4.png" alt="The Royal Estate"
                             class="property-img">
@@ -783,7 +813,7 @@
                 </div>
 
                 <!-- PROPERTY 6 -->
-                <div class="property-card" data-location="malibu" data-type="penthouse" data-price="9.2">
+                <div class="property-card" data-location="malibu" data-type="residence" data-price="9.2">
                     <div class="property-image-container">
                         <img src="SKYLINE ESTATES/b5926422-5ed7-473c-a956-1096312889f8.png" alt="Sunset Tower Suite"
                             class="property-img">
@@ -804,7 +834,7 @@
                 </div>
 
                 <!-- PROPERTY 7 (NEW IMAGE) -->
-                <div class="property-card" data-location="london" data-type="villa" data-price="15.5">
+                <div class="property-card" data-location="hampstead" data-type="villa" data-price="15.5">
                     <div class="property-image-container">
                         <img src="SKYLINE ESTATES/54eb2822-2abd-41a6-b9d0-bda905e528f7.png" alt="Elysium Manor"
                             class="property-img">
