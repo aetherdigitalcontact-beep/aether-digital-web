@@ -346,6 +346,43 @@
             backdrop-filter: blur(15px);
             padding: 2rem;
         }
+
+        /* Force Light Theme Variables Overriding script.js */
+        body,
+        body.dark-theme,
+        body.light-theme {
+            --bg-primary: #ffffff !important;
+            --bg-secondary: #f8fafc !important;
+            --text-main: #0f172a !important;
+            --text-muted: #475569 !important;
+            background: var(--bg-primary) !important;
+            color: var(--text-main) !important;
+        }
+
+        /* Enforce Visibility */
+        body .nav-links a {
+            color: var(--text-main) !important;
+            font-weight: 600;
+        }
+
+        body .logo {
+            color: var(--text-main) !important;
+            text-decoration: none;
+        }
+
+        body .logo .logo-accent {
+            color: var(--brand-gold) !important;
+        }
+
+        body .section-title,
+        body h3 {
+            color: var(--text-main) !important;
+        }
+
+        .showcase-footer .footer-logo {
+            color: #ffffff !important;
+            text-decoration: none !important;
+        }
     </style>
 </head>
 
@@ -354,7 +391,7 @@
     <nav class="glass-nav luxury-nav">
         <div class="container nav-content">
             <div class="nav-left">
-                <a href="index.html" class="logo">
+                <a href="index.html" class="logo" style="text-decoration: none; color: var(--text-main);">
                     <span class="logo-accent" style="color: var(--brand-gold);">SKYLINE</span> ESTATES
                 </a>
             </div>
@@ -369,10 +406,16 @@
                     <button class="lang-btn lang-btn-s" data-lang="es">ES</button>
                     <button class="lang-btn lang-btn-s" data-lang="pt">PT</button>
                 </div>
-                <div
-                    style="padding: 0.5rem 1rem; border: 1px solid var(--brand-gold); border-radius: 50px; font-size: 0.65rem; font-weight: 800; color: var(--brand-gold); letter-spacing: 1px; margin-right: 15px;">
-                    TECHNICAL SHOWCASE</div>
-                <a href="#" class="btn-primary-sm" style="background: var(--brand-gold); color: #000;"
+                <a href="index.html#expertise"
+                    style="padding: 0.5rem 1rem; border: 1px solid var(--brand-gold); border-radius: 50px; font-size: 0.65rem; font-weight: 800; color: var(--brand-gold); letter-spacing: 1px; margin-right: 15px; text-decoration: none; transition: 0.3s; display: inline-block;"
+                    onmouseover="this.style.background='rgba(197, 160, 89, 0.1)'"
+                    onmouseout="this.style.background='transparent'">
+                    TECHNICAL SHOWCASE</a>
+                <a href="https://wa.me/?text=Hello%20Aether%20Digital,%20I'm%20very%20interested%20in%20your%20development%20and%20automation%20services%20after%20seeing%20the%20Skyline%20Showcase."
+                    target="_blank" class="btn-primary-sm"
+                    style="background: var(--brand-gold); color: #000; border-radius: 50px; font-weight: 800; padding: 0.6rem 1.8rem; text-decoration: none; transition: 0.3s; border: none; display: inline-block;"
+                    onmouseover="this.style.boxShadow='0 10px 20px rgba(197,160,89,0.4)'; this.style.transform='translateY(-2px)';"
+                    onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)';"
                     data-i18n="skyline-btn-contact">Contact Agent</a>
             </div>
         </div>
@@ -565,7 +608,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <a href="#" class="footer-logo">
+                    <a href="index.html" class="footer-logo" style="text-decoration: none; color: white;">
                         <span style="color: var(--brand-gold);">SKYLINE</span> ESTATES
                     </a>
                     <p style="line-height: 1.8; color: #64748b; font-size: 1rem; margin-top: 1.5rem;">

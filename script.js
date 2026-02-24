@@ -577,26 +577,30 @@ const body = document.body;
 const currentTheme = localStorage.getItem('theme');
 if (currentTheme) {
     body.className = currentTheme;
-    if (currentTheme === 'light-theme') {
-        checkbox.checked = false;
-    } else {
-        checkbox.checked = true;
+    if (checkbox) {
+        checkbox.checked = (currentTheme !== 'light-theme');
     }
 } else {
-    // Default is dark-theme as per initial HTML
-    body.classList.add('dark-theme');
-    checkbox.checked = true;
+    // Default is dark-theme unless light-theme is already explicitly set
+    if (!body.classList.contains('light-theme')) {
+        body.classList.add('dark-theme');
+        if (checkbox) checkbox.checked = true;
+    } else {
+        if (checkbox) checkbox.checked = false;
+    }
 }
 
-checkbox.addEventListener('change', () => {
-    if (checkbox.checked) {
-        body.classList.replace('light-theme', 'dark-theme');
-        localStorage.setItem('theme', 'dark-theme');
-    } else {
-        body.classList.replace('dark-theme', 'light-theme');
-        localStorage.setItem('theme', 'light-theme');
-    }
-});
+if (checkbox) {
+    checkbox.addEventListener('change', () => {
+        if (checkbox.checked) {
+            body.classList.replace('light-theme', 'dark-theme');
+            localStorage.setItem('theme', 'dark-theme');
+        } else {
+            body.classList.replace('dark-theme', 'light-theme');
+            localStorage.setItem('theme', 'light-theme');
+        }
+    });
+}
 
 // Scroll Reveal Animation (Intersection Observer)
 const revealElements = document.querySelectorAll('.reveal, .reveal-delay, .reveal-delay-2, .service-card');
