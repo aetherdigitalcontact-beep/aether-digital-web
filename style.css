@@ -20,17 +20,18 @@
 }
 
 body.dark-theme {
-    /* Dark Theme Tokens */
-    --bg-primary: #0f172a;
-    --bg-secondary: #1e293b;
-    --text-main: #f1f5f9;
+    /* Dark Theme Tokens - Refined Cinematic Deep Blue Palette */
+    --bg-primary: #020617;
+    /* Much deeper blue/black */
+    --bg-secondary: #0f172a;
+    --text-main: #f8fafc;
     --text-muted: #94a3b8;
     --accent: #38bdf8;
     --accent-glow: rgba(56, 189, 248, 0.3);
-    --glass-bg: rgba(30, 41, 59, 0.7);
+    --glass-bg: rgba(15, 23, 42, 0.7);
     --glass-border: rgba(255, 255, 255, 0.05);
-    --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
-    --gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+    --card-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.5);
+    --gradient: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
 }
 
 * {
@@ -489,15 +490,17 @@ body.light-theme #neural-canvas {
 }
 
 .blob-1 {
-    background: #3b82f6;
-    top: -100px;
+    background: #0ea5e9;
+    top: -150px;
     right: -100px;
+    opacity: 0.3;
 }
 
 .blob-2 {
-    background: #8b5cf6;
-    bottom: -100px;
+    background: #4f46e5;
+    bottom: -150px;
     left: -100px;
+    opacity: 0.3;
 }
 
 @keyframes blob-float {
