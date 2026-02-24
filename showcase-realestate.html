@@ -363,9 +363,35 @@
         }
 
         /* Enforce Visibility */
+        /* Enforce Visibility & Premium Nav Styling */
         body .nav-links a {
             color: var(--text-main) !important;
-            font-weight: 600;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: 0.3s;
+        }
+
+        body .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--brand-gold);
+            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        body .nav-links a:hover {
+            color: var(--brand-gold) !important;
+        }
+
+        body .nav-links a:hover::after {
+            width: 100%;
         }
 
         body .logo {
@@ -789,10 +815,20 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <a href="index.html" class="footer-logo" style="text-decoration: none; color: white;">
-                        <span style="color: var(--brand-gold);">SKYLINE</span> ESTATES
+                    <a href="index.html" class="footer-logo"
+                        style="text-decoration: none; color: white; display: flex; align-items: center; gap: 12px; font-size: 1.4rem; font-weight: 800;">
+                        <svg width="28" height="32" viewBox="0 0 24 28" fill="none" stroke="var(--brand-gold)"
+                            stroke-width="2" stroke-linejoin="round">
+                            <path d="M12 2L4 8v18h16V8L12 2z" />
+                            <path d="M12 2v24" />
+                            <path d="M8 12h8" />
+                            <path d="M8 18h8" />
+                        </svg>
+                        <div><span style="color: var(--brand-gold); letter-spacing: 1px;">SKYLINE</span> <span
+                                style="letter-spacing: 1px;">ESTATES</span></div>
                     </a>
-                    <p style="line-height: 1.8; color: #64748b; font-size: 1rem; margin-top: 1.5rem;">
+                    <p
+                        style="line-height: 1.8; color: #64748b; font-size: 0.95rem; margin-top: 2rem; max-width: 320px;">
                         Leading the transition to digital-first real estate. A technical masterclass in luxury
                         architecture and automation by Aether Digital.
                     </p>
@@ -802,14 +838,20 @@
                         style="color: white; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2rem;">
                         Portfolio</h4>
                     <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 1rem;"><a href="#"
-                                style="color: #475569; text-decoration: none; transition: 0.3s;">Penthouse Series</a>
+                        <li style="margin-bottom: 1rem;"><a href="#main-property-grid"
+                                style="color: #64748b; text-decoration: none; transition: 0.3s;"
+                                onmouseover="this.style.color='var(--brand-gold)'"
+                                onmouseout="this.style.color='#64748b'">Penthouse Series</a>
                         </li>
-                        <li style="margin-bottom: 1rem;"><a href="#"
-                                style="color: #475569; text-decoration: none; transition: 0.3s;">Modernist Villas</a>
+                        <li style="margin-bottom: 1rem;"><a href="#main-property-grid"
+                                style="color: #64748b; text-decoration: none; transition: 0.3s;"
+                                onmouseover="this.style.color='var(--brand-gold)'"
+                                onmouseout="this.style.color='#64748b'">Modernist Villas</a>
                         </li>
-                        <li style="margin-bottom: 1rem;"><a href="#"
-                                style="color: #475569; text-decoration: none; transition: 0.3s;">Commercial Core</a>
+                        <li style="margin-bottom: 1rem;"><a href="#main-property-grid"
+                                style="color: #64748b; text-decoration: none; transition: 0.3s;"
+                                onmouseover="this.style.color='var(--brand-gold)'"
+                                onmouseout="this.style.color='#64748b'">Commercial Core</a>
                         </li>
                     </ul>
                 </div>
@@ -818,13 +860,19 @@
                         style="color: white; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2rem;">
                         Technology</h4>
                     <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 1rem;"><a href="#"
-                                style="color: #475569; text-decoration: none; transition: 0.3s;">Python Automation</a>
+                        <li style="margin-bottom: 1rem;"><a href="../index.html#services"
+                                style="color: #64748b; text-decoration: none; transition: 0.3s;"
+                                onmouseover="this.style.color='var(--brand-gold)'"
+                                onmouseout="this.style.color='#64748b'">Python Automation</a>
                         </li>
-                        <li style="margin-bottom: 1rem;"><a href="#"
-                                style="color: #475569; text-decoration: none; transition: 0.3s;">Bespoke UI/UX</a></li>
-                        <li style="margin-bottom: 1rem;"><a href="#"
-                                style="color: #475569; text-decoration: none; transition: 0.3s;">ROI Analytics</a></li>
+                        <li style="margin-bottom: 1rem;"><a href="../index.html#services"
+                                style="color: #64748b; text-decoration: none; transition: 0.3s;"
+                                onmouseover="this.style.color='var(--brand-gold)'"
+                                onmouseout="this.style.color='#64748b'">Bespoke UI/UX</a></li>
+                        <li style="margin-bottom: 1rem;"><a href="#amenities"
+                                style="color: #64748b; text-decoration: none; transition: 0.3s;"
+                                onmouseover="this.style.color='var(--brand-gold)'"
+                                onmouseout="this.style.color='#64748b'">ROI Analytics</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
