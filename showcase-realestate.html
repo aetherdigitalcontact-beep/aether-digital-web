@@ -191,9 +191,56 @@
             z-index: 100;
         }
 
-        .agency-link:hover {
+        .back-to-agency:hover {
             background: var(--brand-indigo);
-            transform: rotate(360deg) scale(1.1);
+            transform: translateX(-50%) translateY(-5px);
+        }
+
+        /* CINEMATIC HERO SLIDER */
+        .hero-slider {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            animation: kenBurns 20s linear infinite;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        @keyframes kenBurns {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1) translate(10px, 5px);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.4), rgba(2, 6, 23, 0.8));
+            z-index: 0;
+        }
+
+        .showcase-hero .container {
+            position: relative;
+            z-index: 1;
         }
 
         .aesthetic-underline {
@@ -262,6 +309,12 @@
     </nav>
 
     <header class="showcase-hero">
+        <div class="hero-slider">
+            <div class="slide active" style="background-image: url('images/skyline estates.png');"></div>
+            <div class="slide" style="background-image: url('images/real_estate_luxury_hero_1771954275746.png');"></div>
+            <div class="slide" style="background-image: url('images/property_card_1.png');"></div>
+        </div>
+        <div class="hero-overlay"></div>
         <div class="container">
             <span class="tagline" style="color: var(--brand-gold); letter-spacing: 6px;">PRIVATE COLLECTION 2026</span>
             <h1 class="hero-title-main">Living in <span
@@ -331,10 +384,11 @@
                     </div>
                 </div>
 
-                <!-- PROPERTY 3: SUNSET VILLA (REALISTIC) -->
+                <!-- PROPERTY 3: SUNSET VILLA (THE SPECIFIC ONE) -->
                 <div class="property-card">
                     <div class="property-image-container">
-                        <img src="images/real_estate_luxury_hero.png" alt="Sunset Luxury Villa" class="property-img">
+                        <img src="images/real_estate_luxury_hero_1771954275746.png" alt="Sunset Luxury Villa"
+                            class="property-img">
                         <div class="image-overlay"></div>
                     </div>
                     <div class="property-info">
@@ -366,6 +420,18 @@
 
     <script>
         lucide.createIcons();
+
+        // HERO SLIDER LOGIC
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        setInterval(nextSlide, 6000); // Change image every 6 seconds
 
         // Intersection Observer for Section Animations
         const observer = new IntersectionObserver((entries) => {
