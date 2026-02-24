@@ -466,26 +466,35 @@
             transform: scale(0.95);
         }
 
-        /* Ultra-Sharpening for High-End Displays */
+        /* Ultra-Sharpening & Performance Optimization */
         .property-img,
         .slide,
-        #analytics>div:first-child,
         #modal-img {
             image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
             -webkit-font-smoothing: antialiased;
             transform: translateZ(0);
             backface-visibility: hidden;
+            will-change: transform, opacity;
         }
 
         .property-image-container {
             overflow: hidden;
             background: #f1f5f9;
-            /* Skeleton background */
         }
 
         .property-card:hover .property-img {
             transform: scale(1.05) translateZ(0);
+        }
+
+        /* Analytics Background Optimization */
+        .analytics-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1;
+            filter: contrast(1.1) saturate(0.8);
+            will-change: auto;
         }
 
         /* Section Layouts */
@@ -571,9 +580,11 @@
 
     <header class="showcase-hero" style="position: relative; overflow: hidden;">
         <div class="hero-slider">
-            <div class="slide active" style="background-image: url('SKYLINE ESTATES/slider_luxury_1.png');"></div>
+            <!-- Swapping legacy low-res for high-res assets -->
+            <div class="slide active"
+                style="background-image: url('SKYLINE ESTATES/54eb2822-2abd-41a6-b9d0-bda905e528f7.png');"></div>
             <div class="slide"
-                style="background-image: url('SKYLINE ESTATES/real_estate_luxury_hero_1771954275746.png');"></div>
+                style="background-image: url('SKYLINE ESTATES/2c4d311f-8399-40f5-a999-5018fce0ad74.png');"></div>
             <div class="slide"
                 style="background-image: url('SKYLINE ESTATES/ca7121c5-895a-4f4a-9c17-96d2ff50d41b.png');"></div>
         </div>
@@ -706,7 +717,7 @@
                 <div class="property-card" data-location="mayfair" data-type="penthouse" data-price="8.4">
                     <div class="property-image-container">
                         <img src="SKYLINE ESTATES/bd169766-4f69-4760-815f-8d09199d2a1a.png" alt="Sterling Penthouse"
-                            class="property-img">
+                            class="property-img" loading="lazy">
                         <div class="image-overlay"></div>
                     </div>
                     <div class="property-info">
@@ -861,9 +872,8 @@
     <!-- AI Analytics Section -->
     <section id="analytics" class="section-reveal"
         style="padding: 10rem 0; background: #0f172a; color: white; position: relative; overflow: hidden;">
-        <div
-            style="position: absolute; inset: 0; background-image: url('SKYLINE ESTATES/ca7121c5-895a-4f4a-9c17-96d2ff50d41b.png'); background-size: cover; background-position: center; opacity: 0.1; filter: saturate(0.5);">
-        </div>
+        <div class="analytics-bg"
+            style="background-image: url('SKYLINE ESTATES/ca7121c5-895a-4f4a-9c17-96d2ff50d41b.png');"></div>
 
         <div class="container" style="position: relative; z-index: 1;">
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
