@@ -198,7 +198,11 @@
             background-position: center;
             opacity: 0;
             transition: opacity 2s ease-in-out;
-            animation: kenBurns 20s linear infinite;
+            animation: kenBurns 25s linear infinite;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transform-origin: center;
+            image-rendering: -webkit-optimize-contrast;
         }
 
         .slide.active {
@@ -207,15 +211,15 @@
 
         @keyframes kenBurns {
             0% {
-                transform: scale(1);
+                transform: scale(1) translate3d(0, 0, 0);
             }
 
             50% {
-                transform: scale(1.05) translate(5px, 5px);
+                transform: scale(1.04) translate3d(10px, 5px, 0);
             }
 
             100% {
-                transform: scale(1);
+                transform: scale(1) translate3d(0, 0, 0);
             }
         }
 
@@ -581,7 +585,7 @@
                     </select>
                 </div>
                 <div class="search-group">
-                    <label data-i18n="skyline-search-budget">Budget Rank</label>
+                    <label data-i18n="skyline-search-budget">Budget Range</label>
                     <select id="filter-budget">
                         <option value="all">Any Budget</option>
                         <option value="5">Under $10M</option>
@@ -1108,6 +1112,13 @@
                     EXIT TO MAIN AGENCY <i data-lucide="external-link" style="width:14px;"></i>
                 </a>
             </div>
+            <p
+                style="margin-top: 2rem; opacity: 0.4; font-size: 0.7rem; line-height: 1.6; border-top: 1px solid rgba(255,255,255,0.03); padding-top: 2rem;">
+                *DISCLAIMER: This project (Skyline Estates) is a fictional architectural and technical study.
+                The conceptual design and its digital environment have been acquired by a private entity.
+                This showcase remains active under Aether Digital's portfolio for professional reference and
+                technical benchmarking only.
+            </p>
         </div>
     </footer>
 
