@@ -22,17 +22,21 @@
     <style>
         /* SKYLINE ESTATES - INDEPENDENT LUXURY BRANDING */
         :root {
-            --brand-gold: #e2b87e;
-            --brand-indigo: #6366f1;
-            --brand-deep: #020617;
-            --brand-surface: rgba(15, 23, 42, 0.8);
-            --accent: var(--brand-indigo);
+            --brand-gold: #c5a059;
+            --brand-slate: #1e293b;
+            --brand-light: #f8fafc;
+            --brand-white: #ffffff;
+            --accent: var(--brand-gold);
+            --bg-body: var(--brand-white);
+            --text-main: #0f172a;
         }
 
         body {
             font-family: 'Outfit', sans-serif;
-            background: var(--brand-deep);
-            color: #f8fafc;
+            background: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            overflow-x: hidden;
         }
 
         h1,
@@ -43,13 +47,11 @@
 
         .showcase-hero {
             height: 100vh;
-            /* Removed fixed background to avoid overlap with slider */
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             padding: 0 1rem;
-            overflow: hidden;
             position: relative;
         }
 
@@ -72,25 +74,26 @@
 
         .property-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
             gap: 3rem;
             margin-top: 5rem;
         }
 
         .property-card {
             position: relative;
-            border-radius: 30px;
+            border-radius: 24px;
             overflow: hidden;
-            background: var(--brand-surface);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
             transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
             cursor: pointer;
         }
 
         .property-card:hover {
-            transform: translateY(-20px) scale(1.02);
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
-            border-color: var(--brand-indigo);
+            transform: translateY(-15px);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.08);
+            border-color: var(--brand-gold);
         }
 
         .property-image-container {
@@ -107,14 +110,13 @@
         }
 
         .property-card:hover .property-img {
-            transform: scale(1.1);
+            transform: scale(1.08);
         }
 
         .image-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, var(--brand-deep) 0%, transparent 50%);
-            opacity: 0.8;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.4) 0%, transparent 60%);
         }
 
         .property-info {
@@ -122,77 +124,64 @@
             position: relative;
         }
 
-        .price-tag {
-            font-size: 2rem;
-            font-weight: 800;
-            color: white;
-            margin-bottom: 1rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
         .ai-status-badge {
             position: absolute;
             top: -20px;
             right: 30px;
-            background: var(--brand-indigo);
-            color: white;
+            background: var(--brand-gold);
+            color: black;
             padding: 0.6rem 1.2rem;
             border-radius: 12px;
             font-weight: 700;
-            font-size: 0.85rem;
-            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+            font-size: 0.8rem;
+            box-shadow: 0 10px 20px rgba(197, 160, 89, 0.2);
             display: flex;
             align-items: center;
             gap: 8px;
-            transform: translateY(10px);
-            opacity: 0;
-            transition: all 0.4s ease 0.2s;
-        }
-
-        .property-card:hover .ai-status-badge {
-            transform: translateY(0);
-            opacity: 1;
+            z-index: 5;
         }
 
         .luxury-nav {
-            background: rgba(2, 6, 23, 0.8);
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+        }
+
+        .lang-switch-showcase {
+            display: flex;
+            gap: 10px;
+            margin-right: 20px;
+        }
+
+        .lang-btn-s {
+            background: transparent;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: #0f172a;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .lang-btn-s:hover,
+        .lang-btn-s.active {
+            background: var(--brand-gold);
+            color: black;
+            border-color: var(--brand-gold);
         }
 
         .section-reveal {
             opacity: 0;
-            transform: translateY(50px);
+            transform: translateY(40px);
             transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         .section-reveal.active {
             opacity: 1;
             transform: translateY(0);
-        }
-
-        /* Float back button */
-        .agency-link {
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1rem;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            color: white;
-            display: flex;
-            transition: all 0.4s;
-            z-index: 100;
-        }
-
-        .back-to-agency:hover {
-            background: var(--brand-indigo);
-            transform: translateX(-50%) translateY(-5px);
         }
 
         /* CINEMATIC HERO SLIDER */
@@ -222,7 +211,7 @@
             }
 
             50% {
-                transform: scale(1.1) translate(10px, 5px);
+                transform: scale(1.05) translate(5px, 5px);
             }
 
             100% {
@@ -233,13 +222,96 @@
         .hero-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.4), rgba(2, 6, 23, 0.8));
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1));
             z-index: 0;
         }
 
-        .showcase-hero .container {
-            position: relative;
-            z-index: 1;
+        .search-container {
+            position: absolute;
+            bottom: -45px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1000px;
+            z-index: 100;
+        }
+
+        .search-bar {
+            background: white;
+            padding: 1.5rem 2.5rem;
+            border-radius: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 2rem;
+            align-items: center;
+            box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .search-group label {
+            font-size: 0.7rem;
+            color: var(--brand-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 800;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .search-group select {
+            background: transparent;
+            border: none;
+            color: #0f172a;
+            font-family: 'Sora', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            outline: none;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        /* AMENITIES SECTION */
+        .amenities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .amenity-card {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 24px;
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .amenity-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--brand-gold);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        .amenity-card i {
+            width: 32px;
+            height: 32px;
+            color: var(--brand-gold);
+            margin-bottom: 2rem;
+        }
+
+        /* LUXURY FOOTER */
+        .showcase-footer {
+            padding: 8rem 0 4rem;
+            background: #0a0a0a;
+            color: #64748b;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
         }
 
         .aesthetic-underline {
@@ -254,7 +326,7 @@
             bottom: -5px;
             width: 0;
             height: 3px;
-            background: var(--brand-indigo);
+            background: var(--brand-gold);
             transition: width 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
@@ -262,312 +334,187 @@
             width: 100%;
         }
 
-        /* LUXURY SPECS LIST */
-        .specs-list {
-            list-style: none;
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 1.5rem;
-        }
-
-        .spec-item {
-            display: flex;
+        /* Modal Styles */
+        #property-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
             align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        .spec-item i {
-            width: 16px;
-            color: var(--brand-indigo);
-        }
-
-        /* SEARCH BAR ENHANCEMENT */
-        .search-container {
-            position: absolute;
-            bottom: -40px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 1000px;
-            z-index: 10;
-        }
-
-        .search-bar {
-            background: var(--brand-surface);
-            backdrop-filter: blur(30px);
-            padding: 1.5rem 2.5rem;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr auto;
-            gap: 2rem;
-            align-items: center;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-
-        .search-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .search-group label {
-            font-size: 0.75rem;
-            color: var(--brand-gold);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 700;
-        }
-
-        .search-group select,
-        .search-group input {
-            background: transparent;
-            border: none;
-            color: white;
-            font-family: 'Sora', sans-serif;
-            font-size: 1.1rem;
-            outline: none;
-            cursor: pointer;
-        }
-
-        /* TRUST BAR */
-        .trust-bar {
-            padding: 4rem 0;
-            background: rgba(0, 0, 0, 0.3);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .brand-logos {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            opacity: 0.4;
-            filter: grayscale(1);
-            transition: opacity 0.3s;
-        }
-
-        .brand-logos:hover {
-            opacity: 0.8;
-            filter: grayscale(0);
-        }
-
-        .brand-logos span {
-            font-family: 'Sora', sans-serif;
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-
-        /* AMENITIES SECTION */
-        .amenities-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            margin: 4rem 0;
-        }
-
-        .amenity-card {
-            background: rgba(255, 255, 255, 0.02);
-            padding: 2.5rem;
-            border-radius: 20px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s;
-        }
-
-        .amenity-card:hover {
-            background: rgba(99, 102, 241, 0.05);
-            transform: translateY(-5px);
-            border-color: var(--brand-indigo);
-        }
-
-        .amenity-card i {
-            width: 40px;
-            height: 40px;
-            color: var(--brand-gold);
-            margin-bottom: 1.5rem;
-        }
-
-        /* LUXURY FOOTER */
-        .showcase-footer {
-            padding: 6rem 0 3rem;
-            background: #010411;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .footer-logo {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 2rem;
-            display: block;
+            justify-content: center;
+            backdrop-filter: blur(15px);
+            padding: 2rem;
         }
     </style>
 </head>
 
-<body class="dark-theme">
+<body class="light-theme">
 
     <nav class="glass-nav luxury-nav">
         <div class="container nav-content">
             <div class="nav-left">
-                <a href="#" class="logo">
+                <a href="index.html" class="logo">
                     <span class="logo-accent" style="color: var(--brand-gold);">SKYLINE</span> ESTATES
                 </a>
             </div>
             <ul class="nav-links">
-                <li><a href="#collection">Portafolio</a></li>
-                <li><a href="#">Analítica IA</a></li>
-                <li><a href="#">Inversores</a></li>
+                <li><a href="#collection" data-i18n="skyline-nav-portfolio">Portafolio</a></li>
+                <li><a href="#" data-i18n="skyline-nav-analysis">Analítica IA</a></li>
+                <li><a href="#" data-i18n="skyline-nav-investors">Inversores</a></li>
             </ul>
             <div class="nav-right">
-                <a href="#" class="btn-primary-sm" style="background: var(--brand-gold); color: #000;">Contact Agent</a>
+                <div class="lang-switch-showcase">
+                    <button class="lang-btn lang-btn-s" data-lang="en">EN</button>
+                    <button class="lang-btn lang-btn-s" data-lang="es">ES</button>
+                    <button class="lang-btn lang-btn-s" data-lang="pt">PT</button>
+                </div>
+                <div
+                    style="padding: 0.5rem 1rem; border: 1px solid var(--brand-gold); border-radius: 50px; font-size: 0.65rem; font-weight: 800; color: var(--brand-gold); letter-spacing: 1px; margin-right: 15px;">
+                    TECHNICAL SHOWCASE</div>
+                <a href="#" class="btn-primary-sm" style="background: var(--brand-gold); color: #000;"
+                    data-i18n="skyline-btn-contact">Contact Agent</a>
             </div>
         </div>
     </nav>
 
     <header class="showcase-hero">
         <div class="hero-slider">
-            <div class="slide active" style="background-image: url('images/skyline estates.png');"></div>
-            <div class="slide" style="background-image: url('images/real_estate_luxury_hero_1771954275746.png');"></div>
-            <!-- Removed the futuristic card image as requested -->
+            <div class="slide active" style="background-image: url('images/slider_luxury_1.png');"></div>
+            <div class="slide" style="background-image: url('images/a6c72dcc-8b04-4753-ac0d-3f237f913401.png');"></div>
+            <div class="slide" style="background-image: url('images/c8a1d808-9ddd-4684-afad-829a64d6973a.png');"></div>
         </div>
         <div class="hero-overlay"></div>
-        <div class="container" style="padding-bottom: 60px;">
-            <span class="tagline" style="color: var(--brand-gold); letter-spacing: 6px;">PRIVATE COLLECTION 2026</span>
-            <h1 class="hero-title-main">Living in <span
-                    style="font-style: italic; color: var(--brand-gold);">Art</span>.</h1>
-            <p style="font-size: 1.5rem; max-width: 600px; margin: 0 auto; opacity: 0.8;">Exclusive properties managed
-                by autonomous AI systems for the modern elite.</p>
+        <div class="container" style="padding-bottom: 60px; color: white;">
+            <span class="tagline" style="color: var(--brand-gold); letter-spacing: 6px;"
+                data-i18n="skyline-hero-tag">PRIVATE COLLECTION 2026</span>
+            <h1 class="hero-title-main" data-i18n="skyline-hero-title">Architectural <span
+                    style="font-style: italic; color: var(--brand-gold);">Excellence</span>.</h1>
+            <p style="font-size: clamp(1.1rem, 2vw, 1.5rem); max-width: 600px; margin: 0 auto; opacity: 0.9;"
+                data-i18n="skyline-hero-desc">
+                Curating the world's most exclusive real estate assets with precision and tech-driven valuation.</p>
         </div>
 
-        <!-- NEW: Search/Filter Bar -->
-        <div class="search-container reveal-delay-2">
+        <div class="search-container">
             <div class="search-bar">
                 <div class="search-group">
-                    <label>Location</label>
-                    <select>
-                        <option>Malibu, California</option>
-                        <option>Neo Tokyo, JP</option>
-                        <option>Madrid, Spain</option>
+                    <label data-i18n="skyline-search-loc">Location</label>
+                    <select id="filter-location">
+                        <option value="all">All Locations</option>
+                        <option value="london">London, UK</option>
+                        <option value="marbella">Marbella, Spain</option>
+                        <option value="malibu">Malibu, CA</option>
                     </select>
                 </div>
                 <div class="search-group">
-                    <label>Property Type</label>
-                    <select>
-                        <option>Luxury Villa</option>
-                        <option>Penthouse</option>
-                        <option>Private Island</option>
+                    <label data-i18n="skyline-search-type">Property Type</label>
+                    <select id="filter-type">
+                        <option value="all">Any Type</option>
+                        <option value="villa" data-i18n="skyline-opt-villa">Luxury Villa</option>
+                        <option value="penthouse" data-i18n="skyline-opt-pent">Penthouse</option>
                     </select>
                 </div>
                 <div class="search-group">
-                    <label>Budget</label>
-                    <select>
-                        <option>$1M - $5M</option>
-                        <option>$5M - $20M</option>
-                        <option>$20M+</option>
+                    <label data-i18n="skyline-search-budget">Budget Rank</label>
+                    <select id="filter-budget">
+                        <option value="all">Any Budget</option>
+                        <option value="5">Under $10M</option>
+                        <option value="10">$10M - $20M</option>
+                        <option value="20">$20M+</option>
                     </select>
                 </div>
-                <button class="btn-primary"
-                    style="padding: 1rem 2rem; border-radius: 12px; background: var(--brand-gold); color: #000;">Explore
-                    Assets</button>
+                <button class="btn-primary" id="apply-filters"
+                    style="padding: 1.2rem 2.5rem; border-radius: 14px; background: var(--brand-gold); color: #000; font-weight:800; cursor: pointer; border:none; transition: 0.3s;"
+                    onmouseover="this.style.boxShadow='0 10px 20px rgba(197,160,89,0.3)'"
+                    onmouseout="this.style.boxShadow='none'" data-i18n="skyline-btn-explore">Explore Assets</button>
             </div>
         </div>
     </header>
 
-    <!-- NEW: Trust Section -->
-    <div class="trust-bar">
-        <div class="container brand-logos">
-            <span>FORBES REAL ESTATE</span>
+    <!-- Trust Bar -->
+    <div class="trust-bar" style="background: var(--brand-light); border-bottom: 1px solid #e2e8f0; padding: 4rem 0;">
+        <div class="container brand-logos"
+            style="display: flex; justify-content: space-between; align-items: center; color: #94a3b8; font-weight: 700; font-size: 0.85rem; letter-spacing: 2.5px; opacity: 0.5;">
+            <span>SOTHEBY'S REALTY</span>
             <span>ARCHITECTURAL DIGEST</span>
             <span>VOGUE LIVING</span>
-            <span>SOTHEBY'S</span>
+            <span>MANSION GLOBAL</span>
         </div>
     </div>
 
-    <section id="collection" class="services section-reveal">
+    <!-- Collection Section -->
+    <section id="collection" class="services section-reveal" style="padding: 8rem 0;">
         <div class="container">
             <div style="text-align: center; margin-bottom: 6rem;">
-                <h2 class="section-title aesthetic-underline">Featured Assets</h2>
-                <p class="text-muted">High-liquidity properties with verified architectural value.</p>
+                <h2 class="section-title aesthetic-underline" data-i18n="skyline-assets-title">The Collection</h2>
+                <p class="text-muted" data-i18n="skyline-assets-desc">High-liquidity properties with verified
+                    architectural value.</p>
             </div>
 
-            <div class="property-grid">
-                <!-- PROPERTY 1: PENTHOUSE -->
-                <div class="property-card">
+            <div class="property-grid" id="main-property-grid">
+                <!-- PROPERTY 1 -->
+                <div class="property-card" data-location="london" data-type="penthouse" data-price="8.4">
                     <div class="property-image-container">
-                        <img src="images/property_card_1.png" alt="Luxury Penthouse" class="property-img">
+                        <img src="images/property_card_1.png" alt="Sterling Penthouse" class="property-img">
                         <div class="image-overlay"></div>
                     </div>
                     <div class="property-info">
-                        <div class="ai-status-badge"><i data-lucide="trending-up"></i> +15.2% ROI Projected</div>
-                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem;">The Zenith Penthouse</h3>
-                        <p class="text-muted"><i data-lucide="map-pin" style="width:14px;"></i> District 1, Neo-Madrid
-                        </p>
-
-                        <ul class="specs-list">
-                            <li class="spec-item"><i data-lucide="maximize"></i> 450m²</li>
-                            <li class="spec-item"><i data-lucide="bed"></i> 4 Beds</li>
-                            <li class="spec-item"><i data-lucide="droplet"></i> Pool</li>
-                        </ul>
-
+                        <div class="ai-status-badge"><i data-lucide="trending-up" style="width:14px;"></i> +12.5% ROI
+                        </div>
+                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #0f172a;">The Sterling Penthouse
+                        </h3>
+                        <p class="text-muted"><i data-lucide="map-pin" style="width:14px; margin-right:5px;"></i>
+                            Mayfair, London</p>
                         <div
-                            style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center;">
-                            <div class="price-tag">$5,400,000</div>
-                            <button class="btn-outline" style="border-radius: 50px;">Details</button>
+                            style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 1.5rem;">
+                            <div class="price-tag" style="font-size: 1.8rem; font-weight: 800; color: #0f172a;">
+                                $8,400,000</div>
+                            <button class="btn-outline view-details-btn"
+                                style="border-radius: 50px; border: 1px solid #e2e8f0; color: #2d3748; padding: 0.6rem 1.6rem; cursor: pointer; font-weight: 600;">Details</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- PROPERTY 2: SKYLINE VILLA (THE LOGO ONE) -->
-                <div class="property-card">
+                <!-- PROPERTY 2 -->
+                <div class="property-card" data-location="marbella" data-type="villa" data-price="12.8">
                     <div class="property-image-container">
-                        <img src="images/skyline estates.png" alt="Skyline Villa" class="property-img">
+                        <img src="images/skyline estates.png" alt="Flagship Residence" class="property-img">
                         <div class="image-overlay"></div>
                     </div>
                     <div class="property-info">
-                        <div class="ai-status-badge"><i data-lucide="shield-check"></i> AD-Verified Security</div>
-                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Skyline Flagship Residence</h3>
-                        <p class="text-muted"><i data-lucide="map-pin" style="width:14px;"></i> Diamond Coast, Marbella
-                        </p>
-
-                        <ul class="specs-list">
-                            <li class="spec-item"><i data-lucide="maximize"></i> 1,200m²</li>
-                            <li class="spec-item"><i data-lucide="sun"></i> Smart Glass</li>
-                            <li class="spec-item"><i data-lucide="zap"></i> Self-Sustained</li>
-                        </ul>
-
+                        <div class="ai-status-badge"><i data-lucide="shield-check" style="width:14px;"></i> AE-Verified
+                        </div>
+                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #0f172a;">Flagship Residence</h3>
+                        <p class="text-muted"><i data-lucide="map-pin" style="width:14px; margin-right:5px;"></i>
+                            Diamond Coast, Marbella</p>
                         <div
-                            style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center;">
-                            <div class="price-tag">$12,800,000</div>
-                            <button class="btn-outline" style="border-radius: 50px;">Details</button>
+                            style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 1.5rem;">
+                            <div class="price-tag" style="font-size: 1.8rem; font-weight: 800; color: #0f172a;">
+                                $12,800,000</div>
+                            <button class="btn-outline view-details-btn"
+                                style="border-radius: 50px; border: 1px solid #e2e8f0; color: #2d3748; padding: 0.6rem 1.6rem; cursor: pointer; font-weight: 600;">Details</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- PROPERTY 3: SUNSET VILLA (THE SPECIFIC ONE) -->
-                <div class="property-card">
+                <!-- PROPERTY 3 -->
+                <div class="property-card" data-location="malibu" data-type="villa" data-price="25.2">
                     <div class="property-image-container">
-                        <img src="images/real_estate_luxury_hero_1771954275746.png" alt="Sunset Luxury Villa"
+                        <img src="images/5fb21786-b89c-46d7-8cd2-7779d62bf007.png" alt="Cliffs of Malibu"
                             class="property-img">
                         <div class="image-overlay"></div>
                     </div>
                     <div class="property-info">
-                        <div class="ai-status-badge"><i data-lucide="cpu"></i> Full Automation v4.0</div>
-                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem;">The Infinite Horizon Villa</h3>
-                        <p class="text-muted"><i data-lucide="map-pin" style="width:14px;"></i> Cliffs of Malibu, CA</p>
-
-                        <ul class="specs-list">
-                            <li class="spec-item"><i data-lucide="maximize"></i> 850m²</li>
-                            <li class="spec-item"><i data-lucide="waves"></i> Private Beach</li>
-                            <li class="spec-item"><i data-lucide="eye"></i> 360° View</li>
-                        </ul>
-
+                        <div class="ai-status-badge"><i data-lucide="cpu" style="width:14px;"></i> Full Automation</div>
+                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #0f172a;">Cliffs of Malibu</h3>
+                        <p class="text-muted"><i data-lucide="map-pin" style="width:14px; margin-right:5px;"></i>
+                            Pacific Coast, CA</p>
                         <div
-                            style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center;">
-                            <div class="price-tag">$9,250,000</div>
-                            <button class="btn-outline" style="border-radius: 50px;">Details</button>
+                            style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 1.5rem;">
+                            <div class="price-tag" style="font-size: 1.8rem; font-weight: 800; color: #0f172a;">
+                                $25,250,000</div>
+                            <button class="btn-outline view-details-btn"
+                                style="border-radius: 50px; border: 1px solid #e2e8f0; color: #2d3748; padding: 0.6rem 1.6rem; cursor: pointer; font-weight: 600;">Details</button>
                         </div>
                     </div>
                 </div>
@@ -575,123 +522,247 @@
         </div>
     </section>
 
-    <!-- NEW: Amenities Section -->
-    <section class="services section-reveal">
+    <!-- Amenities Section -->
+    <section class="services section-reveal" style="background: #fdfdfd; padding: 10rem 0;">
         <div class="container">
             <div style="text-align: center; margin-bottom: 5rem;">
-                <h2 class="section-title aesthetic-underline">Unparalleled Living</h2>
-                <p class="text-muted">Standard features for every property in our collection.</p>
+                <h2 class="section-title aesthetic-underline" data-i18n="skyline-amenities-title">Unparalleled Standards
+                </h2>
+                <p class="text-muted" data-i18n="skyline-amenities-desc">Standard features for every property in our
+                    collection.</p>
             </div>
             <div class="amenities-grid">
                 <div class="amenity-card">
                     <i data-lucide="shield-check"></i>
-                    <h3>Blockchain Security</h3>
-                    <p class="text-muted" style="font-size: 0.9rem; margin-top: 1rem;">Immutable property records and
-                        smart contracts.</p>
+                    <h3 data-i18n="skyline-amenity-1-title">Blockchain Security</h3>
+                    <p class="text-muted" style="font-size: 0.95rem; line-height: 1.6;">Immutable property records and
+                        smart contracts integrated for instant liquidation.</p>
                 </div>
                 <div class="amenity-card">
                     <i data-lucide="wind"></i>
-                    <h3>Smart Climate</h3>
-                    <p class="text-muted" style="font-size: 0.9rem; margin-top: 1rem;">AI-controlled atmospheric
-                        optimization.</p>
+                    <h3 data-i18n="skyline-amenity-2-title">Smart Climate</h3>
+                    <p class="text-muted" style="font-size: 0.95rem; line-height: 1.6;">AI-controlled atmospheric
+                        optimization based on inhabitant biometrics.</p>
                 </div>
                 <div class="amenity-card">
                     <i data-lucide="eye"></i>
-                    <h3>Privacy Shield</h3>
-                    <p class="text-muted" style="font-size: 0.9rem; margin-top: 1rem;">Quantum-encrypted communication
-                        and access.</p>
+                    <h3 data-i18n="skyline-amenity-3-title">Privacy Shield</h3>
+                    <p class="text-muted" style="font-size: 0.95rem; line-height: 1.6;">Quantum-encrypted communication
+                        and biometric perimeter access.</p>
                 </div>
                 <div class="amenity-card">
                     <i data-lucide="zap"></i>
-                    <h3>Energy Autonomy</h3>
-                    <p class="text-muted" style="font-size: 0.9rem; margin-top: 1rem;">Off-grid power generation and
-                        management.</p>
+                    <h3 data-i18n="skyline-amenity-4-title">Energy Autonomy</h3>
+                    <p class="text-muted" style="font-size: 0.95rem; line-height: 1.6;">Zero-grid dependency with
+                        integrated fusion-ready solar management.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- NEW: Agent Profile Section -->
-    <section class="founder-section section-reveal" style="background: var(--brand-surface);">
-        <div class="container">
-            <div class="founder-card" style="box-shadow: none;">
-                <div class="founder-img-wrapper" style="flex: 0 0 300px; aspect-ratio: 1/1;">
-                    <img src="images/08aad65b-577f-47e6-b8b3-610f79ef6ceb.jpg" alt="Luxury Agent" class="founder-img">
-                </div>
-                <div class="founder-content">
-                    <span class="badge" style="background: var(--brand-gold); color: #000;">Executive Director</span>
-                    <h2 style="font-size: 3rem; margin: 1rem 0;">Exequiel G. Nicolas</h2>
-                    <p style="font-size: 1.1rem; opacity: 0.8; margin-bottom: 2rem;">"We don't sell square meters; we
-                        curate time, light, and architectural history. Every property in Skyline is a testament to the
-                        future of high-liquidity assets."</p>
-                    <div style="display: flex; gap: 2rem;">
-                        <div class="metric">
-                            <span
-                                style="display: block; font-size: 1.5rem; font-weight: 800; color: var(--brand-gold);">$2.4B</span>
-                            <span style="font-size: 0.8rem; opacity: 0.6; text-transform: uppercase;">Closed
-                                Sales</span>
-                        </div>
-                        <div class="metric">
-                            <span
-                                style="display: block; font-size: 1.5rem; font-weight: 800; color: var(--brand-gold);">98%</span>
-                            <span style="font-size: 0.8rem; opacity: 0.6; text-transform: uppercase;">Client
-                                Retention</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- NEW: Comprehensive Footer -->
+    <!-- Footer -->
     <footer class="showcase-footer">
-        <div class="container" style="text-align: center;">
-            <a href="#" class="footer-logo">
-                <span style="color: var(--brand-gold);">SKYLINE</span> ESTATES
-            </a>
-            <div style="display: flex; justify-content: center; gap: 3rem; margin-bottom: 3rem; opacity: 0.6;">
-                <a href="#">The Collection</a>
-                <a href="#">Market Analysis</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Investment</a>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="#" class="footer-logo">
+                        <span style="color: var(--brand-gold);">SKYLINE</span> ESTATES
+                    </a>
+                    <p style="line-height: 1.8; color: #64748b; font-size: 1rem; margin-top: 1.5rem;">
+                        Leading the transition to digital-first real estate. A technical masterclass in luxury
+                        architecture and automation by Aether Digital.
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h4
+                        style="color: white; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2rem;">
+                        Portfolio</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1rem;"><a href="#"
+                                style="color: #475569; text-decoration: none; transition: 0.3s;">Penthouse Series</a>
+                        </li>
+                        <li style="margin-bottom: 1rem;"><a href="#"
+                                style="color: #475569; text-decoration: none; transition: 0.3s;">Modernist Villas</a>
+                        </li>
+                        <li style="margin-bottom: 1rem;"><a href="#"
+                                style="color: #475569; text-decoration: none; transition: 0.3s;">Commercial Core</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4
+                        style="color: white; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2rem;">
+                        Technology</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1rem;"><a href="#"
+                                style="color: #475569; text-decoration: none; transition: 0.3s;">Python Automation</a>
+                        </li>
+                        <li style="margin-bottom: 1rem;"><a href="#"
+                                style="color: #475569; text-decoration: none; transition: 0.3s;">Bespoke UI/UX</a></li>
+                        <li style="margin-bottom: 1rem;"><a href="#"
+                                style="color: #475569; text-decoration: none; transition: 0.3s;">ROI Analytics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4
+                        style="color: white; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2rem;">
+                        Legal</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1rem;"><a href="privacy.html"
+                                style="color: #475569; text-decoration: none; transition: 0.3s;">Privacy Policy</a></li>
+                        <li style="margin-bottom: 1rem;"><a href="terms.html"
+                                style="color: #475569; text-decoration: none; transition: 0.3s;">Terms of Service</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <p style="opacity: 0.3; font-size: 0.8rem;">&copy; 2026 Skyline Estates by Aether Digital. Operating
-                globally under high-end licensing.</p>
+            <div
+                style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 3rem; margin-top: 5rem; display: flex; justify-content: space-between; align-items: center; color: #475569; font-size: 0.85rem;">
+                <p>&copy; 2026 Skyline Estates. An Aether Digital Production.</p>
+                <a href="index.html"
+                    style="color: var(--brand-gold); text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                    EXIT TO MAIN AGENCY <i data-lucide="external-link" style="width:14px;"></i>
+                </a>
+            </div>
         </div>
     </footer>
 
-    <!-- FOOTER LINK BACK -->
-    <a href="index.html" class="agency-link" title="Power by Aether Digital">
-        <i data-lucide="external-link"></i>
+    <!-- PROPERTY DETAIL MODAL -->
+    <div id="property-modal">
+        <div
+            style="background: white; width: 90%; max-width: 1000px; border-radius: 30px; overflow: hidden; position: relative; display: flex; height: 650px; box-shadow: 0 50px 100px rgba(0,0,0,0.5);">
+            <button id="close-modal"
+                style="position: absolute; top: 25px; right: 25px; background: white; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; z-index: 10; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.1);"><i
+                    data-lucide="x" style="width:20px; color:#0f172a;"></i></button>
+            <div id="modal-img" style="flex: 1.2; background-size: cover; background-position: center;"></div>
+            <div style="flex: 1; padding: 4rem; overflow-y: auto; display: flex; flex-direction: column;">
+                <span
+                    style="background: var(--brand-gold); color: black; padding: 0.5rem 1rem; border-radius: 50px; font-weight: 800; font-size: 0.75rem; align-self: flex-start; margin-bottom: 2rem;">AI
+                    VERIFIED ASSET</span>
+                <h2 id="modal-title"
+                    style="font-size: 2.8rem; line-height: 1.1; margin-bottom: 0.5rem; color: #010411;">Property Title
+                </h2>
+                <p id="modal-loc"
+                    style="color: #94a3b8; font-size: 1.1rem; margin-bottom: 2.5rem; display: flex; align-items: center; gap:8px;">
+                    Location Details</p>
+
+                <div style="background: #f8fafc; padding: 2.5rem; border-radius: 20px; margin-bottom:3rem;">
+                    <h4
+                        style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.75rem; color: #94a3b8; margin-bottom: 1.5rem; font-weight: 700;">
+                        Market Performance</h4>
+                    <div style="display: flex; gap: 4rem;">
+                        <div>
+                            <span
+                                style="display: block; font-size: 2rem; font-weight: 800; color: #010411;">+12.5%</span>
+                            <span
+                                style="font-size: 0.7rem; color: #64748b; text-transform: uppercase; font-weight: 600;">Yearly
+                                ROI</span>
+                        </div>
+                        <div>
+                            <span
+                                style="display: block; font-size: 2rem; font-weight: 800; color: var(--brand-gold);">AAA</span>
+                            <span
+                                style="font-size: 0.7rem; color: #64748b; text-transform: uppercase; font-weight: 600;">Equity
+                                Grade</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p style="line-height: 1.8; color: #475569; font-size: 1.05rem; margin-bottom: auto;">This property is
+                    legally verified and integrated with Aether-OS, providing the owner with real-time equity tracking
+                    and autonomous architectural management.</p>
+
+                <button
+                    style="margin-top: 3rem; width: 100%; padding: 1.5rem; border-radius: 18px; background: #010411; color: white; border: none; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: 0.4s;"
+                    onmouseover="this.style.background='#c5a059'; this.style.color='#000';"
+                    onmouseout="this.style.background='#010411'; this.style.color='#fff';">Request Private
+                    Portfolio</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agency Link -->
+    <a href="index.html" class="agency-link" title="Power by Aether Digital"
+        style="position: fixed; bottom: 30px; right: 30px; background: white; padding: 15px; border-radius: 50%; box-shadow: 0 10px 30px rgba(0,0,0,0.1); color: black; z-index: 100; transition: 0.3s; border:1px solid #e2e8f0; text-decoration: none;"
+        onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        <i data-lucide="external-link" style="width:24px;"></i>
     </a>
 
+    <script src="script.js"></script>
     <script>
         lucide.createIcons();
 
-        // HERO SLIDER LOGIC
+        // HERO SLIDER
         const slides = document.querySelectorAll('.slide');
         let currentSlide = 0;
-
         function nextSlide() {
             slides[currentSlide].classList.remove('active');
             currentSlide = (currentSlide + 1) % slides.length;
             slides[currentSlide].classList.add('active');
         }
+        setInterval(nextSlide, 7000);
 
-        setInterval(nextSlide, 6000); // Change image every 6 seconds
+        // FILTER LOGIC
+        const applyBtn = document.getElementById('apply-filters');
+        if (applyBtn) {
+            applyBtn.addEventListener('click', () => {
+                const loc = document.getElementById('filter-location').value;
+                const type = document.getElementById('filter-type').value;
+                const budget = document.getElementById('filter-budget').value;
 
-        // Intersection Observer for Section Animations
+                document.querySelectorAll('.property-card').forEach(card => {
+                    const cardLoc = card.getAttribute('data-location');
+                    const cardType = card.getAttribute('data-type');
+                    const cardPrice = parseFloat(card.getAttribute('data-price'));
+
+                    let show = true;
+                    if (loc !== 'all' && loc !== cardLoc) show = false;
+                    if (type !== 'all' && type !== cardType) show = false;
+                    if (budget !== 'all') {
+                        if (budget === '5' && cardPrice > 10) show = false;
+                        if (budget === '10' && (cardPrice < 10 || cardPrice > 20)) show = false;
+                        if (budget === '20' && cardPrice < 20) show = false;
+                    }
+
+                    card.style.opacity = show ? '1' : '0.1';
+                    card.style.pointerEvents = show ? 'all' : 'none';
+                    card.style.transform = show ? 'scale(1)' : 'scale(0.95)';
+                    card.style.transition = 'all 0.5s ease';
+                });
+            });
+        }
+
+        // MODAL LOGIC
+        const modal = document.getElementById('property-modal');
+        const closeModal = document.getElementById('close-modal');
+
+        document.querySelectorAll('.view-details-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const card = e.target.closest('.property-card');
+                const title = card.querySelector('h3').innerText;
+                const locText = card.querySelector('.text-muted').innerText;
+                const imgSrc = card.querySelector('.property-img').src;
+
+                document.getElementById('modal-title').innerText = title;
+                document.getElementById('modal-loc').innerHTML = `<i data-lucide="map-pin" style="width:16px;"></i> ${locText}`;
+                document.getElementById('modal-img').style.backgroundImage = `url('${imgSrc}')`;
+
+                modal.style.display = 'flex';
+                lucide.createIcons();
+            });
+        });
+
+        if (closeModal) closeModal.addEventListener('click', () => modal.style.display = 'none');
+        window.onclick = (e) => { if (e.target == modal) modal.style.display = 'none'; };
+
+        // INTERSECTION OBSERVER
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('active');
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.section-reveal').forEach(section => {
-            observer.observe(section);
-        });
+        document.querySelectorAll('.section-reveal').forEach(section => observer.observe(section));
     </script>
 </body>
 
