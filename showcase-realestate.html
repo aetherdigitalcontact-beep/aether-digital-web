@@ -151,13 +151,26 @@
             background: var(--brand-gold);
             color: #000 !important;
             border-radius: 50px;
-            box-shadow: 0 10px 20px rgba(197, 160, 89, 0.2);
-            font-weight: 800;
+            box-shadow: 0 10px 25px rgba(197, 160, 89, 0.3);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 0.8rem 2rem;
+            font-size: 0.75rem;
+            transition: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .nav-right .view-details-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(197, 160, 89, 0.4);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(197, 160, 89, 0.5);
+            background: #fff;
+            color: #000 !important;
+        }
+
+        .nav-right .view-details-btn i {
+            margin-right: 8px;
+            width: 14px;
         }
 
         /* Responsive Nav Tweak for 1024px - 1400px */
