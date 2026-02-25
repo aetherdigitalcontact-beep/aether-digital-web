@@ -220,6 +220,9 @@ const translations = {
         "skyline-footer-analysis": "Inteligencia",
         "skyline-footer-legal": "Legal",
         "skyline-footer-exit": "SALIR A AGENCIA PRINCIPAL",
+        "skyline-amenity-tag": "LA PROMESA SKYLINE",
+        "skyline-footer-desc": "Liderando la transición hacia un sector inmobiliario digital-first. Una clase magistral técnica en arquitectura de lujo y automatización de Aether Digital.",
+        "skyline-new-asset": "Nuevo Activo",
         "skyline-footer-rights": "&copy; 2026 Skyline Estates por Aether Digital. Una demostración técnica de arquitectura web de alto nivel."
     },
     en: {
@@ -442,6 +445,9 @@ const translations = {
         "skyline-footer-analysis": "Intelligence",
         "skyline-footer-terms": "Legal",
         "skyline-footer-exit": "EXIT TO MAIN AGENCY",
+        "skyline-amenity-tag": "THE SKYLINE PROMISE",
+        "skyline-footer-desc": "Leading the transition to digital-first real estate. A technical masterclass in luxury architecture and automation by Aether Digital.",
+        "skyline-new-asset": "New Asset",
         "skyline-footer-rights": "&copy; 2026 Skyline Estates by Aether Digital. A technical showcase of high-end web architecture."
     },
     pt: {
