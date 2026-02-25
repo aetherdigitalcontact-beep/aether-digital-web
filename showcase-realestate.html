@@ -176,14 +176,62 @@
             left: 50%;
             transform: translateX(-50%);
             color: var(--brand-gold);
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 800;
             opacity: 0;
-            transition: 0.5s 1s ease;
+            transition: 0.5s 1.2s ease;
         }
 
         .section-reveal.active .analytics-bar::before {
             opacity: 1;
+        }
+
+        /* --- MODAL RESPONSIVENESS --- */
+        @media (max-width: 900px) {
+            #property-modal {
+                padding: 10px;
+            }
+
+            .modal-content-wrapper {
+                flex-direction: column;
+                height: 95vh;
+                max-height: none;
+                border-radius: 25px;
+                overflow-y: auto;
+            }
+
+            .modal-image-side {
+                height: 250px;
+                min-height: 250px;
+                flex: none;
+            }
+
+            .modal-info-side {
+                padding: 2.5rem 1.5rem;
+                flex: none;
+            }
+
+            .modal-title-text {
+                font-size: 2.2rem !important;
+            }
+
+            .modal-performance-card {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .performance-value {
+                font-size: 1.8rem;
+            }
+
+            .modal-close-btn {
+                top: 15px;
+                right: 15px;
+                background: white;
+                color: black;
+                width: 40px;
+                height: 40px;
+            }
         }
 
         /* Desktop Nav CTA Special Style */
@@ -1818,7 +1866,8 @@
         // FILTER LOGIC
         const applyBtn = document.getElementById('apply-filters');
         if (applyBtn) {
-            applyBtn.addEventListener('click', () => {
+            applyBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
                 const loc = document.getElementById('filter-location').value;
                 const type = document.getElementById('filter-type').value;
                 const budget = document.getElementById('filter-budget').value;
@@ -1852,11 +1901,9 @@
                     }
                 });
 
-                // Scroll to collection to show results
-                const collectionSection = document.getElementById('collection');
-                if (collectionSection) {
-                    collectionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+                // Scroll to search results
+                const coll = document.getElementById('collection');
+                if (coll) coll.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         }
 
