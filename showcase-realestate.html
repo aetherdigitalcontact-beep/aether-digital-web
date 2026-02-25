@@ -146,6 +146,46 @@
             letter-spacing: 0.5px;
         }
 
+        /* Analytics Chart Animations */
+        @keyframes growBar {
+            from {
+                height: 0;
+                opacity: 0;
+            }
+
+            to {
+                height: var(--bar-height);
+                opacity: var(--bar-opacity);
+            }
+        }
+
+        .section-reveal.active .analytics-bar {
+            animation: growBar 1.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
+
+        .analytics-bar {
+            position: relative;
+            height: 0;
+            /* Pre-animation state */
+        }
+
+        .analytics-bar::before {
+            content: attr(data-percentage);
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--brand-gold);
+            font-size: 0.7rem;
+            font-weight: 800;
+            opacity: 0;
+            transition: 0.5s 1s ease;
+        }
+
+        .section-reveal.active .analytics-bar::before {
+            opacity: 1;
+        }
+
         /* Desktop Nav CTA Special Style */
         .nav-right .view-details-btn {
             background: var(--brand-gold);
@@ -1405,21 +1445,26 @@
                                 style="color: var(--brand-gold); font-size: 0.65rem; font-weight: 800; border: 1px solid var(--brand-gold); padding: 4px 8px; border-radius: 4px;"
                                 data-i18n="skyline-liquidity-live">LIVE</span>
                         </div>
-                        <div style="height: 180px; display: flex; align-items: flex-end; gap: 12px;">
+                        <div style="height: 180px; display: flex; align-items: flex-end; gap: 12px; padding-top: 20px;">
                             <div class="analytics-bar"
-                                style="--bar-height: 40%; width: 20%; background: #fff; border-radius: 6px; opacity: 0.1;">
+                                style="--bar-height: 40%; --bar-opacity: 0.1; width: 20%; background: #fff; border-radius: 6px;"
+                                data-percentage="40%">
                             </div>
                             <div class="analytics-bar"
-                                style="--bar-height: 65%; width: 20%; background: #fff; border-radius: 6px; opacity: 0.2;">
+                                style="--bar-height: 65%; --bar-opacity: 0.2; width: 20%; background: #fff; border-radius: 6px;"
+                                data-percentage="65%">
                             </div>
                             <div class="analytics-bar"
-                                style="--bar-height: 50%; width: 20%; background: #fff; border-radius: 6px; opacity: 0.3;">
+                                style="--bar-height: 50%; --bar-opacity: 0.3; width: 20%; background: #fff; border-radius: 6px;"
+                                data-percentage="50%">
                             </div>
                             <div class="analytics-bar"
-                                style="--bar-height: 85%; width: 20%; background: #fff; border-radius: 6px; opacity: 0.5;">
+                                style="--bar-height: 85%; --bar-opacity: 0.5; width: 20%; background: #fff; border-radius: 6px;"
+                                data-percentage="85%">
                             </div>
                             <div class="analytics-bar"
-                                style="--bar-height: 100%; width: 20%; background: var(--brand-gold); border-radius: 6px; box-shadow: 0 0 30px rgba(197,160,89,0.4);">
+                                style="--bar-height: 100%; --bar-opacity: 1; width: 20%; background: var(--brand-gold); border-radius: 6px; box-shadow: 0 0 30px rgba(197,160,89,0.4);"
+                                data-percentage="100%">
                             </div>
                         </div>
                         <p style="margin-top: 2.5rem; color: #94a3b8; font-size: 0.9rem; line-height: 1.6;"

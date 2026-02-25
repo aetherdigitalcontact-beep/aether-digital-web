@@ -678,6 +678,11 @@ const translations = {
         "skyline-footer-analysis": "Inteligencia",
         "skyline-footer-legal": "Jurídico",
         "skyline-footer-exit": "SAIR PARA AGÊNCIA",
+        "skyline-amenity-tag": "A PROMESSA SKYLINE",
+        "skyline-footer-desc": "Liderando a transição para o setor imobiliário digital-first. Uma masterclass técnica em arquitetura de luxo e automação pela Aether Digital.",
+        "skyline-new-asset": "Novo Ativo",
+        "skyline-footer-privacy": "Política de Privacidade",
+        "skyline-footer-terms": "Termos de Serviço",
         "skyline-footer-rights": "&copy; 2026 Skyline Estates por Aether Digital. Demonstração de arquitetura web premium."
     }
 };
