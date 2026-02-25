@@ -190,38 +190,75 @@
         @media (max-width: 900px) {
             #property-modal {
                 padding: 10px;
+                display: none;
+                align-items: center;
+                justify-content: center;
             }
 
             .modal-content-wrapper {
                 flex-direction: column;
-                height: 95vh;
-                max-height: none;
-                border-radius: 25px;
+                height: auto;
+                max-height: 95vh;
+                border-radius: 30px;
                 overflow-y: auto;
+                width: 100%;
+                background: white;
             }
 
             .modal-image-side {
-                height: 250px;
-                min-height: 250px;
+                height: 240px;
+                min-height: 240px;
                 flex: none;
+                border-radius: 0;
             }
 
             .modal-info-side {
-                padding: 2.5rem 1.5rem;
+                padding: 2.5rem 1.5rem !important;
                 flex: none;
+                text-align: left !important;
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 1.2rem !important;
+            }
+
+            .modal-badge-container {
+                margin-bottom: 0.5rem;
+                display: flex;
+                justify-content: flex-start;
             }
 
             .modal-title-text {
                 font-size: 2.2rem !important;
+                margin-bottom: 0 !important;
+                text-align: left;
+                line-height: 1.1;
+            }
+
+            .modal-location-text {
+                margin-bottom: 0.5rem !important;
+                font-size: 1rem;
+                justify-content: flex-start;
             }
 
             .modal-performance-card {
-                padding: 1.5rem;
-                margin-bottom: 2rem;
+                padding: 1.5rem !important;
+                margin-bottom: 0.5rem !important;
+                border-radius: 20px;
             }
 
-            .performance-value {
-                font-size: 1.8rem;
+            .modal-description {
+                font-size: 1.05rem;
+                line-height: 1.6;
+                margin-bottom: 1rem !important;
+                color: #475569;
+                text-align: left;
+            }
+
+            .view-details-btn {
+                margin-top: 0 !important;
+                padding: 1.3rem !important;
+                border-radius: 18px;
+                width: 100%;
             }
 
             .modal-close-btn {
@@ -231,6 +268,15 @@
                 color: black;
                 width: 40px;
                 height: 40px;
+                z-index: 100;
+            }
+        }
+
+        /* Property Grid Mobile Fix */
+        @media (max-width: 600px) {
+            .property-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
         }
 
@@ -1184,10 +1230,10 @@
                     <label data-i18n="skyline-search-loc">Location</label>
                     <select id="filter-location">
                         <option value="all" data-i18n="skyline-opt-all-loc">All Locations</option>
-                        <option value="mayfair">Mayfair, London</option>
-                        <option value="kensington">Kensington, London</option>
-                        <option value="marbella">Marbella, Spain</option>
-                        <option value="malibu">Malibu, USA</option>
+                        <option value="mayfair" data-i18n="skyline-opt-mayfair">Mayfair, London</option>
+                        <option value="kensington" data-i18n="skyline-opt-ken">Kensington, London</option>
+                        <option value="marbella" data-i18n="skyline-opt-mar">Marbella, Spain</option>
+                        <option value="malibu" data-i18n="skyline-opt-mal">Malibu, USA</option>
                         <option value="hampstead" data-i18n="skyline-opt-hampstead">Hampstead, London</option>
                     </select>
                 </div>
@@ -1416,7 +1462,7 @@
                     </div>
                 </div>
 
-                <!-- PROPERTY 7 (NEW IMAGE) -->
+                <!-- PROPERTY 7 (NEW ASSET) -->
                 <div class="property-card" data-location="hampstead" data-type="villa" data-price="15.5">
                     <div class="property-image-container">
                         <img decoding="async" loading="lazy" class="property-img"
@@ -1792,15 +1838,16 @@
                     Title</h2>
                 <p id="modal-loc" class="modal-location-text">Location Details</p>
 
-                <div class="modal-performance-card">
+                <div class="modal-performance-card" style="margin-left: 0; margin-right: 0;">
                     <h4 class="performance-title" data-i18n="skyline-modal-performance">Market Performance</h4>
-                    <div style="display: flex; gap: 3rem; flex-wrap: wrap;">
-                        <div>
-                            <span class="performance-value">+12.5%</span>
+                    <div style="display: flex; gap: 2rem; flex-wrap: wrap; justify-content: flex-start;">
+                        <div style="min-width: 120px;">
+                            <span class="performance-value" style="font-size: clamp(1.5rem, 4vw, 2.2rem);">+12.5%</span>
                             <span class="performance-label" data-i18n="skyline-modal-roi">Yearly ROI</span>
                         </div>
-                        <div>
-                            <span class="performance-value" style="color: var(--brand-gold);">AAA</span>
+                        <div style="min-width: 120px;">
+                            <span class="performance-value"
+                                style="color: var(--brand-gold); font-size: clamp(1.5rem, 4vw, 2.2rem);">AAA</span>
                             <span class="performance-label" data-i18n="skyline-modal-grade">Equity Grade</span>
                         </div>
                     </div>
