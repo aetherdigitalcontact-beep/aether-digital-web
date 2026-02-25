@@ -221,8 +221,12 @@ const translations = {
         "skyline-footer-legal": "Legal",
         "skyline-footer-exit": "SALIR A AGENCIA PRINCIPAL",
         "skyline-amenity-tag": "LA PROMESA SKYLINE",
+        "skyline-amenities-title": "Estándares Sin Parangón",
+        "skyline-amenities-desc": "Características de ingeniería estándar para cada propiedad en nuestra selección.",
         "skyline-footer-desc": "Liderando la transición hacia un sector inmobiliario digital-first. Una clase magistral técnica en arquitectura de lujo y automatización de Aether Digital.",
         "skyline-new-asset": "Nuevo Activo",
+        "skyline-footer-privacy": "Política de Privacidad",
+        "skyline-footer-terms": "Términos de Servicio",
         "skyline-footer-rights": "&copy; 2026 Skyline Estates por Aether Digital. Una demostración técnica de arquitectura web de alto nivel."
     },
     en: {
@@ -443,11 +447,15 @@ const translations = {
         "skyline-modal-btn": "Request Private Portfolio",
         "skyline-footer-collection": "Properties",
         "skyline-footer-analysis": "Intelligence",
-        "skyline-footer-terms": "Legal",
+        "skyline-footer-legal": "Legal",
         "skyline-footer-exit": "EXIT TO MAIN AGENCY",
         "skyline-amenity-tag": "THE SKYLINE PROMISE",
+        "skyline-amenities-title": "Unparalleled Standards",
+        "skyline-amenities-desc": "Standard engineering features for every property in our collection.",
         "skyline-footer-desc": "Leading the transition to digital-first real estate. A technical masterclass in luxury architecture and automation by Aether Digital.",
         "skyline-new-asset": "New Asset",
+        "skyline-footer-privacy": "Privacy Policy",
+        "skyline-footer-terms": "Terms of Service",
         "skyline-footer-rights": "&copy; 2026 Skyline Estates by Aether Digital. A technical showcase of high-end web architecture."
     },
     pt: {
