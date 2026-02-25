@@ -1,92 +1,307 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skyline Estates | Architectural Excellence</title>
-    <link rel="icon" type="image/png" href="images/favicon.png">
+    <title>Skyline Estates | Aether Digital Showcase</title>
+    <link rel="icon" type="image/x-icon" href="AETHER ASSETS/favicon.png">
 
-    <!-- Google Fonts: Sora for luxury headlines, Outfit for clean body -->
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;800&family=Sora:wght@300;400;600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Outfit:wght@300;400;600;700;800;900&display=swap"
         rel="stylesheet">
-
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <link rel="stylesheet" href="style.css">
-
     <style>
-        /* SKYLINE ESTATES - INDEPENDENT LUXURY BRANDING */
         :root {
             --brand-gold: #c5a059;
-            --brand-slate: #1e293b;
-            --brand-light: #f8fafc;
-            --brand-white: #ffffff;
-            --accent: var(--brand-gold);
-            --bg-body: var(--brand-white);
+            --brand-dark: #010411;
+            --brand-light: #f7f6f2;
             --text-main: #0f172a;
+            --text-muted: #64748b;
+            --nav-height: 80px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
         }
 
         body {
-            font-family: 'Outfit', sans-serif;
-            background: var(--bg-body);
+            background-color: var(--brand-light);
             color: var(--text-main);
-            margin: 0;
             overflow-x: hidden;
+            background-image: radial-gradient(#d5d4cd 1px, transparent 1px);
+            background-size: 30px 30px;
         }
 
-        h1,
-        h2,
-        h3 {
-            font-family: 'Sora', sans-serif;
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
         }
 
+        /* --- NAVIGATION --- */
+        .luxury-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--nav-height);
+            background: rgba(247, 246, 242, 0.85);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--text-main);
+        }
+
+        .logo-accent {
+            color: var(--brand-gold);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--brand-gold);
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--brand-gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .lang-switch-showcase {
+            display: flex;
+            gap: 8px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: var(--text-muted);
+            padding: 5px 10px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .lang-btn.active {
+            background: var(--brand-gold);
+            color: white;
+            border-color: var(--brand-gold);
+        }
+
+        .skyline-menu-btn {
+            display: none;
+            background: var(--brand-dark);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- HERO SECTION --- */
         .showcase-hero {
-            height: 100vh;
+            height: 90vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 0 1rem;
+            background: var(--brand-dark);
             position: relative;
+            color: white;
+            overflow: hidden;
         }
 
-        .hero-title-main {
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 800;
-            line-height: 1;
-            margin-bottom: 2rem;
+        .hero-slider,
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+        }
+
+        .hero-slider {
+            z-index: 0;
+        }
+
+        .hero-overlay {
+            background: linear-gradient(to bottom, rgba(1, 4, 17, 0.3), var(--brand-dark));
+            z-index: 1;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
             opacity: 0;
-            transform: translateY(30px);
-            animation: elegantAppear 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            transition: opacity 1.5s ease;
+            animation: kenBurns 30s infinite alternate;
         }
 
-        @keyframes elegantAppear {
+        .slide.active {
+            opacity: 0.6;
+        }
+
+        @keyframes kenBurns {
+            from {
+                transform: scale(1);
+            }
+
             to {
-                opacity: 1;
-                transform: translateY(0);
+                transform: scale(1.1);
             }
         }
 
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            padding: 0 20px;
+        }
+
+        .hero-title-main {
+            font-size: clamp(2.5rem, 8vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin: 1.5rem 0;
+            text-transform: uppercase;
+        }
+
+        .hero-tag {
+            color: var(--brand-gold);
+            letter-spacing: 6px;
+            font-weight: 800;
+            font-size: 0.85rem;
+        }
+
+        /* --- SEARCH BAR --- */
+        .search-container {
+            position: relative;
+            margin-top: -60px;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-bar {
+            background: white;
+            padding: 1.2rem 3rem;
+            border-radius: 100px;
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+            width: 100%;
+            max-width: 1100px;
+            border: 1px solid rgba(197, 160, 89, 0.1);
+        }
+
+        .search-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #f1f5f9;
+            padding-right: 2rem;
+        }
+
+        .search-group:last-of-type {
+            border-right: none;
+        }
+
+        .search-group label {
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--brand-gold);
+            margin-bottom: 4px;
+        }
+
+        .search-group select {
+            border: none;
+            background: transparent;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--brand-dark);
+            outline: none;
+            cursor: pointer;
+            padding: 5px 0;
+        }
+
+        /* --- PROPERTY GRID --- */
         .property-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
             gap: 3rem;
             margin-top: 5rem;
         }
 
         .property-card {
-            position: relative;
-            border-radius: 24px;
-            overflow: hidden;
             background: white;
+            border-radius: 30px;
+            overflow: hidden;
+            transition: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
             border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
-            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
             cursor: pointer;
         }
 
@@ -97,86 +312,82 @@
         }
 
         .property-image-container {
-            position: relative;
-            height: 350px;
+            height: 380px;
             overflow: hidden;
+            position: relative;
         }
 
         .property-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transition: 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         .property-card:hover .property-img {
             transform: scale(1.08);
         }
 
-        .image-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.4) 0%, transparent 60%);
-        }
-
         .property-info {
             padding: 2.5rem;
-            position: relative;
         }
 
         .ai-status-badge {
-            position: absolute;
-            top: -20px;
-            right: 30px;
-            background: var(--brand-gold);
-            color: black;
-            padding: 0.6rem 1.2rem;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            box-shadow: 0 10px 20px rgba(197, 160, 89, 0.2);
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
-            z-index: 5;
-        }
-
-        .luxury-nav {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            z-index: 1000;
-        }
-
-        .lang-switch-showcase {
-            display: flex;
-            gap: 10px;
-            margin-right: 20px;
-        }
-
-        .lang-btn-s {
-            background: transparent;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            color: #0f172a;
-            padding: 4px 10px;
-            border-radius: 6px;
-            cursor: pointer;
+            background: rgba(197, 160, 89, 0.1);
+            color: var(--brand-gold);
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 800;
             font-size: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .property-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .price-tag {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--brand-dark);
+        }
+
+        .view-details-btn {
+            padding: 1rem 1.8rem;
+            background: var(--brand-dark);
+            color: white;
+            border: none;
+            border-radius: 14px;
             font-weight: 700;
-            transition: 0.3s;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.4s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .lang-btn-s:hover,
-        .lang-btn-s.active {
+        .view-details-btn:hover {
             background: var(--brand-gold);
-            color: black;
-            border-color: var(--brand-gold);
+            color: #000;
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(197, 160, 89, 0.3);
         }
 
+        /* --- PREMIUM SECTIONS --- */
         .section-reveal {
             opacity: 0;
-            transform: translateY(40px);
-            transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transform: translateY(30px);
+            transition: all 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         .section-reveal.active {
@@ -184,537 +395,240 @@
             transform: translateY(0);
         }
 
-        /* CINEMATIC HERO SLIDER */
-        .hero-slider {
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-        }
-
-        .slide {
-            position: absolute;
-            inset: 0;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transition: opacity 2.5s ease-in-out;
-            animation: kenBurns 28s linear infinite;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            transform-origin: center;
-            image-rendering: -webkit-optimize-contrast;
-            filter: contrast(1.05) brightness(1.02);
-            will-change: transform, opacity;
-        }
-
-        .slide.active {
-            opacity: 1;
-        }
-
-        @keyframes kenBurns {
-            0% {
-                transform: scale(1) translate3d(0, 0, 0);
-            }
-
-            50% {
-                transform: scale(1.015) translate3d(5px, 2px, 0);
-            }
-
-            100% {
-                transform: scale(1) translate3d(0, 0, 0);
-            }
-        }
-
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1));
-            z-index: 0;
-        }
-
-        .search-container {
-            position: absolute;
-            bottom: -45px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 1000px;
-            z-index: 100;
-        }
-
-        .search-bar {
+        .investor-card-premium {
             background: white;
-            padding: 1.5rem 2.5rem;
-            border-radius: 20px;
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .search-group {
-            flex: 1;
-        }
-
-        .property-footer {
-            margin-top: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
-            padding-top: 1.5rem;
-        }
-
-        .search-group label {
-            font-size: 0.7rem;
-            color: var(--brand-gold);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 800;
-            margin-bottom: 5px;
-            display: block;
-        }
-
-        .search-group select {
-            background: transparent;
-            border: none;
-            color: #0f172a;
-            font-family: 'Sora', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            outline: none;
-            width: 100%;
+            padding: 4rem 3rem;
+            border-radius: 30px;
+            border: 1px solid #e2e8f0;
+            transition: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
             cursor: pointer;
-        }
-
-        /* AMENITIES SECTION */
-        .amenities-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 2rem;
-            margin: 4rem 0;
-        }
-
-        .amenity-card {
-            background: white;
-            padding: 3rem 2rem;
-            border-radius: 24px;
-            text-align: center;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
-            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-
-        .amenity-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--brand-gold);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
-        }
-
-        .amenity-card i {
-            width: 32px;
-            height: 32px;
-            color: var(--brand-gold);
-            margin-bottom: 2rem;
-        }
-
-        /* LUXURY FOOTER */
-        .showcase-footer {
-            padding: 8rem 0 4rem;
-            background: #0a0a0a;
-            color: #64748b;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 4rem;
-        }
-
-        .aesthetic-underline {
             position: relative;
-            display: inline-block;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
-        .aesthetic-underline::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -5px;
-            width: 0;
-            height: 3px;
-            background: var(--brand-gold);
-            transition: width 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        .investor-card-premium:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 40px 80px rgba(15, 23, 42, 0.1);
+            border-color: var(--brand-gold);
         }
 
-        .section-reveal.active .aesthetic-underline::after {
-            width: 100%;
-        }
-
-        /* Modal Styles */
+        /* --- MODAL --- */
         #property-modal {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(1, 4, 17, 0.98);
             z-index: 2000;
             align-items: center;
             justify-content: center;
+            padding: 20px;
             backdrop-filter: blur(15px);
-            padding: 2rem;
         }
 
-        /* Global Reset & Theme */
-        html,
-        body {
-            overflow-x: hidden;
+        .modal-content-wrapper {
+            background: white;
             width: 100%;
+            max-width: 1100px;
+            height: 90vh;
+            max-height: 800px;
+            border-radius: 40px;
+            display: flex;
             position: relative;
+            overflow: hidden;
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5);
         }
 
-        body,
-        body.dark-theme,
-        body.light-theme {
-            --bg-primary: #f7f6f2 !important;
-            --bg-secondary: #efefea !important;
-            --text-main: #0f172a !important;
-            --text-muted: #475569 !important;
-            background: var(--bg-primary) !important;
-            background-image: radial-gradient(#d5d4cd 1px, transparent 1px) !important;
-            background-size: 30px 30px !important;
-            color: var(--text-main) !important;
+        .modal-image-side {
+            flex: 1.3;
+            background-size: cover;
+            background-position: center;
         }
 
-        /* Enforce Visibility */
-        /* Enforce Visibility & Premium Nav Styling */
-        body .nav-links a {
-            color: var(--text-main) !important;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            position: relative;
-            padding: 0.5rem 0;
+        .modal-info-side {
+            flex: 1;
+            padding: 4rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            background: white;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             transition: 0.3s;
         }
 
-        body .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--brand-gold);
-            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        .modal-close-btn:hover {
+            transform: scale(1.1);
+            background: white;
         }
 
-        body .nav-links a:hover {
-            color: var(--brand-gold) !important;
-        }
-
-        body .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        body .logo {
-            color: var(--text-main) !important;
-            text-decoration: none;
-        }
-
-        body .logo .logo-accent {
-            color: var(--brand-gold) !important;
-        }
-
-        body .section-title,
-        body h3 {
-            color: var(--text-main) !important;
-        }
-
-        .showcase-footer .footer-logo {
-            color: #ffffff !important;
-            text-decoration: none !important;
-        }
-
-        /* Premium Details Button */
-        .view-details-btn {
-            background: transparent;
-            border: 1px solid #e2e8f0;
-            color: #2d3748;
-            padding: 0.7rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .view-details-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: var(--brand-gold);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
-            z-index: -1;
-            opacity: 0.2;
-        }
-
-        .view-details-btn:hover {
-            border-color: var(--brand-gold);
-            color: var(--brand-gold);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(197, 160, 89, 0.15);
-        }
-
-        .view-details-btn:hover::before {
-            width: 300%;
-            height: 300%;
-        }
-
-        .view-details-btn:active {
-            transform: scale(0.95);
-        }
-
-        /* Ultra-Sharpening & Performance Optimization */
-        .property-img,
-        .slide,
-        #modal-img {
-            image-rendering: -webkit-optimize-contrast;
-            -webkit-font-smoothing: antialiased;
-            transform: translateZ(0);
-            backface-visibility: hidden;
-            will-change: transform, opacity;
-        }
-
-        .property-image-container {
-            overflow: hidden;
-            background: #f1f5f9;
-        }
-
-        .property-card:hover .property-img {
-            transform: scale(1.05) translateZ(0);
-        }
-
-        /* Analytics Background Optimization */
-        .analytics-bg {
-            position: absolute;
-            inset: 0;
-            background-size: cover;
-            background-position: center;
-            opacity: 0.1;
-            filter: contrast(1.1) saturate(0.8);
-            will-change: auto;
-        }
-
-        /* Section Layouts */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .stat-card {
-            background: rgba(15, 23, 42, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 2rem;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            text-align: center;
-        }
-
-        .stat-value {
-            display: block;
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--brand-gold);
+        .modal-title-text {
+            font-size: 3rem;
+            line-height: 1.1;
             margin-bottom: 0.5rem;
+            font-weight: 800;
         }
 
-        .stat-label {
-            color: #94a3b8;
-            font-size: 0.8rem;
+        .modal-location-text {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-performance-card {
+            background: #f8fafc;
+            padding: 2.5rem;
+            border-radius: 24px;
+            margin-bottom: 3rem;
+        }
+
+        .performance-title {
             text-transform: uppercase;
             letter-spacing: 2px;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
         }
 
-        /* --- MOBILE RESPONSIVENESS (iOS & Android) --- */
+        .performance-value {
+            display: block;
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--brand-dark);
+        }
+
+        .performance-label {
+            font-size: 0.7rem;
+            color: #64748b;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .modal-description {
+            line-height: 1.8;
+            color: #475569;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* --- MOBILE MEDIA QUERIES --- */
         @media (max-width: 1024px) {
             .nav-links {
                 display: none;
             }
 
-            .hero-title-main {
-                font-size: 3rem !important;
+            .skyline-menu-btn {
+                display: flex;
             }
 
-            .modal-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .investment-plans {
-                grid-template-columns: repeat(2, 1fr);
+            .property-grid {
+                grid-template-columns: 1fr 1fr;
             }
         }
 
         @media (max-width: 768px) {
-            .nav-content {
-                padding: 0 15px;
-            }
-
-            .nav-right {
-                gap: 10px;
-            }
-
-            .lang-switch-showcase {
-                display: none;
-            }
-
-            .skyline-menu-btn {
-                display: flex !important;
+            .container {
+                padding: 0 20px;
             }
 
             .hero-title-main {
-                font-size: 2.2rem !important;
-            }
-
-            .nav-links,
-            .nav-cta-secondary {
-                display: none !important;
-            }
-
-            .skyline-contact-btn span {
-                display: none;
-            }
-
-            .skyline-contact-btn {
-                padding: 0.7rem !important;
-            }
-
-            .property-grid {
-                grid-template-columns: 1fr;
-                padding: 0 10px;
-            }
-
-            #analytics .container>div {
-                grid-template-columns: 1fr !important;
-                gap: 2rem;
-            }
-
-            #investors .container>div {
-                grid-template-columns: 1fr !important;
-            }
-
-            .investment-plans {
-                grid-template-columns: 1fr;
+                font-size: 2.5rem !important;
             }
 
             .search-container {
-                position: relative !important;
-                bottom: 0 !important;
-                left: 0 !important;
-                transform: none !important;
-                width: 95% !important;
-                margin: -30px auto 3rem !important;
-                z-index: 100 !important;
+                margin: 2rem auto 4rem;
+                width: 92%;
             }
 
             .search-bar {
-                flex-direction: column !important;
-                padding: 1.5rem !important;
-                gap: 1.5rem !important;
-                border-radius: 20px !important;
+                flex-direction: column;
+                padding: 2rem;
+                border-radius: 24px;
+                gap: 1.5rem;
+                max-width: 100%;
             }
 
             .search-group {
-                width: 100% !important;
-                border-right: none !important;
-                padding-right: 0 !important;
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #f1f5f9;
+                padding: 0 0 1rem 0;
             }
 
-            #apply-filters {
-                width: 100% !important;
-                max-width: none !important;
+            .search-bar button {
+                width: 100%;
+                max-width: 100% !important;
+                padding: 1.5rem !important;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr !important;
+                text-align: center;
+            }
+
+            .stat-card {
+                border-left: none !important;
+                border-bottom: 1px solid var(--brand-gold);
+                padding: 0 0 1.5rem 0 !important;
+                align-items: center;
+            }
+
+            .modal-content-wrapper {
+                flex-direction: column;
+                height: 95vh;
+                overflow-y: auto;
+            }
+
+            .modal-img-col {
+                height: 300px;
+                width: 100%;
             }
         }
 
         @media (max-width: 480px) {
+            .property-grid {
+                grid-template-columns: 1fr;
+            }
+
             .hero-title-main {
-                font-size: 1.8rem !important;
-            }
-
-            .luxury-nav .logo {
-                font-size: 0.9rem !important;
-            }
-
-            .nav-tech-showcase-text {
-                display: none;
-            }
-
-            .brand-logos {
-                flex-wrap: wrap !important;
-                justify-content: center !important;
-                gap: 1.5rem 2rem !important;
-                padding: 0 20px !important;
-            }
-
-            .brand-logos span {
-                width: auto !important;
-                letter-spacing: 2px !important;
-                opacity: 0.8 !important;
-                font-size: 0.7rem !important;
-            }
-
-            .case-study-title {
-                font-size: 1.4rem !important;
-            }
-
-            .property-footer {
-                flex-direction: column !important;
-                gap: 1rem !important;
-            }
-
-            .price-tag {
-                font-size: 1.5rem !important;
+                font-size: 2rem !important;
             }
         }
 
-        .skyline-menu-btn {
-            display: none;
-            background: #0f172a;
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            cursor: pointer;
-            align-items: center;
-            justify-content: center;
-            margin-left: 10px;
-        }
-
+        /* Mobile Menu */
         .skyline-mobile-menu {
             position: fixed;
             top: 0;
             right: -100%;
             width: 100%;
             height: 100vh;
-            background: #f7f6f2;
-            z-index: 2000;
+            background: var(--brand-light);
+            z-index: 2500;
             transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             display: flex;
             flex-direction: column;
-            padding: 4rem 2rem;
+            padding: 6rem 2rem;
             text-align: center;
         }
 
@@ -724,6 +638,7 @@
 
         .mobile-nav-list {
             list-style: none;
+            flex: 1;
             padding: 0;
             margin-top: 2rem;
         }
@@ -733,12 +648,36 @@
         }
 
         .mobile-nav-list a {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 800;
-            color: #0f172a;
+            color: var(--brand-dark);
             text-decoration: none;
             text-transform: uppercase;
-            letter-spacing: 2px;
+        }
+
+        .mobile-lang-switcher {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .mobile-lang-btn {
+            background: white;
+            border: 1px solid #e2e8f0;
+            color: var(--text-muted);
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .mobile-lang-btn.active {
+            background: var(--brand-gold);
+            color: white;
+            border-color: var(--brand-gold);
         }
 
         .close-mobile-menu {
@@ -747,7 +686,7 @@
             right: 25px;
             border: none;
             background: none;
-            color: #0f172a;
+            color: var(--brand-dark);
             cursor: pointer;
         }
     </style>
@@ -755,41 +694,33 @@
 
 <body class="light-theme">
 
-    <nav class="glass-nav luxury-nav">
+    <nav class="luxury-nav">
         <div class="container nav-content">
             <div class="nav-left">
-                <a href="index.html" class="logo"
-                    style="text-decoration: none; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+                <a href="index.html" class="logo">
                     <svg width="24" height="28" viewBox="0 0 24 28" fill="none" stroke="var(--brand-gold)"
-                        stroke-width="2" stroke-linejoin="round">
+                        stroke-width="2">
                         <path d="M12 2L4 8v18h16V8L12 2z" />
-                        <path d="M12 2v24" />
-                        <path d="M8 12h8" />
-                        <path d="M8 18h8" />
+                        <path d="M12 2v24M8 12h8M8 18h8" />
                     </svg>
-                    <div><span class="logo-accent" style="color: var(--brand-gold);">SKYLINE</span> ESTATES</div>
+                    <div><span class="logo-accent">SKYLINE</span> ESTATES</div>
                 </a>
             </div>
             <ul class="nav-links">
-                <li><a href="#collection" data-i18n="skyline-nav-portfolio">Portafolio</a></li>
-                <li><a href="#analytics" data-i18n="skyline-nav-analysis">Analítica IA</a></li>
-                <li><a href="#investors" data-i18n="skyline-nav-investors">Inversores</a></li>
+                <li><a href="#collection" data-i18n="skyline-nav-portfolio">Collection</a></li>
+                <li><a href="#analytics" data-i18n="skyline-nav-analysis">Analytics</a></li>
+                <li><a href="#investors" data-i18n="skyline-nav-investors">Investors</a></li>
             </ul>
             <div class="nav-right">
                 <div class="lang-switch-showcase">
-                    <button class="lang-btn lang-btn-s" data-lang="en">EN</button>
-                    <button class="lang-btn lang-btn-s" data-lang="es">ES</button>
-                    <button class="lang-btn lang-btn-s" data-lang="pt">PT</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="es">ES</button>
+                    <button class="lang-btn" data-lang="pt">PT</button>
                 </div>
-                <a href="index.html#expertise" class="nav-cta-secondary"
-                    style="position: relative; padding: 0.6rem; border-radius: 5px; font-size: 0.7rem; font-weight: 800; color: #fff; background: linear-gradient(135deg, #1e293b, #0f172a); letter-spacing: 1.5px; text-decoration: none; transition: 0.4s; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid rgba(197, 160, 89, 0.3);"
-                    title="Technical Showcase">
-                    <i data-lucide="code" style="width: 14px; color: var(--brand-gold);"></i>
-                </a>
-                <a href="https://wa.me/?text=Hello" target="_blank" class="btn-primary-sm skyline-contact-btn"
-                    style="position: relative; background: linear-gradient(135deg, #d4af37, #aa8222); color: #fff; border-radius: 5px; font-weight: 800; padding: 0.7rem 1.2rem; text-decoration: none; transition: 0.4s; border: none; display: flex; align-items: center; gap: 5px; box-shadow: 0 10px 20px rgba(197, 160, 89, 0.3);"
+                <a href="https://wa.me/?text=Hello" target="_blank" class="view-details-btn"
+                    style="background: var(--brand-gold); color: #000; font-size: 0.75rem; padding: 0.6rem 1.2rem;"
                     data-i18n="skyline-btn-contact">
-                    <i data-lucide="key" style="width: 16px;"></i> <span class="nav-tech-showcase-text">Access</span>
+                    <i data-lucide="key" style="width: 14px;"></i> Request Access
                 </a>
                 <button class="skyline-menu-btn" id="mobile-trigger">
                     <i data-lucide="menu"></i>
@@ -800,18 +731,22 @@
             <button class="close-mobile-menu" id="mobile-close"><i data-lucide="x"
                     style="width:30px; height:30px;"></i></button>
             <ul class="mobile-nav-list">
-                <li><a href="#collection" data-i18n="skyline-nav-portfolio">Portafolio</a></li>
-                <li><a href="#analytics" data-i18n="skyline-nav-analysis">Analítica IA</a></li>
-                <li><a href="#investors" data-i18n="skyline-nav-investors">Inversores</a></li>
-                <li style="margin-top: 2rem;"><a href="index.html" style="color: var(--brand-gold);">EXIT TO AGENCY</a>
-                </li>
+                <li><a href="#collection" data-i18n="skyline-nav-portfolio">Collection</a></li>
+                <li><a href="#analytics" data-i18n="skyline-nav-analysis">Analytics</a></li>
+                <li><a href="#investors" data-i18n="skyline-nav-investors">Investors</a></li>
+                <li style="margin-top: 2rem;"><a href="index.html" style="color: var(--brand-gold);"
+                        data-i18n="skyline-footer-exit">EXIT TO AGENCY</a></li>
             </ul>
+            <div class="mobile-lang-switcher">
+                <button class="mobile-lang-btn" data-lang="en">EN</button>
+                <button class="mobile-lang-btn" data-lang="es">ES</button>
+                <button class="mobile-lang-btn" data-lang="pt">PT</button>
+            </div>
         </div>
     </nav>
 
-    <header class="showcase-hero" style="position: relative; overflow: hidden;">
+    <header class="showcase-hero">
         <div class="hero-slider">
-            <!-- Using optimized .jpg assets for extreme performance -->
             <div class="slide active"
                 style="background-image: url('SKYLINE ESTATES/jpg/54eb2822-2abd-41a6-b9d0-bda905e528f7.jpg');"></div>
             <div class="slide"
@@ -820,65 +755,60 @@
                 style="background-image: url('SKYLINE ESTATES/jpg/ca7121c5-895a-4f4a-9c17-96d2ff50d41b.jpg');"></div>
         </div>
         <div class="hero-overlay"></div>
-        <div class="container" style="padding-bottom: 80px; color: white;">
-            <span class="tagline" style="color: var(--brand-gold); letter-spacing: 6px;"
-                data-i18n="skyline-hero-tag">PRIVATE COLLECTION 2026</span>
-            <h1 class="hero-title-main" data-i18n="skyline-hero-title">Architectural <span
-                    style="font-style: italic; color: var(--brand-gold);">Excellence</span>.</h1>
-            <p style="font-size: clamp(1.1rem, 2vw, 1.5rem); max-width: 600px; margin: 0 auto; opacity: 0.9;"
+        <div class="hero-content">
+            <span class="hero-tag" data-i18n="skyline-hero-tag">PRIVATE COLLECTION 2026</span>
+            <h1 class="hero-title-main" data-i18n="skyline-hero-title">Architectural <span>Excellence</span>.</h1>
+            <p style="font-size: clamp(1rem, 2vw, 1.4rem); opacity: 0.9; max-width: 650px; margin: 0 auto;"
                 data-i18n="skyline-hero-desc">
-                Curating the world's most exclusive real estate assets with precision and tech-driven valuation.</p>
+                Curating the world's most exclusive real estate assets with technical precision and AI-driven valuation.
+            </p>
         </div>
     </header>
 
-    <div class="search-container"
-        style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 1000px; z-index: 100;">
-        <div class="search-bar"
-            style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.4);">
-            <div class="search-group">
-                <label data-i18n="skyline-search-loc">Location</label>
-                <select id="filter-location">
-                    <option value="all">All Locations</option>
-                    <option value="mayfair">Mayfair, London</option>
-                    <option value="kensington">Kensington, London</option>
-                    <option value="hampstead">Hampstead, London</option>
-                    <option value="marbella">Diamond Coast, Marbella</option>
-                    <option value="malibu">Pacific Coast, Malibu</option>
-                </select>
+    <div class="container">
+        <div class="search-container">
+            <div class="search-bar">
+                <div class="search-group">
+                    <label data-i18n="skyline-search-loc">Location</label>
+                    <select id="filter-location">
+                        <option value="all" data-i18n="skyline-opt-all-loc">All Locations</option>
+                        <option value="mayfair">Mayfair, London</option>
+                        <option value="kensington">Kensington, London</option>
+                        <option value="marbella">Marbella, Spain</option>
+                        <option value="malibu">Malibu, USA</option>
+                    </select>
+                </div>
+                <div class="search-group">
+                    <label data-i18n="skyline-search-type">Asset Type</label>
+                    <select id="filter-type">
+                        <option value="all" data-i18n="skyline-opt-all-type">Any Type</option>
+                        <option value="villa" data-i18n="skyline-opt-villa">Luxury Villa</option>
+                        <option value="penthouse" data-i18n="skyline-opt-pent">Penthouse</option>
+                        <option value="estate" data-i18n="skyline-opt-estate">Royal Estate</option>
+                    </select>
+                </div>
+                <div class="search-group">
+                    <label data-i18n="skyline-search-budget">Budget</label>
+                    <select id="filter-budget">
+                        <option value="all" data-i18n="skyline-opt-all-budget">Any Budget</option>
+                        <option value="5">Under $10M</option>
+                        <option value="10">$10M - $20M</option>
+                        <option value="20">$20M+</option>
+                    </select>
+                </div>
+                <button class="view-details-btn" id="apply-filters"
+                    style="background: var(--brand-gold); color: #000; border-radius: 100px; padding: 1.2rem 2.5rem; justify-content: center;"
+                    data-i18n="skyline-btn-explore">
+                    Explore Assets
+                </button>
             </div>
-            <div class="search-group">
-                <label data-i18n="skyline-search-type">Asset Type</label>
-                <select id="filter-type">
-                    <option value="all">Any Type</option>
-                    <option value="villa">Luxury Villa</option>
-                    <option value="penthouse">Signature Penthouse</option>
-                    <option value="estate">Royal Estate</option>
-                    <option value="residence">Coastal Residence</option>
-                </select>
-            </div>
-            <div class="search-group">
-                <label data-i18n="skyline-search-budget">Budget Range</label>
-                <select id="filter-budget">
-                    <option value="all">Any Budget</option>
-                    <option value="5">Under $10M</option>
-                    <option value="10">$10M - $20M</option>
-                    <option value="20">$20M+</option>
-                </select>
-            </div>
-            <button class="btn-primary" id="apply-filters"
-                style="padding: 1.2rem 2.5rem; border-radius: 14px; background: var(--brand-gold); color: #000; font-weight:800; cursor: pointer; border:none; transition: 0.3s; width: 100%; max-width: 250px;"
-                onmouseover="this.style.boxShadow='0 10px 30px rgba(197,160,89,0.4)'; this.style.transform='translateY(-2px)';"
-                onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)';"
-                data-i18n="skyline-btn-explore">Explore Assets</button>
         </div>
     </div>
-    </header>
-
     <!-- Trust Bar -->
     <div class="trust-bar"
         style="background: var(--brand-light); border-bottom: 2px solid var(--brand-gold); padding: 4rem 0;">
         <div class="container brand-logos"
-            style="display: flex; justify-content: space-between; align-items: center; color: #94a3b8; font-weight: 700; font-size: 0.85rem; letter-spacing: 2.5px; opacity: 0.6;">
+            style="display: flex; justify-content: space-between; align-items: center; color: #94a3b8; font-weight: 700; font-size: 0.85rem; letter-spacing: 2.5px; opacity: 0.6; flex-wrap: wrap; gap: 2rem;">
             <span>SOTHEBY'S REALTY</span>
             <span>ARCHITECTURAL DIGEST</span>
             <span>VOGUE LIVING</span>
@@ -888,49 +818,35 @@
 
     <!-- Aether Digital Case Study Banner -->
     <div
-        style="background: linear-gradient(135deg, #1e293b, #0f172a); color: white; padding: 5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden;">
-        <!-- Background Grid Decoration -->
-        <div
-            style="position: absolute; inset: 0; background-image: radial-gradient(rgba(197,160,89,0.1) 1px, transparent 1px); background-size: 20px 20px; z-index: 0;">
-        </div>
-
+        style="background: var(--brand-dark); color: white; padding: 6rem 0; margin-top: 4rem; position: relative; overflow: hidden;">
         <div class="container"
-            style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 3rem; position: relative; z-index: 1;">
+            style="display: flex; flex-wrap: wrap; align-items: center; gap: 4rem; position: relative; z-index: 5;">
             <div style="flex: 1.5; min-width: 300px;">
-                <span class="tagline" style="color: var(--brand-gold); letter-spacing: 4px; font-size: 0.75rem;"><i
-                        data-lucide="award"
-                        style="width: 14px; margin-right: 5px; display: inline-block; vertical-align: middle;"></i>
-                    AETHER DIGITAL SHOWCASE</span>
-                <h2 class="case-study-title"
-                    style="font-size: 2.2rem; margin: 1rem 0; font-weight: 800; text-transform: uppercase;">Engineering
-                    The Pinnacle <br>of <span
-                        style="color: var(--brand-gold); font-style: italic; text-transform: none;">Digital Real
-                        Estate</span></h2>
-                <p style="color: #94a3b8; font-size: 1.05rem; line-height: 1.8; max-width: 600px;">
-                    This portfolio was meticulously engineered by <strong style="color: white; font-weight: 600;">Aether
-                        Digital</strong> as an exclusive design and automation study for top-tier real estate groups. It
-                    highlights bespoke web architecture, dynamic UI/UX, and python-driven property valuation integration
-                    tailored to transcend the ordinary.
+                <span class="hero-tag" style="font-size: 0.75rem;" data-i18n="skyline-case-tag">AETHER DIGITAL
+                    SHOWCASE</span>
+                <h2 style="font-size: 2.5rem; margin: 1.5rem 0;" data-i18n="skyline-case-title">Engineering The
+                    <span>Next Level</span> of Digital Real Estate
+                </h2>
+                <p style="color: #94a3b8; font-size: 1.1rem; line-height: 1.8; max-width: 600px;"
+                    data-i18n="skyline-case-desc">
+                    This portfolio was meticulously engineered by Aether Digital as an exclusive design and automation
+                    study for top-tier groups.
                 </p>
             </div>
-            <div style="flex: 1; min-width: 300px; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-                <div style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; cursor: default;"
-                    onmouseover="this.style.borderColor='var(--brand-gold)'; this.style.background='rgba(197,160,89,0.05)';"
-                    onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'; this.style.background='rgba(255,255,255,0.03)';">
-                    <i data-lucide="zap" style="color: var(--brand-gold); width: 24px; margin-bottom: 15px;"></i>
-                    <h4 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">
-                        Fluid Reactivity</h4>
-                    <p style="color: #64748b; font-size: 0.85rem;">Optimized for instantaneous global rendering and
-                        zero-latency filtering.</p>
+            <div style="flex: 1; min-width: 300px; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div
+                    style="background: rgba(255,255,255,0.03); padding: 2rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
+                    <i data-lucide="zap" style="color: var(--brand-gold); width: 28px; margin-bottom: 1rem;"></i>
+                    <h4 style="margin-bottom: 0.5rem;" data-i18n="skyline-feature-1-title">Fluid Reactivity</h4>
+                    <p style="color: #64748b; font-size: 0.85rem;" data-i18n="skyline-feature-1-desc">Optimized for
+                        global rendering and zero-latency filtering.</p>
                 </div>
-                <div style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; cursor: default;"
-                    onmouseover="this.style.borderColor='var(--brand-gold)'; this.style.background='rgba(197,160,89,0.05)';"
-                    onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'; this.style.background='rgba(255,255,255,0.03)';">
-                    <i data-lucide="cpu" style="color: var(--brand-gold); width: 24px; margin-bottom: 15px;"></i>
-                    <h4 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">
-                        Automated Logic</h4>
-                    <p style="color: #64748b; font-size: 0.85rem;">Script-driven dynamic asset valuation formatting
-                        logic integrated.</p>
+                <div
+                    style="background: rgba(255,255,255,0.03); padding: 2rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
+                    <i data-lucide="cpu" style="color: var(--brand-gold); width: 28px; margin-bottom: 1rem;"></i>
+                    <h4 style="margin-bottom: 0.5rem;" data-i18n="skyline-feature-2-title">Automated Logic</h4>
+                    <p style="color: #64748b; font-size: 0.85rem;" data-i18n="skyline-feature-2-desc">Script-driven
+                        dynamic valuation formatting logic integrated.</p>
                 </div>
             </div>
         </div>
@@ -956,14 +872,15 @@
                     <div class="property-info">
                         <div class="ai-status-badge"><i data-lucide="trending-up" style="width:14px;"></i> +12.5% ROI
                         </div>
-                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #0f172a;">The Sterling Penthouse
+                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #0f172a;" data-i18n="case-1-title">
+                            The Sterling Penthouse
                         </h3>
                         <p class="text-muted"><i data-lucide="map-pin" style="width:14px; margin-right:5px;"></i>
                             Mayfair, London</p>
                         <div class="property-footer">
-                            <div class="price-tag" style="font-size: 1.8rem; font-weight: 800; color: #0f172a;">
+                            <div class="price-tag" style="font-size: 1.8rem; font-weight: 800; color: #000;">
                                 $8,400,000</div>
-                            <button class="view-details-btn">Details</button>
+                            <button class="view-details-btn" data-i18n="skyline-btn-details">Details</button>
                         </div>
                     </div>
                 </div>
@@ -978,13 +895,14 @@
                     <div class="property-info">
                         <div class="ai-status-badge"><i data-lucide="shield-check" style="width:14px;"></i> AE-Verified
                         </div>
-                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #0f172a;">Flagship Residence</h3>
+                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #0f172a;" data-i18n="case-2-title">
+                            Flagship Residence</h3>
                         <p class="text-muted"><i data-lucide="map-pin" style="width:14px; margin-right:5px;"></i>
                             Diamond Coast, Marbella</p>
                         <div class="property-footer">
-                            <div class="price-tag" style="font-size: 1.8rem; font-weight: 800; color: #0f172a;">
+                            <div class="price-tag" style="font-size: 1.8rem; font-weight: 800; color: #000;">
                                 $12,800,000</div>
-                            <button class="view-details-btn">Details</button>
+                            <button class="view-details-btn" data-i18n="skyline-btn-details">Details</button>
                         </div>
                     </div>
                 </div>
@@ -998,13 +916,14 @@
                     </div>
                     <div class="property-info">
                         <div class="ai-status-badge"><i data-lucide="cpu" style="width:14px;"></i> Full Automation</div>
-                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #0f172a;">Cliffs of Malibu</h3>
+                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #0f172a;" data-i18n="case-3-title">
+                            Cliffs of Malibu</h3>
                         <p class="text-muted"><i data-lucide="map-pin" style="width:14px; margin-right:5px;"></i>
                             Pacific Coast, CA</p>
                         <div class="property-footer">
-                            <div class="price-tag" style="font-size: 1.8rem; font-weight: 800; color: #0f172a;">
+                            <div class="price-tag" style="font-size: 1.8rem; font-weight: 800; color: #000;">
                                 $25,250,000</div>
-                            <button class="view-details-btn">Details</button>
+                            <button class="view-details-btn" data-i18n="skyline-btn-details">Details</button>
                         </div>
                     </div>
                 </div>
@@ -1019,13 +938,14 @@
                     <div class="property-info">
                         <div class="ai-status-badge"><i data-lucide="shield-check" style="width:14px;"></i> AE-Verified
                         </div>
-                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #0f172a;">Oceanside Horizon</h3>
+                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #0f172a;" data-i18n="case-4-title">
+                            Oceanside Horizon</h3>
                         <p class="text-muted"><i data-lucide="map-pin" style="width:14px; margin-right:5px;"></i>
                             Diamond Coast, Marbella</p>
                         <div class="property-footer">
-                            <div class="price-tag" style="font-size: 1.8rem; font-weight: 800; color: #0f172a;">
+                            <div class="price-tag" style="font-size: 1.8rem; font-weight: 800; color: #000;">
                                 $18,500,000</div>
-                            <button class="view-details-btn">Details</button>
+                            <button class="view-details-btn" data-i18n="skyline-btn-details">Details</button>
                         </div>
                     </div>
                 </div>
@@ -1040,13 +960,14 @@
                     <div class="property-info">
                         <div class="ai-status-badge"><i data-lucide="trending-up" style="width:14px;"></i> +18% ROI
                         </div>
-                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #0f172a;">The Royal Estate</h3>
+                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #0f172a;" data-i18n="case-5-title">
+                            The Royal Estate</h3>
                         <p class="text-muted"><i data-lucide="map-pin" style="width:14px; margin-right:5px;"></i>
                             Kensington, London</p>
                         <div class="property-footer">
-                            <div class="price-tag" style="font-size: 1.8rem; font-weight: 800; color: #0f172a;">
+                            <div class="price-tag" style="font-size: 1.8rem; font-weight: 800; color: #000;">
                                 $32,000,000</div>
-                            <button class="view-details-btn">Details</button>
+                            <button class="view-details-btn" data-i18n="skyline-btn-details">Details</button>
                         </div>
                     </div>
                 </div>
@@ -1060,13 +981,14 @@
                     </div>
                     <div class="property-info">
                         <div class="ai-status-badge"><i data-lucide="cpu" style="width:14px;"></i> Level 4 AI</div>
-                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #0f172a;">Sunset Tower Suite</h3>
+                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #0f172a;" data-i18n="case-6-title">
+                            Sunset Tower Suite</h3>
                         <p class="text-muted"><i data-lucide="map-pin" style="width:14px; margin-right:5px;"></i>
                             Pacific Coast, CA</p>
                         <div class="property-footer">
-                            <div class="price-tag" style="font-size: 1.8rem; font-weight: 800; color: #0f172a;">
+                            <div class="price-tag" style="font-size: 1.8rem; font-weight: 800; color: #000;">
                                 $9,200,000</div>
-                            <button class="view-details-btn">Details</button>
+                            <button class="view-details-btn" data-i18n="skyline-btn-details">Details</button>
                         </div>
                     </div>
                 </div>
@@ -1080,13 +1002,14 @@
                     </div>
                     <div class="property-info">
                         <div class="ai-status-badge"><i data-lucide="sparkles" style="width:14px;"></i> New Asset</div>
-                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #0f172a;">Elysium Manor</h3>
+                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #0f172a;" data-i18n="case-7-title">
+                            Elysium Manor</h3>
                         <p class="text-muted"><i data-lucide="map-pin" style="width:14px; margin-right:5px;"></i>
                             Hampstead, London</p>
                         <div class="property-footer">
-                            <div class="price-tag" style="font-size: 1.8rem; font-weight: 800; color: #0f172a;">
+                            <div class="price-tag" style="font-size: 1.8rem; font-weight: 800; color: #000;">
                                 $15,500,000</div>
-                            <button class="view-details-btn">Details</button>
+                            <button class="view-details-btn" data-i18n="skyline-btn-details">Details</button>
                         </div>
                     </div>
                 </div>
@@ -1099,59 +1022,70 @@
     <section id="analytics" class="section-reveal"
         style="padding: 10rem 0; background: #0f172a; color: white; position: relative; overflow: hidden;">
         <div class="analytics-bg"
-            style="background-image: url('SKYLINE ESTATES/jpg/ca7121c5-895a-4f4a-9c17-96d2ff50d41b.jpg');"></div>
+            style="background-image: url('SKYLINE ESTATES/jpg/ca7121c5-895a-4f4a-9c17-96d2ff50d41b.jpg'); opacity: 0.15;">
+        </div>
 
         <div class="container" style="position: relative; z-index: 1;">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem; align-items: center;">
                 <div>
                     <span
-                        style="color: var(--brand-gold); letter-spacing: 3px; font-weight: 700; text-transform: uppercase; margin-bottom: 1rem; display: block;">Quantum
-                        Valuation</span>
-                    <h2 style="font-size: 3.5rem; color: white !important; line-height: 1.1; margin-bottom: 2rem;">
-                        Real-time Market <br><span style="color: var(--brand-gold);">Intelligence</span>.</h2>
-                    <p style="color: #94a3b8; font-size: 1.2rem; line-height: 1.8; margin-bottom: 3rem;">Our proprietary
-                        AI engine analyzes over 1,500 data points per property, from hyper-local zoning changes to
-                        global high-net-worth migration patterns.</p>
+                        style="color: var(--brand-gold); letter-spacing: 3px; font-weight: 700; text-transform: uppercase; margin-bottom: 1rem; display: block;"
+                        data-i18n="skyline-ai-tag">Quantum Valuation</span>
+                    <h2 style="font-size: clamp(2.2rem, 5vw, 3.5rem); color: white !important; line-height: 1.1; margin-bottom: 2rem;"
+                        data-i18n="skyline-ai-title">Real-time Market <br><span
+                            style="color: var(--brand-gold);">Intelligence</span>.</h2>
+                    <p style="color: #94a3b8; font-size: 1.1rem; line-height: 1.8; margin-bottom: 3rem;"
+                        data-i18n="skyline-ai-desc">Our proprietary AI engine analyzes over 1,500 data points per
+                        property, from hyper-local zoning changes to global high-net-worth migration patterns.</p>
 
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <span class="stat-value">$1.2B</span>
-                            <span class="stat-label">Assets Monitored</span>
+                    <div class="stats-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                        <div class="stat-card"
+                            style="border-left: 2px solid var(--brand-gold); padding-left: 1.5rem; text-align: left; background: transparent; backdrop-filter: none;">
+                            <span class="stat-value"
+                                style="font-size: 2.8rem; font-weight: 900; color: white; display: block;">$1.2B</span>
+                            <span class="stat-label"
+                                style="color: var(--brand-gold); font-size: 0.75rem; letter-spacing: 2px;"
+                                data-i18n="skyline-stat-1-label">Assets Monitored</span>
                         </div>
-                        <div class="stat-card">
-                            <span class="stat-value">99.2%</span>
-                            <span class="stat-label">Valuation Accuracy</span>
+                        <div class="stat-card"
+                            style="border-left: 2px solid var(--brand-gold); padding-left: 1.5rem; text-align: left; background: transparent; backdrop-filter: none;">
+                            <span class="stat-value"
+                                style="font-size: 2.8rem; font-weight: 900; color: white; display: block;">99.2%</span>
+                            <span class="stat-label"
+                                style="color: var(--brand-gold); font-size: 0.75rem; letter-spacing: 2px;"
+                                data-i18n="skyline-stat-2-label">Valuation Accuracy</span>
                         </div>
                     </div>
                 </div>
 
                 <div style="position: relative;">
                     <div
-                        style="background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 3rem; backdrop-filter: blur(20px);">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 2rem;">
-                            <h4 style="color: white !important;">Market Liquidity Index</h4>
-                            <span style="color: var(--brand-gold);">LIVE UPDATE</span>
+                        style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 30px; padding: 3rem; backdrop-filter: blur(20px);">
+                        <div
+                            style="display: flex; justify-content: space-between; margin-bottom: 2rem; align-items: center;">
+                            <h4 style="color: white !important; font-size: 0.9rem; letter-spacing: 1px;"
+                                data-i18n="skyline-chart-title">MARKET LIQUIDITY INDEX</h4>
+                            <span
+                                style="color: var(--brand-gold); font-size: 0.65rem; font-weight: 800; border: 1px solid var(--brand-gold); padding: 4px 8px; border-radius: 4px;">LIVE</span>
                         </div>
-                        <div style="height: 200px; display: flex; align-items: flex-end; gap: 10px;">
-                            <div
-                                style="height: 40%; width: 20%; background: var(--brand-gold); border-radius: 5px; opacity: 0.3;">
+                        <div style="height: 180px; display: flex; align-items: flex-end; gap: 12px;">
+                            <div style="height: 40%; width: 20%; background: #fff; border-radius: 6px; opacity: 0.1;">
+                            </div>
+                            <div style="height: 65%; width: 20%; background: #fff; border-radius: 6px; opacity: 0.2;">
+                            </div>
+                            <div style="height: 50%; width: 20%; background: #fff; border-radius: 6px; opacity: 0.3;">
+                            </div>
+                            <div style="height: 85%; width: 20%; background: #fff; border-radius: 6px; opacity: 0.5;">
                             </div>
                             <div
-                                style="height: 60%; width: 20%; background: var(--brand-gold); border-radius: 5px; opacity: 0.5;">
-                            </div>
-                            <div
-                                style="height: 85%; width: 20%; background: var(--brand-gold); border-radius: 5px; opacity: 0.7;">
-                            </div>
-                            <div
-                                style="height: 70%; width: 20%; background: var(--brand-gold); border-radius: 5px; opacity: 0.9;">
-                            </div>
-                            <div
-                                style="height: 95%; width: 20%; background: var(--brand-gold); border-radius: 5px; box-shadow: 0 0 20px var(--brand-gold);">
+                                style="height: 100%; width: 20%; background: var(--brand-gold); border-radius: 6px; box-shadow: 0 0 30px rgba(197,160,89,0.4);">
                             </div>
                         </div>
-                        <p style="margin-top: 2rem; color: #94a3b8; font-size: 0.9rem;">Predictive AI suggests a <span
-                                style="color: #10b981;">+4.2% increase</span> in prime Mayfair locations within the next
-                            fiscal quarter.</p>
+                        <p style="margin-top: 2.5rem; color: #94a3b8; font-size: 0.9rem; line-height: 1.6;"
+                            data-i18n="skyline-ai-prediction">Predictive AI suggests a <span
+                                style="color: #10b981; font-weight: 700;">+4.2% increase</span> in prime locations
+                            within the next fiscal quarter.</p>
                     </div>
                 </div>
             </div>
@@ -1159,56 +1093,55 @@
     </section>
 
     <!-- Global Investors Section -->
-    <section id="investors" class="section-reveal" style="padding: 10rem 0; background: #fdfdfb; position: relative;">
+    <section id="investors" class="section-reveal" style="padding: 10rem 0; background: #fff; position: relative;">
         <div class="container">
             <div style="text-align: center; margin-bottom: 6rem;">
                 <span
-                    style="color: #0f172a; opacity: 0.5; letter-spacing: 4px; font-weight: 700; text-transform: uppercase;">Partner
-                    Network</span>
-                <h2 style="font-size: 3rem; margin-top: 1rem; color: #0f172a !important;">Global Investor <span
-                        style="color: var(--brand-gold);">Ecosystem</span></h2>
+                    style="color: var(--brand-gold); letter-spacing: 4px; font-weight: 800; text-transform: uppercase; font-size: 0.8rem;"
+                    data-i18n="skyline-investor-tag">PARTNER NETWORK</span>
+                <h2 style="font-size: 3.5rem; margin-top: 1rem; color: var(--brand-dark) !important;"
+                    data-i18n="skyline-investor-title">Global Investor <span>Ecosystem</span></h2>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 3rem;">
                 <!-- Investor Card 1 -->
-                <div style="background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 3rem; transition: 0.4s; cursor: pointer;"
-                    onmouseover="this.style.boxShadow='0 30px 60px rgba(0,0,0,0.05)'; this.style.transform='translateY(-10px)';"
-                    onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)';">
+                <div class="investor-card-premium">
                     <div
-                        style="width: 60px; height: 60px; background: #0f172a; border-radius: 50%; margin-bottom: 2rem; display: flex; align-items: center; justify-content: center; color: white;">
-                        <i data-lucide="globe" style="width: 30px;"></i>
+                        style="width: 70px; height: 70px; background: var(--brand-dark); border-radius: 20px; display: flex; align-items: center; justify-content: center; color: white; transform: rotate(-5deg);">
+                        <i data-lucide="globe" style="width: 32px; height: 32px;"></i>
                     </div>
-                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #0f172a !important;">Institutional Access
-                    </h3>
-                    <p style="color: #475569; line-height: 1.7;">Exclusive pathways for family offices and institutional
+                    <h3 style="font-size: 1.6rem; color: var(--brand-dark) !important;"
+                        data-i18n="skyline-investor-1-title">Institutional Access</h3>
+                    <p style="color: var(--text-muted); line-height: 1.8; font-size: 1.05rem;"
+                        data-i18n="skyline-investor-1-desc">Exclusive pathways for family offices and institutional
                         funds seeking inflation-resistant architectural assets.</p>
                 </div>
 
-                <!-- Investor Card 2 (With new image) -->
-                <div style="position: relative; border-radius: 20px; overflow: hidden; min-height: 350px;">
-                    <img decoding="async" loading="lazy" class="property-img"
-                        src="SKYLINE ESTATES/jpg/ebc2c491-053f-4e51-899f-665e0e4bf677.jpg"
-                        style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+                <!-- Investor Card 2 -->
+                <div class="investor-card-premium"
+                    style="background: var(--brand-dark); color: white; border-color: var(--brand-dark);">
                     <div
-                        style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.9), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 2.5rem; color: white;">
-                        <h3 style="color: white !important; font-size: 1.4rem; margin-bottom: 0.5rem;">The Sky-Lounge
-                        </h3>
-                        <p style="opacity: 0.8; font-size: 0.9rem;">Private networking events for Platinum Tier
-                            investors in our verified rooftop locations.</p>
+                        style="width: 70px; height: 70px; background: var(--brand-gold); border-radius: 20px; display: flex; align-items: center; justify-content: center; color: black; transform: rotate(5deg);">
+                        <i data-lucide="layers" style="width: 32px; height: 32px;"></i>
                     </div>
+                    <h3 style="font-size: 1.6rem; color: white !important;" data-i18n="skyline-investor-2-title">
+                        Portfolio Diversification</h3>
+                    <p style="color: #94a3b8; line-height: 1.8; font-size: 1.05rem;"
+                        data-i18n="skyline-investor-2-desc">Technical risk assessment and automated ROI tracking for
+                        diverse high-yield real estate holdings.</p>
                 </div>
 
                 <!-- Investor Card 3 -->
-                <div style="background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 3rem; transition: 0.4s; cursor: pointer;"
-                    onmouseover="this.style.boxShadow='0 30px 60px rgba(0,0,0,0.05)'; this.style.transform='translateY(-10px)';"
-                    onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)';">
+                <div class="investor-card-premium">
                     <div
-                        style="width: 60px; height: 60px; background: var(--brand-gold); border-radius: 50%; margin-bottom: 2rem; display: flex; align-items: center; justify-content: center; color: white;">
-                        <i data-lucide="trending-up" style="width: 30px;"></i>
+                        style="width: 70px; height: 70px; background: var(--brand-gold); border-radius: 20px; display: flex; align-items: center; justify-content: center; color: black; transform: rotate(-8deg);">
+                        <i data-lucide="shield" style="width: 32px; height: 32px;"></i>
                     </div>
-                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #0f172a !important;">Secondary Market</h3>
-                    <p style="color: #475569; line-height: 1.7;">Our internal exchange allows for frictionless
-                        fractional ownership and liquidity events for high-value properties.</p>
+                    <h3 style="font-size: 1.6rem; color: var(--brand-dark) !important;"
+                        data-i18n="skyline-investor-3-title">Asset Tokenization</h3>
+                    <p style="color: var(--text-muted); line-height: 1.8; font-size: 1.05rem;"
+                        data-i18n="skyline-investor-3-desc">Bridging the gap between traditional prestige assets and
+                        modern liquid investment structures.</p>
                 </div>
             </div>
         </div>
@@ -1279,17 +1212,9 @@
                         biometric perimeter access.</p>
                 </div>
 
-                <div style="background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); padding: 3.5rem 2.5rem; border-radius: 20px; text-align: center; transition: 0.4s; cursor: crosshair; box-shadow: 0 20px 40px rgba(0,0,0,0.5);"
-                    onmouseover="this.style.transform='translateY(-15px)'; this.style.borderColor='var(--brand-gold)'; this.style.boxShadow='0 30px 60px rgba(197,160,89,0.15)';"
-                    onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.05)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.5)';">
-                    <i data-lucide="zap"
-                        style="color: var(--brand-gold); width: 40px; height: 40px; margin-bottom: 1.5rem;"></i>
-                    <h3 style="color: white !important; font-size: 1.2rem; margin-bottom: 1rem;"
-                        data-i18n="skyline-amenity-4-title">Energy Autonomy</h3>
-                    <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6;">Zero-grid dependency with
-                        integrated fusion-ready solar management.</p>
-                </div>
+                integrated fusion-ready solar management.</p>
             </div>
+        </div>
         </div>
     </section>
 
@@ -1391,54 +1316,44 @@
 
     <!-- PROPERTY DETAIL MODAL -->
     <div id="property-modal">
-        <div
-            style="background: white; width: 90%; max-width: 1000px; border-radius: 30px; overflow: hidden; position: relative; display: flex; height: 650px; box-shadow: 0 50px 100px rgba(0,0,0,0.5);">
-            <button id="close-modal"
-                style="position: absolute; top: 25px; right: 25px; background: white; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; z-index: 10; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.1);"><i
-                    data-lucide="x" style="width:20px; color:#0f172a;"></i></button>
-            <div id="modal-img" style="flex: 1.2; background-size: cover; background-position: center;"></div>
-            <div style="flex: 1; padding: 4rem; overflow-y: auto; display: flex; flex-direction: column;">
-                <span
-                    style="background: var(--brand-gold); color: black; padding: 0.5rem 1rem; border-radius: 50px; font-weight: 800; font-size: 0.75rem; align-self: flex-start; margin-bottom: 2rem;">AI
-                    VERIFIED ASSET</span>
-                <h2 id="modal-title"
-                    style="font-size: 2.8rem; line-height: 1.1; margin-bottom: 0.5rem; color: #010411;">Property Title
-                </h2>
-                <p id="modal-loc"
-                    style="color: #94a3b8; font-size: 1.1rem; margin-bottom: 2.5rem; display: flex; align-items: center; gap:8px;">
-                    Location Details</p>
+        <div class="modal-content-wrapper">
+            <button id="close-modal" class="modal-close-btn">
+                <i data-lucide="x"></i>
+            </button>
+            <div id="modal-img" class="modal-image-side"></div>
+            <div class="modal-info-side">
+                <div class="modal-badge-container">
+                    <span class="ai-status-badge"
+                        style="background: var(--brand-gold); color: #000; border: none; font-weight: 800;"
+                        data-i18n="skyline-modal-badge">AI VERIFIED ASSET</span>
+                </div>
+                <h2 id="modal-title" class="modal-title-text" style="color: var(--brand-dark) !important;">Property
+                    Title</h2>
+                <p id="modal-loc" class="modal-location-text">Location Details</p>
 
-                <div style="background: #f8fafc; padding: 2.5rem; border-radius: 20px; margin-bottom:3rem;">
-                    <h4
-                        style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.75rem; color: #94a3b8; margin-bottom: 1.5rem; font-weight: 700;">
-                        Market Performance</h4>
-                    <div style="display: flex; gap: 4rem;">
+                <div class="modal-performance-card">
+                    <h4 class="performance-title" data-i18n="skyline-modal-performance">Market Performance</h4>
+                    <div style="display: flex; gap: 3rem; flex-wrap: wrap;">
                         <div>
-                            <span
-                                style="display: block; font-size: 2rem; font-weight: 800; color: #010411;">+12.5%</span>
-                            <span
-                                style="font-size: 0.7rem; color: #64748b; text-transform: uppercase; font-weight: 600;">Yearly
-                                ROI</span>
+                            <span class="performance-value">+12.5%</span>
+                            <span class="performance-label" data-i18n="skyline-modal-roi">Yearly ROI</span>
                         </div>
                         <div>
-                            <span
-                                style="display: block; font-size: 2rem; font-weight: 800; color: var(--brand-gold);">AAA</span>
-                            <span
-                                style="font-size: 0.7rem; color: #64748b; text-transform: uppercase; font-weight: 600;">Equity
-                                Grade</span>
+                            <span class="performance-value" style="color: var(--brand-gold);">AAA</span>
+                            <span class="performance-label" data-i18n="skyline-modal-grade">Equity Grade</span>
                         </div>
                     </div>
                 </div>
 
-                <p style="line-height: 1.8; color: #475569; font-size: 1.05rem; margin-bottom: auto;">This property is
-                    legally verified and integrated with Aether-OS, providing the owner with real-time equity tracking
-                    and autonomous architectural management.</p>
+                <p class="modal-description" data-i18n="skyline-modal-desc">This property is legally verified and
+                    integrated with Aether-OS, providing the owner with real-time equity tracking and autonomous
+                    architectural management.</p>
 
-                <button
-                    style="margin-top: 3rem; width: 100%; padding: 1.5rem; border-radius: 18px; background: #010411; color: white; border: none; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: 0.4s;"
-                    onmouseover="this.style.background='#c5a059'; this.style.color='#000';"
-                    onmouseout="this.style.background='#010411'; this.style.color='#fff';">Request Private
-                    Portfolio</button>
+                <button class="view-details-btn"
+                    style="width: 100%; margin-top: auto; justify-content: center; padding: 1.5rem; border-radius: 20px;"
+                    data-i18n="skyline-modal-btn">
+                    Request Private Portfolio
+                </button>
             </div>
         </div>
     </div>
