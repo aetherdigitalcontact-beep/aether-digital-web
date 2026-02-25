@@ -146,7 +146,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* Analytics Chart Animations */
+        /* --- ANALYTICS CHART ANIMATIONS --- */
         @keyframes growBar {
             from {
                 height: 0;
@@ -1140,6 +1140,7 @@
                         <option value="kensington">Kensington, London</option>
                         <option value="marbella">Marbella, Spain</option>
                         <option value="malibu">Malibu, USA</option>
+                        <option value="hampstead" data-i18n="skyline-opt-hampstead">Hampstead, London</option>
                     </select>
                 </div>
                 <div class="search-group">
@@ -1149,6 +1150,7 @@
                         <option value="villa" data-i18n="skyline-opt-villa">Luxury Villa</option>
                         <option value="penthouse" data-i18n="skyline-opt-pent">Penthouse</option>
                         <option value="estate" data-i18n="skyline-opt-estate">Royal Estate</option>
+                        <option value="residence" data-i18n="skyline-opt-res">Luxury Residence</option>
                     </select>
                 </div>
                 <div class="search-group">
@@ -1835,11 +1837,26 @@
                         if (budget === '20' && cardPrice < 20) show = false;
                     }
 
-                    card.style.opacity = show ? '1' : '0.1';
-                    card.style.pointerEvents = show ? 'all' : 'none';
-                    card.style.transform = show ? 'scale(1)' : 'scale(0.95)';
-                    card.style.transition = 'all 0.5s ease';
+                    if (show) {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'scale(1)';
+                        }, 10);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'scale(0.95)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 500);
+                    }
                 });
+
+                // Scroll to collection to show results
+                const collectionSection = document.getElementById('collection');
+                if (collectionSection) {
+                    collectionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             });
         }
 
@@ -1850,9 +1867,17 @@
         document.querySelectorAll('.view-details-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const card = e.target.closest('.property-card');
-                const title = card.querySelector('h3').innerText;
-                const locText = card.querySelector('.text-muted').innerText;
-                const imgSrc = card.querySelector('.property-img').src;
+                if (!card) return; // Exit if not a property card button (e.g., filter button)
+
+                const titleElement = card.querySelector('h3');
+                const locElement = card.querySelector('.text-muted');
+                const imgElement = card.querySelector('.property-img');
+
+                if (!titleElement || !locElement || !imgElement) return;
+
+                const title = titleElement.innerText;
+                const locText = locElement.innerText;
+                const imgSrc = imgElement.src;
 
                 document.getElementById('modal-title').innerText = title;
                 document.getElementById('modal-loc').innerHTML = `<i data-lucide="map-pin" style="width:16px;"></i> ${locText}`;
