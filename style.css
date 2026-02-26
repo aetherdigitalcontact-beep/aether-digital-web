@@ -412,12 +412,13 @@ input:checked+.slider:before {
 .special-nav-btn {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.5rem;
     position: relative;
     overflow: hidden;
     background: transparent;
     border: none;
-    padding: 0.5rem 0;
+    padding: 0.6rem 1.4rem;
+    border-radius: 50px;
 }
 
 .special-nav-btn::before {
