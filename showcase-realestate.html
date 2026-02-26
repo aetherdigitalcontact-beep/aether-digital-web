@@ -1140,6 +1140,28 @@
             background: var(--brand-gold);
             transform: rotate(90deg);
         }
+
+        /* FINAL FIX FOR ENGINEERING BUTTON */
+        #engineering #final-audit-button.btn-audit-shame {
+            width: 100% !important;
+            margin-top: 4rem !important;
+            justify-content: center !important;
+            padding: 1.5rem !important;
+            background: transparent !important;
+            border: 1px solid rgba(197, 160, 89, 0.4) !important;
+            color: #ffffff !important;
+            border-radius: 20px !important;
+            transition: all 0.3s ease !important;
+        }
+
+        #engineering #final-audit-button.btn-audit-shame:hover {
+            background: #c5a059 !important;
+            /* Gold */
+            color: #000000 !important;
+            /* Black */
+            border-color: #c5a059 !important;
+            box-shadow: 0 15px 35px rgba(197, 160, 89, 0.4) !important;
+        }
     </style>
 </head>
 
@@ -1790,8 +1812,8 @@
 
                     <a href="https://wa.me/?text=I%20want%20a%20technical%20audit%20for%20my%20business%20infrastructure."
                         target="_blank" style="text-decoration: none;">
-                        <button class="view-details-btn"
-                            style="width: 100%; margin-top: 4rem; justify-content: center; padding: 1.5rem; background: transparent; border: 1px solid rgba(255,255,255,0.15); color: white; border-radius: 20px;">
+                        <button id="final-audit-button" class="view-details-btn btn-audit-shame"
+                            data-i18n="skyline-eng-btn">
                             Audit My Business Infrastructure <i data-lucide="arrow-right"
                                 style="width: 18px; margin-left: 12px;"></i>
                         </button>
