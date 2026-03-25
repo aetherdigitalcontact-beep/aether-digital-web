@@ -2084,16 +2084,17 @@
                     </p>
                     <button class="cta-btn" id="start-scan-btn" data-i18n="btn-scan">Iniciar Escaneo</button>
                 </div>
-                <div class="scan-preview" id="drop-zone" data-reveal style="cursor: pointer;">
+                <div class="scan-preview" id="drop-zone" data-reveal>
                     <div id="scan-line" class="scan-line"></div>
-                    <div id="preview-placeholder" style="display: flex; flex-direction: column; align-items: center;">
+                    <div id="preview-placeholder"
+                        style="display: flex; flex-direction: column; align-items: center; pointer-events: none;">
                         <i data-lucide="upload-cloud"
                             style="width: 80px; height: 80px; opacity: 0.25; margin-bottom: 2rem;"></i>
                         <p style="font-weight: 800; opacity: 0.5; font-size: 1.1rem; letter-spacing: 1px;"
-                            data-i18n="upload-text">Subir estudio DICOM/RX...</p>
+                            data-i18n="upload-text">Subir Captura Macroscópica...</p>
                     </div>
                     <img id="preview-img" class="hidden" alt="Estudio"
-                        style="width: 100%; height: 100%; object-fit: contain;">
+                        style="width: 100%; height: 100%; object-fit: contain; pointer-events: none;">
                     <input type="file" id="file-input" class="hidden" accept="image/*">
                 </div>
             </div>
@@ -2300,20 +2301,36 @@
                 </div>
                 <div class="footer-col" data-reveal style="text-align: right;">
                     <h4 data-i18n="footer-contact-title">Contacto</h4>
-                    <div style="display: flex; flex-direction: column; gap: 1rem; align-items: flex-end;">
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem; align-items: flex-end;">
                         <a href="mailto:aetherdigital.contact@gmail.com" class="footer-email-link"
                             style="font-size: 0.85rem; display: flex; align-items: center; gap: 10px;">
                             <i data-lucide="mail" style="width: 18px; height: 18px;"></i>
                             aetherdigital.contact@gmail.com
                         </a>
-                        <div style="display: flex; gap: 1.5rem; margin-top: 0.5rem;">
+                        <div
+                            style="display: flex; gap: 1.5rem; justify-content: flex-end; width: 100%; margin-top: 5px;">
                             <a href="https://www.linkedin.com/in/exequiel-gutierrez-0993703b2" target="_blank"
-                                class="footer-email-link" title="LinkedIn">
-                                <i data-lucide="linkedin" style="width: 22px; height: 22px; display: block;"></i>
+                                class="footer-email-link" title="LinkedIn"
+                                style="display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; color: var(--text-main);">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                                    <rect width="4" height="12" x="2" y="9" />
+                                    <circle cx="4" cy="4" r="2" />
+                                </svg>
                             </a>
                             <a href="https://github.com/aetherdigitalcontact-beep" target="_blank"
-                                class="footer-email-link" title="GitHub">
-                                <i data-lucide="github" style="width: 22px; height: 22px; display: block;"></i>
+                                class="footer-email-link" title="GitHub"
+                                style="display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; color: var(--text-main);">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M15 22v-4a4.8 4.8 0 0 0-1-3.02c3.18-.35 6.5-1.56 6.5-7.16 0-1.49-.5-2.7-1.3-3.65.13-.32.55-1.73-.13-3.6 0 0-1.07-.35-3.5 1.3A12.3 12.3 0 0 0 12 3c-1.2.05-2.3.2-3.4.5-2.43-1.65-3.5-1.29-3.5-1.29-.68 1.87-.26 3.28-.13 3.6-0.8.95-1.3 2.16-1.3 3.65 0 5.6 3.32 6.8 6.5 7.16A4.8 4.8 0 0 0 8 18v4" />
+                                    <path d="M4 20c-1.5.5-3-.5-5-2" />
+                                </svg>
                             </a>
                         </div>
                     </div>
@@ -2350,13 +2367,12 @@
                 "nav-book": "Cita V.I.P.",
                 "hero-title": "Donde la Ciencia <br> se vuelve <span style='font-style: italic; color: var(--clinic-gold);'>Arte</span>.",
                 "hero-desc": "Infraestructura digital para clínicas de medicina estética que no aceptan menos que la perfección absoluta.",
-                "upload-text": "Subir estudio DICOM/RX...",
+                "upload-text": "Subir Captura Macroscópica...",
                 "btn-demo": "Diagnóstico IA",
                 "btn-pricing": "Planes",
                 "scan-title": "Visión Óptica <br><span style='font-style: italic; color: var(--clinic-gold);'>Subdérmica</span>",
                 "scan-desc": "Identificamos patrones anatómicos y estéticos con precisión microscópica, transformando datos en planes de tratamiento.",
                 "btn-scan": "Iniciar Escaneo",
-                "upload-text": "Subir estudio DICOM/RX...",
                 "pricing-title": "Planes de Infraestructura",
                 "btn-select": "Solicitar",
                 "portal-diag": "Análisis de pigmentación uniforme. Hidratación dérmica en niveles óptimos. Porosidad controlada en estrato córneo.",
@@ -2438,12 +2454,12 @@
                 "nav-book": "V.I.P. Appt",
                 "hero-title": "Where Science <br> becomes <span style='font-style: italic; color: var(--clinic-gold);'>Art</span>.",
                 "hero-desc": "Digital infrastructure for aesthetic medicine clinics that accept nothing less than absolute perfection.",
+                "upload-text": "Upload Macroscopic Capture...",
                 "btn-demo": "AI Diagnostic",
                 "btn-pricing": "Plans",
                 "scan-title": "Subdermal <br><span style='font-style: italic; color: var(--clinic-gold);'>Optical Vision</span>",
                 "scan-desc": "We identify anatomical and aesthetic patterns with microscopic precision, transforming data into treatment plans.",
                 "btn-scan": "Start Scan",
-                "upload-text": "Upload DICOM/RX study...",
                 "pricing-title": "Infrastructure Plans",
                 "btn-select": "Inquire",
                 "portal-diag": "Uniform pigmentation analysis. Optimal dermal hydration levels. Controlled porosity in stratum corneum.",
@@ -2523,17 +2539,14 @@
                 "nav-book": "Consulta V.I.P.",
                 "hero-title": "Onde a Ciência <br> se torna <span style='font-style: italic; color: var(--clinic-gold);'>Arte</span>.",
                 "hero-desc": "Infraestrutura digital para clínicas de medicina estética que não aceitam nada menos que a perfeição absoluta.",
+                "upload-text": "Carregar Captura Macroscópica...",
                 "btn-demo": "Diagnóstico IA",
                 "btn-pricing": "Planos",
                 "scan-title": "Visão Óptica <br><span style='font-style: italic; color: var(--clinic-gold);'>Subdérmica</span>",
                 "scan-desc": "Identificamos padrões anatômicos e estéticos con precisão microscópica, transformando dados em planos de tratamento.",
                 "btn-scan": "Iniciar Varredura",
-                "upload-text": "Carregar estudo DICOM/RX...",
                 "pricing-title": "Planos de Infraestrutura",
                 "btn-select": "Solicitar",
-                "portal-diag": "Análise de pigmentação uniforme. Níveis ótimos de hidratação dérmica. Porosidad controlada no estrato córneo.",
-                "portal-btn": "EXPEDIENTE COMPLETO",
-                "footer-tagline": "Infraestrutura digital para a elite da medicina estética.",
                 "footer-curated-prefix": "Curado por",
                 "modal-title": "Versão Demonstrativa",
                 "modal-desc": "Esta é uma demonstração técnica de alta fidelidade criada pela Aether Digital. Para implementar esta infraestrutura em sua clínica profissional e acessar todas as funcionalidades, por favor, entre em contato conosco conosco.",
@@ -2753,9 +2766,16 @@
         function closeModal() { if (modal) modal.style.display = 'none'; }
 
         if (dropZone) {
-            const triggerFile = (e) => { e.preventDefault(); fileInput.click(); };
+            const triggerFile = (e) => {
+                if (e.target === fileInput) return; // Crucial: Prevent infinite loop when fileInput clicked
+                e.preventDefault();
+                fileInput.click();
+            };
             dropZone.onclick = triggerFile;
-            dropZone.ontouchstart = (e) => { if (e.touches.length === 1) triggerFile(e); };
+            dropZone.style.cursor = "pointer";
+            dropZone.ontouchstart = (e) => {
+                if (e.touches.length === 1 && e.target !== fileInput) triggerFile(e);
+            };
         }
 
         if (fileInput) {
