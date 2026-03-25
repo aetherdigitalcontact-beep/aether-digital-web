@@ -2641,11 +2641,12 @@
         // Theme Management (Unified)
         function toggleTheme() {
             const html = document.documentElement;
-            const current = html.getAttribute('data-theme');
+            let current = html.getAttribute('data-theme');
+            if (current !== 'light' && current !== 'dark') current = 'dark'; // Fallback for invalid states
             const target = current === 'light' ? 'dark' : 'light';
 
             html.setAttribute('data-theme', target);
-            localStorage.setItem('theme', target);
+            localStorage.setItem('aesthetic-theme', target);
 
             // Sync all theme buttons/icons
             document.querySelectorAll('#theme-toggle, .theme-btn').forEach(btn => {
@@ -2661,7 +2662,8 @@
 
         // Initialize Theme (Default Dark)
         (function initTheme() {
-            const saved = localStorage.getItem('theme') || 'dark';
+            let saved = localStorage.getItem('aesthetic-theme') || 'dark';
+            if (saved !== 'light' && saved !== 'dark') saved = 'dark'; // Fallback for invalid states inherited
             document.documentElement.setAttribute('data-theme', saved);
             document.querySelectorAll('#theme-toggle, .theme-btn').forEach(btn => {
                 btn.classList.toggle('active', saved === 'dark');

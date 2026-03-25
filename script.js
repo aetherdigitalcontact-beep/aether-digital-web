@@ -807,7 +807,12 @@ const checkbox = document.getElementById('checkbox');
 const body = document.body;
 
 // Check for saved theme
-const currentTheme = localStorage.getItem('theme');
+let currentTheme = localStorage.getItem('theme');
+
+// Sanitize legacy keys leaked from Aesthetic page before isolation
+if (currentTheme === 'dark') currentTheme = 'dark-theme';
+if (currentTheme === 'light') currentTheme = 'light-theme';
+
 if (currentTheme) {
     body.className = currentTheme;
     if (checkbox) {
@@ -827,9 +832,11 @@ if (checkbox) {
     checkbox.addEventListener('change', () => {
         if (checkbox.checked) {
             body.classList.replace('light-theme', 'dark-theme');
+            if (!body.classList.contains('dark-theme')) body.classList.add('dark-theme'); // Safeguard
             localStorage.setItem('theme', 'dark-theme');
         } else {
             body.classList.replace('dark-theme', 'light-theme');
+            if (!body.classList.contains('light-theme')) body.classList.add('light-theme'); // Safeguard
             localStorage.setItem('theme', 'light-theme');
         }
     });
