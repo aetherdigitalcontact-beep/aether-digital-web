@@ -51,12 +51,19 @@
             left: 0;
             width: 100%;
             height: var(--nav-height);
-            background: rgba(247, 246, 242, 0.85);
-            backdrop-filter: blur(20px);
+            background: transparent;
             z-index: 1000;
-            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+            border-bottom: none;
             display: flex;
             align-items: center;
+            transition: all 0.4s ease;
+        }
+
+        .luxury-nav.scrolled {
+            background: rgba(247, 246, 242, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
         .nav-content {
@@ -73,6 +80,11 @@
             gap: 10px;
             font-weight: 800;
             font-size: 1.2rem;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .luxury-nav.scrolled .logo {
             color: var(--text-main);
         }
 
@@ -88,13 +100,17 @@
 
         .nav-links a {
             text-decoration: none;
-            color: var(--text-main);
+            color: rgba(255, 255, 255, 0.9);
             font-weight: 700;
             font-size: 0.8rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             transition: 0.3s;
             position: relative;
+        }
+
+        .luxury-nav.scrolled .nav-links a {
+            color: var(--text-main);
         }
 
         .nav-links a::after {
@@ -146,6 +162,11 @@
             letter-spacing: 0.5px;
         }
 
+        .luxury-nav.scrolled .lang-btn {
+            border-color: rgba(0, 0, 0, 0.1);
+            color: var(--text-muted);
+        }
+
         /* --- ANALYTICS CHART ANIMATIONS --- */
         @keyframes growBar {
             from {
@@ -187,7 +208,7 @@
         }
 
         /* --- MODAL RESPONSIVENESS --- */
-        @media (max-width: 900px) {
+        @media (max-width: 1150px) {
             #property-modal {
                 padding: 10px;
                 display: none;
@@ -327,41 +348,75 @@
         }
 
         .lang-btn {
-            background: transparent;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            color: var(--text-muted);
-            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            padding: 8px 14px;
             font-size: 0.7rem;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
-            border-radius: 6px;
-            transition: 0.3s;
+            border-radius: 10px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            backdrop-filter: blur(5px);
+        }
+
+        .lang-btn:hover {
+            border-color: var(--brand-gold);
+            color: white;
+            transform: translateY(-3px) scale(1.05);
+            background: rgba(197, 160, 89, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
         .lang-btn.active {
             background: var(--brand-gold);
-            color: white;
+            color: #000;
+            border-color: var(--brand-gold);
+            box-shadow: 0 5px 15px rgba(197, 160, 89, 0.4);
+            font-weight: 900;
+        }
+
+        .luxury-nav.scrolled .lang-btn {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.08);
+            color: var(--text-muted);
+        }
+
+        .luxury-nav.scrolled .lang-btn:hover {
+            background: var(--brand-gold);
+            color: #000;
             border-color: var(--brand-gold);
         }
 
         .skyline-menu-btn {
             display: none;
-            background: var(--brand-dark);
+            background: rgba(1, 4, 17, 0.8);
+            backdrop-filter: blur(10px);
             color: white;
-            border: 1px solid rgba(197, 160, 89, 0.3);
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
+            border: 1px solid rgba(197, 160, 89, 0.4);
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
             cursor: pointer;
             align-items: center;
             justify-content: center;
-            transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            padding: 0;
+            outline: none;
+        }
+
+        .skyline-menu-btn i {
+            width: 24px;
+            height: 24px;
         }
 
         .skyline-menu-btn:active {
             transform: scale(0.9);
             background: var(--brand-gold);
+            color: #000;
             border-color: var(--brand-gold);
         }
 
@@ -389,7 +444,7 @@
         }
 
         .hero-overlay {
-            background: linear-gradient(to bottom, rgba(1, 4, 17, 0.3), var(--brand-dark));
+            background: linear-gradient(to bottom, rgba(1, 4, 17, 0.15), rgba(1, 4, 17, 0.7));
             z-index: 1;
         }
 
@@ -397,14 +452,14 @@
             position: absolute;
             inset: 0;
             background-size: cover;
-            background-position: center;
+            background-position: center 25%;
             opacity: 0;
             transition: opacity 1.5s ease;
             animation: kenBurns 30s infinite alternate;
         }
 
         .slide.active {
-            opacity: 0.6;
+            opacity: 0.85;
         }
 
         @keyframes kenBurns {
@@ -413,7 +468,7 @@
             }
 
             to {
-                transform: scale(1.1);
+                transform: scale(1.05);
             }
         }
 
@@ -788,7 +843,7 @@
             gap: 6rem;
         }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 1150px) {
             .footer-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 4rem;
@@ -821,12 +876,18 @@
         }
 
         /* --- MOBILE MEDIA QUERIES --- */
-        @media (max-width: 1024px) {
+        @media (max-width: 1150px) {
 
             .nav-links,
             .lang-switch-showcase,
             .nav-right .view-details-btn {
                 display: none;
+            }
+
+            .nav-right {
+                display: flex;
+                align-items: center;
+                gap: 0;
             }
 
             .skyline-menu-btn {
@@ -850,7 +911,7 @@
             }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1150px) {
             .container {
                 padding: 0 15px;
             }
@@ -1144,23 +1205,167 @@
         /* FINAL FIX FOR ENGINEERING BUTTON */
         #engineering #final-audit-button.btn-audit-shame {
             width: 100% !important;
-            margin-top: 4rem !important;
+            margin-top: 3rem !important;
             justify-content: center !important;
-            padding: 1.5rem !important;
+            padding: 1.25rem !important;
             background: transparent !important;
             border: 1px solid rgba(197, 160, 89, 0.4) !important;
             color: #ffffff !important;
-            border-radius: 20px !important;
-            transition: all 0.3s ease !important;
+            border-radius: 16px !important;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+            font-weight: 800 !important;
+            font-size: 0.9rem !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
         }
 
+        #engineering #final-audit-button.btn-audit-shame:active,
         #engineering #final-audit-button.btn-audit-shame:hover {
-            background: #c5a059 !important;
-            /* Gold */
+            background: var(--brand-gold) !important;
             color: #000000 !important;
-            /* Black */
-            border-color: #c5a059 !important;
-            box-shadow: 0 15px 35px rgba(197, 160, 89, 0.4) !important;
+            border-color: var(--brand-gold) !important;
+            box-shadow: 0 15px 35px rgba(197, 160, 89, 0.3) !important;
+            transform: translateY(-5px) !important;
+        }
+
+        /* TRUST BANNER STYLES */
+        .trust-banner {
+            background: #020617;
+            padding: 4rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            z-index: 10;
+        }
+
+        .trust-grid {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 3rem;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            text-align: left;
+        }
+
+        .trust-icon-box {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(197, 160, 89, 0.1);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            color: var(--brand-gold);
+        }
+
+        .trust-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .trust-val {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: white;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+        }
+
+        .trust-label {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--brand-gold);
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+        }
+
+        @media (max-width: 768px) {
+            .trust-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1.5rem;
+                justify-items: center;
+                /* Centering the items */
+            }
+
+            .trust-banner {
+                padding: 3rem 1rem;
+            }
+
+            .trust-item {
+                gap: 0.8rem;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .trust-val {
+                font-size: 1.1rem;
+            }
+
+            .trust-label {
+                font-size: 0.55rem;
+                letter-spacing: 1.5px;
+            }
+
+            .trust-icon-box {
+                width: 40px;
+                height: 40px;
+                flex-shrink: 0;
+            }
+
+            .trust-icon-box i {
+                width: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .trust-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            #engineering {
+                padding: 6rem 0 !important;
+            }
+
+            #engineering .container>div {
+                gap: 3rem !important;
+            }
+
+            #engineering h2 {
+                font-size: 2.2rem !important;
+                margin: 1.5rem 0 !important;
+            }
+
+            #engineering p {
+                font-size: 1rem !important;
+                margin-bottom: 2rem !important;
+            }
+
+            .audit-card {
+                padding: 2.5rem 1.5rem !important;
+            }
+
+            .stat-circle {
+                width: 70px !important;
+                height: 70px !important;
+                font-size: 1.3rem !important;
+                flex-shrink: 0;
+            }
+
+            #engineering #final-audit-button.btn-audit-shame {
+                font-size: 0.75rem !important;
+                padding: 1rem 0.5rem !important;
+                letter-spacing: 0.5px !important;
+            }
         }
     </style>
 </head>
@@ -1227,12 +1432,26 @@
 
     <header class="showcase-hero">
         <div class="hero-slider">
+            <!-- Slide 1: External Cliff Side -->
             <div class="slide active"
-                style="background-image: url('SKYLINE ESTATES/jpg/54eb2822-2abd-41a6-b9d0-bda905e528f7.jpg');"></div>
+                style="background-image: url('SKYLINE ESTATES/jpg/54eb2822-2abd-41a6-b9d0-bda905e528f7.jpg'); background-position: center 25%;">
+            </div>
+            <!-- Slide 2: Luxury Infinity Pool -->
             <div class="slide"
-                style="background-image: url('SKYLINE ESTATES/jpg/2c4d311f-8399-40f5-a999-5018fce0ad74.jpg');"></div>
+                style="background-image: url('SKYLINE ESTATES/jpg/2c4d311f-8399-40f5-a999-5018fce0ad74.jpg'); background-position: center 25%;">
+            </div>
+            <!-- Slide 3: Interior Grand Living (Adjusted Focus) -->
             <div class="slide"
-                style="background-image: url('SKYLINE ESTATES/jpg/ca7121c5-895a-4f4a-9c17-96d2ff50d41b.jpg');"></div>
+                style="background-image: url('SKYLINE ESTATES/jpg/ca7121c5-895a-4f4a-9c17-96d2ff50d41b.jpg'); background-position: center 45%;">
+            </div>
+            <!-- Slide 4: Modernist Facade -->
+            <div class="slide"
+                style="background-image: url('SKYLINE ESTATES/jpg/5fb21786-b89c-46d7-8cd2-7779d62bf007.jpg'); background-position: center 25%;">
+            </div>
+            <!-- Slide 5: Twilight Architecture -->
+            <div class="slide"
+                style="background-image: url('SKYLINE ESTATES/jpg/a6c72dcc-8b04-4753-ac0d-3f237f913401.jpg'); background-position: center bottom;">
+            </div>
         </div>
         <div class="hero-overlay"></div>
         <div class="hero-content">
@@ -1245,56 +1464,52 @@
         </div>
     </header>
 
+
+
     <div class="container">
-        <div class="search-container">
-            <div class="search-bar">
-                <div class="search-group">
-                    <label data-i18n="skyline-search-loc">Location</label>
-                    <select id="filter-location">
-                        <option value="all" data-i18n="skyline-opt-all-loc">All Locations</option>
-                        <option value="mayfair" data-i18n="skyline-opt-mayfair">Mayfair, London</option>
-                        <option value="kensington" data-i18n="skyline-opt-ken">Kensington, London</option>
-                        <option value="marbella" data-i18n="skyline-opt-mar">Marbella, Spain</option>
-                        <option value="malibu" data-i18n="skyline-opt-mal">Malibu, USA</option>
-                        <option value="hampstead" data-i18n="skyline-opt-hampstead">Hampstead, London</option>
-                    </select>
-                </div>
-                <div class="search-group">
-                    <label data-i18n="skyline-search-type">Asset Type</label>
-                    <select id="filter-type">
-                        <option value="all" data-i18n="skyline-opt-all-type">Any Type</option>
-                        <option value="villa" data-i18n="skyline-opt-villa">Luxury Villa</option>
-                        <option value="penthouse" data-i18n="skyline-opt-pent">Penthouse</option>
-                        <option value="estate" data-i18n="skyline-opt-estate">Royal Estate</option>
-                        <option value="residence" data-i18n="skyline-opt-res">Luxury Residence</option>
-                    </select>
-                </div>
-                <div class="search-group">
-                    <label data-i18n="skyline-search-budget">Budget</label>
-                    <select id="filter-budget">
-                        <option value="all" data-i18n="skyline-opt-all-budget">Any Budget</option>
-                        <option value="5">Under $10M</option>
-                        <option value="10">$10M - $20M</option>
-                        <option value="20">$20M+</option>
-                    </select>
-                </div>
-                <button class="view-details-btn" id="apply-filters"
-                    style="background: var(--brand-gold); color: #000; border-radius: 100px; padding: 1.2rem 2.5rem; justify-content: center;"
-                    data-i18n="skyline-btn-explore">
-                    Explore Assets
-                </button>
-            </div>
-        </div>
     </div>
-    <!-- Trust Bar -->
-    <div class="trust-bar"
-        style="background: var(--brand-light); border-bottom: 2px solid var(--brand-gold); padding: 4rem 0;">
-        <div class="container brand-logos"
-            style="display: flex; justify-content: space-between; align-items: center; color: #94a3b8; font-weight: 700; font-size: 0.85rem; letter-spacing: 2.5px; opacity: 0.6; flex-wrap: wrap; gap: 2rem;">
-            <span>SOTHEBY'S REALTY</span>
-            <span>ARCHITECTURAL DIGEST</span>
-            <span>VOGUE LIVING</span>
-            <span>MANSION GLOBAL</span>
+    <!-- REPLACED OLD BRAND BAR WITH NEW TRUST & AUTHORITY BANNER -->
+    <div class="trust-banner" style="margin-top: 4rem;">
+        <div class="container">
+            <div class="trust-grid">
+                <div class="trust-item">
+                    <div class="trust-icon-box">
+                        <i data-lucide="award" style="width: 24px;"></i>
+                    </div>
+                    <div class="trust-content">
+                        <span class="trust-val">100% SEO</span>
+                        <span class="trust-label" data-i18n="trust-seo">Optimized</span>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon-box" style="background: rgba(197, 160, 89, 0.2);">
+                        <i data-lucide="zap" style="width: 24px;"></i>
+                    </div>
+                    <div class="trust-content">
+                        <span class="trust-val" style="color: var(--brand-gold);">ZERO LATENCY</span>
+                        <span class="trust-label" data-i18n="trust-speed">Response Time</span>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon-box">
+                        <i data-lucide="globe" style="width: 24px;"></i>
+                    </div>
+                    <div class="trust-content">
+                        <span class="trust-val">GLOBAL REACH</span>
+                        <span class="trust-label" data-i18n="trust-reach">2026 Ready</span>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon-box">
+                        <i data-lucide="handshake" style="width: 24px;"></i>
+                    </div>
+                    <div class="trust-content">
+                        <span class="trust-val" style="font-weight: 400; font-style: italic; color: #64748b;">TRUSTED
+                            PARTNERS</span>
+                        <span class="trust-label" data-i18n="trust-badge">Aether Engineering</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1344,6 +1559,46 @@
                     Propiedades de alta liquidez con valor arquitectónico y técnico verificado.
                 </p>
                 <div class="aesthetic-underline"></div>
+            </div>
+
+            <div class="search-container" style="margin-top: -2rem;">
+                <div class="search-bar">
+                    <div class="search-group">
+                        <label data-i18n="skyline-search-loc">Location</label>
+                        <select id="filter-location">
+                            <option value="all" data-i18n="skyline-opt-all-loc">All Locations</option>
+                            <option value="mayfair" data-i18n="skyline-opt-mayfair">Mayfair, London</option>
+                            <option value="kensington" data-i18n="skyline-opt-ken">Kensington, London</option>
+                            <option value="marbella" data-i18n="skyline-opt-mar">Marbella, Spain</option>
+                            <option value="malibu" data-i18n="skyline-opt-mal">Malibu, USA</option>
+                            <option value="hampstead" data-i18n="skyline-opt-hampstead">Hampstead, London</option>
+                        </select>
+                    </div>
+                    <div class="search-group">
+                        <label data-i18n="skyline-search-type">Asset Type</label>
+                        <select id="filter-type">
+                            <option value="all" data-i18n="skyline-opt-all-type">Any Type</option>
+                            <option value="villa" data-i18n="skyline-opt-villa">Luxury Villa</option>
+                            <option value="penthouse" data-i18n="skyline-opt-pent">Penthouse</option>
+                            <option value="estate" data-i18n="skyline-opt-estate">Royal Estate</option>
+                            <option value="residence" data-i18n="skyline-opt-res">Luxury Residence</option>
+                        </select>
+                    </div>
+                    <div class="search-group">
+                        <label data-i18n="skyline-search-budget">Budget</label>
+                        <select id="filter-budget">
+                            <option value="all" data-i18n="skyline-opt-all-budget">Any Budget</option>
+                            <option value="5">Under $10M</option>
+                            <option value="10">$10M - $20M</option>
+                            <option value="20">$20M+</option>
+                        </select>
+                    </div>
+                    <button class="view-details-btn" id="apply-filters"
+                        style="background: var(--brand-gold); color: #000; border-radius: 100px; padding: 1.2rem 2.5rem; justify-content: center;"
+                        data-i18n="skyline-btn-explore">
+                        Explore Assets
+                    </button>
+                </div>
             </div>
 
             <div class="property-grid" id="main-property-grid">
@@ -1775,7 +2030,7 @@
                     </div>
                 </div>
 
-                <div
+                <div class="audit-card"
                     style="flex: 1; min-width: 320px; background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255,255,255,0.08); padding: 4rem 3rem; border-radius: 40px; backdrop-filter: blur(20px); box-shadow: 0 40px 100px rgba(0,0,0,0.4); position: relative;">
                     <div
                         style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: var(--brand-gold); opacity: 0.1; filter: blur(80px); border-radius: 50%;">
@@ -1788,7 +2043,7 @@
 
                     <div style="display: grid; gap: 3rem;">
                         <div style="display: flex; gap: 2.5rem; align-items: center;">
-                            <div
+                            <div class="stat-circle"
                                 style="width: 85px; height: 85px; border-radius: 50%; border: 4px solid var(--brand-gold); display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; font-size: 1.6rem; box-shadow: 0 0 30px rgba(197, 160, 89, 0.2);">
                                 100</div>
                             <div>
@@ -1798,7 +2053,7 @@
                             </div>
                         </div>
                         <div style="display: flex; gap: 2.5rem; align-items: center;">
-                            <div
+                            <div class="stat-circle"
                                 style="width: 85px; height: 85px; border-radius: 50%; border: 4px solid #10b981; display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; font-size: 1.6rem; box-shadow: 0 0 30px rgba(16, 185, 129, 0.2);">
                                 100</div>
                             <div>
@@ -1886,7 +2141,7 @@
                                 onmouseover="this.style.color='var(--brand-gold)'"
                                 onmouseout="this.style.color='#64748b'" data-i18n="skyline-feature-1-title">Bespoke
                                 UI/UX</a></li>
-                        <li style="margin-bottom: 1rem;"><a href="#amenities"
+                        <li style="margin-bottom: 1rem;"><a href="#analytics"
                                 style="color: #64748b; text-decoration: none; transition: 0.3s;"
                                 onmouseover="this.style.color='var(--brand-gold)'"
                                 onmouseout="this.style.color='#64748b'" data-i18n="skyline-nav-analysis">ROI
@@ -1900,10 +2155,14 @@
                     <ul style="list-style: none; padding: 0;">
                         <li style="margin-bottom: 1rem;"><a href="privacy.html"
                                 style="color: #475569; text-decoration: none; transition: 0.3s;"
-                                data-i18n="skyline-footer-privacy">Privacy Policy</a></li>
+                                onmouseover="this.style.color='var(--brand-gold)'"
+                                onmouseout="this.style.color='#475569'" data-i18n="skyline-footer-privacy">Privacy
+                                Policy</a></li>
                         <li style="margin-bottom: 1rem;"><a href="terms.html"
                                 style="color: #475569; text-decoration: none; transition: 0.3s;"
-                                data-i18n="skyline-footer-terms">Terms of Service</a>
+                                onmouseover="this.style.color='var(--brand-gold)'"
+                                onmouseout="this.style.color='#475569'" data-i18n="skyline-footer-terms">Terms of
+                                Service</a>
                         </li>
                     </ul>
                 </div>
@@ -2010,7 +2269,8 @@
             currentSlide = (currentSlide + 1) % slides.length;
             slides[currentSlide].classList.add('active');
         }
-        setInterval(nextSlide, 7000);
+        // Increased interval to 7.5 seconds for a more relaxed, premium cinematic feel
+        setInterval(nextSlide, 7500);
 
         // FILTER LOGIC
         const applyBtn = document.getElementById('apply-filters');
@@ -2095,6 +2355,16 @@
         }, { threshold: 0.1 });
 
         document.querySelectorAll('.section-reveal').forEach(section => observer.observe(section));
+
+        // NAV SCROLL EFFECT
+        const nav = document.querySelector('.luxury-nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
     </script>
 </body>
 

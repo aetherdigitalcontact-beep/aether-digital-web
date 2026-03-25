@@ -12,17 +12,18 @@
     <!-- LinkedIn Author info -->
     <meta name="author" content="Exequiel Gutierrez Nicolas">
     <!-- Open Graph / LinkedIn / Facebook Meta Tags -->
-    <meta property="og:title" content="Aether Digital | Web Architecture & Python Automation">
+    <meta property="og:title" content="Aether Digital | Transforming Complexity into Excellence">
     <meta property="og:description"
-        content="Premium web architecture and data processing automation. We scale B2B businesses.">
+        content="High-end web design and intelligent automation. We build the tools your business needs to scale without limits.">
     <meta property="og:image" content="https://aether-digital-web.vercel.app/images/banner.png">
     <meta property="og:url" content="https://aether-digital-web.vercel.app/">
     <meta property="og:type" content="website">
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Aether Digital | Tech Agency">
-    <meta name="twitter:description" content="Premium web architecture and data processing automation.">
+    <meta name="twitter:title" content="Aether Digital | Transforming Complexity into Excellence">
+    <meta name="twitter:description"
+        content="High-end web design and intelligent automation for high-performance businesses.">
     <meta name="twitter:image" content="https://aether-digital-web.vercel.app/images/banner.png">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -65,10 +66,10 @@
         <ul class="nav-links">
             <li><a href="#home" data-i18n="nav-home">Inicio</a></li>
             <li><a href="#services" data-i18n="nav-services">Servicios</a></li>
-            <li><a href="showcase-realestate.html" class="special-nav-btn"
-                    style="color: var(--accent); font-weight: 700;"><i data-lucide="sparkles"
-                        style="width:14px; margin-right:5px;"></i> <span data-i18n="nav-special-showcase">Proyectos
-                        Destacados</span></a></li>
+            <li><a href="skylineestates.html" class="nav-btn-featured">
+                    <i data-lucide="sparkles" style="width:14px; margin-right:5px;"></i>
+                    <span data-i18n="nav-special-showcase">Proyectos Destacados</span>
+                </a></li>
             <li><a href="#portfolio" data-i18n="nav-portfolio">Proyectos</a></li>
             <li><a href="#expertise" data-i18n="nav-expertise">Filosofía</a></li>
             <li><a href="#faq" data-i18n="nav-faq">FAQ</a></li>
@@ -146,20 +147,52 @@
             <div class="portfolio-item glass case-study-card featured-project"
                 style="border: 2px solid var(--accent); background: linear-gradient(rgba(2, 6, 23, 0.9), rgba(2, 6, 23, 0.9)), url('images/skyline estates.png'); background-size: cover;">
                 <div class="case-header" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                    <span class="badge" style="background: var(--accent); color: white;">Showcase Premium</span>
-                    <h3 style="color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">Skyline Estates</h3>
+                    <span class="badge" style="background: var(--accent); color: white;"
+                        data-i18n="showcase-badge-1">Showcase Premium</span>
+                    <h3 style="color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.5);" data-i18n="showcase-title-1">
+                        Skyline Estates</h3>
                 </div>
                 <div class="case-metrics">
                     <div class="case-metric" style="background: rgba(255,255,255,0.05);">
-                        <span class="metric-value" style="font-size: 2.5rem;">Real Estate</span>
-                        <span class="metric-label">Premium Industry</span>
+                        <span class="metric-value" style="font-size: 2.5rem;" data-i18n="showcase-metric-1">Real
+                            Estate</span>
+                        <span class="metric-label" data-i18n="showcase-label-1">Premium Industry</span>
                     </div>
                 </div>
-                <p class="case-description" style="color: rgba(255,255,255,0.8);">A high-end real estate infrastructure
-                    featuring AI-driven property valuation and autonomous management systems.</p>
+                <p class="case-description" style="color: rgba(255,255,255,0.8);" data-i18n="showcase-desc-1">A high-end
+                    real estate infrastructure featuring AI-driven property valuation and autonomous management systems.
+                </p>
                 <div class="case-details">
-                    <a href="showcase-realestate.html" class="btn-primary"
-                        style="display: block; text-align: center; margin-top: 1rem;">Launch Live Experience</a>
+                    <a href="skylineestates.html" class="btn-primary"
+                        style="display: block; text-align: center; margin-top: 1rem;" data-i18n="showcase-btn-1">Launch
+                        Live Experience</a>
+                </div>
+            </div>
+
+            <!-- Showcase Project: Aether Aesthetic | Medicina Estética -->
+            <div class="portfolio-item glass case-study-card featured-project"
+                style="border: 2px solid #c5a059; background: linear-gradient(rgba(2, 6, 23, 0.9), rgba(2, 6, 23, 0.9)), url('AETHER ASSETS/aesthetic_hero.png'); background-size: cover;">
+                <div class="case-header" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <span class="badge" style="background: #c5a059; color: black;" data-i18n="showcase-badge-2">Showcase
+                        Premium</span>
+                    <h3 style="color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.5);" data-i18n="showcase-title-2">
+                        Aether Aesthetic</h3>
+                </div>
+                <div class="case-metrics">
+                    <div class="case-metric"
+                        style="background: rgba(255,255,255,0.05); border-color: rgba(197, 160, 89, 0.3);">
+                        <span class="metric-value" style="font-size: 2.5rem; color: #c5a059;"
+                            data-i18n="showcase-metric-2">Medical</span>
+                        <span class="metric-label" data-i18n="showcase-label-2">Aesthetic Clinic</span>
+                    </div>
+                </div>
+                <p class="case-description" style="color: rgba(255,255,255,0.8);" data-i18n="showcase-desc-2">
+                    Premium medical clinic infrastructure featuring AI skin analysis, smart patient scheduling, and
+                    luxury UX design.</p>
+                <div class="case-details">
+                    <a href="showcase-aesthetic.html" class="btn-primary"
+                        style="display: block; text-align: center; margin-top: 1rem; background: linear-gradient(135deg, #c5a059, #fdfdfc); color: #000;"
+                        data-i18n="showcase-btn-2">Launch Live Experience</a>
                 </div>
             </div>
 
