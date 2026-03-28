@@ -6,12 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="contact-page-title">Onboarding & Contacto | Aether Digital</title>
     <link rel="icon" type="image/png" href="images/favicon.png">
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Sora:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="style.css">
@@ -99,8 +101,8 @@
             margin-bottom: 0.8rem;
         }
 
-        .form-group input, 
-        .form-group select, 
+        .form-group input,
+        .form-group select,
         .form-group textarea {
             width: 100%;
             background: rgba(0, 0, 0, 0.2);
@@ -119,8 +121,8 @@
             background: rgba(255, 255, 255, 0.5);
         }
 
-        .form-group input:focus, 
-        .form-group select:focus, 
+        .form-group input:focus,
+        .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
             border-color: var(--accent);
@@ -163,9 +165,11 @@
             .form-grid {
                 grid-template-columns: 1fr;
             }
+
             .form-group.full-width {
                 grid-column: span 1;
             }
+
             .contact-glass-card {
                 padding: 2.5rem 1.5rem;
                 margin: 0 1rem;
@@ -230,7 +234,8 @@
                     <button class="lang-btn" data-lang="en">EN</button>
                     <button class="lang-btn" data-lang="pt">PT</button>
                 </div>
-                <a href="index.html" class="btn-outline" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;" data-i18n="nav-back">Volver</a>
+                <a href="index.html" class="btn-outline" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;"
+                    data-i18n="nav-back">Volver</a>
             </div>
         </div>
     </nav>
@@ -248,29 +253,40 @@
                 <div class="spam-defense-banner highlight-border">
                     <i data-lucide="shield-alert" style="width: 32px; height: 32px;"></i>
                     <p data-i18n="contact-defense-desc">
-                        <strong>Protocolo de Alta Prioridad:</strong> Este portal es exclusivamente para propuestas de negocio y contratación de servicios. No se atenderán solicitudes de empleo, propuestas de outsourcing o spam.
+                        <strong>Protocolo de Alta Prioridad:</strong> Este portal es exclusivamente para propuestas de
+                        negocio y contratación de servicios. No se atenderán solicitudes de empleo, propuestas de
+                        outsourcing o spam.
                     </p>
                 </div>
 
                 <div id="form-state">
-                    <h1 class="serif" style="font-size: 2.5rem; margin-bottom: 0.5rem;" data-i18n="contact-title">Inicie su Proyecto</h1>
-                    <p style="color: var(--text-muted); margin-bottom: 3rem;" data-i18n="contact-subtitle">Complete los detalles para una evaluación técnica de su caso.</p>
+                    <h1 class="serif" style="font-size: 2.5rem; margin-bottom: 0.5rem;" data-i18n="contact-title">Inicie
+                        su Proyecto</h1>
+                    <p style="color: var(--text-muted); margin-bottom: 3rem;" data-i18n="contact-subtitle">Complete los
+                        detalles para una evaluación técnica de su caso.</p>
 
-                    <form action="https://formspree.io/f/xvgzvjzw" method="POST" id="contact-form" class="form-grid">
+                    <form action="https://formspree.io/f/mjgpgqad" method="POST" id="contact-form" class="form-grid">
                         <div class="form-group">
                             <label data-i18n="contact-label-name">Nombre Completo</label>
-                            <input type="text" name="name" required placeholder="Exequiel Gutierrez" data-i18n-placeholder="contact-placeholder-name">
+                            <input type="text" name="name" required minlength="5"
+                                pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ]+\s+[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ].*$"
+                                title="Por favor, ingrese su nombre completo (nombre y apellido)"
+                                placeholder="Exequiel Gutierrez" data-i18n-placeholder="contact-placeholder-name">
                         </div>
                         <div class="form-group">
                             <label data-i18n="contact-label-email">Email Corporativo</label>
-                            <input type="email" name="_replyto" required placeholder="empresa@partner.com" data-i18n-placeholder="contact-placeholder-email">
+                            <input type="email" name="email" required placeholder="empresa@partner.com"
+                                data-i18n-placeholder="contact-placeholder-email">
                         </div>
                         <div class="form-group">
                             <label data-i18n="contact-label-industry">Industria</label>
                             <select name="industry" required>
-                                <option value="Medical / Aesthetic" data-i18n="contact-opt-medical">Médica / Estética</option>
-                                <option value="Real Estate" data-i18n="contact-opt-realestate">Bienes Raíces de Lujo</option>
-                                <option value="E-commerce / Retail" data-i18n="contact-opt-ecommerce">E-commerce / Minorista</option>
+                                <option value="Medical / Aesthetic" data-i18n="contact-opt-medical">Médica / Estética
+                                </option>
+                                <option value="Real Estate" data-i18n="contact-opt-realestate">Bienes Raíces de Lujo
+                                </option>
+                                <option value="E-commerce / Retail" data-i18n="contact-opt-ecommerce">E-commerce /
+                                    Minorista</option>
                                 <option value="SAAS / Tech" data-i18n="contact-opt-saas">SaaS / Tecnología</option>
                                 <option value="Other" data-i18n="contact-opt-other">Otros</option>
                             </select>
@@ -285,7 +301,9 @@
                         </div>
                         <div class="form-group full-width">
                             <label data-i18n="contact-label-message">Detalles del Proyecto</label>
-                            <textarea name="message" rows="5" required placeholder="Describa brevemente lo que necesita automatizar o diseñar..." data-i18n-placeholder="contact-placeholder-message"></textarea>
+                            <textarea name="message" rows="5" required minlength="20"
+                                placeholder="Describa brevemente lo que necesita automatizar o diseñar (mínimo 20 caracteres)..."
+                                data-i18n-placeholder="contact-placeholder-message"></textarea>
                         </div>
 
                         <!-- Anti-spam honeypot -->
@@ -305,9 +323,13 @@
                     <div class="success-icon">
                         <i data-lucide="check" style="width: 40px; height: 40px;"></i>
                     </div>
-                    <h2 class="serif" style="font-size: 2.5rem; margin-bottom: 1rem;" data-i18n="contact-success-title">Propuesta Recibida</h2>
-                    <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 2rem;" data-i18n="contact-success-desc">
-                        Su requerimiento técnica ha sido ingresado en nuestra cola de alta prioridad. El equipo de Aether Digital evaluará la viabilidad de su proyecto y recibirá una respuesta en menos de 24 horas.
+                    <h2 class="serif" style="font-size: 2.5rem; margin-bottom: 1rem;" data-i18n="contact-success-title">
+                        Propuesta Recibida</h2>
+                    <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 2rem;"
+                        data-i18n="contact-success-desc">
+                        Su requerimiento técnica ha sido ingresado en nuestra cola de alta prioridad. El equipo de
+                        Aether Digital evaluará la viabilidad de su proyecto y recibirá una respuesta en menos de 24
+                        horas.
                     </p>
                     <a href="index.html" class="btn-primary" data-i18n="nav-back">Volver al Inicio</a>
                 </div>
@@ -324,36 +346,62 @@
 
         form.onsubmit = async (e) => {
             e.preventDefault();
+
+            // Check for name (at least two words)
+            const nameInput = form.querySelector('input[name="name"]');
+            const nameValue = nameInput.value.trim();
+            if (!nameValue.includes(' ')) {
+                alert('Por favor, ingrese su nombre completo (nombre y apellido).');
+                nameInput.focus();
+                return;
+            }
+
             const submitBtn = form.querySelector('.btn-submit');
             const originalText = submitBtn.innerHTML;
-            
+
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<div class="loader"></div>';
 
-            const formData = new FormData(form);
-            const response = await fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            });
+            try {
+                // IMPORTANT: Formspree requires a "Form ID" (e.g., https://formspree.io/f/XXXXXX) for AJAX to work.
+                // Using a direct email address will return a 405 error on the AJAX call.
+                const formData = new FormData(form);
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
 
-            if (response.ok) {
-                formState.style.display = 'none';
-                successState.style.display = 'block';
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-                alert('Ocurrió un error. Por favor intente de nuevo o contacte vía LinkedIn.');
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalText;
+                if (response.ok) {
+                    formState.style.display = 'none';
+                    successState.style.display = 'block';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    // Detect if the error is 405 (AJAX not allowed with direct email)
+                    if (response.status === 405) {
+                        alert('CONFIGURACIÓN REQUERIDA: Para un envío sin recargar la página, debe crear una cuenta en Formspree.io y usar el "Form ID" en lugar de su mail directamente. \n\nPor ahora, se enviará de forma tradicional.');
+                        form.submit(); // Fallback to standard submission
+                    } else {
+                        const data = await response.json();
+                        alert(data && data.errors ? data.errors.map(err => err.message).join(", ") : 'Error (' + response.status + '). Intente de nuevo.');
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalText;
+                    }
+                }
+            } catch (error) {
+                console.error('Submission error:', error);
+                alert('Error de conexión. Intentando envío tradicional...');
+                form.submit(); // Final fallback
             }
         };
 
         // Initialize Neural Canvas on this page
-        if(typeof initNeuralCanvas === 'function') {
+        if (typeof initNeuralCanvas === 'function') {
             initNeuralCanvas();
         }
     </script>
 </body>
+
 </html>
