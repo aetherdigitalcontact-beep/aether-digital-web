@@ -265,7 +265,7 @@
                     <p style="color: var(--text-muted); margin-bottom: 3rem;" data-i18n="contact-subtitle">Complete los
                         detalles para una evaluación técnica de su caso.</p>
 
-                    <form action="https://formspree.io/f/mjgpgqad" method="POST" id="contact-form" class="form-grid">
+                    <form action="/api/send" method="POST" id="contact-form" class="form-grid">
                         <div class="form-group">
                             <label data-i18n="contact-label-name">Nombre Completo</label>
                             <input type="text" name="name" required minlength="5"
@@ -365,13 +365,17 @@
             try {
                 // IMPORTANT: Formspree requires a "Form ID" (e.g., https://formspree.io/f/XXXXXX) for AJAX to work.
                 // Using a direct email address will return a 405 error on the AJAX call.
+                // Convert FormData to JSON for the API route
                 const formData = new FormData(form);
+                const jsonData = Object.fromEntries(formData.entries());
+
                 const response = await fetch(form.action, {
                     method: 'POST',
-                    body: formData,
                     headers: {
+                        'Content-Type': 'application/json',
                         'Accept': 'application/json'
-                    }
+                    },
+                    body: JSON.stringify(jsonData)
                 });
 
                 if (response.ok) {
@@ -379,16 +383,22 @@
                     successState.style.display = 'block';
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 } else {
-                    // Detect if the error is 405 (AJAX not allowed with direct email)
-                    if (response.status === 405) {
-                        alert('CONFIGURACIÓN REQUERIDA: Para un envío sin recargar la página, debe crear una cuenta en Formspree.io y usar el "Form ID" en lugar de su mail directamente. \n\nPor ahora, se enviará de forma tradicional.');
-                        form.submit(); // Fallback to standard submission
-                    } else {
+                    // Try to extract error message from response
+                    let errorMessage = 'Error (' + response.status + '). Intente de nuevo.';
+                    try {
                         const data = await response.json();
-                        alert(data && data.errors ? data.errors.map(err => err.message).join(", ") : 'Error (' + response.status + '). Intente de nuevo.');
-                        submitBtn.disabled = false;
-                        submitBtn.innerHTML = originalText;
+                        if (data && data.error) errorMessage = data.error;
+                        if (data && data.errors) errorMessage = data.errors.map(err => err.message).join(", ");
+                    } catch (e) { }
+
+                    // Detect if the error is 405 or 500 (API not ready or config missing)
+                    if (response.status === 405 || response.status === 500) {
+                        alert('CONFIGURACIÓN REQUERIDA: El sistema de envío interno aún no está activo. Asegúrese de haber configurado la RESEND_API_KEY en Vercel.');
+                    } else {
+                        alert(errorMessage);
                     }
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
                 }
             } catch (error) {
                 console.error('Submission error:', error);
