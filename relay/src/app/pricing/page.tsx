@@ -25,6 +25,10 @@ export default function PricingPage() {
     const [isAnnual, setIsAnnual] = useState(false);
     const [isArgentina, setIsArgentina] = useState(false);
 
+    // User Session State
+    const [userPlan, setUserPlan] = useState<string | null>(null);
+    const [userEmail, setUserEmail] = useState<string | null>(null);
+
     // Load saved settings
     useEffect(() => {
         const savedLang = localStorage.getItem('relay-lang') as Language;
@@ -36,6 +40,17 @@ export default function PricingPage() {
         if (navigator.language.includes('es-AR') || Intl.DateTimeFormat().resolvedOptions().timeZone.includes('Buenos_Aires')) {
             setIsArgentina(true);
         }
+
+        // Fetch user session to prevent downgrades and prefill email
+        fetch('/api/auth/me')
+            .then(res => res.ok ? res.json() : null)
+            .then(data => {
+                if (data?.user) {
+                    setUserPlan(data.user.plan?.toLowerCase() || null);
+                    setUserEmail(data.user.email || null);
+                }
+            })
+            .catch(() => { });
     }, []);
 
     // Save language whenever it changes
@@ -58,7 +73,35 @@ export default function PricingPage() {
     };
 
     const handlePlanSelect = (planKey: 'starter' | 'pro') => {
-        const url = CHECKOUT_LINKS[planKey][isAnnual ? 'yearly' : 'monthly'];
+        // Prevent Downgrade or Redundant Purchases
+        if (userPlan) {
+            const planValue: Record<string, number> = {
+                free: 0,
+                hobby: 0,
+                starter: 1,
+                pro: 2,
+                enterprise: 3
+            };
+
+            const targetValue = planValue[planKey] || 0;
+            const userValue = planValue[userPlan] || 0;
+
+            if (userValue > targetValue) {
+                alert(`Acción Denegada: Actualmente cuentas con el plan ${userPlan.toUpperCase()}. No puedes cambiar a un plan inferior (${planKey.toUpperCase()}) desde aquí.`);
+                return;
+            } else if (userValue === targetValue && targetValue > 0) {
+                alert(`Acción Denegada: ¡Ya tienes el plan ${planKey.toUpperCase()} activado en tu cuenta!`);
+                return;
+            }
+        }
+
+        let url = CHECKOUT_LINKS[planKey][isAnnual ? 'yearly' : 'monthly'];
+
+        // Auto-fill the email in the Lemon Squeezy checkout if the user is logged in
+        if (userEmail) {
+            url += `&checkout[email]=${encodeURIComponent(userEmail)}`;
+        }
+
         window.location.href = url;
     };
 
