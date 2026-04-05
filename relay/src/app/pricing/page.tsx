@@ -29,6 +29,9 @@ export default function PricingPage() {
     const [userPlan, setUserPlan] = useState<string | null>(null);
     const [userEmail, setUserEmail] = useState<string | null>(null);
 
+    // Mercado Pago Loader
+    const [isMPLoading, setIsMPLoading] = useState(false);
+
     // Load saved settings
     useEffect(() => {
         const savedLang = localStorage.getItem('relay-lang') as Language;
@@ -102,7 +105,31 @@ export default function PricingPage() {
             url += `&checkout[email]=${encodeURIComponent(userEmail)}`;
         }
 
+
         window.location.href = url;
+    };
+
+    const handleMPCheckout = async () => {
+        if (userPlan && (userPlan === 'pro' || userPlan === 'enterprise')) {
+            alert(`Acción Denegada: Actualmente cuentas con el plan ${userPlan.toUpperCase()}. ¡No tienes necesidad de comprar esta oferta limitada!`);
+            return;
+        }
+
+        setIsMPLoading(true);
+        try {
+            const res = await fetch('/api/checkout/mercadopago', { method: 'POST' });
+            const data = await res.json();
+            if (res.ok && data.url) {
+                window.location.href = data.url;
+            } else {
+                alert(data.error || 'Ocurrió un error en la conexión con Mercado Pago.');
+                setIsMPLoading(false);
+            }
+        } catch (error) {
+            console.error(error);
+            alert('Fallo de conexión crítico. Revisa tu internet.');
+            setIsMPLoading(false);
+        }
     };
 
     return (
@@ -218,8 +245,17 @@ export default function PricingPage() {
                             <p className="text-sm text-slate-400 font-medium">{d.pricing.regional.desc}</p>
                         </div>
                     </div>
-                    <button className="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-black rounded-xl transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] active:scale-95 text-sm uppercase tracking-wider">
-                        {d.pricing.regional.cta}
+                    <button
+                        onClick={handleMPCheckout}
+                        disabled={isMPLoading}
+                        className="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-black rounded-xl transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] active:scale-95 text-sm uppercase tracking-wider disabled:opacity-50 disabled:active:scale-100 flex items-center gap-2"
+                    >
+                        {isMPLoading ? (
+                            <>
+                                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                                PROCESANDO...
+                            </>
+                        ) : d.pricing.regional.cta}
                     </button>
                 </motion.div>
             )}
