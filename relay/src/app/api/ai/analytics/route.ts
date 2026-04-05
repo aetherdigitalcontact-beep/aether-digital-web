@@ -80,8 +80,9 @@ export async function GET(req: NextRequest) {
         const bestTimeStr = `${bestHour.toString().padStart(2, '0')}:00 - ${(bestHour + 1).toString().padStart(2, '0')}:00 UTC`;
 
         // 5. Platform Efficiency
-        const platformEfficiency: Record<string, { total: number, successRate: string }> = {};
-        const platforms = ['telegram', 'discord', 'whatsapp'];
+        const platformEfficiency: Record<string, { total: number, successRate: string, usageShare?: string }> = {};
+        const platforms = ['telegram', 'discord', 'whatsapp', 'slack', 'email'];
+        const totalLogsCount = logs.length;
 
         platforms.forEach(p => {
             const pLogs = logs.filter(l => l.platform.toLowerCase() === p);
@@ -89,7 +90,8 @@ export async function GET(req: NextRequest) {
                 const pSuccess = pLogs.filter(l => l.status_code >= 200 && l.status_code < 300).length;
                 platformEfficiency[p] = {
                     total: pLogs.length,
-                    successRate: ((pSuccess / pLogs.length) * 100).toFixed(1) + "%"
+                    successRate: ((pSuccess / pLogs.length) * 100).toFixed(1) + "%",
+                    usageShare: totalLogsCount > 0 ? ((pLogs.length / totalLogsCount) * 100).toFixed(1) + "%" : "0%"
                 };
             }
         });

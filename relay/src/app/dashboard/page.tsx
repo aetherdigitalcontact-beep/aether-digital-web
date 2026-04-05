@@ -1000,7 +1000,8 @@ export default function DashboardPage() {
                     {/* Platform Efficiency */}
                     <div className="space-y-6">
                         {['telegram', 'discord', 'whatsapp', 'slack', 'email'].map((p) => {
-                            const efficiency = aiStats.platformEfficiency[p] || { total: 0, successRate: "0%" };
+                            const efficiency = aiStats.platformEfficiency[p] || { total: 0, successRate: "0%", usageShare: "0%" };
+                            const displayPercentage = efficiency.usageShare || efficiency.successRate || "0%";
                             return (
                                 <div key={p} className="glass border-white/5 rounded-[30px] p-8 flex items-center justify-between group hover:border-accent/10 transition-all">
                                     <div className="flex items-center gap-6">
@@ -1017,11 +1018,11 @@ export default function DashboardPage() {
                                         </div>
                                     </div>
                                     <div className="text-right">
-                                        <p className="text-2xl font-black text-white italic tracking-tighter">{efficiency.successRate}</p>
+                                        <p className="text-2xl font-black text-white italic tracking-tighter">{displayPercentage}</p>
                                         <div className="w-24 h-1 bg-white/5 rounded-full mt-2 overflow-hidden">
                                             <motion.div
                                                 initial={{ width: 0 }}
-                                                animate={{ width: efficiency.successRate }}
+                                                animate={{ width: displayPercentage }}
                                                 className="h-full bg-accent"
                                             />
                                         </div>
@@ -1970,9 +1971,13 @@ export default function DashboardPage() {
                             if (!isHistoryKnown) {
                                 status = 'offline'; // Before user joined, mark as offline/standby
                             } else {
-                                // Simulate some realistic events
-                                if (i === 12) status = 'offline'; // Simulated past maintenance
-                                else if (i === 13 || i === 30 || i === 35) status = 'degraded'; // Simulated congestion
+                                // Deterministic shifting status based on absolute block time
+                                const blockDuration = 7 * 24 * 60 * 60 * 1000 / 48; // 3.5h in ms
+                                const blockId = Math.floor(blockTime / blockDuration);
+                                const hash = Math.abs(Math.sin(blockId) * 10000) % 100;
+
+                                if (hash < 3) status = 'offline'; // Simulated outages over time
+                                else if (hash < 12) status = 'degraded'; // Simulated congestion
                             }
 
                             const colorMap = {
