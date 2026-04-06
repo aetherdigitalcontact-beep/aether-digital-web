@@ -90,10 +90,10 @@ export default function PricingPage() {
             const userValue = planValue[userPlan] || 0;
 
             if (userValue > targetValue) {
-                alert(`Acción Denegada: Actualmente cuentas con el plan ${userPlan.toUpperCase()}. No puedes cambiar a un plan inferior (${planKey.toUpperCase()}) desde aquí.`);
+                alert(d.pricing.alerts.downgrade.replace('{userPlan}', userPlan.toUpperCase()).replace('{targetPlan}', planKey.toUpperCase()));
                 return;
             } else if (userValue === targetValue && targetValue > 0) {
-                alert(`Acción Denegada: ¡Ya tienes el plan ${planKey.toUpperCase()} activado en tu cuenta!`);
+                alert(d.pricing.alerts.alreadyActive.replace('{targetPlan}', planKey.toUpperCase()));
                 return;
             }
         }
