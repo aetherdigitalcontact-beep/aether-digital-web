@@ -105,6 +105,14 @@ export const dictionaries: Record<Language, any> = {
                 desc: "Save 30% by paying in ARS via Mercado Pago. Secure your price today.",
                 cta: "Pay with Mercado Pago"
             },
+            alerts: {
+                downgrade: "Action Denied: You currently have the {userPlan} plan. You cannot switch to a lower plan ({targetPlan}) from here.",
+                alreadyActive: "Action Denied: You already have the {targetPlan} plan active on your account!",
+                mpNoNeed: "Action Denied: You currently have the {userPlan} plan. You do not need to purchase this limited offer!",
+                mpAuth: "Please sign in to Relay first to access the regional discount.",
+                mpError: "An error occurred connecting to Mercado Pago.",
+                critical: "Critical connection failure. Check your internet."
+            },
             checkout: {
                 title: "Simulate Checkout",
                 successTitle: "Uplink Success",
@@ -388,6 +396,14 @@ export const dictionaries: Record<Language, any> = {
                 desc: "Ahorra un 30% extra pagando en ARS con Mercado Pago. Asegura tu precio hoy.",
                 cta: "Pagar con Mercado Pago"
             },
+            alerts: {
+                downgrade: "Acción Denegada: Actualmente cuentas con el plan {userPlan}. No puedes cambiar a un plan inferior ({targetPlan}) desde aquí.",
+                alreadyActive: "Acción Denegada: ¡Ya tienes el plan {targetPlan} activado en tu cuenta!",
+                mpNoNeed: "Acción Denegada: Actualmente cuentas con el plan {userPlan}. ¡No tienes necesidad de comprar esta oferta limitada!",
+                mpAuth: "Inicia sesión en Relay primero para poder acceder al descuento regional.",
+                mpError: "Ocurrió un error en la conexión con Mercado Pago.",
+                critical: "Fallo de conexión crítico. Revisa tu internet."
+            },
             checkout: {
                 title: "Simular Pago",
                 successTitle: "Enlace Exitoso",
@@ -656,6 +672,14 @@ export const dictionaries: Record<Language, any> = {
                 desc: "Economize 30% extras pagando em ARS via Mercado Pago. Garanta seu preço hoje.",
                 cta: "Pagar com Mercado Pago"
             },
+            alerts: {
+                downgrade: "Ação Negada: Atualmente você tem o plano {userPlan}. Você não pode mudar para um plano inferior ({targetPlan}) daqui.",
+                alreadyActive: "Ação Negada: Você já tem o plano {targetPlan} ativo na sua conta!",
+                mpNoNeed: "Ação Negada: Atualmente você tem o plano {userPlan}. Você não precisa comprar esta oferta limitada!",
+                mpAuth: "Faça login no Relay primeiro para acessar o desconto regional.",
+                mpError: "Ocorreu um erro ao conectar ao Mercado Pago.",
+                critical: "Falha crítica de conexão. Verifique sua internet."
+            },
             checkout: {
                 title: "Simular Pagamento",
                 successTitle: "Uplink de Sucesso",
@@ -888,6 +912,14 @@ export const dictionaries: Record<Language, any> = {
                 title: "🇦🇷 Ограниченное предложение для Аргентины",
                 desc: "Сэкономьте дополнительные 30%, оплачивая в ARS через Mercado Pago.",
                 cta: "Оплатить через Mercado Pago"
+            },
+            alerts: {
+                downgrade: "В действии отказано: сейчас у вас тариф {userPlan}. Вы не можете перейти на более низкий тариф ({targetPlan}) отсюда.",
+                alreadyActive: "В действии отказано: тариф {targetPlan} уже активен в вашей учетной записи!",
+                mpNoNeed: "В действии отказано: сейчас у вас тариф {userPlan}. Вам не нужно приобретать это ограниченное предложение!",
+                mpAuth: "Пожалуйста, сначала войдите в систему, чтобы получить региональную скидку.",
+                mpError: "Произошла ошибка при подключении к Mercado Pago.",
+                critical: "Критическая ошибка подключения."
             },
             checkout: {
                 title: "Симуляция оплаты",
@@ -1122,6 +1154,14 @@ export const dictionaries: Record<Language, any> = {
                 desc: "Économisez 30% supplémentaires en payant en ARS via Mercado Pago.",
                 cta: "Payer avec Mercado Pago"
             },
+            alerts: {
+                downgrade: "Action refusée: Vous avez actuellement le forfait {userPlan}. Vous ne pouvez pas passer à un forfait inférieur ({targetPlan}).",
+                alreadyActive: "Action refusée: Vous avez déjà le forfait {targetPlan} actif sur votre compte!",
+                mpNoNeed: "Action refusée: Vous avez actuellement le forfait {userPlan}. Vous n'avez pas besoin d'acheter cette offre limitée!",
+                mpAuth: "Veuillez d'abord vous connecter pour accéder à la réduction régionale.",
+                mpError: "Une erreur s'est produite lors de la connexion.",
+                critical: "Échec de connexion critique."
+            },
             checkout: {
                 title: "Simuler le Paiement",
                 successTitle: "Succès de la Mise à Jour",
@@ -1341,6 +1381,14 @@ export const dictionaries: Record<Language, any> = {
                 title: "🇦🇷 Limitiertes Angebot für Argentinien",
                 desc: "Sparen Sie zusätzlich 30% bei Zahlung in ARS über Mercado Pago.",
                 cta: "Mit Mercado Pago bezahlen"
+            },
+            alerts: {
+                downgrade: "Aktion verweigert: Sie haben derzeit den {userPlan}-Plan. Sie können nicht zu einem niedrigeren Plan ({targetPlan}) wechseln.",
+                alreadyActive: "Aktion verweigert: Sie haben den {targetPlan}-Plan bereits aktiv!",
+                mpNoNeed: "Aktion verweigert: Sie haben derzeit den {userPlan}-Plan. Sie müssen dieses Angebot nicht kaufen!",
+                mpAuth: "Bitte melden Sie sich zuerst an, um auf den Rabatt zuzugreifen.",
+                mpError: "Ein Fehler ist aufgetreten.",
+                critical: "Kritischer Verbindungsfehler."
             },
             checkout: {
                 title: "Zahlung simulieren",
@@ -1562,6 +1610,14 @@ export const dictionaries: Record<Language, any> = {
                 desc: "通过 Mercado Pago 以 ARS 支付，额外节省 30%。立即锁定价格。",
                 cta: "使用 Mercado Pago 支付"
             },
+            alerts: {
+                downgrade: "操作被拒绝：您当前的计划是 {userPlan}。无法降级到 ({targetPlan})。",
+                alreadyActive: "操作被拒绝：您的账户已经启用了 {targetPlan} 计划！",
+                mpNoNeed: "操作被拒绝：您当前的计划是 {userPlan}。您不需要购买此优惠！",
+                mpAuth: "请先登录以享受区域折扣。",
+                mpError: "连接时发生错误。",
+                critical: "严重的连接失败。"
+            },
             checkout: {
                 title: "模拟结账",
                 successTitle: "升级成功",
@@ -1782,6 +1838,14 @@ export const dictionaries: Record<Language, any> = {
                 desc: "Mercado Pago を通じて ARS で支払うことで、さらに 30% お得になります。今すぐ価格を確保しましょう。",
                 cta: "Mercado Pago で支払う"
             },
+            alerts: {
+                downgrade: "拒否：現在のプランは {userPlan} です。下位プラン ({targetPlan}) に変更することはできません。",
+                alreadyActive: "拒否：すでに {targetPlan} プランが有効になっています！",
+                mpNoNeed: "拒否：現在のプランは {userPlan} です。このオファーを購入する必要はありません！",
+                mpAuth: "割引を利用するにはログインしてください。",
+                mpError: "接続中にエラーが発生しました。",
+                critical: "致命的な接続エラー。"
+            },
             checkout: {
                 title: "チェックアウトのシミュレーション",
                 successTitle: "アップグレード成功",
@@ -2001,6 +2065,14 @@ export const dictionaries: Record<Language, any> = {
                 title: "🇦🇷 Offerta Limitata per l'Argentina",
                 desc: "Risparmia un ulteriore 30% pagando in ARS tramite Mercado Pago.",
                 cta: "Paga con Mercado Pago"
+            },
+            alerts: {
+                downgrade: "Azione negata: Hai il piano {userPlan}. Non puoi passare a un piano inferiore ({targetPlan}).",
+                alreadyActive: "Azione negata: Hai già il piano {targetPlan} attivo!",
+                mpNoNeed: "Azione negata: Hai il piano {userPlan}. Non hai bisogno di questa offerta!",
+                mpAuth: "Accedi per poter accedere allo sconto regionale.",
+                mpError: "Si è verificato un errore.",
+                critical: "Errore critico di connessione."
             },
             checkout: {
                 title: "Simula il Pagamento",

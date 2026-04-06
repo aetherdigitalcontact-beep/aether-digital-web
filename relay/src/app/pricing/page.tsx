@@ -111,7 +111,7 @@ export default function PricingPage() {
 
     const handleMPCheckout = async () => {
         if (userPlan && (userPlan === 'pro' || userPlan === 'enterprise')) {
-            alert(`Acción Denegada: Actualmente cuentas con el plan ${userPlan.toUpperCase()}. ¡No tienes necesidad de comprar esta oferta limitada!`);
+            alert(d.pricing.alerts.mpNoNeed.replace('{userPlan}', userPlan.toUpperCase()));
             return;
         }
 
@@ -122,12 +122,12 @@ export default function PricingPage() {
             if (res.ok && data.url) {
                 window.location.href = data.url;
             } else {
-                alert(data.error || 'Ocurrió un error en la conexión con Mercado Pago.');
+                alert(data.error || d.pricing.alerts.mpError);
                 setIsMPLoading(false);
             }
         } catch (error) {
             console.error(error);
-            alert('Fallo de conexión crítico. Revisa tu internet.');
+            alert(d.pricing.alerts.critical);
             setIsMPLoading(false);
         }
     };
