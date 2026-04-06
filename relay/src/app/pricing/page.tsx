@@ -150,15 +150,29 @@ export default function PricingPage() {
         });
     };
 
-    const handleMPCheckout = async () => {
-        if (userPlan && (userPlan === 'pro' || userPlan === 'enterprise')) {
-            alert(d.pricing.alerts.mpNoNeed.replace('{userPlan}', userPlan.toUpperCase()));
-            return;
+    const handleMPCheckout = async (planKey: 'starter' | 'pro') => {
+        // Validation for Downgrades
+        if (userPlan) {
+            const planValue: Record<string, number> = { free: 0, hobby: 0, starter: 1, pro: 2, enterprise: 3 };
+            const targetValue = planValue[planKey] || 0;
+            const userValue = planValue[userPlan] || 0;
+
+            if (userValue > targetValue) {
+                alert(d.pricing.alerts.downgrade.replace('{userPlan}', userPlan.toUpperCase()).replace('{targetPlan}', planKey.toUpperCase()));
+                return;
+            } else if (userValue === targetValue && targetValue > 0) {
+                alert(d.pricing.alerts.alreadyActive.replace('{targetPlan}', planKey.toUpperCase()));
+                return;
+            }
         }
 
         setIsMPLoading(true);
         try {
-            const res = await fetch('/api/checkout/mercadopago', { method: 'POST' });
+            const res = await fetch('/api/checkout/mercadopago', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ planKey })
+            });
             const data = await res.json();
             if (res.ok && data.url) {
                 window.location.href = data.url;
@@ -272,35 +286,7 @@ export default function PricingPage() {
                     </motion.div>
                 </div>
 
-                {/* Regional Banner */}
-                {isArgentina && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="w-full max-w-5xl mx-auto mb-16 p-6 rounded-2xl border border-blue-500/30 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 flex flex-col md:flex-row items-center justify-between gap-6 backdrop-blur-md relative overflow-hidden group"
-                    >
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 blur-3xl -z-10 group-hover:bg-blue-500/10 transition-all" />
-                        <div className="flex items-center gap-6 text-center md:text-left">
-                            <div className="text-4xl filter drop-shadow-lg">🇦🇷</div>
-                            <div>
-                                <h3 className="font-black text-xl text-white tracking-tight">{d.pricing.regional.title}</h3>
-                                <p className="text-sm text-slate-400 font-medium">{d.pricing.regional.desc}</p>
-                            </div>
-                        </div>
-                        <button
-                            onClick={handleMPCheckout}
-                            disabled={isMPLoading}
-                            className="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-black rounded-xl transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] active:scale-95 text-sm uppercase tracking-wider disabled:opacity-50 disabled:active:scale-100 flex items-center gap-2"
-                        >
-                            {isMPLoading ? (
-                                <>
-                                    <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
-                                    PROCESANDO...
-                                </>
-                            ) : d.pricing.regional.cta}
-                        </button>
-                    </motion.div>
-                )}
+                {/* Regional Banner Removed for integrated UI */}
 
                 {/* Pricing Grid */}
                 <div className="max-w-7xl w-full z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-start pb-32">
@@ -358,7 +344,7 @@ export default function PricingPage() {
                                 onClick={() => handlePlanSelect('starter')}
                                 className="w-full py-3.5 rounded-full bg-white/5 border border-white/10 text-white font-black text-center text-[10px] uppercase tracking-widest hover:bg-white/10 transition-all active:scale-[0.98]"
                             >
-                                {d.pricing.cta}
+                                {d.pricing.ctaLemon || d.pricing.cta}
                             </button>
 
                             <div className="h-[40px] w-full rounded-full overflow-hidden opacity-90 hover:opacity-100 transition-opacity">
@@ -368,6 +354,16 @@ export default function PricingPage() {
                                     onApprove={async () => { window.location.href = '/dashboard?payment=success'; }}
                                 />
                             </div>
+
+                            {isArgentina && (
+                                <button
+                                    onClick={() => handleMPCheckout('starter')}
+                                    disabled={isMPLoading}
+                                    className="w-full py-3.5 mt-1 rounded-full bg-[#009EE3] hover:bg-[#0089C7] text-white font-black text-center text-[10px] uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(0,158,227,0.3)] active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2"
+                                >
+                                    {isMPLoading ? <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : d.pricing.ctaMP || "Mercado Pago"}
+                                </button>
+                            )}
                         </div>
 
                         <ul className="space-y-4 mt-auto">
@@ -407,7 +403,7 @@ export default function PricingPage() {
                                     onClick={() => handlePlanSelect('pro')}
                                     className="w-full py-4 rounded-full bg-accent text-white font-black text-center text-[10px] uppercase tracking-widest hover:shadow-[0_0_40px_rgba(59,130,246,0.4)] transition-all active:scale-[0.98]"
                                 >
-                                    {d.pricing.cta}
+                                    {d.pricing.ctaLemon || d.pricing.cta}
                                 </button>
 
                                 <div className="h-[40px] w-full rounded-full overflow-hidden opacity-90 hover:opacity-100 transition-opacity">
@@ -417,6 +413,16 @@ export default function PricingPage() {
                                         onApprove={async () => { window.location.href = '/dashboard?payment=success'; }}
                                     />
                                 </div>
+
+                                {isArgentina && (
+                                    <button
+                                        onClick={() => handleMPCheckout('pro')}
+                                        disabled={isMPLoading}
+                                        className="w-full py-3.5 mt-1 rounded-full bg-[#009EE3] hover:bg-[#0089C7] text-white font-black text-center text-[10px] uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(0,158,227,0.3)] active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2"
+                                    >
+                                        {isMPLoading ? <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : d.pricing.ctaMP || "Mercado Pago"}
+                                    </button>
+                                )}
                             </div>
 
                             <ul className="space-y-4 mt-auto">

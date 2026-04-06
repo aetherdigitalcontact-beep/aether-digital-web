@@ -25,16 +25,39 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'Falta configurar Mercado Pago en Vercel.' }, { status: 500 });
         }
 
+        let planKey = 'pro'; // default
+        try {
+            const reqBody = await req.json();
+            if (reqBody.planKey && (reqBody.planKey === 'starter' || reqBody.planKey === 'pro')) {
+                planKey = reqBody.planKey;
+            }
+        } catch (e) {
+            // Ignore if no body
+        }
+
         const client = new MercadoPagoConfig({ accessToken: mpToken });
         const preference = new Preference(client);
+
+        const prices = {
+            starter: {
+                id: 'relay_starter_ar',
+                title: 'Relay Starter (Oferta Argentina)',
+                unit_price: 18620
+            },
+            pro: {
+                id: 'relay_pro_ar',
+                title: 'Relay Pro (Oferta Argentina)',
+                unit_price: 48020
+            }
+        };
 
         const body = {
             items: [
                 {
-                    id: 'relay_pro_ar',
-                    title: 'Relay Pro (Oferta Argentina)',
+                    id: prices[planKey as 'starter' | 'pro'].id,
+                    title: prices[planKey as 'starter' | 'pro'].title,
                     quantity: 1,
-                    unit_price: 48020 // Pricing in ARS - $49 USD * 1400 ARS/USD - 30% discount
+                    unit_price: prices[planKey as 'starter' | 'pro'].unit_price
                 }
             ],
             back_urls: {
@@ -45,7 +68,7 @@ export async function POST(req: NextRequest) {
             auto_return: 'approved',
             metadata: {
                 user_email: userEmail,
-                plan_key: 'pro'
+                plan_key: planKey
             },
         };
 

@@ -94,6 +94,8 @@ export const dictionaries: Record<Language, any> = {
                 ]
             },
             cta: "Get Started",
+            ctaLemon: "🍋 Card (Lemon Squeezy)",
+            ctaMP: "🇦🇷 Mercado Pago (30% OFF)",
             contact: "Contact Sales",
             billing: {
                 monthly: "Monthly",
@@ -385,6 +387,8 @@ export const dictionaries: Record<Language, any> = {
                 ]
             },
             cta: "Comenzar",
+            ctaLemon: "🍋 Tarjeta (Lemon Squeezy)",
+            ctaMP: "🇦🇷 Mercado Pago (30% OFF)",
             contact: "Contactar Ventas",
             billing: {
                 monthly: "Mensual",
@@ -661,6 +665,8 @@ export const dictionaries: Record<Language, any> = {
                 ]
             },
             cta: "Começar",
+            ctaLemon: "🍋 Cartão (Lemon Squeezy)",
+            ctaMP: "🇦🇷 Mercado Pago (30% OFF)",
             contact: "Fale Conosco",
             billing: {
                 monthly: "Mensal",
@@ -902,6 +908,8 @@ export const dictionaries: Record<Language, any> = {
                 ]
             },
             cta: "Начать",
+            ctaLemon: "🍋 Начать (Lemon Squeezy)",
+            ctaMP: "🇦🇷 Mercado Pago (30% OFF)",
             contact: "Связаться",
             billing: {
                 monthly: "Ежемесячно",
@@ -1143,6 +1151,8 @@ export const dictionaries: Record<Language, any> = {
                 ]
             },
             cta: "Commencer",
+            ctaLemon: "🍋 Commencer (Lemon Squeezy)",
+            ctaMP: "🇦🇷 Mercado Pago (30% OFF)",
             contact: "Contactez-nous",
             billing: {
                 monthly: "Mensuel",
@@ -1371,6 +1381,8 @@ export const dictionaries: Record<Language, any> = {
                 ]
             },
             cta: "Starten",
+            ctaLemon: "🍋 Starten (Lemon Squeezy)",
+            ctaMP: "🇦🇷 Mercado Pago (30% OFF)",
             contact: "Kontaktieren Sie uns",
             billing: {
                 monthly: "Monatlich",
@@ -1599,6 +1611,8 @@ export const dictionaries: Record<Language, any> = {
                 ]
             },
             cta: "立即开始",
+            ctaLemon: "🍋 立即开始 (Lemon Squeezy)",
+            ctaMP: "🇦🇷 Mercado Pago (30% OFF)",
             contact: "联系我们",
             billing: {
                 monthly: "按月计费",
@@ -1827,6 +1841,8 @@ export const dictionaries: Record<Language, any> = {
                 ]
             },
             cta: "今すぐ開始",
+            ctaLemon: "🍋 今すぐ開始 (Lemon Squeezy)",
+            ctaMP: "🇦🇷 Mercado Pago (30% OFF)",
             contact: "お問い合わせ",
             billing: {
                 monthly: "月払い",
@@ -2055,6 +2071,8 @@ export const dictionaries: Record<Language, any> = {
                 ]
             },
             cta: "Inizia",
+            ctaLemon: "🍋 Inizia (Lemon Squeezy)",
+            ctaMP: "🇦🇷 Mercado Pago (30% OFF)",
             contact: "Contatta le vendite",
             billing: {
                 monthly: "Mensile",
