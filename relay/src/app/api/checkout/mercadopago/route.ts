@@ -37,9 +37,6 @@ export async function POST(req: NextRequest) {
                     unit_price: 48020 // Pricing in ARS - $49 USD * 1400 ARS/USD - 30% discount
                 }
             ],
-            payer: {
-                email: userEmail
-            },
             back_urls: {
                 success: 'https://relay-amber-nu.vercel.app/dashboard?payment=success',
                 failure: 'https://relay-amber-nu.vercel.app/pricing?payment=failure',
