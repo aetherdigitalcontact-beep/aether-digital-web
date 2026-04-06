@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
                     id: 'relay_pro_ar',
                     title: 'Relay Pro (Oferta Argentina)',
                     quantity: 1,
-                    unit_price: 19000 // Pricing in ARS
+                    unit_price: 48020 // Pricing in ARS - $49 USD * 1400 ARS/USD - 30% discount
                 }
             ],
             payer: {
