@@ -29,10 +29,12 @@ export async function POST(req: NextRequest) {
 
                 if (paymentData.status === 'approved') {
                     const userEmail = paymentData.metadata?.user_email;
+                    const planKey = paymentData.metadata?.plan_key || 'pro';
+
                     if (userEmail) {
                         const { error } = await supabaseServer
                             .from('accounts')
-                            .update({ plan: 'pro' })
+                            .update({ plan: planKey })
                             .eq('email', userEmail);
 
                         if (error) console.error('MercadoPago Db Update Error:', error);
