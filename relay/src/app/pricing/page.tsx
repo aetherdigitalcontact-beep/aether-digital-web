@@ -77,6 +77,11 @@ export default function PricingPage() {
     };
 
     const handlePlanSelect = (planKey: 'starter' | 'pro') => {
+        if (!userEmail) {
+            alert(d.pricing.alerts.mpAuth || "Please login to purchase a subscription.");
+            return;
+        }
+
         // Prevent Downgrade or Redundant Purchases
         if (userPlan) {
             const planValue: Record<string, number> = {
@@ -112,6 +117,11 @@ export default function PricingPage() {
 
     // Generic PayPal subscription creation handler
     const handlePayPalCreateSubscription = (planKey: 'starter' | 'pro', actions: any) => {
+        if (!userEmail) {
+            alert(d.pricing.alerts.mpAuth || "Please login to purchase a subscription.");
+            return null;
+        }
+
         // Validation for Downgrades
         if (userPlan) {
             const planValue: Record<string, number> = { free: 0, hobby: 0, starter: 1, pro: 2, enterprise: 3 };
@@ -151,6 +161,11 @@ export default function PricingPage() {
     };
 
     const handleMPCheckout = async (planKey: 'starter' | 'pro') => {
+        if (!userEmail) {
+            alert(d.pricing.alerts.mpAuth || "Please login to purchase a subscription.");
+            return;
+        }
+
         // Validation for Downgrades
         if (userPlan) {
             const planValue: Record<string, number> = { free: 0, hobby: 0, starter: 1, pro: 2, enterprise: 3 };
@@ -192,6 +207,11 @@ export default function PricingPage() {
     };
 
     const handleCryptoCheckout = async (planKey: 'starter' | 'pro') => {
+        if (!userEmail) {
+            alert(d.pricing.alerts.mpAuth || "Please login to purchase a subscription.");
+            return;
+        }
+
         // Validation for Downgrades
         if (userPlan) {
             const planValue: Record<string, number> = { free: 0, hobby: 0, starter: 1, pro: 2, enterprise: 3 };
