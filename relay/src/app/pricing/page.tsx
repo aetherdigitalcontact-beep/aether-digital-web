@@ -407,12 +407,12 @@ export default function PricingPage() {
                         </div>
 
                         <div className="flex flex-col gap-3 w-full mb-10 w-full relative z-20">
-                            <button
+                            {/* <button
                                 onClick={() => handlePlanSelect('starter')}
                                 className="w-full py-3.5 rounded-full bg-white/5 border border-white/10 text-white font-black text-center text-[10px] uppercase tracking-widest hover:bg-white/10 transition-all active:scale-[0.98]"
                             >
                                 {d.pricing.ctaLemon || d.pricing.cta}
-                            </button>
+                            </button> */}
 
                             <div className="h-[40px] w-full rounded-full overflow-hidden opacity-90 hover:opacity-100 transition-opacity">
                                 <PayPalButtons
@@ -473,12 +473,12 @@ export default function PricingPage() {
                             </div>
 
                             <div className="flex flex-col gap-3 w-full mb-10 w-full relative z-20">
-                                <button
+                                {/* <button
                                     onClick={() => handlePlanSelect('pro')}
                                     className="w-full py-4 rounded-full bg-accent text-white font-black text-center text-[10px] uppercase tracking-widest hover:shadow-[0_0_40px_rgba(59,130,246,0.4)] transition-all active:scale-[0.98]"
                                 >
                                     {d.pricing.ctaLemon || d.pricing.cta}
-                                </button>
+                                </button> */}
 
                                 <div className="h-[40px] w-full rounded-full overflow-hidden opacity-90 hover:opacity-100 transition-opacity">
                                     <PayPalButtons
@@ -565,6 +565,42 @@ export default function PricingPage() {
                 </div>
 
 
+
+                {/* Live System Status Section */}
+                <section className="w-full max-w-7xl mx-auto py-20 px-6">
+                    <div className="rounded-[40px] bg-white/[0.02] border border-white/5 p-8 md:p-12 relative overflow-hidden group">
+                        <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-all duration-1000 blur-3xl"></div>
+
+                        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+                            <div>
+                                <h3 className="text-2xl font-black mb-2 uppercase tracking-tight text-white flex items-center gap-3">
+                                    <span className="relative flex h-3 w-3">
+                                        <span className="animate-ping absolute h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                        <span className="relative rounded-full h-3 w-3 bg-emerald-500"></span>
+                                    </span>
+                                    UPLINK STATUS: OPERATIONAL
+                                </h3>
+                                <p className="text-slate-500 text-sm max-w-md">
+                                    Our global notification infrastructure is monitored 24/7. Current uptime for Q2 2026 is holding steady at 99.98%.
+                                </p>
+                            </div>
+
+                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 w-full md:w-auto">
+                                {[
+                                    { label: 'Latency', value: '42ms' },
+                                    { label: 'Uptime', value: '99.98%' },
+                                    { label: 'Protocol', value: 'TLS 1.3' },
+                                    { label: 'Edge', value: 'Active' }
+                                ].map((stat, i) => (
+                                    <div key={i} className="text-center md:text-left px-6 border-l border-white/5 first:border-0">
+                                        <div className="text-[10px] font-black uppercase tracking-widest text-slate-600 mb-1">{stat.label}</div>
+                                        <div className="text-lg font-black text-white">{stat.value}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
                 {/* FAQ Section */}
                 <section className="w-full max-w-4xl mx-auto py-32 px-6">
