@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
         // 1. Auth check
         const token = req.cookies.get('relay_session')?.value;
         if (!token) {
-            return NextResponse.json({ error: 'No tienes sesión iniciada.' }, { status: 401 });
+            return NextResponse.json({ error: 'AUTH_REQUIRED' }, { status: 401 });
         }
 
         let userEmail = '';
@@ -98,11 +98,11 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ url: data.data.checkoutUrl });
         } else {
             console.error('Binance API error:', data);
-            return NextResponse.json({ error: 'Hubo un error contactando a Binance Pay.', details: data.errorMessage }, { status: 500 });
+            return NextResponse.json({ error: 'PROVIDER_ERROR', details: data.errorMessage }, { status: 500 });
         }
 
     } catch (err: any) {
         console.error('Binance Checkout Error:', err);
-        return NextResponse.json({ error: 'Error interno del servidor.' }, { status: 500 });
+        return NextResponse.json({ error: 'INTERNAL_ERROR' }, { status: 500 });
     }
 }

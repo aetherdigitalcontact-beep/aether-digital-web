@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
         // Authenticate request using session cookie
         const token = req.cookies.get('relay_session')?.value;
         if (!token) {
-            return NextResponse.json({ error: 'No tienes sesión iniciada.' }, { status: 401 });
+            return NextResponse.json({ error: 'AUTH_REQUIRED' }, { status: 401 });
         }
 
         let userEmail = '';
@@ -78,6 +78,6 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ url: response.init_point });
     } catch (err: any) {
         console.error('Mercado Pago Checkout Error:', err);
-        return NextResponse.json({ error: 'Hubo un error contactando a Mercado Pago.' }, { status: 500 });
+        return NextResponse.json({ error: 'PROVIDER_ERROR' }, { status: 500 });
     }
 }

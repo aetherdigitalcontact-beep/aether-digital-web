@@ -177,7 +177,11 @@ export default function PricingPage() {
             if (res.ok && data.url) {
                 window.location.href = data.url;
             } else {
-                alert(data.error || d.pricing.alerts.mpError);
+                if (data.error === 'AUTH_REQUIRED') {
+                    alert(d.pricing.alerts.mpAuth);
+                } else {
+                    alert(d.pricing.alerts.mpError);
+                }
                 setIsMPLoading(false);
             }
         } catch (error) {
@@ -214,7 +218,11 @@ export default function PricingPage() {
             if (res.ok && data.url) {
                 window.location.href = data.url;
             } else {
-                alert(data.error || "Error al iniciar el pago con Cripto.");
+                if (data.error === 'AUTH_REQUIRED') {
+                    alert(d.pricing.alerts.mpAuth);
+                } else {
+                    alert(d.pricing.alerts.binanceError || "Error connecting to Binance Pay.");
+                }
                 setIsMPLoading(false);
             }
         } catch (error) {
@@ -512,6 +520,10 @@ export default function PricingPage() {
 
                         <a
                             href="mailto:aetherdigital.contact@gmail.com?subject=Relay Enterprise Inquiry"
+                            onClick={() => {
+                                navigator.clipboard.writeText('aetherdigital.contact@gmail.com');
+                                alert(d.pricing.alerts.contactCopied || "Email copied to clipboard!");
+                            }}
                             className="w-full py-4 rounded-full bg-white text-black font-black text-center text-[10px] uppercase tracking-widest hover:bg-slate-200 hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-all mb-10 relative z-10 active:scale-[0.98] block"
                         >
                             {d.pricing.contact}

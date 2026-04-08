@@ -113,6 +113,8 @@ export const dictionaries: Record<Language, any> = {
                 mpNoNeed: "Action Denied: You currently have the {userPlan} plan. You do not need to purchase this limited offer!",
                 mpAuth: "Please sign in to Relay first to access the regional discount.",
                 mpError: "An error occurred connecting to Mercado Pago.",
+                binanceError: "An error occurred connecting to Binance Pay.",
+                contactCopied: "Email copied to clipboard! You can also reach us at aetherdigital.contact@gmail.com",
                 critical: "Critical connection failure. Check your internet."
             },
             checkout: {
@@ -407,6 +409,8 @@ export const dictionaries: Record<Language, any> = {
                 mpNoNeed: "Acción Denegada: Actualmente cuentas con el plan {userPlan}. ¡No tienes necesidad de comprar esta oferta limitada!",
                 mpAuth: "Inicia sesión en Relay primero para poder acceder al descuento regional.",
                 mpError: "Ocurrió un error en la conexión con Mercado Pago.",
+                binanceError: "Hubo un error contactando a Binance Pay.",
+                contactCopied: "¡Email copiado al portapapeles! También puedes escribirnos a aetherdigital.contact@gmail.com",
                 critical: "Fallo de conexión crítico. Revisa tu internet."
             },
             checkout: {
@@ -686,6 +690,8 @@ export const dictionaries: Record<Language, any> = {
                 mpNoNeed: "Ação Negada: Atualmente você tem o plano {userPlan}. Você não precisa comprar esta oferta limitada!",
                 mpAuth: "Faça login no Relay primeiro para acessar o desconto regional.",
                 mpError: "Ocorreu um erro ao conectar ao Mercado Pago.",
+                binanceError: "Ocorreu um erro ao conectar ao Binance Pay.",
+                contactCopied: "Email copiado para a área de transferência! Você também pode nos contatar em aetherdigital.contact@gmail.com",
                 critical: "Falha crítica de conexão. Verifique sua internet."
             },
             checkout: {
