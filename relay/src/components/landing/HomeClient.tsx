@@ -29,6 +29,13 @@ export default function HomeClient({ initialUser, initialLang }: HomeClientProps
     const [isLangOpen, setIsLangOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [user, setUser] = useState<any>(initialUser);
+    const [openFaq, setOpenFaq] = useState<number | null>(null);
+    const [stats, setStats] = useState({
+        uptime: "99.98%",
+        latency: "42ms",
+        protocol: "TLS 1.3",
+        edge: "Active"
+    });
     const containerRef = useRef(null);
     const { scrollYProgress } = useScroll({ target: containerRef });
 
@@ -49,7 +56,19 @@ export default function HomeClient({ initialUser, initialLang }: HomeClientProps
                 else setUser(null);
             } catch (err) { }
         };
+
+        const fetchStats = async () => {
+            try {
+                const res = await fetch('/api/system/stats');
+                const data = await res.json();
+                if (data.uptime) setStats(data);
+            } catch (err) { }
+        };
+
         checkUser();
+        fetchStats();
+        const interval = setInterval(fetchStats, 30000); // Poll every 30s
+        return () => clearInterval(interval);
     }, []);
 
     const d = dictionaries[lang];
@@ -315,6 +334,96 @@ export default function HomeClient({ initialUser, initialLang }: HomeClientProps
                     </div>
                 </motion.div>
             </div>
+
+            {/* Live System Status Section */}
+            <section className="mt-40 w-full max-w-7xl mx-auto px-6 z-10">
+                <div className="rounded-[40px] bg-white/[0.02] border border-white/5 p-8 md:p-12 relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-all duration-1000 blur-3xl"></div>
+
+                    <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+                        <div>
+                            <h3 className="text-2xl font-black mb-2 uppercase tracking-tight text-white flex items-center gap-3">
+                                <span className="relative flex h-3 w-3">
+                                    <span className="animate-ping absolute h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                    <span className="relative rounded-full h-3 w-3 bg-emerald-500"></span>
+                                </span>
+                                {lang === 'es' ? 'ESTADO DEL PROTOCOLO: OPERATIVO' : 'UPLINK STATUS: OPERATIONAL'}
+                            </h3>
+                            <p className="text-slate-500 text-sm max-w-md">
+                                {lang === 'es'
+                                    ? `Nuestra infraestructura global es monitoreada 24/7. El tiempo de actividad actual es del ${stats.uptime}.`
+                                    : `Our global notification infrastructure is monitored 24/7. Current uptime is holding steady at ${stats.uptime}.`}
+                            </p>
+                        </div>
+
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 w-full md:w-auto">
+                            {[
+                                { label: 'Latency', value: stats.latency },
+                                { label: 'Uptime', value: stats.uptime },
+                                { label: 'Protocol', value: stats.protocol },
+                                { label: 'Edge', value: stats.edge }
+                            ].map((stat, i) => (
+                                <div key={i} className="text-center md:text-left px-6 border-l border-white/5 first:border-0">
+                                    <div className="text-[10px] font-black uppercase tracking-widest text-slate-600 mb-1">{stat.label}</div>
+                                    <div className="text-lg font-black text-white">{stat.value}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* FAQ Section */}
+            <section className="mt-40 w-full max-w-4xl mx-auto px-6 z-10 pb-40">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="text-center mb-16"
+                >
+                    <h2 className="text-3xl md:text-5xl font-black mb-4 tracking-tight uppercase italic text-white">
+                        {d.faq.title}
+                    </h2>
+                    <div className="w-20 h-1.5 bg-accent mx-auto rounded-full"></div>
+                </motion.div>
+
+                <div className="space-y-4">
+                    {d.faq.items.map((item: any, idx: number) => (
+                        <motion.div
+                            key={idx}
+                            initial={{ opacity: 0, y: 10 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: idx * 0.1 }}
+                            className="group"
+                        >
+                            <button
+                                onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                                className="w-full text-left p-6 rounded-[24px] bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-all flex justify-between items-center group/btn"
+                            >
+                                <span className="font-bold text-slate-200 group-hover/btn:text-white transition-colors pr-8">
+                                    {item.q}
+                                </span>
+                                <ChevronDown className={`w-5 h-5 text-slate-500 group-hover/btn:text-accent transition-all ${openFaq === idx ? 'rotate-180' : ''}`} />
+                            </button>
+                            <AnimatePresence>
+                                {openFaq === idx && (
+                                    <motion.div
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: "auto", opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        className="overflow-hidden"
+                                    >
+                                        <div className="p-8 pt-2 text-slate-400 leading-relaxed text-left">
+                                            {item.a}
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </motion.div>
+                    ))}
+                </div>
+            </section>
 
             <Footer />
         </main>

@@ -32,6 +32,12 @@ export default function PricingPage() {
 
     // Mercado Pago Loader
     const [isMPLoading, setIsMPLoading] = useState(false);
+    const [stats, setStats] = useState({
+        uptime: "99.98%",
+        latency: "42ms",
+        protocol: "TLS 1.3",
+        edge: "Active"
+    });
 
     // Load saved settings
     useEffect(() => {
@@ -55,6 +61,15 @@ export default function PricingPage() {
                 }
             })
             .catch(() => { });
+
+        const fetchStats = async () => {
+            try {
+                const res = await fetch('/api/system/stats');
+                const data = await res.json();
+                if (data.uptime) setStats(data);
+            } catch (err) { }
+        };
+        fetchStats();
     }, []);
 
     // Save language whenever it changes
@@ -581,16 +596,18 @@ export default function PricingPage() {
                                     UPLINK STATUS: OPERATIONAL
                                 </h3>
                                 <p className="text-slate-500 text-sm max-w-md">
-                                    Our global notification infrastructure is monitored 24/7. Current uptime for Q2 2026 is holding steady at 99.98%.
+                                    {lang === 'es'
+                                        ? `Nuestra infraestructura global es monitoreada 24/7. El tiempo de actividad actual es del ${stats.uptime}.`
+                                        : `Our global notification infrastructure is monitored 24/7. Current uptime is holding steady at ${stats.uptime}.`}
                                 </p>
                             </div>
 
                             <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 w-full md:w-auto">
                                 {[
-                                    { label: 'Latency', value: '42ms' },
-                                    { label: 'Uptime', value: '99.98%' },
-                                    { label: 'Protocol', value: 'TLS 1.3' },
-                                    { label: 'Edge', value: 'Active' }
+                                    { label: 'Latency', value: stats.latency },
+                                    { label: 'Uptime', value: stats.uptime },
+                                    { label: 'Protocol', value: stats.protocol },
+                                    { label: 'Edge', value: stats.edge }
                                 ].map((stat, i) => (
                                     <div key={i} className="text-center md:text-left px-6 border-l border-white/5 first:border-0">
                                         <div className="text-[10px] font-black uppercase tracking-widest text-slate-600 mb-1">{stat.label}</div>
