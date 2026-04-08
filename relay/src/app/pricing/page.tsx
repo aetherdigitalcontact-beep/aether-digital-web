@@ -191,7 +191,7 @@ export default function PricingPage() {
         }
     };
 
-    const handleBinanceCheckout = async (planKey: 'starter' | 'pro') => {
+    const handleCryptoCheckout = async (planKey: 'starter' | 'pro') => {
         // Validation for Downgrades
         if (userPlan) {
             const planValue: Record<string, number> = { free: 0, hobby: 0, starter: 1, pro: 2, enterprise: 3 };
@@ -207,12 +207,12 @@ export default function PricingPage() {
             }
         }
 
-        setIsMPLoading(true); // Re-use loading state or add isBinanceLoading
+        setIsMPLoading(true);
         try {
-            const res = await fetch('/api/checkout/binance', {
+            const res = await fetch('/api/checkout/nowpayments', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ planKey })
+                body: JSON.stringify({ planKey, isAnnual })
             });
             const data = await res.json();
             if (res.ok && data.url) {
@@ -221,7 +221,7 @@ export default function PricingPage() {
                 if (data.error === 'AUTH_REQUIRED') {
                     alert(d.pricing.alerts.mpAuth);
                 } else {
-                    alert(d.pricing.alerts.binanceError || "Error connecting to Binance Pay.");
+                    alert(d.pricing.alerts.binanceError || "Error connecting to Crypto provider.");
                 }
                 setIsMPLoading(false);
             }
@@ -411,10 +411,10 @@ export default function PricingPage() {
                             )}
 
                             <button
-                                onClick={() => handleBinanceCheckout('starter')}
+                                onClick={() => handleCryptoCheckout('starter')}
                                 className="w-full py-3.5 mt-1 rounded-full bg-[#F3BA2F] hover:bg-[#E2AD27] text-black font-black text-center text-[10px] uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(243,186,47,0.3)] active:scale-[0.98] flex items-center justify-center gap-2"
                             >
-                                {d.pricing.ctaCrypto || "⚡ Crypto (Binance Pay)"}
+                                {d.pricing.ctaCrypto || "⚡ Crypto (USDT)"}
                             </button>
                         </div>
 
@@ -477,10 +477,10 @@ export default function PricingPage() {
                                 )}
 
                                 <button
-                                    onClick={() => handleBinanceCheckout('pro')}
+                                    onClick={() => handleCryptoCheckout('pro')}
                                     className="w-full py-3.5 mt-1 rounded-full bg-[#F3BA2F] hover:bg-[#E2AD27] text-black font-black text-center text-[10px] uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(243,186,47,0.3)] active:scale-[0.98] flex items-center justify-center gap-2"
                                 >
-                                    {d.pricing.ctaCrypto || "⚡ Crypto (Binance Pay)"}
+                                    {d.pricing.ctaCrypto || "⚡ Crypto (USDT)"}
                                 </button>
                             </div>
 

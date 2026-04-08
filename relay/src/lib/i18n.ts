@@ -3,6 +3,16 @@ export type Language = 'en' | 'es' | 'pt' | 'ru' | 'fr' | 'de' | 'zh' | 'ja' | '
 export const dictionaries: Record<Language, any> = {
     en: {
         docs: {
+            "responseTitle": "Response Protocols",
+            "successLabel": "SUCCESS",
+            "errorLabel": "ERROR",
+            "statusTitle": "Status Code Reference",
+            "colCode": "Code",
+            "colScenario": "Scenario",
+            "colResolution": "Resolution",
+            "modeMessage": "Message",
+            "modeTemplate": "Template"
+,
             "backBtn": "Back to Terminal",
             "titleProtocol": "Protocol",
             "titleDocs": "Documentation",
@@ -298,6 +308,16 @@ export const dictionaries: Record<Language, any> = {
     },
     es: {
         docs: {
+            "responseTitle": "Protocolos de Respuesta",
+            "successLabel": "ÉXITO",
+            "errorLabel": "ERROR",
+            "statusTitle": "Referencia de Códigos de Estado",
+            "colCode": "Código",
+            "colScenario": "Escenario",
+            "colResolution": "Resolución",
+            "modeMessage": "Mensaje",
+            "modeTemplate": "Plantilla"
+,
             "backBtn": "Volver a la Terminal",
             "titleProtocol": "Documentación del",
             "titleDocs": "Protocolo",

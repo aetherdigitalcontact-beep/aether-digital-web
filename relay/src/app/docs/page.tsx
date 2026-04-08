@@ -24,6 +24,8 @@ export default function DocsPage() {
     const [isLangOpen, setIsLangOpen] = useState(false);
 
     // Snippet Generator State
+    const [genMode, setGenMode] = useState<"message" | "template">("message");
+    const [genTemplateId, setGenTemplateId] = useState("order_success_01");
     const [genPlatform, setGenPlatform] = useState("telegram");
     const [genTarget, setGenTarget] = useState("@chat_id");
     const [genMessage, setGenMessage] = useState("Situation: {{situation}} detected in {{location}}");
@@ -52,7 +54,7 @@ export default function DocsPage() {
   -d '{
     "platform": "${genPlatform}",
     "target": "${genTarget}",
-    "message": "${genMessage}",
+    ${genMode === "message" ? `"message": "${genMessage}",` : `"templateId": "${genTemplateId}",`}
     "category": "Security / Alarm",
     "botName": "Aether Sentinel",
     "variables": ${genVars}
@@ -65,7 +67,7 @@ const relay = async () => {
     body: JSON.stringify({
       platform: '${genPlatform}',
       target: '${genTarget}',
-      message: \`${genMessage}\`,
+      ${genMode === "message" ? `message: \`${genMessage}\`,` : `templateId: '${genTemplateId}',`}
       category: 'Situation-Trigger',
       variables: ${genVars}
     })
@@ -73,9 +75,9 @@ const relay = async () => {
   const data = await response.json();
   console.log(data);
 };`,
-        python: `import requests\n\nurl = "https://relay.aether.digital/api/relay"\npayload = {\n    "platform": "${genPlatform}",\n    "target": "${genTarget}",\n    "message": "${genMessage}",\n    "category": "Automation",\n    "variables": ${genVars}\n}\nheaders = {"x-api-key": "RELAY_PK_XXXX", "Content-Type": "application/json"}\n\nresponse = requests.post(url, json=payload, headers=headers)\nprint(response.text)`,
-        php: `<?php\n\n$url = "https://relay.aether.digital/api/relay";\n$payload = json_encode([\n    "platform" => "${genPlatform}",\n    "target" => "${genTarget}",\n    "message" => "${genMessage}",\n    "category" => "Billing",\n    "variables" => ${genVars.replace(/:/g, '=>')}\n]);\n\n$ch = curl_init($url);\ncurl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json", "x-api-key: RELAY_PK_XXXX"]);\ncurl_setopt($ch, CURLOPT_POST, true);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, $payload);\n$response = curl_exec($ch);`,
-        go: `package main\nimport ("bytes"; "net/http")\nfunc main() {\n\turl := "https://relay.aether.digital/api/relay"\n\tjson := []byte(\`{"platform":"${genPlatform}","target":"${genTarget}","message":"${genMessage}"}\`)\n\treq, _ := http.NewRequest("POST", url, bytes.NewBuffer(json))\n\treq.Header.Set("x-api-key", "RELAY_PK_XXXX")\n\thttp.DefaultClient.Do(req)\n}`
+        python: `import requests\n\nurl = "https://relay.aether.digital/api/relay"\npayload = {\n    "platform": "${genPlatform}",\n    "target": "${genTarget}",\n    ${genMode === "message" ? `"message": "${genMessage}",` : `"templateId": "${genTemplateId}",`}\n    "category": "Automation",\n    "variables": ${genVars}\n}\nheaders = {"x-api-key": "RELAY_PK_XXXX", "Content-Type": "application/json"}\n\nresponse = requests.post(url, json=payload, headers=headers)\nprint(response.text)`,
+        php: `<?php\n\n$url = "https://relay.aether.digital/api/relay";\n$payload = json_encode([\n    "platform" => "${genPlatform}",\n    "target" => "${genTarget}",\n    ${genMode === "message" ? `"message" => "${genMessage}",` : `"templateId" => "${genTemplateId}",`}\n    "category" => "Billing",\n    "variables" => ${genVars.replace(/:/g, '=>')}\n]);\n\n$ch = curl_init($url);\ncurl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json", "x-api-key: RELAY_PK_XXXX"]);\ncurl_setopt($ch, CURLOPT_POST, true);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, $payload);\n$response = curl_exec($ch);`,
+        go: `package main\nimport ("bytes"; "net/http")\nfunc main() {\n\turl := "https://relay.aether.digital/api/relay"\n\tjson := []byte(\`{"platform":"${genPlatform}","target":"${genTarget}",${genMode === "message" ? `"message":"${genMessage}"` : `"templateId":"${genTemplateId}"`}}\`)\n\treq, _ := http.NewRequest("POST", url, bytes.NewBuffer(json))\n\treq.Header.Set("x-api-key", "RELAY_PK_XXXX")\n\thttp.DefaultClient.Do(req)\n}`
     };
 
     return (
@@ -128,6 +130,20 @@ const relay = async () => {
                             <h4 className="text-[10px] font-black text-accent uppercase tracking-widest flex items-center gap-2 mb-4">
                                 <Settings className="w-3 h-3" /> CONFIGURATOR
                             </h4>
+                            <div className="flex gap-2 p-1 bg-white/5 rounded-xl mb-6">
+                                <button
+                                    onClick={() => setGenMode("message")}
+                                    className={`flex-1 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${genMode === "message" ? "bg-accent text-white shadow-lg shadow-accent/20" : "text-slate-500 hover:text-slate-300"}`}
+                                >
+                                    Message
+                                </button>
+                                <button
+                                    onClick={() => setGenMode("template")}
+                                    className={`flex-1 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${genMode === "template" ? "bg-accent text-white shadow-lg shadow-accent/20" : "text-slate-500 hover:text-slate-300"}`}
+                                >
+                                    Template
+                                </button>
+                            </div>
                             <div>
                                 <label className="block text-[8px] font-black text-slate-500 uppercase tracking-widest mb-2">Platform</label>
                                 <select value={genPlatform} onChange={(e) => setGenPlatform(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-accent">
@@ -141,11 +157,23 @@ const relay = async () => {
                                 <label className="block text-[8px] font-black text-slate-500 uppercase tracking-widest mb-2">Target ID</label>
                                 <input type="text" value={genTarget} onChange={(e) => setGenTarget(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-accent" />
                             </div>
+                            {genMode === "template" && (
+                                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}>
+                                    <label className="block text-[8px] font-black text-slate-500 uppercase tracking-widest mb-2 mt-4">Template ID</label>
+                                    <input type="text" value={genTemplateId} onChange={(e) => setGenTemplateId(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-accent" />
+                                </motion.div>
+                            )}
                         </div>
                         <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div className="space-y-4">
-                                <label className="block text-[8px] font-black text-slate-500 uppercase tracking-widest">Message Schema</label>
-                                <textarea value={genMessage} onChange={(e) => setGenMessage(e.target.value)} rows={4} className="w-full bg-white/5 border border-white/10 rounded-2xl px-4 py-3 text-xs text-white outline-none focus:border-accent resize-none shadow-inner" />
+                                <label className="block text-[8px] font-black text-slate-500 uppercase tracking-widest">{genMode === "message" ? "Message Schema" : "Template Description (Info only)"}</label>
+                                <textarea
+                                    value={genMode === "message" ? genMessage : "Using a template reduces payload size and ensures layout consistency across all channels."}
+                                    onChange={(e) => genMode === "message" && setGenMessage(e.target.value)}
+                                    readOnly={genMode === "template"}
+                                    rows={4}
+                                    className={`w-full bg-white/5 border border-white/10 rounded-2xl px-4 py-3 text-xs outline-none focus:border-accent resize-none shadow-inner ${genMode === "template" ? "text-slate-600 italic" : "text-white"}`}
+                                />
                             </div>
                             <div className="space-y-4">
                                 <label className="block text-[8px] font-black text-slate-500 uppercase tracking-widest">Variables (Context JSON)</label>
@@ -212,24 +240,77 @@ const relay = async () => {
                     </div>
                 </section>
 
-                {/* Catchall Documentation */}
-                <section className="mt-32 p-12 rounded-[48px] bg-emerald-500/5 border border-emerald-500/10 relative overflow-hidden">
-                    <div className="absolute top-[-100px] right-[-100px] w-64 h-64 bg-emerald-500/20 blur-[100px] rounded-full pointer-events-none" />
-                    <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4 italic underline decoration-white/10">
-                        Universal Catchall Adapter
-                    </h2>
-                    <p className="text-lg text-slate-400 mb-8 max-w-2xl">
-                        Relay can ingest <strong>any</strong> payload from Shopify, WooCommerce, Stripe, or your custom ERP without modifications.
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                {/* Response Protocols */}
+                <section className="mt-32">
+                    <div className="flex items-center gap-3 mb-10">
+                        <Terminal className="text-white w-8 h-8" />
+                        <h2 className="text-3xl font-bold text-white tracking-tight italic">Response Protocols</h2>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="space-y-4">
-                            <h4 className="text-xs font-black text-white uppercase tracking-widest">HOW TO INTEGRATE</h4>
-                            <p className="text-xs text-slate-500">1. Set your webhook URL to our Catchall endpoint.</p>
-                            <p className="text-xs text-slate-500">2. Append your <code>api_key</code> and desired <code>platforms</code> as query parameters.</p>
+                            <h4 className="text-[10px] font-black text-emerald-400 uppercase tracking-widest px-4">SUCCESS (HTTP 200)</h4>
+                            <div className="p-6 rounded-[32px] bg-black/60 border border-emerald-500/10 font-mono text-[10px] leading-relaxed text-emerald-300 shadow-2xl">
+                                <pre>{`{
+  "status": "success",
+  "messageId": "rl_81a2x98...",
+  "deliveredTo": ["telegram"],
+  "timestamp": "2024-04-07T13:42:01Z"
+}`}</pre>
+                            </div>
                         </div>
-                        <div className="p-6 rounded-3xl bg-black/40 border border-white/5 font-mono text-[10px] text-emerald-400 break-all leading-relaxed shadow-xl">
-                            https://relay.aether.digital/api/webhooks/relay?api_key=your_key&platforms=telegram,whatsapp
+                        <div className="space-y-4">
+                            <h4 className="text-[10px] font-black text-rose-400 uppercase tracking-widest px-4">ERROR (HTTP 4XX/5XX)</h4>
+                            <div className="p-6 rounded-[32px] bg-black/60 border border-rose-500/10 font-mono text-[10px] leading-relaxed text-rose-300 shadow-2xl">
+                                <pre>{`{
+  "status": "error",
+  "code": "INVALID_API_KEY",
+  "message": "Protocol identity not verified."
+}`}</pre>
+                            </div>
                         </div>
+                    </div>
+                </section>
+
+                {/* Status Code Reference */}
+                <section className="mt-32 mb-20 overflow-hidden">
+                    <div className="flex items-center gap-3 mb-10">
+                        <Shield className="text-accent w-8 h-8" />
+                        <h2 className="text-3xl font-bold text-white tracking-tight">Status Code Reference</h2>
+                    </div>
+
+                    <div className="rounded-[40px] glass bg-white/[0.01] border border-white/5 overflow-hidden">
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr className="border-b border-white/5">
+                                    <th className="px-8 py-5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Code</th>
+                                    <th className="px-8 py-5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Scenario</th>
+                                    <th className="px-8 py-5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Resolution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr className="border-b border-white/[0.02] hover:bg-white/[0.02] transition-colors">
+                                    <td className="px-8 py-5 text-xs font-bold text-white">401_UNAUTHORIZED</td>
+                                    <td className="px-8 py-5 text-xs text-slate-400 font-medium">Missing or invalid x-api-key.</td>
+                                    <td className="px-8 py-5 text-xs text-slate-500 italic">Check Dashboard Registry.</td>
+                                </tr>
+                                <tr className="border-b border-white/[0.02] hover:bg-white/[0.02] transition-colors">
+                                    <td className="px-8 py-5 text-xs font-bold text-white">402_PAYMENT_REQUIRED</td>
+                                    <td className="px-8 py-5 text-xs text-slate-400 font-medium">Monthly transmission quota exceeded.</td>
+                                    <td className="px-8 py-5 text-xs text-slate-500 italic">Upgrade Tier in Pricing.</td>
+                                </tr>
+                                <tr className="border-b border-white/[0.02] hover:bg-white/[0.02] transition-colors">
+                                    <td className="px-8 py-5 text-xs font-bold text-white">400_INVALID_TARGET</td>
+                                    <td className="px-8 py-5 text-xs text-slate-400 font-medium">Target ID format mismatch for platform.</td>
+                                    <td className="px-8 py-5 text-xs text-slate-500 italic">Review Addressing Guide.</td>
+                                </tr>
+                                <tr className="hover:bg-white/[0.02] transition-colors">
+                                    <td className="px-8 py-5 text-xs font-bold text-white">503_PROVIDER_DOWN</td>
+                                    <td className="px-8 py-5 text-xs text-slate-400 font-medium">Downstream provider (e.g. Meta) technical fail.</td>
+                                    <td className="px-8 py-5 text-xs text-slate-500 italic">Relay will queue for retry.</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </section>
             </main>
