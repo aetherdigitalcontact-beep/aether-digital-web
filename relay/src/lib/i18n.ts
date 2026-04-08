@@ -140,6 +140,72 @@ export const dictionaries: Record<Language, any> = {
                 confirm: "Confirm Protocol Upgrade"
             }
         },
+        
+        legal: {
+            terms: "Terms of Service",
+            privacy: "Privacy Policy",
+            refund: "Refund Policy",
+            support: "Contact Support",
+                                    sections: {
+                agreement: "Aceptación de Términos",
+                agreementDesc: "Al acceder o usar la plataforma Relay, aceptas estar sujeto a estos Términos de Servicio. Estos términos rigen el uso de nuestra infraestructura de notificaciones, API y panel de control.",
+                usage: "Uso de API y Límites",
+                usageDesc: "Los usuarios son responsables de mantener la confidencialidad de sus claves API. El uso está sujeto a los límites mensuales definidos por su plan. El abuso automatizado resultará en la terminación inmediata.",
+                ip: "Propiedad Intelectual",
+                ipDesc: "El protocolo Relay, la marca y la infraestructura son propiedad exclusiva de Aether Digital Architecture. Los usuarios conservan la propiedad de su contenido pero otorgan a Relay los derechos para procesarlo.",
+                availability: "Disponibilidad del Servicio",
+                availabilityDesc: "Aunque nos esforzamos por un tiempo de actividad del 99,9 %, Relay se proporciona 'tal cual'. No somos responsables por caídas de proveedores externos (Telegram, WhatsApp, Discord).",
+                collection: "Recolección de Datos",
+                collectionDesc: "Relay recolecta los datos mínimos necesarios: email, nombre de organización y telemetría de entrega. No almacenamos el contenido de los mensajes a largo plazo.",
+                security: "Protocolos de Seguridad",
+                securityDesc: "Todas las peticiones API están cifradas vía TLS. Tus claves API están hasheadas en reposo. Implementamos aislamiento estricto para asegurar la privacidad de tus paquetes.",
+                disclosure: "Divulgación a Terceros",
+                disclosureDesc: "No vendemos datos de usuarios. Para entregar notificaciones, debemos pasar tu contenido a las plataformas destino (Telegram, WhatsApp, Discord) según tus instrucciones.",
+                noRefund: "Política de No Reembolso",
+                noRefundDesc: "Debido a la naturaleza digital de Relay y sus cuotas de uso, todas las ventas son finales. Una vez activada la suscripción, no podemos proporcionar reembolsos ni créditos.",
+                cancellation: "Cancelaciones",
+                cancellationDesc: "Podés cancelar tu suscripción en cualquier momento. El acceso permanecerá activo hasta el final del periodo de facturación actual.",
+                exceptions: "Excepciones",
+                exceptionsDesc: "Relay se reserva el derecho de emitir reembolsos a su entera discreción en casos de negligencia comprobada para clientes corporativos."
+            }
+        },
+        faq: {
+            title: "Frequently Asked Questions",
+            items: [
+                { q: "How do I start sending alerts?", a: "Simply create an API Key in the dashboard and send a POST request to our global uplink. Check the docs for code snippets." },
+                { q: "Is the Hobby tier really free?", a: "Yes, forever. You get 100 alerts per month and community support without paying a cent." },
+                { q: "Can I upgrade or downgrade?", a: "You can upgrade instantly. Downgrades take effect at the end of your current billing cycle to ensure you get what you paid for." },
+                { q: "Do you store my notification data?", a: "No. We only store metadata (timing, status) for your analytics. The message content is deleted immediately after delivery." }
+            ]
+        },
+        
+        legal: {
+            terms: "Términos de Servicio",
+            privacy: "Política de Privacidad",
+            refund: "Política de Reembolso",
+            support: "Contacto Soporte",
+            sections: {
+                agreement: "Aceptación de Términos",
+                usage: "Uso de API y Límites",
+                ip: "Propiedad Intelectual",
+                availability: "Disponibilidad del Servicio",
+                collection: "Recolección de Datos",
+                security: "Protocolos de Seguridad",
+                disclosure: "Divulgación a Terceros",
+                noRefund: "Política de No Reembolso",
+                cancellation: "Cancelaciones",
+                exceptions: "Excepciones"
+            }
+        },
+        faq: {
+            title: "Preguntas Frecuentes",
+            items: [
+                { q: "¿Cómo empiezo a enviar alertas?", a: "Simplemente creá una API Key en el dashboard y enviá una solicitud POST a nuestro uplink global. Mirá la documentación para ver ejemplos." },
+                { q: "¿El plan Hobby es realmente gratis?", a: "Sí, para siempre. Tenés 100 alertas por mes y soporte comunitario sin pagar un centavo." },
+                { q: "¿Puedo cambiar de plan?", a: "Podés subir de nivel al instante. Las bajas de plan se aplican al final del ciclo de facturación actual." },
+                { q: "¿Guardan los datos de mis notificaciones?", a: "No. Solo guardamos metadatos (hora, estado) para tus analíticas. El contenido del mensaje se borra tras la entrega." }
+            ]
+        },
         footer: "Aether Digital Architecture. Built for Excellence.",
         auth: {
             welcome: "Welcome to RELAY",

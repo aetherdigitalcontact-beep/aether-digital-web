@@ -160,6 +160,8 @@ export default function PricingPage() {
         });
     };
 
+    const [openFaq, setOpenFaq] = useState<number | null>(null);
+
     const handleMPCheckout = async (planKey: 'starter' | 'pro') => {
         if (!userEmail) {
             alert(d.pricing.alerts.mpAuth || "Please login to purchase a subscription.");
@@ -563,6 +565,58 @@ export default function PricingPage() {
                 </div>
 
 
+
+                {/* FAQ Section */}
+                <section className="w-full max-w-4xl mx-auto py-32 px-6">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-center mb-16"
+                    >
+                        <h2 className="text-3xl md:text-5xl font-black mb-4 tracking-tight uppercase italic text-white">
+                            {d.faq.title}
+                        </h2>
+                        <div className="w-20 h-1.5 bg-accent mx-auto rounded-full"></div>
+                    </motion.div>
+
+                    <div className="space-y-4">
+                        {d.faq.items.map((item: any, idx: number) => (
+                            <motion.div
+                                key={idx}
+                                initial={{ opacity: 0, y: 10 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: idx * 0.1 }}
+                                className="group"
+                            >
+                                <button
+                                    onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                                    className="w-full text-left p-6 rounded-[24px] bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-all flex justify-between items-center group/btn"
+                                >
+                                    <span className="font-bold text-slate-200 group-hover/btn:text-white transition-colors pr-8">
+                                        {item.q}
+                                    </span>
+                                    <ChevronDown className={`w-5 h-5 text-slate-500 group-hover/btn:text-accent transition-all ${openFaq === idx ? 'rotate-180' : ''}`} />
+                                </button>
+                                <AnimatePresence>
+                                    {openFaq === idx && (
+                                        <motion.div
+                                            initial={{ height: 0, opacity: 0 }}
+                                            animate={{ height: "auto", opacity: 1 }}
+                                            exit={{ height: 0, opacity: 0 }}
+                                            className="overflow-hidden"
+                                        >
+                                            <div className="p-8 pt-2 text-slate-400 leading-relaxed">
+                                                {item.a}
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </motion.div>
+                        ))}
+                    </div>
+                </section>
 
                 <Footer />
             </main>

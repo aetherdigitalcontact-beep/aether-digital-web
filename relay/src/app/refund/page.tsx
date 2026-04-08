@@ -49,32 +49,27 @@ export default function RefundPage() {
                             <Ban className="w-16 h-16 text-red-500" strokeWidth={3} />
                         </div>
                         <h2 className="text-2xl font-black mb-4 flex items-center gap-3 text-red-500">
-                            No Refund Policy
+                            {d.legal.sections.noRefund}
                         </h2>
                         <p className="text-slate-300 leading-relaxed font-medium">
-                            Due to the digital and instantaneous nature of the Relay notification infrastructure and the associated usage quotas (API keys, message credits), <strong>all sales are final</strong>. Once a subscription is activated, we cannot provide refunds, credits, or prorated billing for unused portions of the billing cycle.
+                            {d.legal.sections.noRefundDesc}
                         </p>
                     </section>
 
-                    <section>
-                        <h2 className="text-2xl font-black mb-4 flex items-center gap-3">
-                            <CreditCard className="w-6 h-6 text-accent" />
-                            Cancellations
-                        </h2>
-                        <p className="text-slate-400 leading-relaxed">
-                            You can cancel your subscription at any time via the dashboard. Access to the Relay Uplink will remain active until the end of your current billing period, after which your account will revert to the Hobby tier. No further charges will be incurred after cancellation.
-                        </p>
-                    </section>
-
-                    <section>
-                        <h2 className="text-2xl font-black mb-4 flex items-center gap-3">
-                            <ShieldAlert className="w-6 h-6 text-accent" />
-                            Exceptions
-                        </h2>
-                        <p className="text-slate-400 leading-relaxed">
-                            Relay reserves the right to issue refunds at its sole discretion in cases of documented service negligence where a 99.9% SLA was missed for established Enterprise customers. For all other billing inquiries, contact <code className="bg-white/5 px-2 py-1 rounded text-accent">aetherdigital.contact@gmail.com</code>.
-                        </p>
-                    </section>
+                    {[
+                        { icon: CreditCard, title: d.legal.sections.cancellation, desc: d.legal.sections.cancellationDesc },
+                        { icon: ShieldAlert, title: d.legal.sections.exceptions, desc: d.legal.sections.exceptionsDesc }
+                    ].map((section, idx) => (
+                        <section key={idx}>
+                            <h2 className="text-2xl font-black mb-4 flex items-center gap-3">
+                                <section.icon className="w-6 h-6 text-accent" />
+                                {section.title}
+                            </h2>
+                            <p className="text-slate-400 leading-relaxed">
+                                {section.desc}
+                            </p>
+                        </section>
+                    ))}
                 </motion.div>
             </div>
 

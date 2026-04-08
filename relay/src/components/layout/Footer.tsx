@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { dictionaries, Language } from "@/lib/i18n";
 import { useEffect, useState } from "react";
 import { Mail } from "lucide-react";
@@ -11,6 +11,13 @@ export default function Footer() {
     const [latency, setLatency] = useState<number>(0);
     const [status, setStatus] = useState<"STABLE" | "OFFLINE" | "DEGRADED">("STABLE");
     const [bars, setBars] = useState([6, 8, 12]);
+    const [copied, setCopied] = useState(false);
+
+    const handleCopyEmail = () => {
+        navigator.clipboard.writeText("aetherdigital.contact@gmail.com");
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
 
     useEffect(() => {
         const savedLang = localStorage.getItem("relay-lang") as Language;
@@ -69,10 +76,35 @@ export default function Footer() {
                         {d.hero.desc}
                     </p>
                     <div className="flex gap-4">
-                        <a href="mailto:aetherdigital.contact@gmail.com" className="flex items-center justify-center gap-2 text-[11px] font-black uppercase tracking-widest px-8 py-3.5 rounded-full bg-accent text-white hover:bg-blue-600 transition-all shadow-[0_0_20px_var(--accent-glow)] active:scale-95 group">
-                            <Mail className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
-                            {d.legal?.support || "Contact Support"}
-                        </a>
+                        <button
+                            onClick={handleCopyEmail}
+                            className="flex items-center justify-center gap-2 text-[11px] font-black uppercase tracking-widest px-8 py-3.5 rounded-full bg-accent text-white hover:bg-blue-600 transition-all shadow-[0_0_20px_var(--accent-glow)] active:scale-95 group relative overflow-hidden"
+                        >
+                            <AnimatePresence mode="wait">
+                                {copied ? (
+                                    <motion.span
+                                        key="copied"
+                                        initial={{ y: 20, opacity: 0 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        exit={{ y: -20, opacity: 0 }}
+                                        className="flex items-center gap-2"
+                                    >
+                                        {lang === 'es' ? '¡COPIADO!' : 'COPIED!'}
+                                    </motion.span>
+                                ) : (
+                                    <motion.span
+                                        key="default"
+                                        initial={{ y: 20, opacity: 0 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        exit={{ y: -20, opacity: 0 }}
+                                        className="flex items-center gap-2"
+                                    >
+                                        <Mail className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+                                        {d.legal?.support || "Contact Support"}
+                                    </motion.span>
+                                )}
+                            </AnimatePresence>
+                        </button>
                     </div>
                 </div>
 

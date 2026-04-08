@@ -44,35 +44,28 @@ export default function PrivacyPage() {
                     transition={{ delay: 0.1 }}
                     className="prose prose-invert prose-slate max-w-none space-y-12"
                 >
-                    <section>
-                        <h2 className="text-2xl font-black mb-4 flex items-center gap-3">
-                            <ShieldCheck className="w-6 h-6 text-accent" />
-                            Data Collection
-                        </h2>
-                        <p className="text-slate-400 leading-relaxed">
-                            Relay collects minimal data required to provide our notification services. This includes your email (for authentication), organization name, and delivery telemetry (timing, status codes, and provider responses). We do not store the content of your messages beyond the transient processing window required for fan-out.
-                        </p>
-                    </section>
-
-                    <section>
-                        <h2 className="text-2xl font-black mb-4 flex items-center gap-3">
-                            <Lock className="w-6 h-6 text-accent" />
-                            Security Protocols
-                        </h2>
-                        <p className="text-slate-400 leading-relaxed">
-                            All API requests are encrypted via TLS. Your API keys are hashed at rest. We implement strict hardware-level isolation for Vercel Edge Functions, ensuring your message packets never co-mingle with other tenant data during the relay process.
-                        </p>
-                    </section>
-
-                    <section>
-                        <h2 className="text-2xl font-black mb-4 flex items-center gap-3">
-                            <EyeOff className="w-6 h-6 text-accent" />
-                            Third-Party Disclosures
-                        </h2>
-                        <p className="text-slate-400 leading-relaxed">
-                            We do not sell user data. To deliver notifications, we must pass your content to the target platforms (Telegram, WhatsApp, Discord) as instructed by your API payload. These platforms have their own privacy policies which govern the data once it reaches their clusters.
-                        </p>
-                    </section>
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                        className="prose prose-invert prose-slate max-w-none space-y-12"
+                    >
+                        {[
+                            { icon: ShieldCheck, title: d.legal.sections.collection, desc: d.legal.sections.collectionDesc },
+                            { icon: Lock, title: d.legal.sections.security, desc: d.legal.sections.securityDesc },
+                            { icon: EyeOff, title: d.legal.sections.disclosure, desc: d.legal.sections.disclosureDesc }
+                        ].map((section, idx) => (
+                            <section key={idx}>
+                                <h2 className="text-2xl font-black mb-4 flex items-center gap-3">
+                                    <section.icon className="w-6 h-6 text-accent" />
+                                    {section.title}
+                                </h2>
+                                <p className="text-slate-400 leading-relaxed">
+                                    {section.desc}
+                                </p>
+                            </section>
+                        ))}
+                    </motion.div>
                 </motion.div>
             </div>
 
