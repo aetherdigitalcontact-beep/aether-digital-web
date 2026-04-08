@@ -1,0 +1,74 @@
+﻿
+> relay@0.1.0 build
+> next build
+
+Ôû▓ Next.js 16.2.1 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+Ô£ô Compiled successfully in 5.9s
+  Running TypeScript ...
+  Finished TypeScript in 9.8s ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/47) ...
+  Generating static pages using 11 workers (11/47) 
+  Generating static pages using 11 workers (23/47) 
+  Generating static pages using 11 workers (35/47) 
+Ô£ô Generating static pages using 11 workers (47/47) in 926ms
+  Finalizing page optimization ...
+
+Route (app)
+Ôöî ãÆ /
+Ôö£ Ôùï /_not-found
+Ôö£ ãÆ /api/admin/accounts
+Ôö£ ãÆ /api/ai/analytics
+Ôö£ ãÆ /api/auth/confirm
+Ôö£ ãÆ /api/auth/login
+Ôö£ ãÆ /api/auth/logout
+Ôö£ ãÆ /api/auth/me
+Ôö£ ãÆ /api/auth/register
+Ôö£ ãÆ /api/auth/resend
+Ôö£ ãÆ /api/auth/reset-password
+Ôö£ ãÆ /api/auth/test-check
+Ôö£ ãÆ /api/auth/update-password
+Ôö£ ãÆ /api/billing/subscribe
+Ôö£ ãÆ /api/checkout/binance
+Ôö£ ãÆ /api/checkout/mercadopago
+Ôö£ ãÆ /api/checkout/nowpayments
+Ôö£ ãÆ /api/debug
+Ôö£ ãÆ /api/domains
+Ôö£ ãÆ /api/health
+Ôö£ ãÆ /api/keys
+Ôö£ ãÆ /api/logs
+Ôö£ ãÆ /api/profile/password
+Ôö£ ãÆ /api/profile/update
+Ôö£ ãÆ /api/relay
+Ôö£ ãÆ /api/retries
+Ôö£ ãÆ /api/scenarios
+Ôö£ ãÆ /api/stats
+Ôö£ ãÆ /api/templates
+Ôö£ ãÆ /api/webhooks
+Ôö£ ãÆ /api/webhooks/binance
+Ôö£ ãÆ /api/webhooks/lemonsqueezy
+Ôö£ ãÆ /api/webhooks/mercadopago
+Ôö£ ãÆ /api/webhooks/nowpayments
+Ôö£ ãÆ /api/webhooks/paypal
+Ôö£ ãÆ /api/webhooks/relay
+Ôö£ ãÆ /api/webhooks/shopify
+Ôö£ ãÆ /api/webhooks/woocommerce
+Ôö£ Ôùï /auth
+Ôö£ Ôùï /auth/reset
+Ôö£ Ôùï /dashboard
+Ôö£ Ôùï /demo
+Ôö£ Ôùï /docs
+Ôö£ Ôùï /pricing
+Ôö£ Ôùï /privacy
+Ôö£ Ôùï /refund
+Ôö£ Ôùï /register
+Ôö£ Ôùï /sentinel
+Ôöö Ôùï /terms
+
+
+Ôùï  (Static)   prerendered as static content
+ãÆ  (Dynamic)  server-rendered on demand
+
