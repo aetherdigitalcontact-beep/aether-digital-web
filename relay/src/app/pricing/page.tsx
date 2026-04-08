@@ -67,12 +67,12 @@ export default function PricingPage() {
 
     const CHECKOUT_LINKS = {
         starter: {
-            monthly: "https://relaydigital.lemonsqueezy.com/checkout/buy/7e4e23f9-ccc5-4dbc-be74-a4f2be21894e?enabled=1491416",
-            yearly: "https://relaydigital.lemonsqueezy.com/checkout/buy/cd5be614-670f-4125-af13-7d4b2d12cc44?enabled=1491351"
+            monthly: process.env.NEXT_PUBLIC_LS_STARTER_MONTHLY || "https://relaydigital.lemonsqueezy.com/checkout/buy/7e4e23f9-ccc5-4dbc-be74-a4f2be21894e?enabled=1491416",
+            yearly: process.env.NEXT_PUBLIC_LS_STARTER_YEARLY || "https://relaydigital.lemonsqueezy.com/checkout/buy/cd5be614-670f-4125-af13-7d4b2d12cc44?enabled=1491351"
         },
         pro: {
-            monthly: "https://relaydigital.lemonsqueezy.com/checkout/buy/7c94943f-c154-4bd3-9b8d-98f84bfcfcef?enabled=1491474",
-            yearly: "https://relaydigital.lemonsqueezy.com/checkout/buy/b0105b3a-2fc8-4a3c-9da0-2ee0c200137c?enabled=1491454"
+            monthly: process.env.NEXT_PUBLIC_LS_PRO_MONTHLY || "https://relaydigital.lemonsqueezy.com/checkout/buy/7c94943f-c154-4bd3-9b8d-98f84bfcfcef?enabled=1491474",
+            yearly: process.env.NEXT_PUBLIC_LS_PRO_YEARLY || "https://relaydigital.lemonsqueezy.com/checkout/buy/b0105b3a-2fc8-4a3c-9da0-2ee0c200137c?enabled=1491454"
         }
     };
 
@@ -178,6 +178,43 @@ export default function PricingPage() {
                 window.location.href = data.url;
             } else {
                 alert(data.error || d.pricing.alerts.mpError);
+                setIsMPLoading(false);
+            }
+        } catch (error) {
+            console.error(error);
+            alert(d.pricing.alerts.critical);
+            setIsMPLoading(false);
+        }
+    };
+
+    const handleBinanceCheckout = async (planKey: 'starter' | 'pro') => {
+        // Validation for Downgrades
+        if (userPlan) {
+            const planValue: Record<string, number> = { free: 0, hobby: 0, starter: 1, pro: 2, enterprise: 3 };
+            const targetValue = planValue[planKey] || 0;
+            const userValue = planValue[userPlan] || 0;
+
+            if (userValue > targetValue) {
+                alert(d.pricing.alerts.downgrade.replace('{userPlan}', userPlan.toUpperCase()).replace('{targetPlan}', planKey.toUpperCase()));
+                return;
+            } else if (userValue === targetValue && targetValue > 0) {
+                alert(d.pricing.alerts.alreadyActive.replace('{targetPlan}', planKey.toUpperCase()));
+                return;
+            }
+        }
+
+        setIsMPLoading(true); // Re-use loading state or add isBinanceLoading
+        try {
+            const res = await fetch('/api/checkout/binance', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ planKey })
+            });
+            const data = await res.json();
+            if (res.ok && data.url) {
+                window.location.href = data.url;
+            } else {
+                alert(data.error || "Error al iniciar el pago con Cripto.");
                 setIsMPLoading(false);
             }
         } catch (error) {
@@ -364,6 +401,13 @@ export default function PricingPage() {
                                     {isMPLoading ? <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : d.pricing.ctaMP || "Mercado Pago"}
                                 </button>
                             )}
+
+                            <button
+                                onClick={() => handleBinanceCheckout('starter')}
+                                className="w-full py-3.5 mt-1 rounded-full bg-[#F3BA2F] hover:bg-[#E2AD27] text-black font-black text-center text-[10px] uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(243,186,47,0.3)] active:scale-[0.98] flex items-center justify-center gap-2"
+                            >
+                                {d.pricing.ctaCrypto || "⚡ Crypto (Binance Pay)"}
+                            </button>
                         </div>
 
                         <ul className="space-y-4 mt-auto">
@@ -423,6 +467,13 @@ export default function PricingPage() {
                                         {isMPLoading ? <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : d.pricing.ctaMP || "Mercado Pago"}
                                     </button>
                                 )}
+
+                                <button
+                                    onClick={() => handleBinanceCheckout('pro')}
+                                    className="w-full py-3.5 mt-1 rounded-full bg-[#F3BA2F] hover:bg-[#E2AD27] text-black font-black text-center text-[10px] uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(243,186,47,0.3)] active:scale-[0.98] flex items-center justify-center gap-2"
+                                >
+                                    {d.pricing.ctaCrypto || "⚡ Crypto (Binance Pay)"}
+                                </button>
                             </div>
 
                             <ul className="space-y-4 mt-auto">
@@ -459,12 +510,12 @@ export default function PricingPage() {
                                 )}
                         </div>
 
-                        <button
-                            onClick={() => window.location.href = 'mailto:aetherdigital.contact@gmail.com?subject=Relay Enterprise Inquiry'}
-                            className="w-full py-4 rounded-full bg-white text-black font-black text-center text-[10px] uppercase tracking-widest hover:bg-slate-200 transition-all mb-10 relative z-10 active:scale-[0.98]"
+                        <a
+                            href="mailto:aetherdigital.contact@gmail.com?subject=Relay Enterprise Inquiry"
+                            className="w-full py-4 rounded-full bg-white text-black font-black text-center text-[10px] uppercase tracking-widest hover:bg-slate-200 hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-all mb-10 relative z-10 active:scale-[0.98] block"
                         >
                             {d.pricing.contact}
-                        </button>
+                        </a>
 
                         <ul className="space-y-4 mt-auto relative z-10 text-left">
                             {d.pricing.enterprise.features.map((f: string, i: number) => (

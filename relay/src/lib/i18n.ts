@@ -388,6 +388,7 @@ export const dictionaries: Record<Language, any> = {
             },
             cta: "Comenzar",
             ctaLemon: "🍋 Tarjeta (Lemon Squeezy)",
+            ctaCrypto: "⚡ Cripto (Binance Pay)",
             ctaMP: "🇦🇷 Mercado Pago (30% OFF)",
             contact: "Contactar Ventas",
             billing: {
@@ -666,6 +667,7 @@ export const dictionaries: Record<Language, any> = {
             },
             cta: "Começar",
             ctaLemon: "🍋 Cartão (Lemon Squeezy)",
+            ctaCrypto: "⚡ Cripto (Binance Pay)",
             ctaMP: "🇦🇷 Mercado Pago (30% OFF)",
             contact: "Fale Conosco",
             billing: {
@@ -909,6 +911,7 @@ export const dictionaries: Record<Language, any> = {
             },
             cta: "Начать",
             ctaLemon: "🍋 Начать (Lemon Squeezy)",
+            ctaCrypto: "⚡ Крипто (Binance Pay)",
             ctaMP: "🇦🇷 Mercado Pago (30% OFF)",
             contact: "Связаться",
             billing: {
@@ -1152,6 +1155,7 @@ export const dictionaries: Record<Language, any> = {
             },
             cta: "Commencer",
             ctaLemon: "🍋 Commencer (Lemon Squeezy)",
+            ctaCrypto: "⚡ Crypto (Binance Pay)",
             ctaMP: "🇦🇷 Mercado Pago (30% OFF)",
             contact: "Contactez-nous",
             billing: {
@@ -1382,6 +1386,7 @@ export const dictionaries: Record<Language, any> = {
             },
             cta: "Starten",
             ctaLemon: "🍋 Starten (Lemon Squeezy)",
+            ctaCrypto: "⚡ Krypto (Binance Pay)",
             ctaMP: "🇦🇷 Mercado Pago (30% OFF)",
             contact: "Kontaktieren Sie uns",
             billing: {

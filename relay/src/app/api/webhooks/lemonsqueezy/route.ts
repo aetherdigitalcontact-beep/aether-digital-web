@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import { supabaseServer } from '@/lib/supabaseServer';
 
 // Must match the secret you pasted in Lemon Squeezy dashboard
-const WEBHOOK_SECRET = 'Relay_Production_Secret_2026';
+const WEBHOOK_SECRET = process.env.LEMON_SQUEEZY_WEBHOOK_SECRET || 'Relay_Production_Secret_2026';
 
 export async function POST(req: NextRequest) {
     try {

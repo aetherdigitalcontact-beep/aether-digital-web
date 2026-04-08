@@ -51,6 +51,7 @@ export async function POST(req: NextRequest) {
             }
         };
 
+        const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://relay-amber-nu.vercel.app';
         const body = {
             items: [
                 {
@@ -61,9 +62,9 @@ export async function POST(req: NextRequest) {
                 }
             ],
             back_urls: {
-                success: 'https://relay-amber-nu.vercel.app/dashboard?payment=success',
-                failure: 'https://relay-amber-nu.vercel.app/pricing?payment=failure',
-                pending: 'https://relay-amber-nu.vercel.app/dashboard?payment=pending'
+                success: `${appUrl}/dashboard?payment=success`,
+                failure: `${appUrl}/pricing?payment=failure`,
+                pending: `${appUrl}/dashboard?payment=pending`
             },
             auto_return: 'approved',
             metadata: {
