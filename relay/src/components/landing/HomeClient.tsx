@@ -230,13 +230,6 @@ export default function HomeClient({ initialUser, initialLang }: HomeClientProps
                 animate="visible"
                 className="min-h-screen flex flex-col items-center justify-center max-w-5xl text-center z-10 pt-20"
             >
-                <motion.div variants={itemVariants} className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 text-accent text-[10px] font-black tracking-[0.2em] mb-10 uppercase">
-                    <span className="relative flex h-3 w-3">
-                        <span className="animate-ping absolute h-full w-full rounded-full bg-accent opacity-40"></span>
-                        <span className="relative rounded-full h-3 w-3 bg-accent"></span>
-                    </span>
-                    {d.hero.phase}
-                </motion.div>
 
                 <motion.h1
                     variants={itemVariants}
