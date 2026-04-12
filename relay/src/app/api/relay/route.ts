@@ -275,6 +275,7 @@ export async function POST(req: NextRequest) {
                         attemptStatusCode = e.message.includes('NOT_CONFIGURED') ? 401 : 502;
                         attemptError = e.message;
                     }
+
                     finalAttempts.push({ platform: p, status: attemptStatusCode, error: attemptError });
                     finalStatusCode = attemptStatusCode; finalProviderError = attemptError;
                 }

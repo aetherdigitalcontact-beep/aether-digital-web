@@ -148,15 +148,25 @@ export const dictionaries: Record<Language, any> = {
             support: "Contact Support",
             sections: {
                 agreement: "Agreement of Terms",
+                agreementDesc: "By accessing the Relay protocol, you agree to be bound by these functional terms. Our infrastructure is provided as-is for high-performance notification delivery.",
                 usage: "API Usage & Limits",
+                usageDesc: "Users must adhere to rate limits and fair use policies. Automated abuse or targeting of non-authorized endpoints will result in immediate protocol revocation.",
                 ip: "Intellectual Property",
+                ipDesc: "All Relay code, branding, and telemetry systems remain the exclusive property of Aether Digital. Reproduction without authorization is prohibited.",
                 availability: "Service Availability",
+                availabilityDesc: "We strive for 99.9% uptime. While our edge network is global, regional availability may vary based on provider health.",
                 collection: "Data Collection",
+                collectionDesc: "We only capture necessary message metadata (timestamp, priority, status) to provide delivery analytics. Content is never logged permanently.",
                 security: "Security Protocols",
+                securityDesc: "All transmissions are secured via TLS 1.3. API Keys are stored using salted cryptographic hashing to ensure identity protection.",
                 disclosure: "Third-Party Disclosure",
+                disclosureDesc: "Relay does not sell user data. Metadata is only processed through encrypted provider uplinks required for final message delivery.",
                 noRefund: "No Refund Policy",
+                noRefundDesc: "Due to the instantaneous nature of digital notification credits and protocol access, all Relay purchases are final.",
                 cancellation: "Cancellations",
-                exceptions: "Exceptions"
+                cancellationDesc: "You may cancel your subscription at any time. Protocol access and features will remain active until the end of your current billing cycle.",
+                exceptions: "Exceptions",
+                exceptionsDesc: "Refund requests will only be reviewed in cases of verifiable system failure preventing access to the Relay terminal for >24 hours."
             }
         },
         faq: {
@@ -480,15 +490,25 @@ export const dictionaries: Record<Language, any> = {
                 support: "Contacto Soporte",
                 sections: {
                     agreement: "Aceptación de Términos",
+                    agreementDesc: "Al acceder al protocolo Relay, aceptas cumplir con estos términos funcionales. Nuestra infraestructura se proporciona 'tal cual' para la entrega de notificaciones de alto rendimiento.",
                     usage: "Uso de API y Límites",
+                    usageDesc: "Los usuarios deben adherirse a los límites de velocidad y políticas de uso justo. El abuso automatizado o el targeting de endpoints no autorizados resultará en la revocación inmediata del protocolo.",
                     ip: "Propiedad Intelectual",
+                    ipDesc: "Todo el código de Relay, marca y sistemas de telemetría siguen siendo propiedad exclusiva de Aether Digital. La reproducción sin autorización está prohibida.",
                     availability: "Disponibilidad del Servicio",
+                    availabilityDesc: "Nos esforzamos por un tiempo de actividad del 99.9%. Aunque nuestra red edge es global, la disponibilidad regional puede variar según la salud del proveedor.",
                     collection: "Recolección de Datos",
+                    collectionDesc: "Solo capturamos los metadatos necesarios del mensaje (marca de tiempo, prioridad, estado) para proporcionar análisis de entrega. El contenido nunca se registra permanentemente.",
                     security: "Protocolos de Seguridad",
+                    securityDesc: "Todas las transmisiones están aseguradas a través de TLS 1.3. Las claves de API se almacenan mediante hashing criptográfico con sal para garantizar la protección de la identidad.",
                     disclosure: "Divulgación a Terceros",
+                    disclosureDesc: "Relay no vende los datos del usuario. Los metadatos solo se procesan a través de enlaces de proveedores cifrados necesarios para la entrega final del mensaje.",
                     noRefund: "Política de No Reembolso",
+                    noRefundDesc: "Debido a la naturaleza instantánea de los créditos de notificación digital y el acceso al protocolo, todas las compras de Relay son definitivas.",
                     cancellation: "Cancelaciones",
-                    exceptions: "Excepciones"
+                    cancellationDesc: "Puedes cancelar tu suscripción en cualquier momento. El acceso al protocolo y las funciones permanecerán activos hasta el final de tu ciclo de facturación actual.",
+                    exceptions: "Excepciones",
+                    exceptionsDesc: "Las solicitudes de reembolso solo se revisarán en casos de fallas verificables del sistema que impidan el acceso a la terminal Relay por más de 24 horas."
                 }
             },
             faq: {
@@ -782,15 +802,43 @@ export const dictionaries: Record<Language, any> = {
                 confirm: "Confirmar Upgrade"
             }
         },
-        legal: {         terms: "Termos de Serviço",         privacy: "Política de Privacidade",         refund: "Política de Reembolso",         support: "Contato de Suporte",         sections: {                 agreement: "Acordo de Termos",                 usage: "Uso da API e Limites",                 ip: "Propriedade Intelectual",                 availability: "Disponibilidade do Serviço",                 collection: "Coleta de Dados",                 security: "Protocolos de Segurança",                 disclosure: "Divulgação a Terceiros",                 noRefund: "Política de Não Reembolso",                 cancellation: "Cancelamentos",                 exceptions: "Exceções"
-        }
-},
-        faq: {         title: "Perguntas Frequentes",         items: [                 {                         q: "Como começo a enviar alertas?",                         a: "Basta criar uma API Key no painel e enviar uma solicitação POST para nosso uplink global. Veja a documentação para exemplos."
-        },                 {                         q: "O plano Hobby é realmente grátis?",                         a: "Sim, para sempre. Você recebe 100 alertas por mês e suporte da comunidade sem pagar nada."
-        },                 {                         q: "Posso fazer upgrade ou downgrade?",                         a: "Você pode fazer upgrade instantaneamente. Downgrades entram em vigor no final do ciclo de cobrança atual."
-        },                 {                         q: "Vocês armazenam meus dados de notificação?",                         a: "Não. Apenas metadados (tempo, status) para análise. O conteúdo da mensagem é excluído após a entrega."
-        }         ]
-},
+        legal: {
+            terms: "Termos de Serviço",
+            privacy: "Política de Privacidade",
+            refund: "Política de Reembolso",
+            support: "Contato de Suporte",
+            sections: {
+                agreement: "Acordo de Termos",
+                agreementDesc: "Ao acessar o protocolo Relay, você concorda em cumprir estes termos funcionais. Nossa infraestrutura é fornecida como está para entrega de notificações de alta performance.",
+                usage: "Uso da API e Limites",
+                usageDesc: "Os usuários devem aderir aos limites de taxa e políticas de uso justo. O abuso automatizado ou o direcionamento de endpoints não autorizados resultará na revogação imediata do protocolo.",
+                ip: "Propriedade Intelectual",
+                ipDesc: "Todo o código do Relay, marca e sistemas de telemetria permanecem propriedade exclusiva da Aether Digital. A reprodução sem autorização é proibida.",
+                availability: "Disponibilidade do Serviço",
+                availabilityDesc: "Esforçamo-nos por 99,9% de disponibilidade. Embora nossa rede edge seja global, a disponibilidade regional pode variar com base na saúde do provedor.",
+                collection: "Coleta de Dados",
+                collectionDesc: "Capturamos apenas os metadados necessários das mensagens (timestamp, prioridade, status) para fornecer análises de entrega. O conteúdo nunca é registrado permanentemente.",
+                security: "Protocolos de Segurança",
+                securityDesc: "Todas as transmissões são protegidas via TLS 1.3. As chaves de API são armazenadas usando hashing criptográfico com sal para garantir a proteção da identidade.",
+                disclosure: "Divulgação a Terceiros",
+                disclosureDesc: "O Relay não vende dados de usuários. Metadados são processados apenas através de conexões de provedores criptografadas para entrega final das mensagens.",
+                noRefund: "Política de Não Reembolso",
+                noRefundDesc: "Devido à natureza instantânea dos créditos de notificação digital e acesso ao protocolo, todas as compras do Relay são finais.",
+                cancellation: "Cancelamentos",
+                cancellationDesc: "Você pode cancelar sua assinatura a qualquer momento. O acesso ao protocolo e os recursos permanecerão ativos até o final do seu ciclo de cobrança atual.",
+                exceptions: "Exceções",
+                exceptionsDesc: "Pedidos de reembolso só serão revisados em casos de falha verificável do sistema impedindo o acesso ao terminal Relay por mais de 24 horas."
+            }
+        },
+        faq: {
+            title: "Perguntas Frequentes",
+            items: [
+                { q: "Como começo a enviar alertas?", a: "Basta criar uma API Key no painel e enviar uma solicitação POST para nosso uplink global. Veja a documentação para exemplos." },
+                { q: "O plano Hobby é realmente grátis?", a: "Sim, para sempre. Você recebe 100 alertas por mês e suporte da comunidade sem pagar nada." },
+                { q: "Posso fazer upgrade ou downgrade?", a: "Você pode fazer upgrade instantaneamente. Downgrades entram em vigor no final do ciclo de cobrança atual." },
+                { q: "Vocês armazenam meus dados de notificação?", a: "Não. Apenas metadados (tempo, status) para análise. O conteúdo da mensagem é excluído após a entrega." }
+            ]
+        },
         footer: "Arquitetura Aether Digital. Construído para Excelência.",
         auth: {
             welcome: "Bem-vindo ao RELAY",
@@ -1035,15 +1083,41 @@ export const dictionaries: Record<Language, any> = {
                 confirm: "Подтвердить обновление"
             }
         },
-        legal: {         terms: "Условия использования",         privacy: "Политика конфиденциальности",         refund: "Политика возврата",         support: "Служба поддержки",         sections: {                 agreement: "Согласие с условиями",                 usage: "Использование API и лимиты",                 ip: "Интеллектуальная собственность",                 availability: "Доступность сервиса",                 collection: "Сбор данных",                 security: "Протоколы безопасности",                 disclosure: "Раскрытие информации",                 noRefund: "Политика отсутствия возврата",                 cancellation: "Отмена подписки",                 exceptions: "Исключения"
-        }
-},
-        faq: {         title: "Часто задаваемые вопросы",         items: [                 {                         q: "Как начать отправлять уведомления?",                         a: "Просто создайте API-ключ в панели управления и отправьте POST-запрос на наш сервер. Ознакомьтесь с документацией для примеров кода."
-        },                 {                         q: "Уровень Hobby действительно бесплатный?",                         a: "Да, навсегда. Вы получаете 100 уведомлений в месяц и поддержку сообщества совершенно бесплатно."
-        },                 {                         q: "Могу ли я сменить тарифный план?",                         a: "Вы можете повысить план мгновенно. Понижение вступает в силу в конце текущего расчетного периода."
-        },                 {                         q: "Вы храните данные моих уведомлений?",                         a: "Нет. Мы храним только метаданные (время, статус) для аналитики. Содержимое сообщения удаляется сразу после доставки."
-        }         ]
-},
+        legal: {
+            terms: "Условия использования", privacy: "Политика конфиденциальности", refund: "Политика возврата", support: "Служба поддержки", sections: {
+                agreement: "Согласие с условиями",
+                agreementDesc: "Доступ к протоколу Relay означает ваше согласие с данными условиями. Наша инфраструктура предоставляется 'как есть' для высокопроизводительной доставки уведомлений.",
+                usage: "Использование API и лимиты",
+                usageDesc: "Пользователи должны соблюдать лимиты запросов и правила добросовестного использования. Автоматизированное злоупотребление приведет к немедленному аннулированию доступа.",
+                ip: "Интеллектуальная собственность",
+                ipDesc: "Весь код Relay, брендинг и системы телеметрии являются исключительной собственностью Aether Digital. Воспроизведение без разрешения запрещено.",
+                availability: "Доступность сервиса",
+                availabilityDesc: "Мы стремимся к доступности 99,9%. Хотя наша сеть является глобальной, региональная доступность может варьироваться в зависимости от состояния провайдеров.",
+                collection: "Сбор данных",
+                collectionDesc: "Мы собираем только необходимые метаданные сообщений (время, приоритет, статус) для аналитики доставки. Содержимое сообщений никогда не сохраняется постоянно.",
+                security: "Протоколы безопасности",
+                securityDesc: "Все передачи защищены TLS 1.3. API-ключи хранятся с использованием криптографического хеширования с солью для защиты идентификационных данных.",
+                disclosure: "Раскрытие информации",
+                disclosureDesc: "Relay не продает данные пользователей. Метаданные обрабатываются только через зашифрованные каналы провайдеров, необходимые для доставки сообщений.",
+                noRefund: "Политика отсутствия возврата",
+                noRefundDesc: "В связи с мгновенным характером предоставления цифровых кредитов и доступа к протоколу, все покупки в Relay являются окончательными.",
+                cancellation: "Отмена подписки",
+                cancellationDesc: "Вы можете отменить подписку в любое время. Доступ к функциям сохранится до конца текущего расчетного периода.",
+                exceptions: "Исключения",
+                exceptionsDesc: "Запросы на возврат рассматриваются только в случаях подтвержденного сбоя системы, препятствующего доступу к терминалу Relay более 24 часов."
+            }
+        },
+        faq: {
+            title: "Часто задаваемые вопросы", items: [{
+                q: "Как начать отправлять уведомления?", a: "Просто создайте API-ключ в панели управления и отправьте POST-запрос на наш сервер. Ознакомьтесь с документацией для примеров кода."
+            }, {
+                q: "Уровень Hobby действительно бесплатный?", a: "Да, навсегда. Вы получаете 100 уведомлений в месяц и поддержку сообщества совершенно бесплатно."
+            }, {
+                q: "Могу ли я сменить тарифный план?", a: "Вы можете повысить план мгновенно. Понижение вступает в силу в конце текущего расчетного периода."
+            }, {
+                q: "Вы храните данные моих уведомлений?", a: "Нет. Мы храним только метаданные (время, статус) для аналитики. Содержимое сообщения удаляется сразу после доставки."
+            }]
+        },
         footer: "Архитектура Aether Digital. Создано для совершенства.",
         auth: {
             welcome: "Добро пожаловать в RELAY",
@@ -1288,15 +1362,41 @@ export const dictionaries: Record<Language, any> = {
                 confirm: "Confirmer la Mise à Jour"
             }
         },
-        legal: {         terms: "Conditions d'utilisation",         privacy: "Politique de confidentialité",         refund: "Politique de remboursement",         support: "Contact Support",         sections: {                 agreement: "Acceptation des conditions",                 usage: "Utilisation de l'API & Limites",                 ip: "Propriété intellectuelle",                 availability: "Disponibilité du service",                 collection: "Collecte de données",                 security: "Protocoles de sécurité",                 disclosure: "Divulgation à des tiers",                 noRefund: "Politique de non-remboursement",                 cancellation: "Annulations",                 exceptions: "Exceptions"
-        }
-},
-        faq: {         title: "Questions fréquemment posées",         items: [                 {                         q: "Comment commencer à envoyer des alertes ?",                         a: "Créez simplement une clé API dans le tableau de bord et envoyez une requête POST à notre uplink global. Consultez la documentation pour les exemples."
-        },                 {                         q: "Le niveau Hobby est-il vraiment gratuit ?",                         a: "Oui, pour toujours. Vous bénéficiez de 100 alertes par mois et d'un support communautaire gratuit."
-        },                 {                         q: "Puis-je changer mon abonnement ?",                         a: "Vous pouvez passer au niveau supérieur instantanément. Les rétrogradations prennent effet à la fin de votre cycle de facturation."
-        },                 {                         q: "Stockez-vous mes données de notification ?",                         a: "Non. Nous stockons uniquement les métadonnées pour vos analyses. Le contenu est supprimé immédiatement après la livraison."
-        }         ]
-},
+        legal: {
+            terms: "Conditions d'utilisation", privacy: "Politique de confidentialité", refund: "Politique de remboursement", support: "Contact Support", sections: {
+                agreement: "Acceptation des conditions",
+                agreementDesc: "En accédant au protocole Relay, vous acceptez d'être lié par ces conditions fonctionnelles. Notre infrastructure est fournie telle quelle pour une livraison de notifications haute performance.",
+                usage: "Utilisation de l'API & Limites",
+                usageDesc: "Les utilisateurs doivent respecter les limites de débit et les politiques d'utilisation équitable. Tout abus automatisé entraînera la révocation immédiate du protocole.",
+                ip: "Propriété intellectuelle",
+                ipDesc: "Tout le code Relay, l'image de marque et les systèmes de télémétrie restent la propriété exclusive d'Aether Digital. Toute reproduction sans autorisation est interdite.",
+                availability: "Disponibilité du service",
+                availabilityDesc: "Nous visons une disponibilité de 99,9 %. Bien que notre réseau edge soit mondial, la disponibilité régionale peut varier selon la santé du fournisseur.",
+                collection: "Collecte de données",
+                collectionDesc: "Nous ne capturons que les métadonnées nécessaires (horodatage, priorité, statut) pour les analyses de livraison. Le contenu n'est jamais enregistré de façon permanente.",
+                security: "Protocoles de sécurité",
+                securityDesc: "Toutes les transmissions sont sécurisées via TLS 1.3. Les clés API sont stockées à l'aide d'un hachage cryptographique salé pour assurer la protection de l'identité.",
+                disclosure: "Divulgation à des tiers",
+                disclosureDesc: "Relay ne vend pas de données utilisateur. Les métadonnées sont uniquement traitées via des liaisons chiffrées nécessaires à la livraison finale du message.",
+                noRefund: "Politique de non-remboursement",
+                noRefundDesc: "En raison de la nature instantanée des crédits de notification numérique et de l'accès au protocole, tous les achats Relay sont définitifs.",
+                cancellation: "Annulations",
+                cancellationDesc: "Vous pouvez annuler votre abonnement à tout moment. L'accès au protocole restera actif jusqu'à la fin de votre cycle de facturation actuel.",
+                exceptions: "Exceptions",
+                exceptionsDesc: "Les demandes de remboursement ne seront examinées qu'en cas de défaillance vérifiable du système empêchant l'accès au terminal Relay pendant plus de 24 heures."
+            }
+        },
+        faq: {
+            title: "Questions fréquemment posées", items: [{
+                q: "Comment commencer à envoyer des alertes ?", a: "Créez simplement une clé API dans le tableau de bord et envoyez une requête POST à notre uplink global. Consultez la documentation pour les exemples."
+            }, {
+                q: "Le niveau Hobby est-il vraiment gratuit ?", a: "Oui, pour toujours. Vous bénéficiez de 100 alertes par mois et d'un support communautaire gratuit."
+            }, {
+                q: "Puis-je changer mon abonnement ?", a: "Vous pouvez passer au niveau supérieur instantanément. Les rétrogradations prennent effet à la fin de votre cycle de facturation."
+            }, {
+                q: "Stockez-vous mes données de notification ?", a: "Non. Nous stockons uniquement les métadonnées pour vos analyses. Le contenu est supprimé immédiatement après la livraison."
+            }]
+        },
         footer: "Architecture Aether Digital. Conçu pour l'Excellence.",
         auth: {
             welcome: "Bienvenue sur RELAY",
@@ -1528,15 +1628,41 @@ export const dictionaries: Record<Language, any> = {
                 confirm: "Update bestätigen"
             }
         },
-        legal: {         terms: "Nutzungsbedingungen",         privacy: "Datenschutzrichtlinie",         refund: "Rückerstattungsrichtlinie",         support: "Kundensupport",         sections: {                 agreement: "Zustimmung zu den Bedingungen",                 usage: "API-Nutzung & Limits",                 ip: "Geistiges Eigentum",                 availability: "Serviceverfügbarkeit",                 collection: "Datenerfassung",                 security: "Sicherheitsprotokolle",                 disclosure: "Weitergabe an Dritte",                 noRefund: "Keine Rückerstattung",                 cancellation: "Stornierungen",                 exceptions: "Ausnahmen"
-        }
-},
-        faq: {         title: "Häufig gestellte Fragen",         items: [                 {                         q: "Wie fange ich an, Warnungen zu senden?",                         a: "Erstellen Sie einfach einen API-Schlüssel im Dashboard und senden Sie einen POST-Request an unseren globalen Uplink. Beispiele finden Sie in der Dokumentation."
-        },                 {                         q: "Ist die Hobby-Stufe wirklich kostenlos?",                         a: "Ja, für immer. Sie erhalten 100 Warnungen pro Monat und Community-Support, ohne einen Cent zu bezahlen."
-        },                 {                         q: "Kann ich ein Upgrade oder Downgrade durchführen?",                         a: "Ein Upgrade ist sofort möglich. Downgrades werden am Ende Ihres aktuellen Abrechnungszeitraums wirksam."
-        },                 {                         q: "Speichern Sie meine Benachrichtigungsdaten?",                         a: "Nein. Wir speichern nur Metadaten für Ihre Analysen. Der Inhalt wird sofort nach der Zustellung gelöscht."
-        }         ]
-},
+        legal: {
+            terms: "Nutzungsbedingungen", privacy: "Datenschutzrichtlinie", refund: "Rückerstattungsrichtlinie", support: "Kundensupport", sections: {
+                agreement: "Zustimmung zu den Bedingungen",
+                agreementDesc: "Durch den Zugriff auf das Relay-Protokoll erklären Sie sich mit diesen Bedingungen einverstanden. Unsere Infrastruktur wird 'wie besehen' bereitgestellt.",
+                usage: "API-Nutzung & Limits",
+                usageDesc: "Benutzer müssen sich an Ratelimits und Fair-Use-Richtlinien halten. Automatisierter Missbrauch führt zum sofortigen Widerruf des Protokolls.",
+                ip: "Geistiges Eigentum",
+                ipDesc: "Sämtlicher Relay-Code, das Branding und die Telemetriesysteme bleiben ausschließliches Eigentum von Aether Digital. Vervielfältigung ist untersagt.",
+                availability: "Serviceverfügbarkeit",
+                availabilityDesc: "Wir streben eine Verfügbarkeit von 99,9 % an. Während unser Edge-Netzwerk global ist, kann die regionale Verfügbarkeit variieren.",
+                collection: "Datenerfassung",
+                collectionDesc: "Wir erfassen nur notwendige Nachrichten-Metadaten (Zeitstempel, Priorität, Status) für Lieferanalysen. Inhalte werden nie dauerhaft protokolliert.",
+                security: "Sicherheitsprotokolle",
+                securityDesc: "Alle Übertragungen sind über TLS 1.3 gesichert. API-Keys werden mit gesalzenem kryptografischem Hashing gespeichert.",
+                disclosure: "Weitergabe an Dritte",
+                disclosureDesc: "Relay verkauft keine Benutzerdaten. Metadaten werden nur über verschlüsselte Verbindungen verarbeitet, die für die Zustellung erforderlich sind.",
+                noRefund: "Keine Rückerstattung",
+                noRefundDesc: "Aufgrund der sofortigen Art digitaler Benachrichtigungsguthaben und des Protokollzugriffs sind alle Relay-Käufe endgültig.",
+                cancellation: "Stornierungen",
+                cancellationDesc: "Sie können Ihr Abonnement jederzeit kündigen. Der Zugriff bleibt bis zum Ende des aktuellen Abrechnungszeitraums aktiv.",
+                exceptions: "Ausnahmen",
+                exceptionsDesc: "Erstattungsanträge werden nur bei nachweisbarem Systemausfall geprüft, der den Zugriff auf das Relay-Terminal länger als 24 Stunden verhindert."
+            }
+        },
+        faq: {
+            title: "Häufig gestellte Fragen", items: [{
+                q: "Wie fange ich an, Warnungen zu senden?", a: "Erstellen Sie einfach einen API-Schlüssel im Dashboard und senden Sie einen POST-Request an unseren globalen Uplink. Beispiele finden Sie in der Dokumentation."
+            }, {
+                q: "Ist die Hobby-Stufe wirklich kostenlos?", a: "Ja, für immer. Sie erhalten 100 Warnungen pro Monat und Community-Support, ohne einen Cent zu bezahlen."
+            }, {
+                q: "Kann ich ein Upgrade oder Downgrade durchführen?", a: "Ein Upgrade ist sofort möglich. Downgrades werden am Ende Ihres aktuellen Abrechnungszeitraums wirksam."
+            }, {
+                q: "Speichern Sie meine Benachrichtigungsdaten?", a: "Nein. Wir speichern nur Metadaten für Ihre Analysen. Der Inhalt wird sofort nach der Zustellung gelöscht."
+            }]
+        },
         footer: "Aether Digital Architecture. Gebaut für Exzellenz.",
         auth: {
             welcome: "Willkommen bei RELAY",
@@ -1767,15 +1893,41 @@ export const dictionaries: Record<Language, any> = {
                 confirm: "确认协议升级"
             }
         },
-        legal: {         terms: "服务条款",         privacy: "隐私政策",         refund: "退款政策",         support: "联系支持",         sections: {                 agreement: "条款协议",                 usage: "API 使用与限制",                 ip: "知识产权",                 availability: "服务可用性",                 collection: "数据收集",                 security: "安全协议",                 disclosure: "第三方披露",                 noRefund: "无退款政策",                 cancellation: "取消政策",                 exceptions: "例外情况"
-        }
-},
-        faq: {         title: "常见问题解答",         items: [                 {                         q: "如何开始发送警报？",                         a: "只需在仪表板中创建 API 密钥，然后向我们的全球上行链路发送 POST 请求。查看文档以获取代码段。"
-        },                 {                         q: "Hobby 级别真的免费吗？",                         a: "是的，永远免费。您每月可获得 100 条警报和社区支持，无需支付任何费用。"
-        },                 {                         q: "我可以升级或降级吗？",                         a: "您可以立即升级。降级将在当前计费周期结束时生效。"
-        },                 {                         q: "你们存储我的通知数据吗？",                         a: "不。我们只存储用于您的分析的元数据。消息内容在送达后立即删除。"
-        }         ]
-},
+        legal: {
+            terms: "服务条款", privacy: "隐私政策", refund: "退款政策", support: "联系支持", sections: {
+                agreement: "条款协议",
+                agreementDesc: "访问 Relay 协议即表示您同意受这些功能条款的约束。我们的基础设施按“原样”提供，用于高性能通知传送。",
+                usage: "API 使用与限制",
+                usageDesc: "用户必须遵守速率限制和公平使用政策。自动滥用或针对非授权端点的攻击将导致协议立即撤销。",
+                ip: "知识产权",
+                ipDesc: "所有 Relay 代码、品牌和遥测系统均为 Aether Digital 的专属财产。未经授权严禁复制。",
+                availability: "服务可用性",
+                availabilityDesc: "我们力争实现 99.9% 的正常运行时间。虽然我们的边缘网络是全球性的，但区域可用性可能因提供商健康状况而异。",
+                collection: "数据收集",
+                collectionDesc: "我们仅捕获必要的消息元数据（代码戳、优先级、状态）以提供传送分析。内容绝不会永久记录。",
+                security: "安全协议",
+                securityDesc: "所有传输均通过 TLS 1.3 进行保护。API 密钥使用加盐加密哈希存储，以确保身份识别保护。",
+                disclosure: "第三方披露",
+                disclosureDesc: "Relay 不分售用户数据。元数据仅通过最终消息传送所需的加密提供商上行链路进行处理。",
+                noRefund: "无退款政策",
+                noRefundDesc: "由于数字通知信用和协议访问的即时性，所有 Relay 购买均为最终决定。",
+                cancellation: "取消政策",
+                cancellationDesc: "您可以随时取消订阅。协议访问和功能将保持激活状态，直到当前计费周期结束。",
+                exceptions: "例外情况",
+                exceptionsDesc: "退款请求仅在可证实的系统故障导致无法访问 Relay 终端超过 24 小时的情况下进行审查。"
+            }
+        },
+        faq: {
+            title: "常见问题解答", items: [{
+                q: "如何开始发送警报？", a: "只需在仪表板中创建 API 密钥，然后向我们的全球上行链路发送 POST 请求。查看文档以获取代码段。"
+            }, {
+                q: "Hobby 级别真的免费吗？", a: "是的，永远免费。您每月可获得 100 条警报和社区支持，无需支付任何费用。"
+            }, {
+                q: "我可以升级或降级吗？", a: "您可以立即升级。降级将在当前计费周期结束时生效。"
+            }, {
+                q: "你们存储我的通知数据吗？", a: "不。我们只存储用于您的分析的元数据。消息内容在送达后立即删除。"
+            }]
+        },
         footer: "Aether Digital Architecture. 为卓越而生。",
         auth: {
             welcome: "欢迎使用 RELAY",
@@ -2006,15 +2158,41 @@ export const dictionaries: Record<Language, any> = {
                 confirm: "プロトコルのアップグレードを確定"
             }
         },
-        legal: {         terms: "利用規約",         privacy: "プライバシーポリシー",         refund: "返金ポリシー",         support: "サポート担当",         sections: {                 agreement: "規約の同意",                 usage: "APIの使用と制限",                 ip: "知的財産権",                 availability: "サービスの可用性",                 collection: "データ収集",                 security: "セキュリティプロトコル",                 disclosure: "第三者への開示",                 noRefund: "返金不可ポリシー",                 cancellation: "キャンセル",                 exceptions: "例外事項"
-        }
-},
-        faq: {         title: "よくある質問",         items: [                 {                         q: "アラートの送信を開始するにはどうすればよいですか？",                         a: "ダッシュボードでAPIキーを作成し、グローバルアップリンクにPOSTリクエストを送信するだけです。詳細はドキュメントを確認してください。"
-        },                 {                         q: "Hobbyプランは本当に無料ですか？",                         a: "はい、永遠に無料です。月間100件のアラートとコミュニティサポートを無料で利用できます。"
-        },                 {                         q: "アップグレードやダウングレードは可能ですか？",                         a: "即時アップグレードが可能です。ダウングレードは現在の請求サイクルの終了時に適用されます。"
-        },                 {                         q: "通知データは保存されますか？",                         a: "いいえ。分析用のメタデータのみを保存し、メッセージ内容は配信後すぐに削除されます。"
-        }         ]
-},
+        legal: {
+            terms: "利用規約", privacy: "プライバシーポリシー", refund: "返金ポリシー", support: "サポート担当", sections: {
+                agreement: "規約の同意",
+                agreementDesc: "Relayプロトコルにアクセスすることにより、これらの機能条項に拘束されることに同意したことになります。当社のインフラストラクチャは、高性能な通知配信のために現在の状態で提供されます。",
+                usage: "APIの使用と制限",
+                usageDesc: "ユーザーはレート制限とフェアユースポリシーを遵守する必要があります。自動化された悪用や未承認のエンドポイントへの標的設定は、即時のプロトコル取り消しにつながります。",
+                ip: "知的財産権",
+                ipDesc: "すべてのRelayコード、ブランディング、およびテレメトリシステムは、Aether Digitalの独占的所有物です。許可のない複製は禁止されています。",
+                availability: "サービスの可用性",
+                availabilityDesc: "99.9%の稼働率を目指しています。当社のエッジネットワークはグローバルですが、地域の可用性はプロバイダーの状態によって異なる場合があります。",
+                collection: "データ収集",
+                collectionDesc: "配信分析を提供するために、必要なメッセージメタデータ（タイムスタンプ、優先度、ステータス）のみをキャプチャします。コンテンツが永続的にログに記録されることはありません。",
+                security: "セキュリティプロトコル",
+                securityDesc: "すべての送信はTLS 1.3を介して保護されます。APIキーは、ID保護を確実にするためにソルト化された暗号化ハッシュを使用して保存されます。",
+                disclosure: "第三者への開示",
+                disclosureDesc: "Relayはユーザーデータを販売しません。メタデータは、最終的なメッセージ配信に必要な暗号化されたプロバイダーアップリンクを通じてのみ処理されます。",
+                noRefund: "返金不可ポリシー",
+                noRefundDesc: "デジタル通知クレジットおよびプロトコルアクセスの即時性により、すべてのRelay購入は最終的なものとなります。",
+                cancellation: "キャンセル",
+                cancellationDesc: "サブスクリプションはいつでもキャンセルできます。プロトコルアクセスと機能は、現在の請求サイクルの終了まで有効のままです。",
+                exceptions: "例外事項",
+                exceptionsDesc: "返金リクエストは、24時間以上にわたってRelayターミナルへのアクセスを妨げる実証可能なシステム障害が発生した場合にのみ審査されます。"
+            }
+        },
+        faq: {
+            title: "よくある質問", items: [{
+                q: "アラートの送信を開始するにはどうすればよいですか？", a: "ダッシュボードでAPIキーを作成し、グローバルアップリンクにPOSTリクエストを送信するだけです。詳細はドキュメントを確認してください。"
+            }, {
+                q: "Hobbyプランは本当に無料ですか？", a: "はい、永遠に無料です。月間100件のアラートとコミュニティサポートを無料で利用できます。"
+            }, {
+                q: "アップグレードやダウングレードは可能ですか？", a: "即時アップグレードが可能です。ダウングレードは現在の請求サイクルの終了時に適用されます。"
+            }, {
+                q: "通知データは保存されますか？", a: "いいえ。分析用のメタデータのみを保存し、メッセージ内容は配信後すぐに削除されます。"
+            }]
+        },
         footer: "Aether Digital Architecture. 卓越性のために構築。",
         auth: {
             welcome: "RELAYへようこそ",
@@ -2245,15 +2423,41 @@ export const dictionaries: Record<Language, any> = {
                 confirm: "Conferma Aggiornamento"
             }
         },
-        legal: {         terms: "Termini di Servizio",         privacy: "Informativa sulla Privacy",         refund: "Politica di Rimborso",         support: "Contatta el Supporto",         sections: {                 agreement: "Accettazione dei Termini",                 usage: "Utilizzo API & Limiti",                 ip: "Proprietà Intellettuale",                 availability: "Disponibilità del Servizio",                 collection: "Raccolta Dati",                 security: "Protocolli di Sicurezza",                 disclosure: "Divulgazione a Terzi",                 noRefund: "Politica di No Rimborso",                 cancellation: "Cancellazioni",                 exceptions: "Eccezioni"
-        }
-},
-        faq: {         title: "Domande Frequenti",         items: [                 {                         q: "Come inizio a inviare avvisi?",                         a: "Crea un'API Key nella dashboard e invia una richiesta POST al nostro uplink globale. Consulta la documentazione per esempi."
-        },                 {                         q: "Il piano Hobby è davvero gratuito?",                         a: "Sì, per sempre. Ricevi 100 avvisi al mese e supporto della community senza costi."
-        },                 {                         q: "Posso fare upgrade o downgrade?",                         a: "L'upgrade è istantaneo. I downgrade diventano effettivi alla fine del ciclo di fatturazione corrente."
-        },                 {                         q: "Archiviate i miei dati di notifica?",                         a: "No. Archiviamo solo metadati per l'analisi. Il contenuto del messaggio viene eliminato dopo la consegna."
-        }         ]
-},
+        legal: {
+            terms: "Termini di Servizio", privacy: "Informativa sulla Privacy", refund: "Politica di Rimborso", support: "Contatta el Supporto", sections: {
+                agreement: "Accettazione dei Termini",
+                agreementDesc: "Accedendo al protocollo Relay, accetti di essere vincolato da questi termini funzionali. La nostra infrastruttura è fornita 'così com'è' per la consegna di notifiche ad alte prestazioni.",
+                usage: "Utilizzo API & Limiti",
+                usageDesc: "Gli utenti devono rispettare i limiti di velocità e le politiche di utilizzo corretto. L'abuso automatizzato o il targeting di endpoint non autorizzati comporterà la revoca immediata del protocollo.",
+                ip: "Proprietà Intellettuale",
+                ipDesc: "Tutto il codice Relay, il branding e i sistemi di telemetria rimangono proprietà esclusiva di Aether Digital. La riproduzione senza autorizzazione è vietata.",
+                availability: "Disponibilità del Servizio",
+                availabilityDesc: "Ci impegniamo per un uptime del 99,9%. Sebbene la nostra rete edge sia globale, la disponibilità regionale può variare in base alla salute del fornitore.",
+                collection: "Raccolta Dati",
+                collectionDesc: "Acquisiamo solo i metadati necessari dei messaggi (timestamp, priorità, stato) per fornire analisi di consegna. Il contenuto non viene mai registrato in modo permanente.",
+                security: "Protocolli di Sicurezza",
+                securityDesc: "Tutte le trasmissioni sono protette tramite TLS 1.3. Le chiavi API sono archiviate utilizzando hashing crittografico salato per garantire la protezione dell'identità.",
+                disclosure: "Divulgazione a Terzi",
+                disclosureDesc: "Relay non vende i dati degli utenti. I metadati vengono elaborati solo tramite collegamenti crittografati dei fornitori necessari per la consegna finale del messaggio.",
+                noRefund: "Politica di No Rimborso",
+                noRefundDesc: "A causa della natura istantanea dei crediti di notifica digitale e dell'accesso al protocollo, tutti gli acquisti Relay sono definitivi.",
+                cancellation: "Cancellazioni",
+                cancellationDesc: "Puoi annullare l'abbonamento in qualsiasi momento. L'accesso al protocollo e le funzionalità rimarranno attivi fino alla fine del ciclo di fatturazione corrente.",
+                exceptions: "Eccezioni",
+                exceptionsDesc: "Le richieste di rimborso verranno esaminate solo in caso di guasto del sistema verificabile che impedisca l'accesso al terminale Relay per più di 24 ore."
+            }
+        },
+        faq: {
+            title: "Domande Frequenti", items: [{
+                q: "Come inizio a inviare avvisi?", a: "Crea un'API Key nella dashboard e invia una richiesta POST al nostro uplink globale. Consulta la documentazione per esempi."
+            }, {
+                q: "Il piano Hobby è davvero gratuito?", a: "Sì, per sempre. Ricevi 100 avvisi al mese e supporto della community senza costi."
+            }, {
+                q: "Posso fare upgrade o downgrade?", a: "L'upgrade è istantaneo. I downgrade diventano effettivi alla fine del ciclo di fatturazione corrente."
+            }, {
+                q: "Archiviate i miei dati di notifica?", a: "No. Archiviamo solo metadati per l'analisi. Il contenuto del messaggio viene eliminato dopo la consegna."
+            }]
+        },
         footer: "Architettura Aether Digital. Costruito per l'Eccellenza.",
         auth: {
             welcome: "Benvenuti in RELAY",

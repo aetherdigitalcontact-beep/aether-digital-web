@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Zap, Check, ChevronDown, ArrowLeft } from "lucide-react";
+import { Zap, Check, ChevronDown, ArrowLeft, User, LogOut } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import Footer from "@/components/layout/Footer";
@@ -29,6 +29,7 @@ export default function PricingPage() {
     // User Session State
     const [userPlan, setUserPlan] = useState<string | null>(null);
     const [userEmail, setUserEmail] = useState<string | null>(null);
+    const [user, setUser] = useState<any>(null);
 
     // Mercado Pago Loader
     const [isMPLoading, setIsMPLoading] = useState(false);
@@ -56,6 +57,7 @@ export default function PricingPage() {
             .then(res => res.ok ? res.json() : null)
             .then(data => {
                 if (data?.user) {
+                    setUser(data.user);
                     setUserPlan(data.user.plan?.toLowerCase() || null);
                     setUserEmail(data.user.email || null);
                 }
@@ -283,42 +285,77 @@ export default function PricingPage() {
                         <span className="font-bold text-lg tracking-tight">RELAY</span>
                     </Link>
 
-                    {/* Language Selector Dropdown */}
-                    <div className="relative">
-                        <button
-                            onClick={() => setIsLangOpen(!isLangOpen)}
-                            className="flex items-center gap-2 px-2.5 py-1.5 rounded-full bg-white/5 border border-white/10 hover:border-white/20 transition-all font-black text-[10px] uppercase tracking-widest"
-                        >
-                            {currentLang?.name}
-                            <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${isLangOpen ? 'rotate-180' : ''}`} />
-                        </button>
+                    <div className="flex items-center gap-4">
+                        {/* Language Selector Dropdown */}
+                        <div className="relative">
+                            <button
+                                onClick={() => setIsLangOpen(!isLangOpen)}
+                                className="flex items-center gap-2 px-2.5 py-1.5 rounded-full bg-white/5 border border-white/10 hover:border-white/20 transition-all font-black text-[10px] uppercase tracking-widest"
+                            >
+                                <img src={`https://flagcdn.com/w40/${currentLang?.flag}.png`} alt={currentLang?.name} className="w-4 h-auto rounded-sm" />
+                                <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${isLangOpen ? 'rotate-180' : ''}`} />
+                            </button>
 
-                        <AnimatePresence>
-                            {isLangOpen && (
-                                <>
-                                    <div className="fixed inset-0 z-[-1]" onClick={() => setIsLangOpen(false)} />
-                                    <motion.div
-                                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                                        className="absolute top-full right-0 mt-2 w-14 glass border border-white/10 rounded-2xl overflow-hidden shadow-2xl p-1.5 z-50 flex flex-col gap-1"
-                                    >
-                                        {languages.map((l) => (
-                                            <button
-                                                key={l.code}
-                                                onClick={() => {
-                                                    setLang(l.code);
-                                                    setIsLangOpen(false);
-                                                }}
-                                                className={`w-full aspect-square flex items-center justify-center rounded-xl transition-all ${lang === l.code ? 'bg-accent/20 scale-105' : 'hover:bg-white/10 hover:scale-110'}`}
-                                            >
-                                                <img src={`https://flagcdn.com/w40/${l.flag}.png`} alt={l.name} className="w-6 h-auto rounded-sm" />
-                                            </button>
-                                        ))}
-                                    </motion.div>
-                                </>
+                            <AnimatePresence>
+                                {isLangOpen && (
+                                    <>
+                                        <div className="fixed inset-0 z-[-1]" onClick={() => setIsLangOpen(false)} />
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                                            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                                            className="absolute top-full right-0 mt-2 w-14 glass border border-white/10 rounded-2xl overflow-hidden shadow-2xl p-1.5 z-50 flex flex-col gap-1"
+                                        >
+                                            {languages.map((l) => (
+                                                <button
+                                                    key={l.code}
+                                                    onClick={() => {
+                                                        setLang(l.code);
+                                                        setIsLangOpen(false);
+                                                    }}
+                                                    className={`w-full aspect-square flex items-center justify-center rounded-xl transition-all ${lang === l.code ? 'bg-accent/20 scale-105' : 'hover:bg-white/10 hover:scale-110'}`}
+                                                >
+                                                    <img src={`https://flagcdn.com/w40/${l.flag}.png`} alt={l.name} className="w-6 h-auto rounded-sm" />
+                                                </button>
+                                            ))}
+                                        </motion.div>
+                                    </>
+                                )}
+                            </AnimatePresence>
+                        </div>
+
+                        {/* User Profile / Login */}
+                        <div className="flex items-center gap-2">
+                            <Link
+                                href={user ? "/dashboard" : "/auth"}
+                                className="flex items-center gap-2 md:gap-3 p-1 pr-3 md:p-1 md:pr-4 rounded-full bg-white/5 border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all active:scale-95 group relative"
+                            >
+                                <div className="p-1.5 bg-white/5 rounded-full">
+                                    <User className={`w-3.5 h-3.5 ${user ? 'text-accent' : 'text-slate-400'} group-hover:text-white transition-colors`} />
+                                </div>
+                                {user ? (
+                                    <div className="flex flex-col">
+                                        <span className="text-[9px] font-bold text-white tracking-tight leading-none mb-0.5">{user.name?.split(' ')[0] || 'User'}</span>
+                                        <span className="text-[7px] font-black text-accent tracking-[0.1em] uppercase leading-none">{user.plan || 'FREE'}</span>
+                                    </div>
+                                ) : (
+                                    <span className="text-[9px] font-bold text-slate-500 group-hover:text-white transition-colors uppercase tracking-[0.2em] px-1">{d.nav?.getStarted || "Get Started"}</span>
+                                )}
+                            </Link>
+
+                            {user && (
+                                <button
+                                    onClick={async () => {
+                                        await fetch('/api/auth/logout', { method: 'POST' });
+                                        window.location.reload();
+                                    }}
+                                    className="p-2 rounded-full bg-rose-500/10 border border-rose-500/20 hover:bg-rose-500/20 transition-all active:scale-95 group cursor-pointer"
+                                    title="Log Out"
+                                >
+                                    <LogOut className="w-3.5 h-3.5 text-rose-400 group-hover:text-rose-300 transition-colors" />
+                                </button>
                             )}
-                        </AnimatePresence>
+                        </div>
                     </div>
                 </nav>
 

@@ -57,6 +57,7 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { dictionaries, Language } from "@/lib/i18n";
+import { supabase } from "@/lib/supabase";
 
 interface ApiKey {
     id: string;
@@ -288,11 +289,27 @@ export default function DashboardPage() {
         return "bg-white/10 text-slate-400 border-white/5";
     };
 
-    const fetchUserData = async () => {
+    const fetchUserData = async (retryCount = 0) => {
         try {
             const res = await fetch(`/api/auth/me?t=${new Date().getTime()}`, {
                 headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' }
             });
+
+            if (res.status === 401 && retryCount === 0) {
+                // Check if we have a Supabase session to sync
+                const { data: { session } } = await supabase.auth.getSession();
+                if (session?.access_token) {
+                    const syncRes = await fetch('/api/auth/sync', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ access_token: session.access_token })
+                    });
+                    if (syncRes.ok) {
+                        return fetchUserData(1); // Retry once after syncing
+                    }
+                }
+            }
+
             const data = await res.json();
 
             if (!res.ok || !data.user) {

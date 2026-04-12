@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Zap, Code2, Copy, Check, ArrowLeft, Terminal, Bot, MessageSquare, Shield, ChevronDown, Settings, Cpu, Webhook, Hash, Mail } from "lucide-react";
+import { Zap, Code2, Copy, Check, ArrowLeft, Terminal, Bot, MessageSquare, Shield, ChevronDown, Settings, Cpu, Webhook, Hash, Mail, User, LogOut, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { dictionaries, Language } from "@/lib/i18n";
@@ -22,6 +22,7 @@ export default function DocsPage() {
     const [copied, setCopied] = useState<string | null>(null);
     const [lang, setLang] = useState<Language>('en');
     const [isLangOpen, setIsLangOpen] = useState(false);
+    const [user, setUser] = useState<any>(null);
 
     // Snippet Generator State
     const [genMode, setGenMode] = useState<"message" | "template">("message");
@@ -36,6 +37,14 @@ export default function DocsPage() {
         if (savedLang && dictionaries[savedLang]) {
             setLang(savedLang);
         }
+
+        // Fetch user session
+        fetch('/api/auth/me')
+            .then(res => res.ok ? res.json() : null)
+            .then(data => {
+                if (data?.user) setUser(data.user);
+            })
+            .catch(() => { });
     }, []);
 
     const d = dictionaries[lang]?.docs;
@@ -48,7 +57,7 @@ export default function DocsPage() {
     };
 
     const codeExamples = {
-        curl: `curl -X POST https://relay.aether.digital/api/relay \\
+        curl: `curl -X POST https://relay-notify.com/api/relay \\
   -H "x-api-key: RELAY_PK_XXXX" \\
   -H "Content-Type: application/json" \\
   -d '{
@@ -61,7 +70,7 @@ export default function DocsPage() {
   }'`,
         javascript: `// Modern Fetch API
 const relay = async () => {
-  const response = await fetch('https://relay.aether.digital/api/relay', {
+  const response = await fetch('https://relay-notify.com/api/relay', {
     method: 'POST',
     headers: { 'x-api-key': 'RELAY_PK_XXXX', 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -75,20 +84,94 @@ const relay = async () => {
   const data = await response.json();
   console.log(data);
 };`,
-        python: `import requests\n\nurl = "https://relay.aether.digital/api/relay"\npayload = {\n    "platform": "${genPlatform}",\n    "target": "${genTarget}",\n    ${genMode === "message" ? `"message": "${genMessage}",` : `"templateId": "${genTemplateId}",`}\n    "category": "Automation",\n    "variables": ${genVars}\n}\nheaders = {"x-api-key": "RELAY_PK_XXXX", "Content-Type": "application/json"}\n\nresponse = requests.post(url, json=payload, headers=headers)\nprint(response.text)`,
-        php: `<?php\n\n$url = "https://relay.aether.digital/api/relay";\n$payload = json_encode([\n    "platform" => "${genPlatform}",\n    "target" => "${genTarget}",\n    ${genMode === "message" ? `"message" => "${genMessage}",` : `"templateId" => "${genTemplateId}",`}\n    "category" => "Billing",\n    "variables" => ${genVars.replace(/:/g, '=>')}\n]);\n\n$ch = curl_init($url);\ncurl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json", "x-api-key: RELAY_PK_XXXX"]);\ncurl_setopt($ch, CURLOPT_POST, true);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, $payload);\n$response = curl_exec($ch);`,
-        go: `package main\nimport ("bytes"; "net/http")\nfunc main() {\n\turl := "https://relay.aether.digital/api/relay"\n\tjson := []byte(\`{"platform":"${genPlatform}","target":"${genTarget}",${genMode === "message" ? `"message":"${genMessage}"` : `"templateId":"${genTemplateId}"`}}\`)\n\treq, _ := http.NewRequest("POST", url, bytes.NewBuffer(json))\n\treq.Header.Set("x-api-key", "RELAY_PK_XXXX")\n\thttp.DefaultClient.Do(req)\n}`
+        python: `import requests\n\nurl = "https://relay-notify.com/api/relay"\npayload = {\n    "platform": "${genPlatform}",\n    "target": "${genTarget}",\n    ${genMode === "message" ? `"message": "${genMessage}",` : `"templateId": "${genTemplateId}",`}\n    "category": "Automation",\n    "variables": ${genVars}\n}\nheaders = {"x-api-key": "RELAY_PK_XXXX", "Content-Type": "application/json"}\n\nresponse = requests.post(url, json=payload, headers=headers)\nprint(response.text)`,
+        php: `<?php\n\n$url = "https://relay-notify.com/api/relay";\n$payload = json_encode([\n    "platform" => "${genPlatform}",\n    "target" => "${genTarget}",\n    ${genMode === "message" ? `"message" => "${genMessage}",` : `"templateId" => "${genTemplateId}",`}\n    "category" => "Billing",\n    "variables" => ${genVars.replace(/:/g, '=>')}\n]);\n\n$ch = curl_init($url);\ncurl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json", "x-api-key: RELAY_PK_XXXX"]);\ncurl_setopt($ch, CURLOPT_POST, true);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, $payload);\n$response = curl_exec($ch);`,
+        go: `package main\nimport ("bytes"; "net/http")\nfunc main() {\n\turl := "https://relay-notify.com/api/relay"\n\tjson := []byte(\`{"platform":"${genPlatform}","target":"${genTarget}",${genMode === "message" ? `"message":"${genMessage}"` : `"templateId":"${genTemplateId}"`}}\`)\n\treq, _ := http.NewRequest("POST", url, bytes.NewBuffer(json))\n\treq.Header.Set("x-api-key", "RELAY_PK_XXXX")\n\thttp.DefaultClient.Do(req)\n}`
     };
 
     return (
         <div className="min-h-screen bg-[#020617] text-slate-300 font-sans selection:bg-accent/30 selection:text-white pb-32">
             <nav className="fixed top-0 left-0 right-0 z-50 px-8 py-4 flex justify-between items-center glass border-b border-white/5 shadow-2xl">
-                <Link href="/dashboard" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors group">
+                <Link href="/" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors group">
                     <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                    <span className="text-xs font-black uppercase tracking-widest">Back to Terminal</span>
+                    <span className="text-xs font-black uppercase tracking-widest">Back to Front</span>
                 </Link>
-                <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center shadow-[0_0_15px_var(--accent-glow)] hidden sm:flex">
-                    <Zap className="text-white w-5 h-5 relative z-10" fill="currentColor" />
+
+                <div className="flex items-center gap-6">
+                    {/* Language Selector */}
+                    <div className="relative">
+                        <button
+                            onClick={() => setIsLangOpen(!isLangOpen)}
+                            className="flex items-center gap-2 px-2.5 py-1.5 rounded-full bg-white/5 border border-white/10 hover:border-white/20 transition-all font-black text-[10px] uppercase tracking-widest"
+                        >
+                            <img src={`https://flagcdn.com/w40/${currentLang?.flag}.png`} alt={currentLang?.name} className="w-4 h-auto rounded-sm" />
+                            <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${isLangOpen ? 'rotate-180' : ''}`} />
+                        </button>
+
+                        <AnimatePresence>
+                            {isLangOpen && (
+                                <>
+                                    <div className="fixed inset-0 z-[-1]" onClick={() => setIsLangOpen(false)} />
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                                        className="absolute top-full right-0 mt-2 w-14 glass border border-white/10 rounded-2xl overflow-hidden shadow-2xl p-1.5 z-50 flex flex-col gap-1"
+                                    >
+                                        {languages.map((l) => (
+                                            <button
+                                                key={l.code}
+                                                onClick={() => {
+                                                    setLang(l.code);
+                                                    setIsLangOpen(false);
+                                                }}
+                                                className={`w-full aspect-square flex items-center justify-center rounded-xl transition-all ${lang === l.code ? 'bg-accent/20 scale-105' : 'hover:bg-white/10 hover:scale-110'}`}
+                                            >
+                                                <img src={`https://flagcdn.com/w40/${l.flag}.png`} alt={l.name} className="w-6 h-auto rounded-sm" />
+                                            </button>
+                                        ))}
+                                    </motion.div>
+                                </>
+                            )}
+                        </AnimatePresence>
+                    </div>
+
+                    {/* User Profile / Login */}
+                    <div className="flex items-center gap-2">
+                        <Link
+                            href={user ? "/dashboard" : "/auth"}
+                            className="flex items-center gap-2 md:gap-3 p-1 pr-3 md:p-1 md:pr-4 rounded-full bg-white/5 border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all active:scale-95 group relative"
+                        >
+                            <div className="p-1.5 bg-white/5 rounded-full">
+                                <User className={`w-3.5 h-3.5 ${user ? 'text-accent' : 'text-slate-400'} group-hover:text-white transition-colors`} />
+                            </div>
+                            {user ? (
+                                <div className="flex flex-col">
+                                    <span className="text-[9px] font-bold text-white tracking-tight leading-none mb-0.5">{user.name?.split(' ')[0] || 'User'}</span>
+                                    <span className="text-[7px] font-black text-accent tracking-[0.1em] uppercase leading-none">{user.plan || 'FREE'}</span>
+                                </div>
+                            ) : (
+                                <span className="text-[9px] font-bold text-slate-500 group-hover:text-white transition-colors uppercase tracking-[0.2em] px-1">Get Started</span>
+                            )}
+                        </Link>
+
+                        {user && (
+                            <button
+                                onClick={async () => {
+                                    await fetch('/api/auth/logout', { method: 'POST' });
+                                    window.location.reload();
+                                }}
+                                className="p-2 rounded-full bg-rose-500/10 border border-rose-500/20 hover:bg-rose-500/20 transition-all active:scale-95 group cursor-pointer"
+                                title="Log Out"
+                            >
+                                <LogOut className="w-3.5 h-3.5 text-rose-400 group-hover:text-rose-300 transition-colors" />
+                            </button>
+                        )}
+                    </div>
+
+                    <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center shadow-[0_0_15px_var(--accent-glow)] hidden sm:flex">
+                        <Zap className="text-white w-5 h-5 relative z-10" fill="currentColor" />
+                    </div>
                 </div>
             </nav>
 
@@ -213,7 +296,7 @@ const relay = async () => {
                         The syntax for your <code>target</code> parameter shifts depending on the selected destination. To guarantee successful delivery, format your targets exactly as dictated below.
                     </p>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
                         <div className="p-6 rounded-[32px] bg-black/40 border border-white/5 space-y-3 shadow-inner hover:bg-black/60 transition-colors">
                             <h4 className="text-xs font-black text-sky-400 uppercase tracking-widest flex items-center gap-2"><Bot className="w-4 h-4" /> Telegram</h4>
                             <p className="text-xs text-slate-400 mb-2">Literal numerical Chat ID or mapped Username Alias.</p>
@@ -235,7 +318,68 @@ const relay = async () => {
                         <div className="p-6 rounded-[32px] bg-black/40 border border-white/5 space-y-3 shadow-inner hover:bg-black/60 transition-colors">
                             <h4 className="text-xs font-black text-yellow-500 uppercase tracking-widest flex items-center gap-2"><Mail className="w-4 h-4" /> Email</h4>
                             <p className="text-xs text-slate-400 mb-2">Standard globally routed electronic mail address.</p>
-                            <code className="text-[10px] text-white bg-white/10 px-2 py-1 rounded inline-block">director@aether.digital</code>
+                            <code className="text-[10px] text-white bg-white/10 px-2 py-1 rounded inline-block">director@relay-notify.com</code>
+                        </div>
+
+                        <div className="p-6 rounded-[32px] bg-black/40 border border-white/5 space-y-3 shadow-inner hover:bg-black/60 transition-colors">
+                            <h4 className="text-xs font-black text-emerald-500 uppercase tracking-widest flex items-center gap-2"><MessageSquare className="w-4 h-4" /> WhatsApp</h4>
+                            <p className="text-xs text-slate-400 mb-2">Full international format without '+' or leading zeros.</p>
+                            <code className="text-[10px] text-white bg-white/10 px-2 py-1 rounded inline-block">34612345678</code>
+                        </div>
+
+                        {/* Filler to maintain symmetry */}
+                        <div className="p-6 rounded-[32px] bg-white/[0.02] border border-white/5 border-dashed flex items-center justify-center opacity-40">
+                            <Sparkles className="w-5 h-5 text-slate-600" />
+                        </div>
+                    </div>
+                </section>
+
+                {/* WhatsApp Setup Deep Dive */}
+                <section className="mt-16 p-10 rounded-[48px] glass bg-emerald-500/5 border border-emerald-500/10 shadow-2xl relative overflow-hidden">
+                    <div className="absolute top-[-100px] right-[-100px] w-64 h-64 bg-emerald-500/20 blur-[100px] rounded-full pointer-events-none" />
+
+                    <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4 italic underline decoration-white/10 relative z-10">
+                        WhatsApp Setup Protocol
+                    </h2>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 relative z-10">
+                        <div className="space-y-6">
+                            <p className="text-slate-400 leading-relaxed font-medium">
+                                To relay messages via WhatsApp, you must integrate with the official <span className="text-emerald-400">Meta Business API</span>. Follow these steps to obtain your active credentials:
+                            </p>
+
+                            <ul className="space-y-4">
+                                {[
+                                    { step: "01", title: "Create Developer App", desc: "Go to developers.facebook.com and create a 'Business' type application." },
+                                    { step: "02", title: "Verify Number", desc: "Connect your SIM number for verification. It cannot be active on a regular WhatsApp app simultaneously." },
+                                    { step: "03", title: "Get Phone ID", desc: "Copy the 'Phone Number ID' from the WhatsApp > Getting Started panel." },
+                                    { step: "04", title: "Permanent Token", desc: "Generate a System User token with 'whatsapp_business_messaging' permissions." }
+                                ].map((item, i) => (
+                                    <li key={i} className="flex gap-4 group">
+                                        <span className="text-emerald-500 font-mono text-xs font-black mt-1 group-hover:scale-110 transition-transform">{item.step}</span>
+                                        <div>
+                                            <h5 className="text-white text-sm font-bold tracking-tight mb-1">{item.title}</h5>
+                                            <p className="text-xs text-slate-500 leading-relaxed">{item.desc}</p>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        <div className="p-8 rounded-[32px] bg-black/40 border border-white/5 space-y-6 shadow-inner flex flex-col justify-center">
+                            <div className="space-y-2">
+                                <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Target Format</h4>
+                                <div className="p-4 rounded-2xl bg-white/5 border border-white/5 font-mono text-[10px] text-emerald-300">
+                                    "target": "34612345678" // Format: CC + Area + Number
+                                </div>
+                            </div>
+
+                            <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
+                                <p className="text-[10px] text-emerald-400 leading-relaxed">
+                                    <span className="font-bold uppercase tracking-widest block mb-1">PRO-TIP:</span>
+                                    WhatsApp requires <span className="underline decoration-emerald-500/30">pre-approved templates</span> in Meta Suite. Ensure your <code>templateId</code> matches exactly and variables match the template schema.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </section>
