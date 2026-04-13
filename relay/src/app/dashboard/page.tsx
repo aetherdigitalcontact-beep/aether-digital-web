@@ -3788,7 +3788,7 @@ export default function DashboardPage() {
                                                 <div className="bg-white/5 p-4 rounded-xl border border-white/5 text-slate-400 space-y-1 overflow-x-auto scrollbar-hide text-[10px] md:text-xs">
                                                     <div className="flex gap-2 min-w-max">
                                                         <span className="text-emerald-400 shrink-0">curl</span>
-                                                        <span>-X POST https://relay.aether.digital/api/relay \</span>
+                                                        <span>-X POST https://relay-notify.com/api/relay \</span>
                                                     </div>
                                                     <div className="pl-6 md:pl-12 flex gap-2 min-w-max">
                                                         <span className="text-slate-600">-H</span>

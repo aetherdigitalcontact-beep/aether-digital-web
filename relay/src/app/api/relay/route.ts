@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
                 plan: plan,
                 limit: userLimit,
                 current: usageCount,
-                message: 'Upgrade your plan at https://relay.aether.digital/pricing'
+                message: 'Upgrade your plan at https://relay-notify.com/pricing'
             }, { status: 429 });
         }
         // ------------------------------------------
