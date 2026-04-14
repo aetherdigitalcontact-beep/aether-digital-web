@@ -1,3 +1,4 @@
+// DEPLOY_TRIGGER_AUTO_UPDATE_V1
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 import { supabaseServer } from '@/lib/supabaseServer';
