@@ -2,11 +2,37 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Relay | Universal Notification API",
-  description: "High-performance API for routing notifications to WhatsApp, Telegram, Discord, and more.",
+  title: "Relay | Universal Notification API & Routing Engine",
+  description: "Enterprise-grade notification routing for WhatsApp, Telegram, Discord, and Slack. Built for developers who need reliable, multi-channel delivery.",
+  keywords: ["Notification API", "WhatsApp API", "Telegram Bot", "Discord Webhooks", "Notification Routing", "Developer Tools", "Real-time Alerts", "Relay Notify"],
+  authors: [{ name: "Aether Digital" }],
+  openGraph: {
+    title: "Relay | Universal Notification API",
+    description: "Route your alerts to any platform with a single API call.",
+    url: "https://relay-notify.com",
+    siteName: "Relay",
+    images: [
+      {
+        url: "/og-image.png", // We should ensure this exists later or use a default
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Relay | Universal Notification API",
+    description: "Multi-channel notification routing made simple.",
+    images: ["/og-image.png"],
+  },
   other: {
     "facebook-domain-verification": "syngclbgjpaz2r6z8a567u9sw61uot",
   },
@@ -23,6 +49,8 @@ export default function RootLayout({
         <div className="hero-glow top-0 left-0" />
         <div className="hero-glow bottom-0 right-0 opacity-50" />
         {children}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
