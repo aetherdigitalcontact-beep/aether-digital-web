@@ -22,9 +22,22 @@ export async function POST(req: NextRequest) {
     const startTime = Date.now();
     try {
         const body = await req.json();
-        const { apiKey, platform, target, message, category, metadata, attempts = 0, variables = {}, _engine_trace, template_id } = body;
+        let { apiKey, platform, target, message, category, metadata, attempts = 0, variables = {}, _engine_trace, template_id, _worker_exec, _override_nodes, apiKeyId } = body;
 
         let apiKeyToUse = apiKey || req.headers.get('x-api-key') || req.headers.get('X-API-Key');
+
+        // --- Special Internal Auth for Worker ---
+        let keyData: any = null;
+        if ((_worker_exec || apiKeyId) && !apiKeyToUse) {
+            const { data } = await supabaseServer
+                .from('api_keys')
+                .select('id, user_id, is_active, key_hash')
+                .eq('id', apiKeyId || body.apiKeyId)
+                .single();
+            keyData = data;
+            apiKeyToUse = keyData?.key_hash;
+        }
+
         if (!apiKeyToUse && req.headers.get('Authorization')) {
             const authHeader = req.headers.get('Authorization') || '';
             if (authHeader.startsWith('Bearer ')) {
@@ -36,14 +49,17 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'API Key is missing' }, { status: 401 });
         }
 
-        const { data: keyData, error: keyError } = await supabaseServer
-            .from('api_keys')
-            .select('id, user_id, is_active')
-            .eq('key_hash', apiKeyToUse)
-            .single();
+        if (!keyData) {
+            const { data: dbKeyData, error: keyError } = await supabaseServer
+                .from('api_keys')
+                .select('id, user_id, is_active')
+                .eq('key_hash', apiKeyToUse)
+                .single();
 
-        if (keyError || !keyData || !keyData.is_active) {
-            return NextResponse.json({ error: 'Invalid or inactive API Key' }, { status: 401 });
+            if (keyError || !dbKeyData || !dbKeyData.is_active) {
+                return NextResponse.json({ error: 'Invalid or inactive API Key' }, { status: 401 });
+            }
+            keyData = dbKeyData;
         }
 
         // --- FETCH GLOBAL TEMPLATE IF template_id IS PROVIDED ---
@@ -86,47 +102,59 @@ export async function POST(req: NextRequest) {
         const { count: usageCount } = await supabaseServer
             .from('logs')
             .select('*', { count: 'exact', head: true })
-            .eq('user_id', keyData.user_id)
-            .gte('created_at', firstDayOfMonth.toISOString());
-
-        if ((usageCount || 0) >= userLimit) {
+        // --- BASE64 PROTECTION & SANITIZATION (Keep in main thread for immediate feedback) ---
+        const injectedAvatar = metadata?.bot_thumbnail || body.botAvatar;
+        if (injectedAvatar && (injectedAvatar.length > 2048 || injectedAvatar.startsWith('data:image'))) {
             return NextResponse.json({
-                error: 'Monthly usage limit exceeded',
-                plan: plan,
-                limit: userLimit,
-                current: usageCount,
-                message: 'Upgrade your plan at https://relay-notify.com/pricing'
-            }, { status: 429 });
+                error: 'Invalid bot avatar format. Base64 is not allowed. Please use a URL or upload via dashboard.',
+                code: 'INVALID_AVATAR_FORMAT'
+            }, { status: 400 });
         }
-        // ------------------------------------------
-
-        const platformList = platform ? (Array.isArray(platform) ? platform : [platform]) : [];
-
-        const payloadToRetry = {
-            apiKey: apiKeyToUse,
-            ...body
-        };
 
         const processPayloadInBackground = async () => {
             try {
-                const payloadToRetry = { ...body, variables, _engine_trace: (_engine_trace || 0) + 1 };
+                // Move usage check to background to save ~500-1000ms
+                const firstDayOfMonth = new Date();
+                firstDayOfMonth.setDate(1);
+                firstDayOfMonth.setHours(0, 0, 0, 0);
 
-                const { data: userScenarios } = await supabaseServer
-                    .from('scenarios')
-                    .select('*')
+                const { count: usageCount } = await supabaseServer
+                    .from('logs')
+                    .select('*', { count: 'exact', head: true })
                     .eq('user_id', keyData.user_id)
-                    .eq('is_active', true);
+                    .gte('created_at', firstDayOfMonth.toISOString());
 
-                let logicOverride = false;
-                let scenarioDebug: any[] = [];
+                // Even in background, we log the limit hit
+                if ((usageCount || 0) >= userLimit && plan !== 'ENTERPRISE') {
+                    console.warn(`[RelayAPI] User ${keyData.user_id} reached limit.`);
+                }
 
-                // Aggregate platform data and webhook URLs
-                // To support multiple targets of the same platform, we use a list of actions
-                const finalActions: { platform: string, target: string | null, template: string | null, botName: string | null, botAvatar: string | null }[] = [];
+                // Sanitize the fallback thumbnail
+                let safeBotAvatarFallback = botAvatarFallback;
+                if (safeBotAvatarFallback && (safeBotAvatarFallback.length > 2048 || safeBotAvatarFallback.startsWith('data:image'))) {
+                    safeBotAvatarFallback = null;
+                }
 
-                // Initialize with request-level platform(s)
                 const platformList = platform ? [platform].flat() : (body.platforms || []);
-                const multiTargets = body.targets || {}; // New: allows { telegram: "...", discord: "..." }
+                const multiTargets = body.targets || {};
+
+                let activeScenarios = [];
+                let logicOverride = false;
+
+                if (_override_nodes) {
+                    activeScenarios = [{ name: 'Worker Resumption', nodes: _override_nodes, is_active: true }];
+                    logicOverride = true;
+                } else {
+                    const { data: userScenarios } = await supabaseServer
+                        .from('scenarios')
+                        .select('*')
+                        .eq('user_id', keyData.user_id)
+                        .eq('is_active', true);
+                    activeScenarios = userScenarios || [];
+                }
+
+                let scenarioDebug: any[] = [];
+                const finalActions: { platform: string, target: string | null, template: string | null, botName: string | null, botAvatar: string | null, fallbackPlatform: string | null, fallbackTarget: string | null }[] = [];
 
                 platformList.forEach((p: string) => {
                     const platformKey = p.toLowerCase();
@@ -135,22 +163,23 @@ export async function POST(req: NextRequest) {
                         target: multiTargets[platformKey] || target || null,
                         template: globalTemplateContent,
                         botName: null,
-                        botAvatar: null
+                        botAvatar: null,
+                        fallbackPlatform: null,
+                        fallbackTarget: null
                     });
                 });
 
                 const finalWebhooks = new Set<string>();
 
-                if (userScenarios && userScenarios.length > 0) {
-                    for (const scenario of userScenarios) {
+                if (activeScenarios && activeScenarios.length > 0) {
+                    for (const scenario of activeScenarios) {
                         const nodes = scenario.nodes || [];
                         let conditionPassed = true;
-                        let scenarioActions: { platform: string, targetAddress: string | null, template: string | null, botName: string | null, botAvatar: string | null }[] = [];
+                        let scenarioActions: any[] = [];
                         let scenarioWebhooks: string[] = [];
 
                         for (const node of nodes) {
                             if (node.type === 'triggerNode') continue;
-
                             if (node.type === 'conditionNode') {
                                 const conditionRaw = node.data?.condition || '';
                                 let match = false;
@@ -160,14 +189,11 @@ export async function POST(req: NextRequest) {
                                         const leftRaw = parts[0];
                                         const operator = parts[1];
                                         const rightRaw = parts.slice(2).join(' ');
-
                                         const getNestedValue = (path: string, obj: any) => path.split('.').reduce((acc, part) => acc && acc[part], obj);
                                         const valLeft = leftRaw.startsWith('variables.') ? getNestedValue(leftRaw.replace('variables.', ''), variables) :
                                             leftRaw.startsWith('payload.') ? getNestedValue(leftRaw.replace('payload.', ''), body) : leftRaw;
-
                                         const right = rightRaw.replace(/['"]/g, '');
                                         const valNum = Number(valLeft), rightNum = Number(right);
-
                                         if (operator === '==') match = (String(valLeft) === String(right));
                                         else if (operator === '!=') match = (String(valLeft) !== String(right));
                                         else if (operator === '>') match = (!isNaN(valNum) && !isNaN(rightNum)) ? valNum > rightNum : false;
@@ -176,7 +202,6 @@ export async function POST(req: NextRequest) {
                                         else match = true;
                                     } else match = true;
                                 } catch (e) { match = false; }
-
                                 if (!match) { conditionPassed = false; break; }
                             } else if (node.type === 'actionNode') {
                                 if (node.data?.platform) {
@@ -185,9 +210,94 @@ export async function POST(req: NextRequest) {
                                         targetAddress: node.data.target_address || null,
                                         template: node.data.message_template || null,
                                         botName: node.data.bot_name || null,
-                                        botAvatar: node.data.bot_avatar || null
+                                        botAvatar: node.data.bot_avatar || null,
+                                        fallbackPlatform: node.data.fallback_platform || null,
+                                        fallbackTarget: node.data.fallback_target_address || null
                                     });
                                 }
+                            } else if (node.type === 'waitNode') {
+                                const duration = Number(node.data?.delay_duration) || 10;
+                                const unit = node.data?.delay_unit || 'minutes';
+                                let scheduledFor = new Date();
+                                if (unit === 'seconds') scheduledFor.setSeconds(scheduledFor.getSeconds() + duration);
+                                else if (unit === 'hours') scheduledFor.setHours(scheduledFor.getHours() + duration);
+                                else if (unit === 'days') scheduledFor.setDate(scheduledFor.getDate() + duration);
+                                else scheduledFor.setMinutes(scheduledFor.getMinutes() + duration);
+
+                                // The 'payload' is the current set of variables + body
+                                const queuePayload = {
+                                    originalBody: body,
+                                    variables,
+                                    // Store remaining nodes to execute later
+                                    remainingNodes: nodes.slice(nodes.indexOf(node) + 1)
+                                };
+
+                                await supabaseServer
+                                    .from('relay_queue')
+                                    .insert([{
+                                        user_id: keyData.user_id,
+                                        key_id: keyData.id,
+                                        scenario_id: scenario.id,
+                                        node_id: node.id,
+                                        payload: queuePayload,
+                                        type: 'DELAY',
+                                        scheduled_for: scheduledFor.toISOString()
+                                    }]);
+
+                                // LOG: Add a log entry for visibility
+                                await supabaseServer.from('logs').insert({
+                                    user_id: keyData.user_id,
+                                    key_id: keyData.id,
+                                    platform: 'INTERNAL',
+                                    status_code: 202,
+                                    response_time: Date.now() - startTime,
+                                    error_message: `QUEUED: Message delayed for ${duration} ${unit}.`,
+                                    payload: { ...body, queued_for: scheduledFor.toISOString(), node_id: node.id }
+                                });
+
+                                // Break the current scenario loop - the rest will be handled by the worker
+                                conditionPassed = false;
+                                break;
+                            } else if (node.type === 'digestNode') {
+                                const interval = Number(node.data?.interval_minutes) || 60;
+                                const digestKeyRaw = node.data?.digest_key || '{{user_id}}';
+                                const resolvedDigestKey = replaceVariables(digestKeyRaw, { ...body, ...variables, user_id: keyData.user_id });
+
+                                let nextBatch = new Date();
+                                const intervalUnit = node.data?.interval_unit || 'minutes';
+                                if (intervalUnit === 'seconds') nextBatch.setSeconds(nextBatch.getSeconds() + interval);
+                                else if (intervalUnit === 'hours') nextBatch.setHours(nextBatch.getHours() + interval);
+                                else if (intervalUnit === 'days') nextBatch.setDate(nextBatch.getDate() + interval);
+                                else nextBatch.setMinutes(nextBatch.getMinutes() + interval);
+
+                                const queuePayload = { originalBody: body, variables, nodeData: node.data };
+
+                                await supabaseServer
+                                    .from('relay_queue')
+                                    .insert([{
+                                        user_id: keyData.user_id,
+                                        key_id: keyData.id,
+                                        scenario_id: scenario.id,
+                                        node_id: node.id,
+                                        payload: queuePayload,
+                                        type: 'DIGEST',
+                                        digest_key: resolvedDigestKey,
+                                        scheduled_for: nextBatch.toISOString()
+                                    }]);
+
+                                // LOG: Add a log entry for visibility
+                                await supabaseServer.from('logs').insert({
+                                    user_id: keyData.user_id,
+                                    key_id: keyData.id,
+                                    platform: 'INTERNAL',
+                                    status_code: 202,
+                                    response_time: Date.now() - startTime,
+                                    error_message: `QUEUED: Message added to digest "${resolvedDigestKey}" (${interval} ${intervalUnit}).`,
+                                    payload: { ...body, digest_key: resolvedDigestKey, scheduled_for: nextBatch.toISOString() }
+                                });
+
+                                conditionPassed = false;
+                                break;
                             } else if (node.type === 'webhookNode') {
                                 if (node.data?.target_url) scenarioWebhooks.push(node.data.target_url);
                             }
@@ -195,14 +305,13 @@ export async function POST(req: NextRequest) {
 
                         if (conditionPassed && (scenarioActions.length > 0 || scenarioWebhooks.length > 0)) {
                             logicOverride = true;
-                            scenarioActions.forEach(a => finalActions.push({ platform: a.platform, target: a.targetAddress, template: a.template, botName: a.botName, botAvatar: a.botAvatar }));
+                            scenarioActions.forEach(a => finalActions.push({ platform: a.platform, target: a.targetAddress, template: a.template, botName: a.botName, botAvatar: a.botAvatar, fallbackPlatform: a.fallbackPlatform, fallbackTarget: a.fallbackTarget }));
                             scenarioWebhooks.forEach(w => finalWebhooks.add(w));
                             scenarioDebug.push({ scenario: scenario.name, platforms: scenarioActions.map(a => a.platform), webhooks: scenarioWebhooks });
                         }
                     }
                 }
 
-                // Default logic: remove Telegram if scenario logic is active and no platform was explicitly requested
                 if (logicOverride && !platform && !body.platforms) {
                     const telIdx = finalActions.findIndex(a => a.platform === 'telegram' && a.target === null);
                     if (telIdx !== -1) finalActions.splice(telIdx, 1);
@@ -211,116 +320,100 @@ export async function POST(req: NextRequest) {
                 const activePlatforms = finalActions;
                 const activeWebhooks = Array.from(finalWebhooks);
 
+                if (activePlatforms.length === 0 && activeWebhooks.length === 0) return;
 
-                if (activePlatforms.length === 0 && activeWebhooks.length === 0) {
-                    console.log('[RelayAPI] No targets identified for matching criteria.');
-                    return;
-                }
-
-                // --- PLATFORM DELIVERY ---
-                let finalStatusCode = 500, finalProviderError = null, successfulPlatform = null, finalAttempts = [];
                 const allVariables = { ...body, ...variables };
-
-                // Fallback message if both template and message are empty
                 const defaultMsg = category ? `[Relay] New ${category} event received.` : `[Relay] Signal received at ${new Date().toLocaleTimeString()}`;
                 let baseMessage = replaceVariables(message || defaultMsg, allVariables);
 
-                // --- CORPORATE SIGNATURE INJECTION (ENTERPRISE ONLY) ---
-                if (plan === 'ENTERPRISE' && botNameFallback) {
-                    const signature = `\n\n**Sent via ${botNameFallback}**`;
-                    baseMessage += signature;
-                }
-
-                if (template_id && !globalTemplateContent) {
-                    console.warn(`[RelayAPI] Template ID ${template_id} requested but not found in DB.`);
-                }
+                // Remove redundant branding footer from baseMessage (Phase 6.2 cleanup)
+                // if (plan === 'ENTERPRISE' && botNameFallback) {
+                //     baseMessage += `\n\n**Sent via ${botNameFallback}**`;
+                // }
 
                 let finalBotName = body.botName || botNameFallback;
-                let finalBotAvatar = body.botAvatar || botAvatarFallback;
+                let finalBotAvatar = body.botAvatar || safeBotAvatarFallback;
 
-                for (const active of activePlatforms) {
+                // Deliveries in parallel to maximize speed
+                await Promise.all(activePlatforms.map(async (active) => {
                     const p = active.platform;
                     const resolvedTarget = active.target || target;
                     const platformMessage = active.template ? replaceVariables(active.template, allVariables) : baseMessage;
+                    const resolvedBotName = active.botName || finalBotName;
+                    const resolvedBotAvatar = active.botAvatar || finalBotAvatar;
 
-                    let attemptStatusCode = 200, attemptError = null, response;
-                    try {
-                        if (!resolvedTarget) throw new Error('Target address missing');
-                        if (!platformMessage) throw new Error('Message content empty');
-
-                        const resolvedBotName = active.botName || finalBotName;
-                        const resolvedBotAvatar = active.botAvatar || finalBotAvatar;
-
-                        switch (p) {
-                            case 'telegram': response = await sendTelegram(resolvedTarget, platformMessage); break;
-                            case 'discord': response = await sendDiscord(resolvedTarget, platformMessage, resolvedBotName, resolvedBotAvatar); break;
-                            case 'whatsapp': response = await sendWhatsApp(resolvedTarget, platformMessage); break;
-                            case 'slack': response = await sendSlack(resolvedTarget, platformMessage, resolvedBotName, resolvedBotAvatar); break;
-                            case 'teams': response = await sendTeams(resolvedTarget, platformMessage); break;
-                            case 'email': response = await sendEmail(resolvedTarget, category || 'Relay', platformMessage, resolvedBotName); break;
-                            case 'sms': response = await sendSMS(resolvedTarget, platformMessage); break;
-                            default: throw new Error(`Unsupported platform: ${p}`);
-                        }
-
-                        if (response) {
-                            attemptStatusCode = response.status;
-                            if (response.ok) {
-                                successfulPlatform = successfulPlatform ? `${successfulPlatform},${p}` : p; finalStatusCode = attemptStatusCode; finalProviderError = null;
-                                finalAttempts.push({ platform: p, status: attemptStatusCode, error: null });
-                            } else {
-                                attemptError = await response.text() || 'Provider error';
-                            }
-                        }
-                    } catch (e: any) {
-                        attemptStatusCode = e.message.includes('NOT_CONFIGURED') ? 401 : 502;
-                        attemptError = e.message;
+                    // --- NON-BLOCKING CDN WARM-UP ---
+                    if (resolvedBotAvatar && resolvedBotAvatar.includes('supabase.co')) {
+                        fetch(resolvedBotAvatar, { method: 'HEAD', cache: 'no-store' }).catch(() => { });
                     }
 
-                    finalAttempts.push({ platform: p, status: attemptStatusCode, error: attemptError });
-                    finalStatusCode = attemptStatusCode; finalProviderError = attemptError;
-                }
-
-                // --- WEBHOOK DELIVERY ---
-                for (const url of activeWebhooks) {
                     try {
-                        await fetch(url, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ event: category || 'NOTIFICATION', payload: body, timestamp: new Date().toISOString(), relay_id: keyData.id })
-                        });
-                    } catch (err) { console.error(`[Webhook] Failed: ${url}`, err); }
-                }
+                        if (!resolvedTarget) return;
 
-                // --- LOGGING ---
-                const responseTime = Date.now() - startTime;
-                await supabaseServer.from('logs').insert({
-                    user_id: keyData.user_id, key_id: keyData.id, platform: successfulPlatform || activePlatforms[0]?.platform || 'webhook',
-                    status_code: finalStatusCode, response_time: responseTime, error_message: finalProviderError,
-                    payload: { ...body, attempts: finalAttempts, category: category || 'general', scenario_debug: scenarioDebug }
+                        const attemptDelivery = async (retryPlatform: string, retryTarget: string) => {
+                            switch (retryPlatform) {
+                                case 'telegram': return await sendTelegram(retryTarget, platformMessage);
+                                case 'discord': return await sendDiscord(retryTarget, platformMessage, resolvedBotName, resolvedBotAvatar);
+                                case 'whatsapp': return await sendWhatsApp(retryTarget, platformMessage);
+                                case 'slack': return await sendSlack(retryTarget, platformMessage, resolvedBotName, resolvedBotAvatar);
+                                case 'teams': return await sendTeams(retryTarget, platformMessage);
+                                case 'email': return await sendEmail(retryTarget, category || 'Relay', platformMessage, resolvedBotName);
+                                case 'sms': return await sendSMS(retryTarget, platformMessage);
+                            }
+                            return null;
+                        };
+
+                        let response = await attemptDelivery(p, resolvedTarget);
+                        let status = response?.status || 500;
+                        let error = response && !response.ok ? await response.text() : null;
+                        let finalPlatformUsed = p;
+                        let fallbackTriggered = false;
+
+                        // Smart Fallback Logic
+                        if ((!response || !response.ok) && active.fallbackPlatform && active.fallbackTarget) {
+                            console.warn(`[RelayAPI] Delivery to ${p} failed (${status}). Attempting SMART FALLBACK to ${active.fallbackPlatform}...`);
+                            const fallbackResponse = await attemptDelivery(active.fallbackPlatform, active.fallbackTarget);
+
+                            status = fallbackResponse?.status || 500;
+                            const fallbackError = fallbackResponse && !fallbackResponse.ok ? await fallbackResponse.text() : null;
+
+                            finalPlatformUsed = active.fallbackPlatform;
+                            error = fallbackError ? `Primary (${p}) failed: ${error} | Fallback (${active.fallbackPlatform}): ${fallbackError}` : null;
+                            fallbackTriggered = true;
+                        }
+
+                        // Internal Logging for the final resolution
+                        await supabaseServer.from('logs').insert({
+                            user_id: keyData.user_id, key_id: keyData.id, platform: finalPlatformUsed,
+                            status_code: status, response_time: Date.now() - startTime, error_message: error,
+                            payload: { ...body, category: category || 'general', scenario_debug: scenarioDebug, fallback_triggered: fallbackTriggered }
+                        });
+                    } catch (e: any) {
+                        console.error(`[RelayAPI] Delivery Error (${p}):`, e.message);
+                    }
+                }));
+
+                // Webhooks in background
+                activeWebhooks.forEach(url => {
+                    fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ event: category || 'NOTIFICATION', payload: body, timestamp: new Date().toISOString(), relay_id: keyData.id })
+                    }).catch(() => { });
                 });
 
-                // --- RETRY QUEUE ---
-                if (!successfulPlatform && activePlatforms.length > 0) {
-                    if (req.headers.get('x-relay-retry') !== 'true') {
-                        await supabaseServer.from('retry_queue').insert({
-                            user_id: keyData.user_id, target_url: `${req.headers.get('origin') || 'http://localhost:3000'}/api/relay`,
-                            payload: payloadToRetry, next_retry_at: new Date(Date.now() + 5 * 60 * 1000).toISOString()
-                        });
-                    }
-                }
             } catch (bgError) {
                 console.error('[RelayAPI] Critical Background Error:', bgError);
             }
         };
 
-        // Fire the background execution without awaiting it
+        // Fire and forget
         processPayloadInBackground();
 
-        // Immediate Response (Webhook Pattern)
         return NextResponse.json({
             success: true,
             status: 202,
-            message: "Payload accepted and routed for background sequential processing. Delivery monitoring actively working silently."
+            message: "Protocol accepted. Processing in hyperspeed background."
         }, { status: 202 });
 
     } catch (error: any) {

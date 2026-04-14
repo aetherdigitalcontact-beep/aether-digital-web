@@ -1,0 +1,21 @@
+[2026-04-14T02:12:22.967Z] Profile Update Route Hit!
+[2026-04-14T02:12:22.968Z] - Payload ID: 1361dedc-e72b-4abf-82bb-07bbd9c68ff0
+[2026-04-14T02:12:22.968Z] - Input Email: "undefined" (Normalized: "undefined")
+[2026-04-14T02:12:22.969Z] - DB Current Email: "quiel.g538@gmail.com" (Normalized: "quiel.g538@gmail.com")
+[2026-04-14T02:12:22.969Z] - JWT Email (Desync Check): "quiel.g538@gmail.com"
+[2026-04-14T02:12:22.969Z] No email change detected or email matches current session.
+[2026-04-14T02:12:23.321Z] Update result: {"success":false,"error":{"code":"PGRST204","details":null,"hint":null,"message":"Could not find the 'bot_name' column of 'accounts' in the schema cache"},"updateData":{"bot_name":"Relay Protocol","bot_thumbnail":"https://yiljzwyewbccfrwconet.supabase.co/storage/v1/object/public/avatars/1361dedc-e72b-4abf-82bb-07bbd9c68ff0/1776132184194.jpeg"}}
+[2026-04-14T02:12:31.336Z] Profile Update Route Hit!
+[2026-04-14T02:12:31.337Z] - Payload ID: 1361dedc-e72b-4abf-82bb-07bbd9c68ff0
+[2026-04-14T02:12:31.337Z] - Input Email: "undefined" (Normalized: "undefined")
+[2026-04-14T02:12:31.337Z] - DB Current Email: "quiel.g538@gmail.com" (Normalized: "quiel.g538@gmail.com")
+[2026-04-14T02:12:31.338Z] - JWT Email (Desync Check): "quiel.g538@gmail.com"
+[2026-04-14T02:12:31.338Z] No email change detected or email matches current session.
+[2026-04-14T02:12:31.551Z] Update result: {"success":false,"error":{"code":"PGRST204","details":null,"hint":null,"message":"Could not find the 'bot_name' column of 'accounts' in the schema cache"},"updateData":{"bot_name":"Business Name","bot_thumbnail":"https://yiljzwyewbccfrwconet.supabase.co/storage/v1/object/public/avatars/1361dedc-e72b-4abf-82bb-07bbd9c68ff0/1776132184194.jpeg"}}
+[2026-04-14T02:35:22.537Z] Profile Update Route Hit!
+[2026-04-14T02:35:22.537Z] - Payload ID: 1361dedc-e72b-4abf-82bb-07bbd9c68ff0
+[2026-04-14T02:35:22.537Z] - Input Email: "undefined" (Normalized: "undefined")
+[2026-04-14T02:35:22.538Z] - DB Current Email: "quiel.g538@gmail.com" (Normalized: "quiel.g538@gmail.com")
+[2026-04-14T02:35:22.538Z] - JWT Email (Desync Check): "quiel.g538@gmail.com"
+[2026-04-14T02:35:22.538Z] No email change detected or email matches current session.
+[2026-04-14T02:35:22.990Z] Update result: {"success":true,"error":null,"updateData":{"bot_name":"Business Name","bot_thumbnail":"https://yiljzwyewbccfrwconet.supabase.co/storage/v1/object/public/avatars/1361dedc-e72b-4abf-82bb-07bbd9c68ff0/1776134115660.jpeg"}}

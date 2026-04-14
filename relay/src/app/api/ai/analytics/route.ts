@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
         // 2. Fetch logs for these keys (all logs for Best Window, but we'll filter for heatmap)
         const { data: logs, error: logsError } = await supabaseServer
             .from('logs')
-            .select('platform, status_code, created_at')
+            .select('platform, status_code, created_at, error_message')
             .in('key_id', keyIds);
 
         if (logsError) throw logsError;
@@ -82,25 +82,71 @@ export async function GET(req: NextRequest) {
         // 5. Platform Efficiency
         const platformEfficiency: Record<string, { total: number, successRate: string, usageShare?: string }> = {};
         const platforms = ['telegram', 'discord', 'whatsapp', 'slack', 'email'];
-        const totalLogsCount = logs.length;
+
+        let totalValidPlatformHits = 0;
+        platforms.forEach(p => {
+            totalValidPlatformHits += logs.filter(l => l.platform?.toLowerCase().includes(p)).length;
+        });
 
         platforms.forEach(p => {
-            const pLogs = logs.filter(l => l.platform.toLowerCase() === p);
+            const pLogs = logs.filter(l => l.platform?.toLowerCase().includes(p));
             if (pLogs.length > 0) {
                 const pSuccess = pLogs.filter(l => l.status_code >= 200 && l.status_code < 300).length;
                 platformEfficiency[p] = {
                     total: pLogs.length,
                     successRate: ((pSuccess / pLogs.length) * 100).toFixed(1) + "%",
-                    usageShare: totalLogsCount > 0 ? ((pLogs.length / totalLogsCount) * 100).toFixed(1) + "%" : "0%"
+                    usageShare: totalValidPlatformHits > 0 ? ((pLogs.length / totalValidPlatformHits) * 100).toFixed(1) + "%" : "0%"
                 };
             }
         });
+
+        // 6. Failure Analysis
+        const failedLogs = logs.filter(l => l.status_code >= 400 || !l.status_code);
+        const errorCounts: Record<string, number> = {};
+
+        failedLogs.forEach(log => {
+            let reason = "Unknown Network Error";
+            if (log.error_message) {
+                try {
+                    const parsed = JSON.parse(log.error_message);
+                    if (parsed.error?.message) reason = parsed.error.message;
+                    else if (parsed.message) reason = parsed.message;
+                    else if (parsed.error) reason = typeof parsed.error === 'string' ? parsed.error : JSON.stringify(parsed.error);
+                    else {
+                        // Handle Discord-style validation errors: {"avatar_url": ["Must be 2048 or fewer in length."]}
+                        const entries = Object.entries(parsed);
+                        if (entries.length > 0) {
+                            reason = entries.map(([k, v]: [string, any]) => `${k}: ${Array.isArray(v) ? v[0] : v}`).join(' | ');
+                        } else {
+                            reason = log.error_message;
+                        }
+                    }
+                } catch {
+                    reason = log.error_message;
+                }
+            } else if (log.status_code === 429) reason = "Rate Limited (429)";
+            else if (log.status_code === 401) reason = "Unauthorized (Invalid Key)";
+            else if (log.status_code === 404) reason = "Target Not Found";
+            else if (log.status_code === 400) reason = "Bad Request (Invalid Payload)";
+
+            // Truncate long reasons
+            reason = reason.length > 80 ? reason.substring(0, 80) + '...' : reason;
+
+            errorCounts[reason] = (errorCounts[reason] || 0) + 1;
+        });
+
+        const topFailures = Object.entries(errorCounts)
+            .map(([reason, count]) => ({ reason, count, percentage: ((count / failedLogs.length) * 100).toFixed(1) + "%" }))
+            .sort((a, b) => b.count - a.count)
+            .slice(0, 4);
 
         return NextResponse.json({
             heatmap: hourlyDistribution,
             bestTime: maxVolume > 0 ? bestTimeStr : "No data yet",
             bestHour,
             platformEfficiency,
+            failureAnalysis: topFailures,
+            failureTotal: failedLogs.length,
             recommendation: maxVolume > 0
                 ? `Relay AI detected your highest activity window at ${bestTimeStr}. Scheduling high-priority alerts for this slot could optimize engagement.`
                 : "Initiate more requests to allow Relay AI to build your personalized delivery model."

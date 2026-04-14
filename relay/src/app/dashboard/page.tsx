@@ -29,6 +29,7 @@ import {
     Lock,
     LogOut,
     Mail,
+    MessageCircle,
     MessageSquare,
     Minus,
     Network,
@@ -37,6 +38,7 @@ import {
     Plus,
     Save,
     Settings,
+    Share2,
     Shield,
     ShieldAlert,
     ShoppingBag,
@@ -51,7 +53,9 @@ import {
     UserPlus,
     Webhook,
     X,
-    Zap
+    Zap,
+    AlertTriangle,
+    Layers
 } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
@@ -79,6 +83,13 @@ const languages = [
     { code: 'ja', name: '日本語', flag: 'jp' },
     { code: 'it', name: 'Italiano', flag: 'it' },
 ] as const;
+
+// Official Brand Icons
+const DiscordIcon = ({ className = "w-5 h-5" }: { className?: string }) => <svg viewBox="0 0 24 24" className={`${className} fill-[#5865F2]`}><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028 14.09 14.09 0 001.226-1.994.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" /></svg>;
+const TelegramIcon = ({ className = "w-5 h-5" }: { className?: string }) => <svg viewBox="0 0 24 24" className={`${className} fill-[#26A5E4]`}><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" /></svg>;
+const WhatsAppIcon = ({ className = "w-5 h-5" }: { className?: string }) => <svg viewBox="0 0 24 24" className={`${className} fill-[#25D366]`}><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" /></svg>;
+const SlackIcon = ({ className = "w-5 h-5" }: { className?: string }) => <svg viewBox="0 0 24 24" className={`${className} fill-current`}><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.52h-6.313z" fill="#E01E5A" /></svg>;
+const EmailIcon = ({ className = "w-5 h-5" }: { className?: string }) => <svg viewBox="0 0 24 24" className={`${className} fill-[#6366f1]/20 stroke-[#6366f1]`} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>;
 
 export default function DashboardPage() {
     const router = useRouter();
@@ -172,12 +183,40 @@ export default function DashboardPage() {
     const [currentPassword, setCurrentPassword] = useState('');
     const [logFilters, setLogFilters] = useState({ platform: 'all', status: '', search: '' });
     const botAvatarInputRef = useRef<HTMLInputElement>(null);
+    const whiteLabelLogoInputRef = useRef<HTMLInputElement>(null);
     const [isUploadingBotAvatar, setIsUploadingBotAvatar] = useState(false);
+    const [isUploadingWhiteLabel, setIsUploadingWhiteLabel] = useState(false);
     const [whiteLabel, setWhiteLabel] = useState({
         corporateName: "",
         corporateLogo: "",
         customDomain: ""
     });
+
+    const processImageUpload = async (base64: string, type: 'avatar' | 'logo') => {
+        try {
+            const isAvatar = type === 'avatar';
+            if (isAvatar) setIsUploadingBotAvatar(true);
+            else setIsUploadingWhiteLabel(true);
+
+            const res = await fetch('/api/upload', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ image: base64, userId: user?.id })
+            });
+            const data = await res.json();
+            if (data.url) {
+                if (isAvatar) setTestConfig(prev => ({ ...prev, botAvatar: data.url }));
+                else setWhiteLabel(prev => ({ ...prev, corporateLogo: data.url }));
+                return data.url;
+            }
+        } catch (err) {
+            console.error(`${type} upload error:`, err);
+        } finally {
+            setIsUploadingBotAvatar(false);
+            setIsUploadingWhiteLabel(false);
+        }
+        return null;
+    };
 
     // Canvas Panning State
     const canvasRef = useRef<HTMLDivElement>(null);
@@ -1023,10 +1062,10 @@ export default function DashboardPage() {
                                 <div key={p} className="glass border-white/5 rounded-[30px] p-8 flex items-center justify-between group hover:border-accent/10 transition-all">
                                     <div className="flex items-center gap-6">
                                         <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-slate-400 group-hover:text-accent transition-colors">
-                                            {p === 'telegram' && <Bot className="w-6 h-6" />}
-                                            {p === 'discord' && <Zap className="w-6 h-6" />}
-                                            {p === 'whatsapp' && <MessageSquare className="w-6 h-6" />}
-                                            {p === 'slack' && <Hash className="w-6 h-6" />}
+                                            {p === 'telegram' && <TelegramIcon />}
+                                            {p === 'discord' && <DiscordIcon />}
+                                            {p === 'whatsapp' && <WhatsAppIcon />}
+                                            {p === 'slack' && <SlackIcon />}
                                             {p === 'email' && <Mail className="w-6 h-6" />}
                                         </div>
                                         <div>
@@ -1048,6 +1087,31 @@ export default function DashboardPage() {
                             );
                         })}
                     </div>
+
+                    {/* Failure Analysis */}
+                    {aiStats.failureAnalysis && aiStats.failureAnalysis.length > 0 && (
+                        <div className="space-y-6 mt-6">
+                            <h3 className="text-xl font-black text-rose-500 uppercase tracking-widest mt-12 mb-4 border-b border-rose-500/20 pb-4">
+                                Failure Diagnostics
+                            </h3>
+                            {aiStats.failureAnalysis.map((f: any, idx: number) => (
+                                <div key={idx} className="glass border-rose-500/10 rounded-[30px] p-6 flex items-center justify-between group hover:border-rose-500/30 transition-all bg-rose-500/[0.02]">
+                                    <div className="flex items-center gap-6">
+                                        <div className="w-12 h-12 bg-rose-500/10 rounded-2xl flex items-center justify-center text-rose-400 group-hover:scale-110 transition-transform shadow-xl">
+                                            <AlertTriangle className="w-6 h-6" />
+                                        </div>
+                                        <div className="max-w-[400px]">
+                                            <h4 className="font-bold text-white tracking-tight break-words">{f.reason}</h4>
+                                        </div>
+                                    </div>
+                                    <div className="text-right min-w-[80px]">
+                                        <p className="text-3xl font-black text-rose-500 italic tracking-tighter">{f.count}</p>
+                                        <p className="text-[10px] text-rose-500/80 font-bold uppercase tracking-widest mt-1">Impacts</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </motion.div>
         );
@@ -1210,12 +1274,12 @@ export default function DashboardPage() {
         const displayKey = showIntegrationKey ? apiKey : `${apiKey.slice(0, 12)}${'•'.repeat(16)}`;
 
         const snippets = {
-            nodejs: `const fetch = require('node-fetch');\n\nfetch('https://relay.aetherdigital.com/api/relay', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'x-api-key': '${displayKey}'\n  },\n  body: JSON.stringify({\n    platform: 'telegram',\n    target: 'your_chat_id',\n    message: 'Relay Active: Situation Detected',\n    category: 'Alarm / Security',\n    botName: 'Aether Sentinel',\n    variables: { location: 'Warehouse A', severity: 'High' }\n  })\n});`,
-            javascript: `// Modern Fetch API (ES6+)\nfetch('https://relay.aetherdigital.com/api/relay', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'x-api-key': '${displayKey}'\n  },\n  body: JSON.stringify({\n    platform: 'whatsapp',\n    target: 'phone_number',\n    message: 'System Alert: {{location}} status is {{severity}}',\n    category: 'Infrastructure',\n    botName: 'Relay AI',\n    variables: { location: 'Server Room', severity: 'Critical' }\n  })\n}).then(r => r.json()).then(console.log);`,
-            python: `import requests\nimport json\n\nurl = "https://relay.aetherdigital.com/api/relay"\npayload = {\n    "platform": "telegram",\n    "target": "your_chat_id",\n    "message": "Situation: {{situation}}",\n    "category": "Automation",\n    "botName": "Relay Bot",\n    "variables": {"situation": "Fire Alarm Triggered"}\n}\nheaders = {\n    "Content-Type": "application/json",\n    "x-api-key": "${displayKey}"\n}\n\nresponse = requests.post(url, json=payload, headers=headers)`,
-            php: `<?php\n\n$url = "https://relay.aetherdigital.com/api/relay";\n$payload = json_encode([\n    "platform" => "discord",\n    "target" => "webhook_url",\n    "message" => "Invoice #{{id}} Created",\n    "category" => "Billing",\n    "variables" => ["id" => "9921"]\n]);\n\n$ch = curl_init($url);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    "Content-Type: application/json",\n    "x-api-key: ${displayKey}"\n]);\ncurl_setopt($ch, CURLOPT_POST, true);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, $payload);\n\n$response = curl_exec($ch);\ncurl_close($ch);`,
-            go: `package main\n\nimport (\n\t"bytes"\n\t"net/http"\n)\n\nfunc main() {\n\turl := "https://relay.aetherdigital.com/api/relay"\n\tjsonStr := []byte(\`{"platform":"telegram","target":"chat_id","message":"Health Check OK"}\`)\n\treq, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))\n\treq.Header.Set("Content-Type", "application/json")\n\treq.Header.Set("x-api-key", "${displayKey}")\n\n\tclient := \u0026http.Client{}\n\tclient.Do(req)\n}`,
-            curl: `curl -X POST https://relay.aetherdigital.com/api/relay \\\n  -H "Content-Type: application/json" \\\n  -H "x-api-key: ${displayKey}" \\\n  -d '{\n    "platform": "telegram",\n    "target": "your_chat_id",\n    "message": "Universal Uplink Active",\n    "category": "Security / Alarm",\n    "botName": "Aether Sentinel",\n    "variables": {"location": "Main Entrance"}\n  }'`
+            nodejs: `const fetch = require('node-fetch');\n\nfetch('https://relay-notify.com/api/relay', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'x-api-key': '${displayKey}'\n  },\n  body: JSON.stringify({\n    platform: 'telegram',\n    target: 'your_chat_id',\n    message: 'Relay Active: Situation Detected',\n    category: 'Alarm / Security',\n    botName: 'Aether Sentinel',\n    variables: { location: 'Warehouse A', severity: 'High' }\n  })\n});`,
+            javascript: `// Modern Fetch API (ES6+)\nfetch('https://relay-notify.com/api/relay', {\n  method: 'POST',\n  headers: {\n    'Content-Type': 'application/json',\n    'x-api-key': '${displayKey}'\n  },\n  body: JSON.stringify({\n    platform: 'whatsapp',\n    target: 'phone_number',\n    message: 'System Alert: {{location}} status is {{severity}}',\n    category: 'Infrastructure',\n    botName: 'Relay AI',\n    variables: { location: 'Server Room', severity: 'Critical' }\n  })\n}).then(r => r.json()).then(console.log);`,
+            python: `import requests\nimport json\n\nurl = "https://relay-notify.com/api/relay"\npayload = {\n    "platform": "telegram",\n    "target": "your_chat_id",\n    "message": "Situation: {{situation}}",\n    "category": "Automation",\n    "botName": "Relay Bot",\n    "variables": {"situation": "Fire Alarm Triggered"}\n}\nheaders = {\n    "Content-Type": "application/json",\n    "x-api-key": "${displayKey}"\n}\n\nresponse = requests.post(url, json=payload, headers=headers)`,
+            php: `<?php\n\n$url = "https://relay-notify.com/api/relay";\n$payload = json_encode([\n    "platform" => "discord",\n    "target" => "webhook_url",\n    "message" => "Invoice #{{id}} Created",\n    "category" => "Billing",\n    "variables" => ["id" => "9921"]\n]);\n\n$ch = curl_init($url);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\ncurl_setopt($ch, CURLOPT_HTTPHEADER, [\n    "Content-Type: application/json",\n    "x-api-key: ${displayKey}"\n]);\ncurl_setopt($ch, CURLOPT_POST, true);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, $payload);\n\n$response = curl_exec($ch);\ncurl_close($ch);`,
+            go: `package main\n\nimport (\n\t"bytes"\n\t"net/http"\n)\n\nfunc main() {\n\turl := "https://relay-notify.com/api/relay"\n\tjsonStr := []byte(\`{"platform":"telegram","target":"chat_id","message":"Health Check OK"}\`)\n\treq, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))\n\treq.Header.Set("Content-Type", "application/json")\n\treq.Header.Set("x-api-key", "${displayKey}")\n\n\tclient := \u0026http.Client{}\n\tclient.Do(req)\n}`,
+            curl: `curl -X POST https://relay-notify.com/api/relay \\\n  -H "Content-Type: application/json" \\\n  -H "x-api-key: ${displayKey}" \\\n  -d '{\n    "platform": "telegram",\n    "target": "your_chat_id",\n    "message": "Universal Uplink Active",\n    "category": "Security / Alarm",\n    "botName": "Aether Sentinel",\n    "variables": {"location": "Main Entrance"}\n  }'`
         };
 
         return (
@@ -1248,7 +1312,7 @@ export default function DashboardPage() {
                                 </div>
                                 <div>
                                     <p className="text-[10px] font-black uppercase text-slate-500">Relay Origin</p>
-                                    <p className="text-xs font-bold text-white">https://relay.aetherdigital.com/api/relay</p>
+                                    <p className="text-xs font-bold text-white">https://relay-notify.com/api/relay</p>
                                 </div>
                             </div>
 
@@ -1451,7 +1515,7 @@ export default function DashboardPage() {
                                                         platform: "email",
                                                         platforms: ["email"],
                                                         category: "general",
-                                                        target: "welcome@relay.digital",
+                                                        target: "welcome@relay-notify.com",
                                                         message: (pObj?.email?.title || "**✨ WELCOME TO RELAY ENTERPRISE**") + "\n\n" + (pObj?.email?.body || "Hi **{{user_name}}**,\n\nYour organization is now connected to the global relay network. Start building your automation pipelines today.\n\nBest,\nThe Relay Team"),
                                                         variables: "{\n  \"user_name\": \"Exequiel\"\n}"
                                                     });
@@ -1478,11 +1542,11 @@ export default function DashboardPage() {
                                     ) : testConfig.platforms.map((p, idx) => (
                                         <div key={idx} className="flex items-center gap-3">
                                             <div className="px-4 py-2 bg-accent/20 border border-accent/40 text-accent font-black text-[9px] rounded-xl flex items-center gap-2 uppercase tracking-tighter shadow-[0_0_15px_rgba(59,130,246,0.1)]">
-                                                {p === 'telegram' && <Bot className="w-3 h-3" />}
-                                                {p === 'discord' && <MessageSquare className="w-3 h-3" />}
-                                                {p === 'slack' && <Hash className="w-3 h-3" />}
-                                                {p === 'email' && <Mail className="w-3 h-3" />}
-                                                {p === 'whatsapp' && <Globe className="w-3 h-3" />}
+                                                {p === 'telegram' && <TelegramIcon className="w-3.5 h-3.5" />}
+                                                {p === 'discord' && <DiscordIcon className="w-3.5 h-3.5" />}
+                                                {p === 'slack' && <SlackIcon className="w-3.5 h-3.5" />}
+                                                {p === 'email' && <EmailIcon className="w-3.5 h-3.5" />}
+                                                {p === 'whatsapp' && <WhatsAppIcon className="w-3.5 h-3.5" />}
                                                 {p.toUpperCase()}
                                                 <X
                                                     className="w-3 h-3 cursor-pointer hover:text-rose-500 transition-colors ml-1"
@@ -1534,11 +1598,11 @@ export default function DashboardPage() {
                                                                 }}
                                                                 className="w-full text-left px-4 py-2 hover:bg-accent/10 rounded-xl text-[10px] font-black text-slate-400 hover:text-accent uppercase transition-all flex items-center gap-2"
                                                             >
-                                                                {p === 'telegram' && <Bot className="w-3 h-3" />}
-                                                                {p === 'discord' && <MessageSquare className="w-3 h-3" />}
-                                                                {p === 'slack' && <Hash className="w-3 h-3" />}
-                                                                {p === 'email' && <Mail className="w-3 h-3" />}
-                                                                {p === 'whatsapp' && <Globe className="w-3 h-3" />}
+                                                                {p === 'telegram' && <TelegramIcon className="w-4 h-4" />}
+                                                                {p === 'discord' && <DiscordIcon className="w-4 h-4" />}
+                                                                {p === 'slack' && <SlackIcon className="w-4 h-4" />}
+                                                                {p === 'email' && <EmailIcon className="w-4 h-4" />}
+                                                                {p === 'whatsapp' && <WhatsAppIcon className="w-4 h-4" />}
                                                                 Add {p}
                                                             </button>
                                                         ))}
@@ -1612,7 +1676,14 @@ export default function DashboardPage() {
                                                 <input
                                                     type="text"
                                                     value={isEnterprise ? testConfig.botAvatar : ""}
-                                                    onChange={(e) => setTestConfig({ ...testConfig, botAvatar: e.target.value })}
+                                                    onChange={(e) => {
+                                                        const val = e.target.value;
+                                                        if (val.startsWith('data:image')) {
+                                                            processImageUpload(val, 'avatar');
+                                                        } else {
+                                                            setTestConfig({ ...testConfig, botAvatar: val });
+                                                        }
+                                                    }}
                                                     disabled={!isEnterprise}
                                                     className={`w-full bg-white/5 border border-white/10 rounded-2xl px-4 py-4 text-white focus:outline-none focus:border-accent transition-all font-medium text-xs ${!isEnterprise ? "cursor-not-allowed opacity-50 select-none" : ""}`}
                                                     placeholder={isEnterprise ? "https://..." : "Enterprise Only"}
@@ -1643,8 +1714,9 @@ export default function DashboardPage() {
                                                     const file = e.target.files?.[0];
                                                     if (file && isEnterprise) {
                                                         const reader = new FileReader();
-                                                        reader.onloadend = () => {
-                                                            setTestConfig({ ...testConfig, botAvatar: reader.result as string });
+                                                        reader.onloadend = async () => {
+                                                            const base64 = reader.result as string;
+                                                            await processImageUpload(base64, 'avatar');
                                                         };
                                                         reader.readAsDataURL(file);
                                                     }
@@ -1972,6 +2044,11 @@ export default function DashboardPage() {
                                 <div className="w-1.5 h-1.5 rounded-full bg-rose-500" />
                                 <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Offline</span>
                             </div>
+                            <div className="flex items-center gap-2 px-3 py-1 bg-white/5 rounded-full border border-white/5 relative overflow-hidden">
+                                <div className="absolute inset-0 bg-accent/10 animate-pulse pointer-events-none" />
+                                <div className="w-1.5 h-1.5 rounded-full bg-accent relative z-10 animate-pulse" />
+                                <span className="text-[8px] font-black text-white uppercase tracking-widest relative z-10">Current Time</span>
+                            </div>
                         </div>
                     </div>
 
@@ -1983,9 +2060,11 @@ export default function DashboardPage() {
                             const blockTime = now - (47 - i) * (7 * 24 * 60 * 60 * 1000 / 48);
                             const isHistoryKnown = blockTime >= userJoined || i >= 40;
 
-                            // Determine status: Operational, Degraded, or Offline
-                            let status: 'operational' | 'degraded' | 'offline' = 'operational';
-                            if (!isHistoryKnown) {
+                            const isCurrent = i === 47;
+                            let status: 'operational' | 'degraded' | 'offline' | 'current' = 'operational';
+                            if (isCurrent) {
+                                status = 'current';
+                            } else if (!isHistoryKnown) {
                                 status = 'offline'; // Before user joined, mark as offline/standby
                             } else {
                                 // Deterministic shifting status based on absolute block time
@@ -2000,13 +2079,15 @@ export default function DashboardPage() {
                             const colorMap = {
                                 operational: 'bg-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.4)]',
                                 degraded: 'bg-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.4)]',
-                                offline: 'bg-rose-500 shadow-[0_0_20px_rgba(244,63,94,0.4)]'
+                                offline: 'bg-rose-500 shadow-[0_0_20px_rgba(244,63,94,0.4)]',
+                                current: 'bg-accent shadow-[0_0_20px_var(--accent)] animate-pulse'
                             };
 
                             const labelMap = {
                                 operational: 'OPERATIONAL 100%',
                                 degraded: 'DEGRADED PERFORMANCE / CONGESTED',
-                                offline: isHistoryKnown ? 'SERVICE OUTAGE / MAINTENANCE' : 'SYSTEM STANDBY (NO DATA)'
+                                offline: isHistoryKnown ? 'SERVICE OUTAGE / MAINTENANCE' : 'SYSTEM STANDBY (NO DATA)',
+                                current: 'LIVE FEED / REAL-TIME MONITORING'
                             };
 
                             const blockAgeInDays = (47 - i) * (7 / 48);
@@ -2036,7 +2117,9 @@ export default function DashboardPage() {
                                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 opacity-0 group-hover:opacity-100 transition-all pointer-events-none z-50">
                                         <div className="glass px-4 py-2 rounded-xl border-white/10 shadow-2xl text-[8px] font-black uppercase tracking-widest whitespace-nowrap text-white">
                                             {labelMap[status]}
-                                            <div className="text-slate-500 mt-1">T-{Math.floor(blockAgeInDays * 24)}H AGEO</div>
+                                            <div className="text-slate-500 mt-1">
+                                                {isCurrent ? "CURRENT TIME (T-0H)" : `T-${Math.floor(blockAgeInDays * 24)}H AGEO`}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -2320,22 +2403,32 @@ export default function DashboardPage() {
         const insertNode = (type: string) => {
             if (insertIndex === null) return;
 
-            const newNode = {
-                id: `node_${Math.random().toString(36).substring(2, 9)}`,
-                type: type,
-                data: type === 'actionNode' ? { label: 'New Action', platform: 'telegram' } :
-                    type === 'conditionNode' ? { label: 'New Filter', condition: 'true' } :
-                        type === 'waitNode' ? { label: 'Wait / Delay', duration: 30, unit: 'seconds' } :
-                            { label: 'New Step' }
-            };
+            let newNode;
+            switch (type) {
+                case 'actionNode':
+                    newNode = { id: Date.now().toString(), type: 'actionNode', data: { label: 'New Action', platform: 'telegram' } };
+                    break;
+                case 'conditionNode':
+                    newNode = { id: Date.now().toString(), type: 'conditionNode', data: { label: 'New Filter', condition: 'true' } };
+                    break;
+                case 'waitNode':
+                    newNode = { id: Date.now().toString(), type: 'waitNode', data: { label: 'Wait / Delay', delay_duration: 10, delay_unit: 'minutes' } };
+                    break;
+                case 'digestNode':
+                    newNode = { id: Date.now().toString(), type: 'digestNode', data: { label: 'Notification Digest', digest_key: '{{user_id}}', interval_minutes: 60, interval_unit: 'minutes' } };
+                    break;
+                case 'webhookNode':
+                    newNode = { id: Date.now().toString(), type: 'webhookNode', data: { label: 'Outgoing Webhook', url: '' } };
+                    break;
+                default:
+                    newNode = { id: Date.now().toString(), type: 'stepNode', data: { label: 'New Step' } };
+            }
 
             setScenarios(prev => prev.map(s => {
                 if (s.id !== activeScenarioId) return s;
                 const newNodes = [...s.nodes];
                 newNodes.splice(insertIndex + 1, 0, newNode);
-                // Also update edges
                 const newEdges = [...(s.edges || [])];
-                // Note: In this simple horizontal layout, edges are implicit but we store them for compatibility
                 return { ...s, nodes: newNodes, edges: newEdges };
             }));
 
@@ -2552,7 +2645,8 @@ export default function DashboardPage() {
                                                 {node.type === 'triggerNode' ? <Webhook className="w-4 h-4" /> :
                                                     node.type === 'actionNode' ? <Activity className="w-4 h-4" /> :
                                                         node.type === 'waitNode' ? <Clock className="w-4 h-4" /> :
-                                                            <Network className="w-4 h-4" />}
+                                                            node.type === 'digestNode' ? <Layers className="w-4 h-4" /> :
+                                                                <Network className="w-4 h-4" />}
                                             </div>
                                             <div>
                                                 <p className="text-[8px] font-black uppercase tracking-[0.2em] text-slate-500 mb-0.5">
@@ -2575,7 +2669,11 @@ export default function DashboardPage() {
                                             <div className="flex items-center justify-between">
                                                 <span className="text-[10px] font-bold text-slate-500"><Zap className="w-3 h-3 inline mr-1" /> ROUTE TO</span>
                                                 <div className="flex items-center gap-1.5">
-                                                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                                                    {node.data.platform === 'telegram' && <TelegramIcon className="w-3 h-3" />}
+                                                    {node.data.platform === 'discord' && <DiscordIcon className="w-3 h-3" />}
+                                                    {node.data.platform === 'slack' && <SlackIcon className="w-3 h-3" />}
+                                                    {node.data.platform === 'email' && <EmailIcon className="w-3 h-3" />}
+                                                    {node.data.platform === 'whatsapp' && <WhatsAppIcon className="w-3 h-3" />}
                                                     <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">
                                                         {node.data.platform?.toUpperCase() || 'TELEGRAM'}
                                                     </span>
@@ -2591,7 +2689,13 @@ export default function DashboardPage() {
                                         {node.type === 'waitNode' && (
                                             <div className="flex items-center justify-between">
                                                 <span className="text-[10px] font-bold text-slate-500"><Clock className="w-3 h-3 inline mr-1" /> DELAY</span>
-                                                <span className="text-[10px] font-black text-amber-400 uppercase tracking-widest">{node.data.duration} {node.data.unit}</span>
+                                                <span className="text-[10px] font-black text-amber-500 uppercase tracking-widest">{node.data.delay_duration} {node.data.delay_unit}</span>
+                                            </div>
+                                        )}
+                                        {node.type === 'digestNode' && (
+                                            <div className="flex items-center justify-between">
+                                                <span className="text-[10px] font-bold text-slate-500"><Layers className="w-3 h-3 inline mr-1" /> DIGEST</span>
+                                                <span className="text-[10px] font-black text-indigo-400 uppercase tracking-widest">{node.data.interval_minutes}{node.data.interval_unit === 'seconds' ? 's' : node.data.interval_unit === 'hours' ? 'h' : node.data.interval_unit === 'days' ? 'd' : 'm'}</span>
                                             </div>
                                         )}
                                     </div>
@@ -2707,6 +2811,16 @@ export default function DashboardPage() {
                                                 <p className="text-[10px] text-slate-500 font-medium">Pause the pipeline execution for a period.</p>
                                             </button>
                                             <button
+                                                onClick={() => insertNode('digestNode')}
+                                                className="p-4 md:p-8 rounded-[24px] md:rounded-[32px] bg-white/5 border border-white/5 hover:border-indigo-500/50 hover:bg-indigo-500/5 transition-all text-left group"
+                                            >
+                                                <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-4 group-hover:scale-110 transition-transform">
+                                                    <Layers className="w-6 h-6" />
+                                                </div>
+                                                <h4 className="font-bold text-white mb-2 uppercase tracking-tighter">Notification Digest</h4>
+                                                <p className="text-[10px] text-slate-500 font-medium">Batch notifications within a time window.</p>
+                                            </button>
+                                            <button
                                                 onClick={() => insertNode('webhookNode')}
                                                 className="p-4 md:p-8 rounded-[24px] md:rounded-[32px] bg-white/5 border border-white/5 hover:border-blue-500/50 hover:bg-blue-500/5 transition-all text-left group"
                                             >
@@ -2726,8 +2840,8 @@ export default function DashboardPage() {
                                                 <p className="text-slate-500 text-[9px] font-black uppercase tracking-widest">Node ID: {editingNode.id}</p>
                                             </div>
                                             <div className="flex items-center gap-3">
-                                                <div className={`p-2.5 rounded-2xl ${editingNode.type === 'triggerNode' ? 'bg-accent/10 text-accent' : editingNode.type === 'waitNode' ? 'bg-amber-500/10 text-amber-400' : editingNode.type === 'webhookNode' ? 'bg-blue-500/10 text-blue-400' : 'bg-emerald-500/10 text-emerald-400'}`}>
-                                                    {editingNode.type === 'triggerNode' ? <Webhook className="w-5 h-5" /> : editingNode.type === 'waitNode' ? <Clock className="w-5 h-5" /> : editingNode.type === 'webhookNode' ? <Globe className="w-5 h-5" /> : <Zap className="w-5 h-5" />}
+                                                <div className={`p-2.5 rounded-2xl ${editingNode.type === 'triggerNode' ? 'bg-accent/10 text-accent' : editingNode.type === 'waitNode' ? 'bg-amber-500/10 text-amber-400' : editingNode.type === 'webhookNode' ? 'bg-blue-500/10 text-blue-400' : editingNode.type === 'digestNode' ? 'bg-indigo-500/10 text-indigo-400' : 'bg-emerald-500/10 text-emerald-400'}`}>
+                                                    {editingNode.type === 'triggerNode' ? <Webhook className="w-5 h-5" /> : editingNode.type === 'waitNode' ? <Clock className="w-5 h-5" /> : editingNode.type === 'webhookNode' ? <Globe className="w-5 h-5" /> : editingNode.type === 'digestNode' ? <Layers className="w-5 h-5" /> : <Zap className="w-5 h-5" />}
                                                 </div>
                                                 <button onClick={() => setIsNodeModalOpen(false)} className="p-2.5 rounded-2xl bg-white/5 border border-white/10 text-slate-500 hover:text-rose-400 hover:border-rose-500/30 hover:bg-rose-500/10 transition-all cursor-pointer">
                                                     <X className="w-5 h-5" />
@@ -2740,7 +2854,7 @@ export default function DashboardPage() {
                                                 <label className="block text-[9px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2">Display Label</label>
                                                 <input
                                                     type="text"
-                                                    value={editingNode.data.label}
+                                                    value={editingNode.data.label || ''}
                                                     onChange={(e) => setEditingNode({ ...editingNode, data: { ...editingNode.data, label: e.target.value } })}
                                                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-accent transition-all font-bold text-sm"
                                                 />
@@ -2753,7 +2867,7 @@ export default function DashboardPage() {
                                                             <label className="block text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Filter by Category</label>
                                                             <button
                                                                 onClick={() => {
-                                                                    const url = `https://relay.aetherdigital.com/api/relay?category=${editingNode.data.event || 'GENERAL'}`;
+                                                                    const url = `https://relay-notify.com/api/relay?category=${editingNode.data.event || 'GENERAL'}`;
                                                                     navigator.clipboard.writeText(url);
                                                                     setSaveSuccess(true);
                                                                     setTimeout(() => setSaveSuccess(false), 2000);
@@ -2849,16 +2963,16 @@ export default function DashboardPage() {
                                                         </div>
                                                     </div>
 
-                                                    <div className="grid grid-cols-2 gap-4">
+                                                    <div className="grid grid-cols-2 gap-4 mb-4">
                                                         <div>
                                                             <label className="block text-[9px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2">Platform</label>
                                                             <div className="grid grid-cols-5 gap-1.5">
                                                                 {[
-                                                                    { id: 'telegram', icon: <Bot className="w-3 h-3" /> },
-                                                                    { id: 'discord', icon: <Zap className="w-3 h-3" /> },
-                                                                    { id: 'whatsapp', icon: <MessageSquare className="w-3 h-3" /> },
-                                                                    { id: 'slack', icon: <Hash className="w-3 h-3" /> },
-                                                                    { id: 'email', icon: <Mail className="w-3 h-3" /> }
+                                                                    { id: 'telegram', icon: <TelegramIcon className="w-4 h-4" /> },
+                                                                    { id: 'discord', icon: <DiscordIcon className="w-4 h-4" /> },
+                                                                    { id: 'whatsapp', icon: <WhatsAppIcon className="w-4 h-4" /> },
+                                                                    { id: 'slack', icon: <SlackIcon className="w-4 h-4" /> },
+                                                                    { id: 'email', icon: <EmailIcon className="w-4 h-4" /> }
                                                                 ].map(p => (
                                                                     <button
                                                                         key={p.id}
@@ -2882,6 +2996,50 @@ export default function DashboardPage() {
                                                                 onChange={(e) => setEditingNode({ ...editingNode, data: { ...editingNode.data, target_address: e.target.value } })}
                                                                 className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-accent transition-all font-bold text-xs"
                                                             />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="p-4 rounded-2xl bg-amber-500/5 border border-amber-500/10 relative overflow-hidden group mb-4">
+                                                        <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/10 blur-2xl rounded-full -mr-12 -mt-12" />
+                                                        <div className="relative z-10 space-y-4">
+                                                            <div className="flex items-center gap-2 mb-2">
+                                                                <ShieldAlert className="w-4 h-4 text-amber-500" />
+                                                                <h4 className="text-[10px] font-black text-amber-400 uppercase tracking-widest">Smart Fallback (Enterprise)</h4>
+                                                            </div>
+                                                            <div className="grid grid-cols-2 gap-4">
+                                                                <div>
+                                                                    <label className="block text-[8px] font-bold uppercase tracking-widest text-amber-500/80 mb-2">If delivery fails, use:</label>
+                                                                    <div className="grid grid-cols-6 gap-1">
+                                                                        {[
+                                                                            { id: 'none', label: 'None', icon: <X className="w-3 h-3" /> },
+                                                                            { id: 'telegram', label: 'TG', icon: <TelegramIcon className="w-3.5 h-3.5" /> },
+                                                                            { id: 'discord', label: 'DC', icon: <DiscordIcon className="w-3.5 h-3.5" /> },
+                                                                            { id: 'slack', label: 'SL', icon: <SlackIcon className="w-3.5 h-3.5" /> },
+                                                                            { id: 'whatsapp', label: 'WA', icon: <WhatsAppIcon className="w-3.5 h-3.5" /> },
+                                                                            { id: 'email', label: 'EM', icon: <EmailIcon className="w-3.5 h-3.5" /> }
+                                                                        ].map(p => (
+                                                                            <button
+                                                                                key={p.id}
+                                                                                onClick={() => setEditingNode({ ...editingNode, data: { ...editingNode.data, fallback_platform: p.id === 'none' ? null : p.id } })}
+                                                                                className={`flex flex-col items-center justify-center p-1.5 rounded-lg border text-[6px] font-black uppercase transition-all ${(editingNode.data.fallback_platform || 'none') === p.id ? 'bg-amber-500 border-amber-500 text-slate-900 shadow-lg' : 'bg-white/5 border-amber-500/20 text-amber-500/70 hover:bg-amber-500/10 hover:text-amber-400'}`}
+                                                                                title={p.label}
+                                                                            >
+                                                                                {p.icon}
+                                                                            </button>
+                                                                        ))}
+                                                                    </div>
+                                                                </div>
+                                                                <div className={!editingNode.data.fallback_platform ? 'opacity-30 pointer-events-none transition-opacity' : 'transition-opacity'}>
+                                                                    <label className="block text-[8px] font-bold uppercase tracking-widest text-amber-500/80 mb-2">Fallback Address</label>
+                                                                    <input
+                                                                        type="text"
+                                                                        placeholder="Fallback ID/URL"
+                                                                        value={editingNode.data.fallback_target_address || ''}
+                                                                        onChange={(e) => setEditingNode({ ...editingNode, data: { ...editingNode.data, fallback_target_address: e.target.value } })}
+                                                                        className="w-full bg-black/40 border border-amber-500/20 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-amber-500 transition-all font-bold text-[10px]"
+                                                                    />
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
 
@@ -3085,7 +3243,7 @@ export default function DashboardPage() {
                                                             <div className="relative">
                                                                 <input
                                                                     type="text"
-                                                                    value={editingNode.data.condition}
+                                                                    value={editingNode.data.condition || ''}
                                                                     onChange={(e) => setEditingNode({ ...editingNode, data: { ...editingNode.data, condition: e.target.value } })}
                                                                     className="w-full bg-black/40 border border-white/10 rounded-2xl px-6 py-4 text-purple-400 font-mono text-sm focus:outline-none focus:border-purple-500 transition-all"
                                                                     placeholder="payload.amount > 100"
@@ -3142,22 +3300,66 @@ export default function DashboardPage() {
                                                         <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-3">Duration</label>
                                                         <input
                                                             type="number"
-                                                            value={editingNode.data.duration}
-                                                            onChange={(e) => setEditingNode({ ...editingNode, data: { ...editingNode.data, duration: parseInt(e.target.value) } })}
+                                                            value={editingNode.data.delay_duration ?? ''}
+                                                            onChange={(e) => setEditingNode({ ...editingNode, data: { ...editingNode.data, delay_duration: e.target.value === '' ? '' : parseInt(e.target.value) } })}
                                                             className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-amber-500 transition-all font-bold"
                                                         />
                                                     </div>
                                                     <div className="flex-1">
                                                         <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-3">Unit</label>
                                                         <select
-                                                            value={editingNode.data.unit}
-                                                            onChange={(e) => setEditingNode({ ...editingNode, data: { ...editingNode.data, unit: e.target.value } })}
+                                                            value={editingNode.data.delay_unit || 'minutes'}
+                                                            onChange={(e) => setEditingNode({ ...editingNode, data: { ...editingNode.data, delay_unit: e.target.value } })}
                                                             className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white appearance-none focus:outline-none focus:border-amber-500 font-bold uppercase text-[10px]"
                                                         >
                                                             <option value="seconds" className="bg-slate-900 text-white font-bold">Seconds</option>
                                                             <option value="minutes" className="bg-slate-900 text-white font-bold">Minutes</option>
                                                             <option value="hours" className="bg-slate-900 text-white font-bold">Hours</option>
                                                         </select>
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {editingNode.type === 'digestNode' && (
+                                                <div className="space-y-4">
+                                                    <div className="flex items-center gap-6">
+                                                        <div className="flex-1">
+                                                            <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-3">Batch Window</label>
+                                                            <input
+                                                                type="number"
+                                                                value={editingNode.data.interval_minutes ?? ''}
+                                                                onChange={(e) => setEditingNode({ ...editingNode, data: { ...editingNode.data, interval_minutes: e.target.value === '' ? '' : parseInt(e.target.value) } })}
+                                                                className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-indigo-500 transition-all font-bold"
+                                                            />
+                                                        </div>
+                                                        <div className="flex-1">
+                                                            <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-3">Unit</label>
+                                                            <select
+                                                                value={editingNode.data.interval_unit || 'minutes'}
+                                                                onChange={(e) => setEditingNode({ ...editingNode, data: { ...editingNode.data, interval_unit: e.target.value } })}
+                                                                className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white appearance-none focus:outline-none focus:border-indigo-500 font-bold uppercase text-[10px]"
+                                                            >
+                                                                <option value="seconds" className="bg-slate-900 text-white font-bold">Seconds</option>
+                                                                <option value="minutes" className="bg-slate-900 text-white font-bold">Minutes</option>
+                                                                <option value="hours" className="bg-slate-900 text-white font-bold">Hours</option>
+                                                                <option value="days" className="bg-slate-900 text-white font-bold">Days</option>
+                                                            </select>
+                                                        </div>
+                                                        <div className="flex-1">
+                                                            <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-3">Grouping Key</label>
+                                                            <input
+                                                                type="text"
+                                                                placeholder="{{user_id}}"
+                                                                value={editingNode.data.digest_key || ''}
+                                                                onChange={(e) => setEditingNode({ ...editingNode, data: { ...editingNode.data, digest_key: e.target.value } })}
+                                                                className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-indigo-500 transition-all font-bold text-xs"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div className="p-4 rounded-2xl bg-indigo-500/5 border border-indigo-500/10">
+                                                        <p className="text-[10px] text-slate-500 font-medium italic">
+                                                            Notifications with the same <span className="text-indigo-400 font-bold">Grouping Key</span> will be batched together and sent as a single notification after the batch window expires.
+                                                        </p>
                                                     </div>
                                                 </div>
                                             )}
@@ -3343,8 +3545,8 @@ export default function DashboardPage() {
                     target: testConfig.target,
                     message: testConfig.message,
                     variables: JSON.parse(testConfig.variables || "{ }"),
-                    botName: testConfig.botName,
-                    botAvatar: testConfig.botAvatar,
+                    botName: (testConfig.botName === 'Relay' || !testConfig.botName) ? whiteLabel.corporateName : testConfig.botName,
+                    botAvatar: (!testConfig.botAvatar) ? whiteLabel.corporateLogo : testConfig.botAvatar,
                     category: testConfig.category
                 })
             });
@@ -3631,11 +3833,11 @@ export default function DashboardPage() {
                                         />
                                     </svg>
                                     <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                        <div className={`mb-1 px-2 py-0.5 rounded-full text-[6px] font-black uppercase tracking-[0.2em] border shadow-sm ${getPlanStyles((stats as any).plan)}`}>
-                                            {(stats as any).plan || 'FREE'}
+                                        <div className={`mb-1 px-2 py-0.5 rounded-full text-[6px] font-black uppercase tracking-[0.2em] border shadow-sm ${getPlanStyles(user?.plan || (stats as any).plan)}`}>
+                                            {user?.plan || (stats as any).plan || 'FREE'}
                                         </div>
                                         <span className="text-xl font-black text-white italic tracking-tighter">
-                                            {(stats as any).limit > 1000000 ? "∞" : `${Math.round(((stats as any).usage / (stats as any).limit) * 100) || 0}%`}
+                                            {(user?.plan === 'ENTERPRISE' || (stats as any).limit > 1000000) ? "∞" : `${Math.round(((stats as any).usage / (stats as any).limit) * 100) || 0}%`}
                                         </span>
                                         <span className="text-[7px] font-black text-slate-500 uppercase tracking-widest mt-0.5">UPLINK CAP</span>
                                     </div>
@@ -3644,7 +3846,7 @@ export default function DashboardPage() {
                                 <div className="space-y-1">
                                     <p className="text-[10px] font-black text-white uppercase tracking-widest">MESSAGE VOLUME</p>
                                     <p className="text-[9px] font-bold text-slate-500 uppercase">
-                                        {(stats as any).usage || 0} <span className="opacity-40">/</span> {(stats as any).limit > 1000000 ? "∞" : ((stats as any).limit || 100)}
+                                        {(stats as any).usage || 0} <span className="opacity-40">/</span> {(user?.plan === 'ENTERPRISE' || (stats as any).limit > 1000000) ? "∞" : ((stats as any).limit || 100)}
                                     </p>
                                 </div>
 
@@ -3842,6 +4044,7 @@ export default function DashboardPage() {
                                         <option className="bg-slate-900 text-white" value="telegram">Telegram</option>
                                         <option className="bg-slate-900 text-white" value="discord">Discord</option>
                                         <option className="bg-slate-900 text-white" value="whatsapp">WhatsApp</option>
+                                        <option className="bg-slate-900 text-white" value="slack">Slack</option>
                                     </select>
                                 </div>
                                 {/* Status Filter */}
@@ -3910,12 +4113,23 @@ export default function DashboardPage() {
                                             >
                                                 <td className="px-10 py-8">
                                                     <div className="flex items-center gap-4">
-                                                        <div className="w-10 h-10 rounded-xl bg-slate-900 border border-white/5 flex items-center justify-center text-accent group-hover:scale-110 transition-transform shadow-xl">
-                                                            {log.platform?.toLowerCase() === 'telegram' ? <Bot className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
+                                                        <div className={`w-10 h-10 rounded-xl bg-slate-900 border border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl ${log.platform?.includes(',') ? 'text-amber-400' :
+                                                            log.platform?.toLowerCase() === 'telegram' ? 'text-sky-400' :
+                                                                log.platform?.toLowerCase() === 'discord' ? 'text-indigo-400' :
+                                                                    log.platform?.toLowerCase() === 'whatsapp' ? 'text-emerald-400' :
+                                                                        log.platform?.toLowerCase() === 'slack' ? 'text-rose-400' :
+                                                                            'text-accent'
+                                                            }`}>
+                                                            {log.platform?.includes(',') ? <Share2 className="w-5 h-5" /> :
+                                                                log.platform?.toLowerCase() === 'telegram' ? <TelegramIcon /> :
+                                                                    log.platform?.toLowerCase() === 'discord' ? <DiscordIcon /> :
+                                                                        log.platform?.toLowerCase() === 'whatsapp' ? <WhatsAppIcon /> :
+                                                                            log.platform?.toLowerCase() === 'slack' ? <SlackIcon /> :
+                                                                                <MessageSquare className="w-5 h-5" />}
                                                         </div>
                                                         <div>
                                                             <div className="flex items-center gap-2">
-                                                                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">POST</span>
+                                                                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">RELAYED</span>
                                                                 <span className="font-bold text-white/90 capitalize text-sm">{log.platform}</span>
                                                                 {log.category && (
                                                                     <span className="px-2 py-0.5 rounded-md bg-accent/10 border border-accent/20 text-accent text-[8px] font-black uppercase tracking-tighter">
@@ -4020,8 +4234,19 @@ export default function DashboardPage() {
                                     >
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-xl bg-slate-900 border border-white/5 flex items-center justify-center text-accent">
-                                                    {log.platform?.toLowerCase() === 'telegram' ? <Bot className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
+                                                <div className={`w-10 h-10 rounded-xl bg-slate-900 border border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl ${log.platform?.includes(',') ? 'text-amber-400' :
+                                                    log.platform?.toLowerCase() === 'telegram' ? 'text-sky-400' :
+                                                        log.platform?.toLowerCase() === 'discord' ? 'text-indigo-400' :
+                                                            log.platform?.toLowerCase() === 'whatsapp' ? 'text-emerald-400' :
+                                                                log.platform?.toLowerCase() === 'slack' ? 'text-rose-400' :
+                                                                    'text-accent'
+                                                    }`}>
+                                                    {log.platform?.includes(',') ? <Share2 className="w-5 h-5" /> :
+                                                        log.platform?.toLowerCase() === 'telegram' ? <TelegramIcon /> :
+                                                            log.platform?.toLowerCase() === 'discord' ? <DiscordIcon /> :
+                                                                log.platform?.toLowerCase() === 'whatsapp' ? <WhatsAppIcon /> :
+                                                                    log.platform?.toLowerCase() === 'slack' ? <SlackIcon /> :
+                                                                        <MessageSquare className="w-5 h-5" />}
                                                 </div>
                                                 <div>
                                                     <div className="flex items-center gap-2">
@@ -4296,12 +4521,45 @@ export default function DashboardPage() {
                                                     {domain.hostname}
                                                 </td>
                                                 <td className="px-10 py-8">
-                                                    <span className={`px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-[0.15em] ${domain.status === 'verified'
-                                                        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.1)]'
-                                                        : 'bg-amber-500/10 text-amber-400 border border-amber-500/20 shadow-[0_0_15px_rgba(245,158,11,0.1)]'
-                                                        }`}>
-                                                        {domain.status}
-                                                    </span>
+                                                    <div className="flex flex-col gap-2">
+                                                        <span className={`px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-[0.15em] w-fit ${domain.status === 'verified'
+                                                            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.1)]'
+                                                            : 'bg-amber-500/10 text-amber-400 border border-amber-500/20 shadow-[0_0_15px_rgba(245,158,11,0.1)]'
+                                                            }`}>
+                                                            {domain.status}
+                                                        </span>
+                                                        {domain.status !== 'verified' && (
+                                                            <div className="flex items-center gap-2 animate-in fade-in slide-in-from-left-2">
+                                                                <div className="px-2 py-1 rounded bg-black/40 border border-white/5 font-mono text-[8px] text-slate-400">
+                                                                    TXT relay-verify={domain.verification_token}
+                                                                </div>
+                                                                <button
+                                                                    onClick={async () => {
+                                                                        try {
+                                                                            const res = await fetch('/api/domains/verify', {
+                                                                                method: 'POST',
+                                                                                headers: { 'Content-Type': 'application/json' },
+                                                                                body: JSON.stringify({ id: domain.id })
+                                                                            });
+                                                                            const data = await res.json();
+                                                                            if (data.success) {
+                                                                                setErrorMessage("Domain verified successfully!");
+                                                                                fetchDomains();
+                                                                            } else {
+                                                                                setErrorMessage(data.message || "Verification failed");
+                                                                            }
+                                                                            setTimeout(() => setErrorMessage(null), 3000);
+                                                                        } catch (e) {
+                                                                            setErrorMessage("Network error during verification");
+                                                                        }
+                                                                    }}
+                                                                    className="text-[8px] font-black text-accent hover:underline uppercase tracking-widest cursor-pointer"
+                                                                >
+                                                                    Verify Now
+                                                                </button>
+                                                            </div>
+                                                        )}
+                                                    </div>
                                                 </td>
                                                 <td className="px-10 py-8 text-xs text-slate-500 font-medium">
                                                     {new Date(domain.created_at).toLocaleDateString()}
@@ -4502,12 +4760,102 @@ export default function DashboardPage() {
                                 <div className="relative">
                                     <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2">{d.settings?.corpLogo}</p>
                                     <div className="flex items-center gap-4 p-3 bg-white/5 border border-white/10 rounded-xl">
-                                        <div className="w-10 h-10 rounded-lg bg-slate-900 border border-white/5 flex items-center justify-center text-slate-500">
-                                            {whiteLabel.corporateLogo ? <img src={whiteLabel.corporateLogo} className="w-full h-full object-cover rounded-lg" /> : <Upload className="w-5 h-5" />}
+                                        <div className="w-10 h-10 rounded-lg bg-slate-900 border border-white/5 flex items-center justify-center text-slate-500 overflow-hidden">
+                                            {whiteLabel.corporateLogo ? (
+                                                <img src={whiteLabel.corporateLogo} className="w-full h-full object-cover rounded-lg" />
+                                            ) : (
+                                                <Upload className="w-5 h-5" />
+                                            )}
                                         </div>
-                                        <button className="text-[10px] font-black text-accent uppercase tracking-widest hover:underline">Upload Logo</button>
+                                        <div className="flex flex-col">
+                                            <button
+                                                onClick={() => whiteLabelLogoInputRef.current?.click()}
+                                                disabled={isUploadingWhiteLabel}
+                                                className="text-[10px] font-black text-accent uppercase tracking-widest hover:underline cursor-pointer disabled:opacity-50"
+                                            >
+                                                {isUploadingWhiteLabel ? "Uploading..." : "Upload Logo"}
+                                            </button>
+                                            <input
+                                                type="file"
+                                                ref={whiteLabelLogoInputRef}
+                                                className="hidden"
+                                                accept="image/*"
+                                                onChange={async (e) => {
+                                                    const file = e.target.files?.[0];
+                                                    if (file) {
+                                                        const reader = new FileReader();
+                                                        reader.onloadend = async () => {
+                                                            const base64 = reader.result as string;
+                                                            try {
+                                                                setIsUploadingWhiteLabel(true);
+                                                                const uploadRes = await fetch('/api/upload', {
+                                                                    method: 'POST',
+                                                                    headers: { 'Content-Type': 'application/json' },
+                                                                    body: JSON.stringify({
+                                                                        image: base64,
+                                                                        userId: user?.id
+                                                                    })
+                                                                });
+                                                                const uploadData = await uploadRes.json();
+                                                                if (uploadData.url) {
+                                                                    setWhiteLabel({ ...whiteLabel, corporateLogo: uploadData.url });
+                                                                }
+                                                            } catch (err) {
+                                                                console.error("WhiteLabel Logo upload error:", err);
+                                                            } finally {
+                                                                setIsUploadingWhiteLabel(false);
+                                                            }
+                                                        };
+                                                        reader.readAsDataURL(file);
+                                                    }
+                                                }}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div className="mt-8 flex justify-end">
+                                <button
+                                    onClick={async () => {
+                                        setIsUploadingWhiteLabel(true);
+                                        setErrorMessage(null);
+                                        try {
+                                            const payload = {
+                                                bot_name: whiteLabel.corporateName,
+                                                bot_thumbnail: whiteLabel.corporateLogo
+                                            };
+                                            const res = await fetch('/api/profile/update', {
+                                                method: 'POST',
+                                                headers: { 'Content-Type': 'application/json' },
+                                                body: JSON.stringify(payload)
+                                            });
+                                            if (res.ok) {
+                                                // Success feedback
+                                                const data = await res.json();
+                                                setUser({
+                                                    ...user!,
+                                                    bot_name: whiteLabel.corporateName,
+                                                    bot_thumbnail: whiteLabel.corporateLogo
+                                                });
+                                                setSaveSuccess(true);
+                                                setTimeout(() => setSaveSuccess(false), 3000);
+                                            } else {
+                                                const errorData = await res.json();
+                                                setErrorMessage(errorData.error || "Failed to save branding. Please try again.");
+                                            }
+                                        } catch (error) {
+                                            setErrorMessage("Network error saving branding.");
+                                        } finally {
+                                            setIsUploadingWhiteLabel(false);
+                                        }
+                                    }}
+                                    disabled={isUploadingWhiteLabel}
+                                    className={`px-8 py-3 rounded-xl font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 ${saveSuccess ? 'bg-emerald-500 text-white' : 'bg-accent text-white hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]'}`}
+                                >
+                                    {isUploadingWhiteLabel ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : (saveSuccess ? <Check className="w-5 h-5" /> : <Check className="w-5 h-5" />)}
+                                    {saveSuccess ? "SAVED" : "SAVE BRANDING"}
+                                </button>
                             </div>
                         </div>
 

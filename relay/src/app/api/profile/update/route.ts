@@ -122,6 +122,12 @@ export async function POST(req: NextRequest) {
 
         if (error) {
             console.error('[API] Supabase Update Error:', error);
+            if (error.code === 'PGRST204') {
+                return NextResponse.json({
+                    error: 'Database Schema Mismatch: The columns bot_name or bot_thumbnail are missing. Please run the provided SQL fix in Supabase dashboard.',
+                    code: 'SCHEMA_MISMATCH'
+                }, { status: 500 });
+            }
             return NextResponse.json({ error: error.message }, { status: 500 });
         }
 

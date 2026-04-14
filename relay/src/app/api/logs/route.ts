@@ -33,7 +33,6 @@ export async function GET(req: NextRequest) {
             response_time,
             created_at,
             error_message,
-            payload,
             api_keys (
                 label
             )

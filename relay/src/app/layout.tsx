@@ -7,6 +7,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Relay | Universal Notification API",
   description: "High-performance API for routing notifications to WhatsApp, Telegram, Discord, and more.",
+  other: {
+    "facebook-domain-verification": "syngclbgjpaz2r6z8a567u9sw61uot",
+  },
 };
 
 export default function RootLayout({
