@@ -4993,13 +4993,13 @@ export default function DashboardPage() {
                             <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center transition-transform shadow-[0_0_20px_rgba(59,130,246,0.3)] group-hover:scale-105">
                                 <Zap className="text-white w-4 h-4" fill="currentColor" />
                             </div>
-                            <span className="font-bold text-lg tracking-tighter uppercase whitespace-nowrap text-white flex items-center gap-1 group-hover:text-accent transition-colors">
+                            <span className="font-bold text-lg tracking-tighter uppercase whitespace-nowrap text-white flex items-center gap-1 group-hover:text-accent transition-all duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100">
                                 RELAY
                             </span>
                         </Link>
 
                         <div id="env-switcher" className="mb-6 px-1 relative z-[75]">
-                            <h4 className="text-[9px] font-black uppercase tracking-widest text-slate-500 mb-2 px-1">ENVIRONMENT</h4>
+                            <h4 className="text-[9px] font-black uppercase tracking-widest text-slate-500 mb-2 px-1 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">ENVIRONMENT</h4>
 
                             <div
                                 onClick={() => setIsEnvOpen(!isEnvOpen)}
@@ -5071,7 +5071,7 @@ export default function DashboardPage() {
                         </div>
 
                         <div id="workspace-switcher" className="mb-6 px-1 relative z-[65]">
-                            <h4 className="text-[9px] font-black uppercase tracking-widest text-slate-500 mb-2 px-1">WORKSPACES</h4>
+                            <h4 className="text-[9px] font-black uppercase tracking-widest text-slate-500 mb-2 px-1 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">WORKSPACES</h4>
                             <div
                                 onClick={() => setIsWorkspaceOpen(!isWorkspaceOpen)}
                                 className={`py-2.5 px-3 flex items-center justify-between gap-3 border ${isWorkspaceOpen ? 'border-white/20 bg-white/[0.05]' : 'border-white/5 bg-white/[0.02]'} rounded-xl cursor-pointer hover:bg-white/[0.05] transition-all duration-200`}
@@ -5138,7 +5138,7 @@ export default function DashboardPage() {
                         </div>
 
                         <nav className="flex-1 flex flex-col gap-0.5 overflow-y-auto scrollbar-hide pr-2">
-                            <div className="text-[9px] font-black uppercase tracking-widest text-slate-500 px-3 mt-2 mb-2">Workspace</div>
+                            <div className="text-[9px] font-black uppercase tracking-widest text-slate-500 px-3 mt-2 mb-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Workspace</div>
                             {[
                                 { id: "overview", icon: <LayoutDashboard className="w-3.5 h-3.5" />, label: "API KEYS" },
                                 { id: "status", icon: <Activity className="w-3.5 h-3.5" />, label: "NETWORK STATUS" },
@@ -5175,7 +5175,7 @@ export default function DashboardPage() {
                                     )}
                                 </button>
                             ))}
-                            <div className="text-[9px] font-black uppercase tracking-widest text-slate-500 px-3 mt-6 mb-2">Directory</div>
+                            <div className="text-[9px] font-black uppercase tracking-widest text-slate-500 px-3 mt-6 mb-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Directory</div>
                             {[
                                 { id: "subscribers", icon: <Users className="w-3.5 h-3.5" />, label: "RECIPIENTS" },
                                 { id: "topics", icon: <Layers className="w-3.5 h-3.5" />, label: "SEGMENTS" },
@@ -5208,7 +5208,7 @@ export default function DashboardPage() {
 
                                 </button>
                             ))}
-                            <div className="text-[9px] font-black uppercase tracking-widest text-slate-500 px-3 mt-6 mb-2">Systems</div>
+                            <div className="text-[9px] font-black uppercase tracking-widest text-slate-500 px-3 mt-6 mb-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Systems</div>
                             {[
                                 { id: "scenarios", icon: <Network className="w-3.5 h-3.5" />, label: d.sidebar?.scenarios || "WORKFLOWS" },
                                 { id: "connectors", icon: <Zap className="w-3.5 h-3.5" />, label: d.sidebar?.connectors || "WEBHOOKS" },
