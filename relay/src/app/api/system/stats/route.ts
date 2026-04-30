@@ -50,9 +50,10 @@ export async function GET(req: Request) {
             }
         }
 
-        // 4. Calculate Real Baseline Latency (P99)
-        const latencies = logs?.map(l => l.response_time || 0).sort((a, b) => a - b) || [];
-        const p99Latency = latencies.length > 0 ? latencies[Math.floor(latencies.length * 0.99)] : 24;
+        // 4. Calculate Real Baseline Latency (Avg of Last 100)
+        let latencies = logs?.map(l => l.response_time || 0) || [];
+        latencies = latencies.slice(0, 100);
+        const p99Latency = latencies.length > 0 ? Math.round(latencies.reduce((a, b) => a + b, 0) / latencies.length) : 24;
 
         // True Hardware Telemetry from Local Host
         const cpus = os.cpus();

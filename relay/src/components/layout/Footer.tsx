@@ -118,7 +118,7 @@ export default function Footer() {
                     <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white mb-6">Protocols</h4>
                     <ul className="space-y-4">
                         <li><Link href="/docs" className="text-sm text-slate-500 hover:text-white transition-colors">{d.nav.docs}</Link></li>
-                        <li><Link href="/pricing" className="text-sm text-slate-500 hover:text-white transition-colors">{d.nav.pricing}</Link></li>
+                        {/* <li><Link href="/pricing" className="text-sm text-slate-500 hover:text-white transition-colors">{d.nav.pricing}</Link></li> */}
                         <li><Link href="/auth" className="text-sm text-slate-500 hover:text-white transition-colors">{d.nav.getStarted}</Link></li>
                     </ul>
                 </div>

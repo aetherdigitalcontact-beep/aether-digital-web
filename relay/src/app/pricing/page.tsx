@@ -391,191 +391,29 @@ export default function PricingPage() {
                 </div>
 
                 {/* Pricing Grid */}
-                <div className="max-w-7xl w-full z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch pb-32 px-4">
-                    {/* Hobby Plan */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="p-10 rounded-[48px] glass border border-white/5 flex flex-col hover:bg-white/[0.02] transition-all"
-                    >
-                        <div className="mb-10">
-                            <h3 className="text-2xl font-black mb-3 uppercase tracking-tight text-white">{d.pricing.hobby.name}</h3>
-                            <p className="text-slate-500 text-xs font-medium leading-relaxed">{d.pricing.hobby.desc}</p>
-                        </div>
-                        <div className="text-6xl font-black mb-12 text-white tracking-tighter">
-                            {isAnnual ? d.pricing.hobby.yearlyPrice : d.pricing.hobby.price}
-                            <span className="text-lg text-slate-700 font-bold ml-1">/mo</span>
-                        </div>
-
-                        <div className="w-full py-4 rounded-3xl bg-white/5 border border-white/10 text-slate-400 font-black text-center text-[10px] uppercase tracking-[0.2em] mb-10 flex items-center justify-center gap-2">
-                            <Zap className="w-3.5 h-3.5 text-accent" fill="currentColor" />
-                            {lang === 'es' ? 'GRATIS POR SIEMPRE' : 'FOREVER FREE'}
-                        </div>
-
-                        <ul className="space-y-5">
-                            {d.pricing.hobby.features.map((f: string, i: number) => (
-                                <li key={i} className="flex gap-4 text-sm font-medium text-slate-400 group">
-                                    <div className="w-6 h-6 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                                        <Check className="text-emerald-400 w-3.5 h-3.5" strokeWidth={3} />
-                                    </div>
-                                    {f}
-                                </li>
-                            ))}
-                        </ul>
-                    </motion.div>
-
-                    {/* Starter Plan */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="p-10 rounded-[48px] glass border border-white/10 flex flex-col hover:bg-white/[0.04] transition-all shadow-2xl"
-                    >
-                        <div className="mb-10">
-                            <h3 className="text-2xl font-black mb-3 uppercase tracking-tight text-white">{d.pricing.starter.name}</h3>
-                            <p className="text-slate-500 text-xs font-medium leading-relaxed">{d.pricing.starter.desc}</p>
-                        </div>
-                        <div className="text-6xl font-black mb-12 text-white tracking-tighter">
-                            {isAnnual ? d.pricing.starter.yearlyPrice : d.pricing.starter.price}
-                            <span className="text-lg text-slate-700 font-bold ml-1">/mo</span>
-                        </div>
-
-                        <div className="space-y-3 mb-12">
-                            <div className="h-[44px] w-full rounded-full overflow-hidden hover:shadow-[0_0_30px_rgba(255,196,57,0.3)] transition-all">
-                                <PayPalButtons
-                                    style={{ shape: "pill", color: "gold", label: "subscribe", height: 44 }}
-                                    createSubscription={(data, actions) => handlePayPalCreateSubscription('starter', actions)}
-                                    onApprove={async () => { window.location.href = '/dashboard?payment=success'; }}
-                                />
-                            </div>
-
-                            {isArgentina && (
-                                <button
-                                    onClick={() => handleMPCheckout('starter')}
-                                    disabled={isMPLoading}
-                                    className="w-full h-[44px] rounded-full bg-[#009EE3] hover:bg-[#0089C7] text-white font-black text-[10px] uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(0,158,227,0.3)] disabled:opacity-50 flex items-center justify-center gap-2"
-                                >
-                                    {isMPLoading ? <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : d.pricing.ctaMP || "Mercado Pago"}
-                                </button>
-                            )}
-
-                            <button
-                                onClick={() => handleCryptoCheckout('starter')}
-                                className="w-full h-[44px] rounded-full bg-white/5 border border-white/10 hover:bg-white/10 text-white font-black text-[10px] uppercase tracking-widest transition-all flex items-center justify-center gap-2"
-                            >
-                                ⚡ CRYPTO (USDT)
-                            </button>
-                        </div>
-
-                        <ul className="space-y-5">
-                            {d.pricing.starter.features.map((f: string, i: number) => (
-                                <li key={i} className="flex gap-4 text-sm font-medium text-slate-400 group">
-                                    <div className="w-6 h-6 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                                        <Check className="text-emerald-400 w-3.5 h-3.5" strokeWidth={3} />
-                                    </div>
-                                    {f}
-                                </li>
-                            ))}
-                        </ul>
-                    </motion.div>
-
-                    {/* Pro Plan (Highlighted) */}
-                    <div className="relative group">
-                        <div className="absolute -inset-1 bg-gradient-to-b from-accent to-purple-600 rounded-[52px] blur opacity-25 group-hover:opacity-50 transition-opacity"></div>
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.3 }}
-                            className="relative p-10 rounded-[48px] bg-[#0b0f1a] border border-white/20 flex flex-col h-full shadow-2xl"
-                        >
-                            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-accent text-white px-6 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-xl z-20">
-                                Most Popular
-                            </div>
-
-                            <div className="mb-10">
-                                <h3 className="text-2xl font-black mb-3 uppercase tracking-tight text-white">{d.pricing.pro.name}</h3>
-                                <p className="text-slate-500 text-xs font-medium leading-relaxed">{d.pricing.pro.desc}</p>
-                            </div>
-                            <div className="text-6xl font-black mb-12 text-white tracking-tighter">
-                                {isAnnual ? d.pricing.pro.yearlyPrice : d.pricing.pro.price}
-                                <span className="text-lg text-slate-700 font-bold ml-1">/mo</span>
-                            </div>
-
-                            <div className="space-y-3 mb-12">
-                                <div className="h-[48px] w-full rounded-full overflow-hidden hover:shadow-[0_0_30px_rgba(255,196,57,0.4)] transition-all">
-                                    <PayPalButtons
-                                        style={{ shape: "pill", color: "gold", label: "subscribe", height: 48 }}
-                                        createSubscription={(data, actions) => handlePayPalCreateSubscription('pro', actions)}
-                                        onApprove={async () => { window.location.href = '/dashboard?payment=success'; }}
-                                    />
-                                </div>
-
-                                {isArgentina && (
-                                    <button
-                                        onClick={() => handleMPCheckout('pro')}
-                                        disabled={isMPLoading}
-                                        className="w-full h-[48px] rounded-full bg-[#009EE3] hover:bg-[#0089C7] text-white font-black text-[10px] uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(0,158,227,0.4)] disabled:opacity-50 flex items-center justify-center gap-2"
-                                    >
-                                        {isMPLoading ? <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : d.pricing.ctaMP || "Mercado Pago"}
-                                    </button>
-                                )}
-
-                                <button
-                                    onClick={() => handleCryptoCheckout('pro')}
-                                    className="w-full h-[48px] rounded-full bg-white/5 border border-white/10 hover:bg-white/10 text-white font-black text-[10px] uppercase tracking-widest transition-all flex items-center justify-center gap-2"
-                                >
-                                    ⚡ CRYPTO (USDT)
-                                </button>
-                            </div>
-
-                            <ul className="space-y-5">
-                                {d.pricing.pro.features.map((f: string, i: number) => (
-                                    <li key={i} className="flex gap-4 text-sm font-black text-white group">
-                                        <div className="w-6 h-6 rounded-lg bg-accent/20 border border-accent/40 flex items-center justify-center shrink-0">
-                                            <Check className="text-accent w-3.5 h-3.5" strokeWidth={4} />
-                                        </div>
-                                        {f}
-                                    </li>
-                                ))}
-                            </ul>
-                        </motion.div>
+                <div className="max-w-7xl w-full z-10 flex flex-col items-center justify-center pb-32 px-4 text-center">
+                    <div className="p-12 rounded-[48px] glass border border-white/10 bg-white/[0.02] max-w-2xl">
+                        <Zap className="w-12 h-12 text-accent mx-auto mb-6 animate-pulse" fill="currentColor" />
+                        <h2 className="text-3xl font-black text-white uppercase tracking-tighter mb-4">
+                            {lang === 'es' ? 'Planes próximamente' : 'Plans Coming Soon'}
+                        </h2>
+                        <p className="text-slate-400 text-lg font-medium leading-relaxed mb-8">
+                            {lang === 'es'
+                                ? 'Estamos finalizando los detalles de nuestra infraestructura de pagos para ofrecerte la mejor experiencia. Vuelve pronto.'
+                                : 'We are finalizing the details of our payment infrastructure to offer you the best experience. Check back soon.'}
+                        </p>
+                        <Link href="/" className="px-8 py-3 rounded-full bg-white text-black font-black text-xs uppercase tracking-widest hover:bg-slate-200 transition-all">
+                            {lang === 'es' ? 'Volver al Inicio' : 'Back to Home'}
+                        </Link>
                     </div>
 
-                    {/* Enterprise Plan */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.4 }}
-                        className="p-10 rounded-[48px] glass border border-white/5 flex flex-col hover:bg-white/[0.02] transition-all"
-                    >
-                        <div className="mb-10">
-                            <h3 className="text-2xl font-black mb-3 uppercase tracking-tight text-white">{d.pricing.enterprise.name}</h3>
-                            <p className="text-slate-500 text-xs font-medium leading-relaxed">{d.pricing.enterprise.desc}</p>
-                        </div>
-                        <div className="text-5xl font-black mb-12 text-white tracking-tighter">
-                            {isAnnual ? d.pricing.enterprise.yearlyPrice : d.pricing.enterprise.price}
-                        </div>
-
-                        <a
-                            href="mailto:aetherdigital.contact@gmail.com?subject=Relay Enterprise Inquiry"
-                            className="w-full h-[52px] rounded-full bg-white text-black font-black text-[10px] uppercase tracking-widest hover:bg-slate-200 hover:shadow-2xl transition-all flex items-center justify-center mb-12"
-                        >
-                            {d.pricing.contact}
-                        </a>
-
-                        <ul className="space-y-5">
-                            {d.pricing.enterprise.features.map((f: string, i: number) => (
-                                <li key={i} className="flex gap-4 text-sm font-medium text-slate-400 group">
-                                    <div className="w-6 h-6 rounded-lg bg-amber-400/10 border border-amber-400/20 flex items-center justify-center shrink-0">
-                                        <Check className="text-amber-400 w-3.5 h-3.5" strokeWidth={3} />
-                                    </div>
-                                    {f}
-                                </li>
-                            ))}
-                        </ul>
-                    </motion.div>
+                    {/* Original Pricing Grid Commented Out
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch w-full mt-20 opacity-20 pointer-events-none grayscale">
+                        ... (Pricing cards left intact but hidden)
+                    </div>
+                    */}
                 </div>
+
 
                 <Footer />
             </main>

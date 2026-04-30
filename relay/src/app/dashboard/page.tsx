@@ -1046,6 +1046,17 @@ export default function DashboardPage() {
 
     // Initialize White Label from User
     useEffect(() => {
+        if (!isOnboarded) return;
+        fetchStats();
+
+        const token = setInterval(() => {
+            fetchStats();
+        }, 15000);
+
+        return () => clearInterval(token);
+    }, [isOnboarded, envMode]);
+
+    useEffect(() => {
         if (user) {
             setWhiteLabel({
                 corporateName: user.company || user.bot_name || "",
@@ -6860,11 +6871,11 @@ export default function DashboardPage() {
                                                             <div className="absolute left-0 top-3 bottom-3 w-1 bg-slate-500 rounded-r-sm" />
                                                             <div className="flex items-center gap-2">
                                                                 <p className="text-sm text-slate-400">
-                                                                    <span className="font-bold text-slate-300">Tip:</span> Get role-based access control and add unlimited members by upgrading.
+                                                                    <span className="font-bold text-slate-300">Protocol Tip:</span> Unlock granular access protocols and expand your crew capacity with a Pro subscription.
                                                                 </p>
                                                             </div>
                                                             <Link href="/pricing" className="text-sm font-medium text-rose-500 hover:text-rose-400 transition-colors">
-                                                                Upgrade to Team
+                                                                Upgrade to Pro
                                                             </Link>
                                                         </div>
                                                     )}
@@ -6917,7 +6928,7 @@ export default function DashboardPage() {
                                                                         const count = teamMembers.length;
                                                                         const plan = user?.plan || 'FREE';
                                                                         if ((plan === 'FREE' || plan === 'STARTER') && count >= 3) {
-                                                                            setNotification({ message: 'Capacity Limit Exceeded: Free/Starter plans are limited to 3 Co-Pilots. Please upgrade to Team.', type: 'error' });
+                                                                            setNotification({ message: 'Capacity Limit Exceeded: Free/Starter plans are limited to 3 Co-Pilots. Please upgrade to Pro.', type: 'error' });
                                                                             return;
                                                                         }
                                                                         setIsInviteModalOpen(!isInviteModalOpen);

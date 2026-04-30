@@ -401,6 +401,7 @@ export async function POST(req: NextRequest) {
                 // --- PARALLEL DELIVERIES ---
                 const pendingLogs: any[] = [];
                 const notificationLogs: any[] = [];
+                const inboxMessages: any[] = [];
                 await Promise.all(finalDeliveries.map(async (active) => {
                     const p = active.platform;
                     const resolvedTarget = active.target || target;
@@ -479,12 +480,23 @@ export async function POST(req: NextRequest) {
 
                         // Si no vino de Topic, intentamos emparejar el target a un External ID
                         if (!subId && resolvedTarget) {
-                            const { data: matchedSub } = await supabaseServer
+                            let { data: matchedSub } = await supabaseServer
                                 .from('subscribers')
                                 .select('id, is_unsubscribed')
                                 .eq('user_id', keyData.user_id)
                                 .eq('external_id', resolvedTarget)
                                 .single();
+
+                            if (!matchedSub) {
+                                // Auto-Upsert: Transparently create subscriber to ensure universal widget mirroring works
+                                const { data: newSub } = await supabaseServer
+                                    .from('subscribers')
+                                    .insert({ user_id: keyData.user_id, external_id: resolvedTarget, status: 'active' })
+                                    .select('id, is_unsubscribed')
+                                    .single();
+                                matchedSub = newSub;
+                            }
+
                             if (matchedSub) {
                                 if (matchedSub.is_unsubscribed) {
                                     console.log(`[RelayAPI] Skipped ${p} delivery for unsubscribed target: ${resolvedTarget}`);
@@ -504,6 +516,18 @@ export async function POST(req: NextRequest) {
                                 message_excerpt: finalExcerpt, environment: keyData?.environment || 'development',
                                 metadata: { external_target: resolvedTarget, attempt_time: deliveryTime, error_message: error, sandbox_mode: isSandboxIntercepted }
                             });
+
+                            // Universal Inbox Mirroring
+                            if ((status === 200 || status === 201 || status === 202) && finalPlatformUsed !== 'in-app') {
+                                inboxMessages.push({
+                                    project_id: keyData.user_id,
+                                    subscriber_id: subId,
+                                    title: body.title || category || active.botName || finalBotName || 'Relay Notification',
+                                    content: typeof platformMessage === 'string' ? platformMessage : finalExcerpt,
+                                    platform: finalPlatformUsed,
+                                    metadata: { mirrored_from: finalPlatformUsed, sandbox_mode: isSandboxIntercepted }
+                                });
+                            }
                         }
 
                     } catch (e: any) { console.error(`[RelayAPI] Delivery Error (${p}):`, e.message); }
@@ -514,6 +538,10 @@ export async function POST(req: NextRequest) {
                     const { error: logErr } = await supabaseServer.from('notification_logs').insert(notificationLogs);
                     if (logErr) console.error('[RelayAPI] Notification Logs Insert Error:', logErr.message);
                 }
+                if (inboxMessages.length > 0) {
+                    const { error: inboxErr } = await supabaseServer.from('inbox_messages').insert(inboxMessages);
+                    if (inboxErr) console.error('[RelayAPI] Inbox Mirroring Error:', inboxErr.message);
+                }
 
                 // Webhooks
                 finalWebhooks.forEach(url => {
@@ -523,7 +551,7 @@ export async function POST(req: NextRequest) {
             } catch (bgError) { console.error('[RelayAPI] Background Error:', bgError); }
         };
 
-        processPayloadInBackground();
+        await processPayloadInBackground();
 
         return NextResponse.json({ success: true, status: 202, message: "Protocol accepted. Processing in optimized background." }, { status: 202 });
 

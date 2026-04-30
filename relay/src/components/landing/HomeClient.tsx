@@ -373,9 +373,9 @@ export default function HomeClient({ initialUser, initialLang }: HomeClientProps
                 <div className="hidden md:flex gap-8 text-[11px] font-black uppercase tracking-[0.25em] text-slate-400 items-center">
                     <a href="#features" className="hover:text-white transition-all">{d.nav.features}</a>
                     <Link href="/docs" className="hover:text-white transition-all">{d.nav.docs}</Link>
-                    <Link href="/pricing" className="hover:text-white transition-all flex items-center gap-2">
+                    {/* <Link href="/pricing" className="hover:text-white transition-all flex items-center gap-2">
                         {d.nav.pricing} <Sparkles className="w-3.5 h-3.5 text-accent animate-pulse" />
-                    </Link>
+                    </Link> */}
 
                     <div className="relative">
                         <button
@@ -469,9 +469,9 @@ export default function HomeClient({ initialUser, initialLang }: HomeClientProps
                         <div className="glass rounded-[30px] p-8 border border-white/5 shadow-2xl flex flex-col gap-6 text-center">
                             <a href="#features" onClick={() => setIsMobileMenuOpen(false)} className="text-white font-black uppercase tracking-widest text-sm hover:text-accent transition-colors">{d.nav.features}</a>
                             <Link href="/docs" onClick={() => setIsMobileMenuOpen(false)} className="text-white font-black uppercase tracking-widest text-sm hover:text-accent transition-colors">{d.nav.docs}</Link>
-                            <Link href="/pricing" onClick={() => setIsMobileMenuOpen(false)} className="text-white font-black uppercase tracking-widest text-sm hover:text-accent transition-colors flex items-center justify-center gap-2">
+                            {/* <Link href="/pricing" onClick={() => setIsMobileMenuOpen(false)} className="text-white font-black uppercase tracking-widest text-sm hover:text-accent transition-colors flex items-center justify-center gap-2">
                                 {d.nav.pricing} <Sparkles className="w-4 h-4 text-accent" />
-                            </Link>
+                            </Link> */}
                             <div className="flex flex-wrap justify-center gap-3 mt-4 pt-4 border-t border-white/10">
                                 {languages.map((l) => (
                                     <button
