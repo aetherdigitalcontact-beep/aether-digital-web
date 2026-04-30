@@ -5323,7 +5323,7 @@ export default function DashboardPage() {
                             {/* Inbox / Notifications */}
                             <RelayInbox
                                 appId={activeWorkspaceId || ""}
-                                subscriberId={user?.id || user?.email || ""}
+                                subscriberId={"admin_dashboard_wildcard"}
                                 position="top-right"
                                 soundEnabled={true}
                                 theme="dark"

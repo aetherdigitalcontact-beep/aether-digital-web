@@ -16,26 +16,36 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ error: 'Missing appId or subscriberId' }, { status: 400 });
         }
 
-        // 1. Get subscriber internal ID
-        const { data: subscriber, error: subError } = await supabaseServer
-            .from('subscribers')
-            .select('id')
-            .eq('user_id', appId)
-            .eq('external_id', subscriberId)
-            .single();
+        // 1. Get subscriber internal ID (unless wildcard admin)
+        let targetSubscriberId: string | null = null;
 
-        if (subError || !subscriber) {
-            return NextResponse.json({ notifications: [] });
+        if (subscriberId !== 'admin_dashboard_wildcard') {
+            const { data: subscriber, error: subError } = await supabaseServer
+                .from('subscribers')
+                .select('id')
+                .eq('user_id', appId)
+                .eq('external_id', subscriberId)
+                .single();
+
+            if (subError || !subscriber) {
+                return NextResponse.json({ notifications: [] });
+            }
+            targetSubscriberId = subscriber.id;
         }
 
-        // 2. Fetch specific messages meant strictly for this subscriber
-        const { data: messages, error: msgError } = await supabaseServer
+        // 2. Fetch specific messages meant strictly for this subscriber (or all for the workspace if wildcard)
+        let query = supabaseServer
             .from('inbox_messages')
             .select('id, title, content, is_read, created_at, metadata')
             .eq('project_id', appId)
-            .eq('subscriber_id', subscriber.id)
             .order('created_at', { ascending: false })
             .limit(30);
+
+        if (targetSubscriberId) {
+            query = query.eq('subscriber_id', targetSubscriberId);
+        }
+
+        const { data: messages, error: msgError } = await query;
 
         if (msgError) throw msgError;
 
@@ -65,6 +75,17 @@ export async function PATCH(req: NextRequest) {
         }
 
         if (!appId || !subscriberId || action !== 'read') return NextResponse.json({ error: 'Bad Request' }, { status: 400 });
+
+        if (subscriberId === 'admin_dashboard_wildcard') {
+            if (Array.isArray(logIds) && logIds.length > 0) {
+                await supabaseServer
+                    .from('inbox_messages')
+                    .update({ is_read: true, read_at: new Date().toISOString() })
+                    .in('id', logIds)
+                    .eq('project_id', appId);
+            }
+            return NextResponse.json({ success: true });
+        }
 
         const { data: subscriber } = await supabaseServer
             .from('subscribers')
