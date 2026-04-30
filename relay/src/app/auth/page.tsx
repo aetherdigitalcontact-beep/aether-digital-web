@@ -31,6 +31,7 @@ function AuthContent() {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
     const [showResend, setShowResend] = useState(false);
+    const [totpCode, setTotpCode] = useState("");
     const [errors, setErrors] = useState<Record<string, string>>({});
 
     const searchParams = useSearchParams();
@@ -81,7 +82,7 @@ function AuthContent() {
         return Object.keys(newErrors).length === 0;
     };
 
-    const [view, setView] = useState<'login' | 'forgot'>('login');
+    const [view, setView] = useState<'login' | 'forgot' | '2fa'>('login');
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -111,6 +112,9 @@ function AuthContent() {
                 }
 
                 setMessage({ type: 'error', text: errorText });
+                setLoading(false);
+            } else if (data.require2FA) {
+                setView('2fa');
                 setLoading(false);
             } else {
                 window.location.href = '/dashboard';
@@ -149,6 +153,37 @@ function AuthContent() {
             setMessage({ type: 'error', text: "Connection error." });
         }
         setLoading(false);
+    };
+
+    const handle2FA = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!totpCode || totpCode.length !== 6) {
+            setErrors({ totp: "Enter a valid 6-digit code" });
+            return;
+        }
+
+        setLoading(true);
+        setMessage(null);
+
+        try {
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password, totpCode }),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                setMessage({ type: 'error', text: data.error || "Invalid 2FA code" });
+                setLoading(false);
+            } else {
+                window.location.href = '/dashboard';
+            }
+        } catch (err) {
+            setMessage({ type: 'error', text: "Connection error." });
+            setLoading(false);
+        }
     };
 
     const handleResendEmail = async () => {
@@ -288,7 +323,7 @@ function AuthContent() {
                                 </div>
                             </form>
                         </motion.div>
-                    ) : (
+                    ) : view === 'forgot' ? (
                         <motion.div
                             key="forgot"
                             initial={{ opacity: 0, x: 20 }}
@@ -321,6 +356,51 @@ function AuthContent() {
                                         className="text-xs text-slate-500 hover:text-white transition-colors flex items-center justify-center gap-2 mx-auto"
                                     >
                                         <ChevronLeft className="w-3 h-3" /> {d.backToLogin}
+                                    </button>
+                                </div>
+                            </form>
+                        </motion.div>
+                    ) : (
+                        <motion.div
+                            key="2fa"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <div className="flex flex-col items-center mb-8 text-center text-slate-400 text-xs px-4">
+                                <p>Your account is protected by two-factor authentication. Please enter the 6-digit code from your authenticator app.</p>
+                            </div>
+                            <form onSubmit={handle2FA} noValidate className="space-y-4">
+                                <div className="relative group">
+                                    <Lock className="absolute left-6 top-5 w-5 h-5 text-slate-500 group-focus-within:text-accent transition-colors" />
+                                    <input
+                                        type="text"
+                                        maxLength={6}
+                                        value={totpCode}
+                                        onChange={(e) => {
+                                            const val = e.target.value.replace(/[^0-9]/g, "");
+                                            setTotpCode(val);
+                                            if (errors.totp) setErrors({ ...errors, totp: '' });
+                                        }}
+                                        placeholder="000000"
+                                        className={`w-full bg-white/5 border ${errors.totp ? 'border-rose-500/50' : 'border-white/5'} rounded-full py-5 pl-14 pr-7 focus:border-accent/40 focus:bg-white/10 outline-none transition-all text-2xl font-black text-white tracking-[0.5em] text-center placeholder:text-slate-800 placeholder:tracking-normal placeholder:text-sm placeholder:font-medium`}
+                                    />
+                                    {errors.totp && <p className="text-[10px] text-rose-500 font-bold ml-6 mt-1 uppercase tracking-wider">{errors.totp}</p>}
+                                </div>
+                                <button
+                                    disabled={loading}
+                                    className="w-full py-5 mt-2 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center gap-2 hover:shadow-[0_0_40px_rgba(16,185,129,0.3)] transition-all active:scale-[0.98] disabled:opacity-50"
+                                >
+                                    {loading ? (d.loading || "Verifying...") : "Verify & Continue"} <ArrowRight className="w-5 h-5" />
+                                </button>
+                                <div className="text-center mt-4">
+                                    <button
+                                        type="button"
+                                        onClick={() => { setView('login'); setMessage(null); }}
+                                        className="text-xs text-slate-500 hover:text-white transition-colors flex items-center justify-center gap-2 mx-auto"
+                                    >
+                                        <ChevronLeft className="w-3 h-3" /> Back to Login
                                     </button>
                                 </div>
                             </form>

@@ -5,37 +5,57 @@ import jwt from 'jsonwebtoken';
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-for-dev-only-change-in-prod';
 
 export const dynamic = 'force-dynamic';
+import { requireWorkspaceAccess } from '@/lib/server/requireWorkspaceAccess';
 
 export async function GET(req: NextRequest) {
     try {
-        const token = req.cookies.get('relay_session')?.value;
-
-        if (!token) {
-            return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
-        }
-
-        const decoded = jwt.verify(token, JWT_SECRET) as any;
-        const userId = decoded.id;
+        const { userId, workspaceId, error: wsError, status } = await requireWorkspaceAccess(req);
+        if (wsError) return NextResponse.json({ error: wsError }, { status: status || 401 });
 
         // 1. Get total deliveries (all logs for any key of this user)
         // We need to join with api_keys to filter by user_id
+        const env = req.nextUrl.searchParams.get('env') || 'development';
+
+        // 1. Get user plan for limits early to avoid partial responses
+        const { data: userData } = await supabaseServer
+            .from('accounts')
+            .select('email, plan')
+            .eq('id', userId)
+            .single();
+
+        const plan = (userData?.plan || 'free').toLowerCase();
+        // Development mode gets "unlimited" feel via a huge limit
+        const limit = env === 'development'
+            ? 999999999
+            : (plan === 'starter' ? 35000 : plan === 'pro' ? 175000 : plan === 'enterprise' ? 999999999 : 10000);
+
+        // 2. Get total deliveries (all logs for any key of this user)
         const { data: keys } = await supabaseServer
             .from('api_keys')
             .select('id')
-            .eq('user_id', userId);
+            .eq('user_id', workspaceId)
+            .eq('environment', env);
 
         const keyIds = keys?.map(k => k.id) || [];
 
         if (keyIds.length === 0) {
             return NextResponse.json({
                 success: 0,
-                failureRate: "0%",
+                failureRate: "0.0%",
                 latency: "0ms",
-                deliveries: []
+                uptime: "100.00%",
+                usage: 0,
+                limit: limit,
+                plan: plan.toUpperCase(),
+                trends: {
+                    success: "+0%",
+                    failureRate: "+0%",
+                    latency: "0ms"
+                }
             });
         }
 
-        // 2. Fetch logs for these keys
+        // 3. Fetch logs for these keys
         const { data: logs, error: logsError } = await supabaseServer
             .from('logs')
             .select('status_code, response_time, created_at')
@@ -102,16 +122,6 @@ export async function GET(req: NextRequest) {
             const diffMs = Math.round(currentLatency - prevLatency);
             latencyTrend = (diffMs > 0 ? "+" : "") + diffMs + "ms";
         }
-
-        // 3. Get user plan for limits
-        const { data: userData } = await supabaseServer
-            .from('accounts')
-            .select('email, plan')
-            .eq('id', userId)
-            .single();
-
-        const plan = (userData?.plan || 'free').toLowerCase();
-        const limit = plan === 'starter' ? 5000 : plan === 'pro' ? 20000 : plan === 'enterprise' ? 999999999 : 100;
 
         return NextResponse.json({
             success: successful,

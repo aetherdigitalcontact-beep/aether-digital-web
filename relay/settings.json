@@ -1,0 +1,21 @@
+{
+  "customModelProviders": {
+    "nvidia-nim": {
+      "baseUrl": "https://integrate.api.nvidia.com/v1",
+      "apiKey": "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",
+      "models": {
+        "deepseek-v4-pro": "deepseek-ai/deepseek-v4-pro",
+        "glm-5.1": "z-ai/glm-5.1"
+      }
+    }
+  },
+  "agentModels": {
+    "nvidia-nim": {
+      "base_url": "https://integrate.api.nvidia.com/v1",
+      "api_key": "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"
+    }
+  },
+  "agentRouting": {
+    "default": "nvidia-nim"
+  }
+}

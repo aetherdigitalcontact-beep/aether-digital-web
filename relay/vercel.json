@@ -1,7 +1,7 @@
 {
   "crons": [
     {
-      "path": "/api/system/worker",
+      "path": "/api/cron/flush",
       "schedule": "* * * * *"
     }
   ]

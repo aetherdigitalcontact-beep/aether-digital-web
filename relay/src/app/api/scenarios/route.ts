@@ -4,20 +4,11 @@ import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-for-dev-only-change-in-prod';
 
-async function getUserId(req: NextRequest) {
-    const token = req.cookies.get('relay_session')?.value;
-    if (!token) return null;
-    try {
-        const decoded = jwt.verify(token, JWT_SECRET) as any;
-        return decoded.id;
-    } catch {
-        return null; // Don't crash on invalid token
-    }
-}
+import { requireWorkspaceAccess } from '@/lib/server/requireWorkspaceAccess';
 
 export async function GET(req: NextRequest) {
-    const userId = await getUserId(req);
-    if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const { userId, workspaceId, error: wsError, status: wsStatus } = await requireWorkspaceAccess(req);
+    if (wsError) return NextResponse.json({ error: wsError }, { status: wsStatus || 401 });
 
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
@@ -28,7 +19,7 @@ export async function GET(req: NextRequest) {
                 .from('scenarios')
                 .select('*')
                 .eq('id', id)
-                .eq('user_id', userId)
+                .eq('user_id', workspaceId)
                 .single();
             if (error) throw error;
             return NextResponse.json({ scenario: data });
@@ -36,7 +27,7 @@ export async function GET(req: NextRequest) {
             const { data, error } = await supabaseServer
                 .from('scenarios')
                 .select('*')
-                .eq('user_id', userId)
+                .eq('user_id', workspaceId)
                 .order('created_at', { ascending: false });
             if (error) throw error;
             return NextResponse.json({ scenarios: data });
@@ -47,8 +38,8 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-    const userId = await getUserId(req);
-    if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const { userId, workspaceId, error: wsError, status: wsStatus } = await requireWorkspaceAccess(req);
+    if (wsError) return NextResponse.json({ error: wsError }, { status: wsStatus || 401 });
 
     try {
         const body = await req.json();
@@ -79,7 +70,7 @@ export async function POST(req: NextRequest) {
         const { data, error } = await supabaseServer
             .from('scenarios')
             .insert({
-                user_id: userId,
+                user_id: workspaceId,
                 name,
                 description: description || '',
                 nodes: defaultNodes,
@@ -97,8 +88,8 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
-    const userId = await getUserId(req);
-    if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const { userId, workspaceId, error: wsError, status: wsStatus } = await requireWorkspaceAccess(req);
+    if (wsError) return NextResponse.json({ error: wsError }, { status: wsStatus || 401 });
 
     try {
         const body = await req.json();
@@ -117,7 +108,7 @@ export async function PUT(req: NextRequest) {
             .from('scenarios')
             .update(updateData)
             .eq('id', id)
-            .eq('user_id', userId)
+            .eq('user_id', workspaceId)
             .select()
             .single();
 
@@ -129,8 +120,8 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-    const userId = await getUserId(req);
-    if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const { userId, workspaceId, error: wsError, status: wsStatus } = await requireWorkspaceAccess(req);
+    if (wsError) return NextResponse.json({ error: wsError }, { status: wsStatus || 401 });
 
     const { searchParams } = new URL(req.url);
     const ids = searchParams.get('ids')?.split(',') || (searchParams.get('id') ? [searchParams.get('id')] : []);
@@ -141,7 +132,7 @@ export async function DELETE(req: NextRequest) {
             .from('scenarios')
             .delete()
             .in('id', ids)
-            .eq('user_id', userId);
+            .eq('user_id', workspaceId);
 
         if (error) throw error;
         return NextResponse.json({ success: true, count: ids.length });

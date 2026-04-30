@@ -4,7 +4,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { dictionaries, Language } from "@/lib/i18n";
 import { useEffect, useState } from "react";
-import { Mail } from "lucide-react";
+import { Mail, Zap } from "lucide-react";
 
 export default function Footer() {
     const [lang, setLang] = useState<Language>("en");
@@ -71,7 +71,13 @@ export default function Footer() {
 
             <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
                 <div className="col-span-1 md:col-span-2 flex flex-col items-center md:items-start text-center md:text-left">
-                    <Link href="/" className="text-2xl font-black tracking-tighter mb-6 block active:scale-95 transition-transform">RELAY</Link>
+                    <Link href="/" className="flex items-center gap-3 mb-6 active:scale-95 transition-transform group">
+                        <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.3)] relative overflow-hidden">
+                            <Zap className="text-white w-5 h-5 z-10" fill="currentColor" />
+                            <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                        </div>
+                        <span className="font-black text-2xl tracking-tighter text-white">RELAY</span>
+                    </Link>
                     <p className="text-slate-500 text-sm max-w-sm mb-8 leading-relaxed">
                         {d.hero.desc}
                     </p>

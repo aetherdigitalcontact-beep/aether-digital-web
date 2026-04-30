@@ -273,24 +273,33 @@ export default function PricingPage() {
 
     return (
         <PayPalScriptProvider options={{ clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "test", vault: true, intent: "subscription" }}>
-            <main className="min-h-screen flex flex-col items-center py-20 px-6 relative overflow-hidden bg-[#05070a]">
-                {/* Background Glows */}
-                <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-accent/15 blur-[120px] rounded-full"></div>
-                <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-500/5 blur-[120px] rounded-full"></div>
+            <main className="min-h-screen flex flex-col items-center py-20 px-6 relative overflow-hidden bg-[#020408]">
+                {/* High-Impact Mesh Gradient */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                    <motion.div
+                        animate={{
+                            x: [0, 100, 0],
+                            y: [0, 50, 0],
+                            scale: [1, 1.2, 1],
+                        }}
+                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                        className="absolute top-[-20%] left-[-10%] w-[80%] h-[80%] bg-accent/20 blur-[180px] rounded-full"
+                    />
 
-                {/* Navbar (Simplified for Pricing) */}
-                <nav className="fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center glass border-b-0 rounded-b-2xl max-w-7xl mx-auto left-0 right-0 mt-4 px-8">
-                    <Link href="/" className="flex items-center gap-2 group translate-x-0 hover:translate-x-[-4px] transition-transform">
+                </div>
+
+                {/* Navbar (Implementation of floating nav) */}
+                <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-8 py-3 flex justify-between items-center glass border border-white/10 rounded-full w-[calc(100%-3rem)] max-w-5xl mx-auto shadow-2xl backdrop-blur-2xl">
+                    <Link href="/" className="flex items-center gap-3 active:scale-95 transition-transform">
                         <ArrowLeft className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
-                        <span className="font-bold text-lg tracking-tight">RELAY</span>
+                        <span className="font-black text-xl tracking-tighter text-white">RELAY</span>
                     </Link>
 
                     <div className="flex items-center gap-4">
-                        {/* Language Selector Dropdown */}
                         <div className="relative">
                             <button
                                 onClick={() => setIsLangOpen(!isLangOpen)}
-                                className="flex items-center gap-2 px-2.5 py-1.5 rounded-full bg-white/5 border border-white/10 hover:border-white/20 transition-all font-black text-[10px] uppercase tracking-widest"
+                                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hover:border-white/20 transition-all font-black text-[10px] uppercase tracking-widest"
                             >
                                 <img src={`https://flagcdn.com/w40/${currentLang?.flag}.png`} alt={currentLang?.name} className="w-4 h-auto rounded-sm" />
                                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${isLangOpen ? 'rotate-180' : ''}`} />
@@ -304,15 +313,12 @@ export default function PricingPage() {
                                             initial={{ opacity: 0, y: 10, scale: 0.95 }}
                                             animate={{ opacity: 1, y: 0, scale: 1 }}
                                             exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                                            className="absolute top-full right-0 mt-2 w-14 glass border border-white/10 rounded-2xl overflow-hidden shadow-2xl p-1.5 z-50 flex flex-col gap-1"
+                                            className="absolute top-full right-0 mt-3 w-14 glass border border-white/10 rounded-2xl overflow-hidden shadow-2xl p-1.5 z-50 flex flex-col gap-1.5"
                                         >
                                             {languages.map((l) => (
                                                 <button
                                                     key={l.code}
-                                                    onClick={() => {
-                                                        setLang(l.code);
-                                                        setIsLangOpen(false);
-                                                    }}
+                                                    onClick={() => { setLang(l.code); setIsLangOpen(false); }}
                                                     className={`w-full aspect-square flex items-center justify-center rounded-xl transition-all ${lang === l.code ? 'bg-accent/20 scale-105' : 'hover:bg-white/10 hover:scale-110'}`}
                                                 >
                                                     <img src={`https://flagcdn.com/w40/${l.flag}.png`} alt={l.name} className="w-6 h-auto rounded-sm" />
@@ -324,47 +330,29 @@ export default function PricingPage() {
                             </AnimatePresence>
                         </div>
 
-                        {/* User Profile / Login */}
-                        <div className="flex items-center gap-2">
-                            <Link
-                                href={user ? "/dashboard" : "/auth"}
-                                className="flex items-center gap-2 md:gap-3 p-1 pr-3 md:p-1 md:pr-4 rounded-full bg-white/5 border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all active:scale-95 group relative"
-                            >
-                                <div className="p-1.5 bg-white/5 rounded-full">
-                                    <User className={`w-3.5 h-3.5 ${user ? 'text-accent' : 'text-slate-400'} group-hover:text-white transition-colors`} />
-                                </div>
-                                {user ? (
-                                    <div className="flex flex-col">
-                                        <span className="text-[9px] font-bold text-white tracking-tight leading-none mb-0.5">{user.name?.split(' ')[0] || 'User'}</span>
-                                        <span className="text-[7px] font-black text-accent tracking-[0.1em] uppercase leading-none">{user.plan || 'FREE'}</span>
-                                    </div>
-                                ) : (
-                                    <span className="text-[9px] font-bold text-slate-500 group-hover:text-white transition-colors uppercase tracking-[0.2em] px-1">{d.nav?.getStarted || "Get Started"}</span>
-                                )}
-                            </Link>
-
+                        <Link
+                            href={user ? "/dashboard" : "/auth"}
+                            className="flex items-center gap-3 p-1 pr-4 rounded-full bg-white/5 border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all active:scale-95 group relative"
+                        >
+                            <div className="p-1.5 bg-white/5 rounded-full">
+                                <User className={`w-3.5 h-3.5 ${user ? 'text-accent' : 'text-slate-400'} group-hover:text-white transition-colors`} />
+                            </div>
                             {user && (
-                                <button
-                                    onClick={async () => {
-                                        await fetch('/api/auth/logout', { method: 'POST' });
-                                        window.location.reload();
-                                    }}
-                                    className="p-2 rounded-full bg-rose-500/10 border border-rose-500/20 hover:bg-rose-500/20 transition-all active:scale-95 group cursor-pointer"
-                                    title="Log Out"
-                                >
-                                    <LogOut className="w-3.5 h-3.5 text-rose-400 group-hover:text-rose-300 transition-colors" />
-                                </button>
+                                <div className="flex flex-col">
+                                    <span className="text-[9px] font-bold text-white tracking-tight leading-none mb-0.5">{user.name?.split(' ')[0] || 'User'}</span>
+                                    <span className="text-[7px] font-black text-accent tracking-[0.1em] uppercase leading-none">{user.plan || 'FREE'}</span>
+                                </div>
                             )}
-                        </div>
+                        </Link>
                     </div>
                 </nav>
 
                 {/* Header */}
-                <div className="max-w-3xl text-center mt-20 mb-20 z-10">
+                <div className="max-w-3xl text-center mt-32 mb-20 z-10">
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-4xl md:text-5xl font-black mb-6 tracking-tight"
+                        className="text-5xl md:text-7xl font-black mb-8 tracking-tighter text-white"
                     >
                         {d.pricing.title}
                     </motion.h1>
@@ -372,7 +360,7 @@ export default function PricingPage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-slate-500 text-lg leading-relaxed"
+                        className="text-slate-400 text-xl leading-relaxed font-medium"
                     >
                         {d.pricing.desc}
                     </motion.p>
@@ -382,59 +370,54 @@ export default function PricingPage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="flex items-center justify-center gap-4 mt-8"
+                        className="flex items-center justify-center gap-6 mt-12 bg-white/5 p-2 rounded-full border border-white/10 w-fit mx-auto"
                     >
-                        <span className={`text-sm tracking-widest ${!isAnnual ? 'text-white font-bold' : 'text-slate-500'}`}>
-                            {d.pricing.billing.monthly.toUpperCase()}
-                        </span>
                         <button
-                            onClick={() => setIsAnnual(!isAnnual)}
-                            className="w-14 h-7 bg-slate-900 border border-slate-800 rounded-full p-1 relative transition-all hover:border-slate-700"
+                            onClick={() => setIsAnnual(false)}
+                            className={`px-6 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all ${!isAnnual ? 'bg-white text-black shadow-xl' : 'text-slate-500 hover:text-white'}`}
                         >
-                            <motion.div
-                                animate={{ x: isAnnual ? 28 : 0 }}
-                                className="w-5 h-5 bg-blue-500 rounded-full shadow-[0_0_10px_rgba(59,130,246,0.5)]"
-                            />
+                            {d.pricing.billing.monthly}
                         </button>
-                        <span className={`text-sm tracking-widest flex items-center gap-2 ${isAnnual ? 'text-white font-bold' : 'text-slate-500'}`}>
-                            {d.pricing.billing.yearly.toUpperCase()}
-                            <span className="px-2 py-0.5 bg-green-500/20 text-green-400 text-[10px] font-black rounded-full border border-green-500/20">
+                        <button
+                            onClick={() => setIsAnnual(true)}
+                            className={`px-6 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all flex items-center gap-2 ${isAnnual ? 'bg-white text-black shadow-xl' : 'text-slate-500 hover:text-white'}`}
+                        >
+                            {d.pricing.billing.yearly}
+                            <span className="px-2 py-0.5 bg-accent/20 text-accent text-[9px] font-black rounded-full border border-accent/20 animate-pulse">
                                 {d.pricing.billing.save}
                             </span>
-                        </span>
+                        </button>
                     </motion.div>
                 </div>
 
-                {/* Regional Banner Removed for integrated UI */}
-
                 {/* Pricing Grid */}
-                <div className="max-w-7xl w-full z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-start pb-32">
+                <div className="max-w-7xl w-full z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch pb-32 px-4">
                     {/* Hobby Plan */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="p-8 rounded-[40px] glass border border-white/5 flex flex-col hover:border-white/10 transition-all h-full"
+                        className="p-10 rounded-[48px] glass border border-white/5 flex flex-col hover:bg-white/[0.02] transition-all"
                     >
                         <div className="mb-10">
-                            <h3 className="text-2xl font-black mb-2 uppercase tracking-tight text-white">{d.pricing.hobby.name}</h3>
-                            <p className="text-slate-500 text-xs leading-relaxed">{d.pricing.hobby.desc}</p>
+                            <h3 className="text-2xl font-black mb-3 uppercase tracking-tight text-white">{d.pricing.hobby.name}</h3>
+                            <p className="text-slate-500 text-xs font-medium leading-relaxed">{d.pricing.hobby.desc}</p>
                         </div>
-                        <div className="text-5xl font-black mb-12 text-white">
+                        <div className="text-6xl font-black mb-12 text-white tracking-tighter">
                             {isAnnual ? d.pricing.hobby.yearlyPrice : d.pricing.hobby.price}
-                            <span className="text-lg text-slate-600 font-bold ml-1">/mo</span>
+                            <span className="text-lg text-slate-700 font-bold ml-1">/mo</span>
                         </div>
 
-                        <div className="w-full py-4 rounded-3xl bg-white/5 border border-white/10 text-slate-500 font-bold text-center text-[10px] uppercase tracking-widest mb-10 flex items-center justify-center gap-2">
-                            <Check className="w-3 h-3 text-emerald-500" strokeWidth={3} />
-                            {lang === 'es' ? 'Incluido por Defecto' : 'Included by Default'}
+                        <div className="w-full py-4 rounded-3xl bg-white/5 border border-white/10 text-slate-400 font-black text-center text-[10px] uppercase tracking-[0.2em] mb-10 flex items-center justify-center gap-2">
+                            <Zap className="w-3.5 h-3.5 text-accent" fill="currentColor" />
+                            {lang === 'es' ? 'GRATIS POR SIEMPRE' : 'FOREVER FREE'}
                         </div>
 
-                        <ul className="space-y-4 mt-auto">
+                        <ul className="space-y-5">
                             {d.pricing.hobby.features.map((f: string, i: number) => (
-                                <li key={i} className="flex gap-3 text-sm font-medium text-slate-400 group">
-                                    <div className="w-5 h-5 rounded-md bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-accent/10 transition-colors">
-                                        <Check className="text-accent w-3 h-3" strokeWidth={3} />
+                                <li key={i} className="flex gap-4 text-sm font-medium text-slate-400 group">
+                                    <div className="w-6 h-6 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                                        <Check className="text-emerald-400 w-3.5 h-3.5" strokeWidth={3} />
                                     </div>
                                     {f}
                                 </li>
@@ -447,28 +430,21 @@ export default function PricingPage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="p-8 rounded-[40px] glass border border-white/5 flex flex-col hover:border-white/10 transition-all h-full"
+                        className="p-10 rounded-[48px] glass border border-white/10 flex flex-col hover:bg-white/[0.04] transition-all shadow-2xl"
                     >
                         <div className="mb-10">
-                            <h3 className="text-2xl font-black mb-2 uppercase tracking-tight text-white">{d.pricing.starter.name}</h3>
-                            <p className="text-slate-500 text-xs leading-relaxed">{d.pricing.starter.desc}</p>
+                            <h3 className="text-2xl font-black mb-3 uppercase tracking-tight text-white">{d.pricing.starter.name}</h3>
+                            <p className="text-slate-500 text-xs font-medium leading-relaxed">{d.pricing.starter.desc}</p>
                         </div>
-                        <div className="text-5xl font-black mb-12 text-white">
+                        <div className="text-6xl font-black mb-12 text-white tracking-tighter">
                             {isAnnual ? d.pricing.starter.yearlyPrice : d.pricing.starter.price}
-                            <span className="text-lg text-slate-600 font-bold ml-1">/mo</span>
+                            <span className="text-lg text-slate-700 font-bold ml-1">/mo</span>
                         </div>
 
-                        <div className="flex flex-col gap-3 w-full mb-10 w-full relative z-20">
-                            {/* <button
-                                onClick={() => handlePlanSelect('starter')}
-                                className="w-full py-3.5 rounded-full bg-white/5 border border-white/10 text-white font-black text-center text-[10px] uppercase tracking-widest hover:bg-white/10 transition-all active:scale-[0.98]"
-                            >
-                                {d.pricing.ctaLemon || d.pricing.cta}
-                            </button> */}
-
-                            <div className="h-[40px] w-full rounded-full overflow-hidden opacity-90 hover:opacity-100 transition-opacity">
+                        <div className="space-y-3 mb-12">
+                            <div className="h-[44px] w-full rounded-full overflow-hidden hover:shadow-[0_0_30px_rgba(255,196,57,0.3)] transition-all">
                                 <PayPalButtons
-                                    style={{ shape: "pill", color: "gold", label: "subscribe", height: 40 }}
+                                    style={{ shape: "pill", color: "gold", label: "subscribe", height: 44 }}
                                     createSubscription={(data, actions) => handlePayPalCreateSubscription('starter', actions)}
                                     onApprove={async () => { window.location.href = '/dashboard?payment=success'; }}
                                 />
@@ -478,25 +454,25 @@ export default function PricingPage() {
                                 <button
                                     onClick={() => handleMPCheckout('starter')}
                                     disabled={isMPLoading}
-                                    className="w-full py-3.5 mt-1 rounded-full bg-[#009EE3] hover:bg-[#0089C7] text-white font-black text-center text-[10px] uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(0,158,227,0.3)] active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2"
+                                    className="w-full h-[44px] rounded-full bg-[#009EE3] hover:bg-[#0089C7] text-white font-black text-[10px] uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(0,158,227,0.3)] disabled:opacity-50 flex items-center justify-center gap-2"
                                 >
-                                    {isMPLoading ? <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : d.pricing.ctaMP || "Mercado Pago"}
+                                    {isMPLoading ? <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : d.pricing.ctaMP || "Mercado Pago"}
                                 </button>
                             )}
 
                             <button
                                 onClick={() => handleCryptoCheckout('starter')}
-                                className="w-full py-3.5 mt-1 rounded-full bg-[#F3BA2F] hover:bg-[#E2AD27] text-black font-black text-center text-[10px] uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(243,186,47,0.3)] active:scale-[0.98] flex items-center justify-center gap-2"
+                                className="w-full h-[44px] rounded-full bg-white/5 border border-white/10 hover:bg-white/10 text-white font-black text-[10px] uppercase tracking-widest transition-all flex items-center justify-center gap-2"
                             >
-                                {d.pricing.ctaCrypto || "⚡ Crypto (USDT)"}
+                                ⚡ CRYPTO (USDT)
                             </button>
                         </div>
 
-                        <ul className="space-y-4 mt-auto">
+                        <ul className="space-y-5">
                             {d.pricing.starter.features.map((f: string, i: number) => (
-                                <li key={i} className="flex gap-3 text-sm font-medium text-slate-400 group">
-                                    <div className="w-5 h-5 rounded-md bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-accent/10 transition-colors">
-                                        <Check className="text-accent w-3 h-3" strokeWidth={3} />
+                                <li key={i} className="flex gap-4 text-sm font-medium text-slate-400 group">
+                                    <div className="w-6 h-6 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                                        <Check className="text-emerald-400 w-3.5 h-3.5" strokeWidth={3} />
                                     </div>
                                     {f}
                                 </li>
@@ -505,36 +481,31 @@ export default function PricingPage() {
                     </motion.div>
 
                     {/* Pro Plan (Highlighted) */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 }}
-                        className="p-0.5 rounded-[42px] bg-gradient-to-b from-accent/40 to-transparent relative shadow-[0_0_80px_rgba(59,130,246,0.15)] h-full"
-                    >
-                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-white px-4 py-1 rounded-full text-[8px] font-black uppercase tracking-widest shadow-xl whitespace-nowrap z-20">
-                            Most Popular
-                        </div>
-                        <div className="bg-[#05070a] p-8 rounded-[40px] h-full flex flex-col">
+                    <div className="relative group">
+                        <div className="absolute -inset-1 bg-gradient-to-b from-accent to-purple-600 rounded-[52px] blur opacity-25 group-hover:opacity-50 transition-opacity"></div>
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.3 }}
+                            className="relative p-10 rounded-[48px] bg-[#0b0f1a] border border-white/20 flex flex-col h-full shadow-2xl"
+                        >
+                            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-accent text-white px-6 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-xl z-20">
+                                Most Popular
+                            </div>
+
                             <div className="mb-10">
-                                <h3 className="text-2xl font-black mb-2 uppercase tracking-tight text-white">{d.pricing.pro.name}</h3>
-                                <p className="text-slate-500 text-xs leading-relaxed">{d.pricing.pro.desc}</p>
+                                <h3 className="text-2xl font-black mb-3 uppercase tracking-tight text-white">{d.pricing.pro.name}</h3>
+                                <p className="text-slate-500 text-xs font-medium leading-relaxed">{d.pricing.pro.desc}</p>
                             </div>
-                            <div className="text-5xl font-black mb-12 text-white">
+                            <div className="text-6xl font-black mb-12 text-white tracking-tighter">
                                 {isAnnual ? d.pricing.pro.yearlyPrice : d.pricing.pro.price}
-                                <span className="text-lg text-slate-600 font-bold ml-1">/mo</span>
+                                <span className="text-lg text-slate-700 font-bold ml-1">/mo</span>
                             </div>
 
-                            <div className="flex flex-col gap-3 w-full mb-10 w-full relative z-20">
-                                {/* <button
-                                    onClick={() => handlePlanSelect('pro')}
-                                    className="w-full py-4 rounded-full bg-accent text-white font-black text-center text-[10px] uppercase tracking-widest hover:shadow-[0_0_40px_rgba(59,130,246,0.4)] transition-all active:scale-[0.98]"
-                                >
-                                    {d.pricing.ctaLemon || d.pricing.cta}
-                                </button> */}
-
-                                <div className="h-[40px] w-full rounded-full overflow-hidden opacity-90 hover:opacity-100 transition-opacity">
+                            <div className="space-y-3 mb-12">
+                                <div className="h-[48px] w-full rounded-full overflow-hidden hover:shadow-[0_0_30px_rgba(255,196,57,0.4)] transition-all">
                                     <PayPalButtons
-                                        style={{ shape: "pill", color: "gold", label: "subscribe", height: 40 }}
+                                        style={{ shape: "pill", color: "gold", label: "subscribe", height: 48 }}
                                         createSubscription={(data, actions) => handlePayPalCreateSubscription('pro', actions)}
                                         onApprove={async () => { window.location.href = '/dashboard?payment=success'; }}
                                     />
@@ -544,70 +515,60 @@ export default function PricingPage() {
                                     <button
                                         onClick={() => handleMPCheckout('pro')}
                                         disabled={isMPLoading}
-                                        className="w-full py-3.5 mt-1 rounded-full bg-[#009EE3] hover:bg-[#0089C7] text-white font-black text-center text-[10px] uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(0,158,227,0.3)] active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2"
+                                        className="w-full h-[48px] rounded-full bg-[#009EE3] hover:bg-[#0089C7] text-white font-black text-[10px] uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(0,158,227,0.4)] disabled:opacity-50 flex items-center justify-center gap-2"
                                     >
-                                        {isMPLoading ? <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : d.pricing.ctaMP || "Mercado Pago"}
+                                        {isMPLoading ? <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : d.pricing.ctaMP || "Mercado Pago"}
                                     </button>
                                 )}
 
                                 <button
                                     onClick={() => handleCryptoCheckout('pro')}
-                                    className="w-full py-3.5 mt-1 rounded-full bg-[#F3BA2F] hover:bg-[#E2AD27] text-black font-black text-center text-[10px] uppercase tracking-widest transition-all hover:shadow-[0_0_20px_rgba(243,186,47,0.3)] active:scale-[0.98] flex items-center justify-center gap-2"
+                                    className="w-full h-[48px] rounded-full bg-white/5 border border-white/10 hover:bg-white/10 text-white font-black text-[10px] uppercase tracking-widest transition-all flex items-center justify-center gap-2"
                                 >
-                                    {d.pricing.ctaCrypto || "⚡ Crypto (USDT)"}
+                                    ⚡ CRYPTO (USDT)
                                 </button>
                             </div>
 
-                            <ul className="space-y-4 mt-auto">
+                            <ul className="space-y-5">
                                 {d.pricing.pro.features.map((f: string, i: number) => (
-                                    <li key={i} className="flex gap-3 text-sm font-bold text-white group">
-                                        <div className="w-5 h-5 rounded-md bg-accent/20 flex items-center justify-center shrink-0">
-                                            <Check className="text-accent w-3 h-3" strokeWidth={4} />
+                                    <li key={i} className="flex gap-4 text-sm font-black text-white group">
+                                        <div className="w-6 h-6 rounded-lg bg-accent/20 border border-accent/40 flex items-center justify-center shrink-0">
+                                            <Check className="text-accent w-3.5 h-3.5" strokeWidth={4} />
                                         </div>
                                         {f}
                                     </li>
                                 ))}
                             </ul>
-                        </div>
-                    </motion.div>
+                        </motion.div>
+                    </div>
 
                     {/* Enterprise Plan */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.4 }}
-                        className="p-8 rounded-[40px] glass border border-white/5 flex flex-col hover:border-white/10 transition-all h-full relative overflow-hidden"
+                        className="p-10 rounded-[48px] glass border border-white/5 flex flex-col hover:bg-white/[0.02] transition-all"
                     >
-                        <div className="absolute top-0 right-0 w-24 h-24 bg-accent/20 blur-[50px] rounded-full opacity-50"></div>
-                        <div className="mb-10 relative z-10">
-                            <h3 className="text-2xl font-black mb-2 uppercase tracking-tight text-white">{d.pricing.enterprise.name}</h3>
-                            <p className="text-slate-500 text-xs leading-relaxed">{d.pricing.enterprise.desc}</p>
+                        <div className="mb-10">
+                            <h3 className="text-2xl font-black mb-3 uppercase tracking-tight text-white">{d.pricing.enterprise.name}</h3>
+                            <p className="text-slate-500 text-xs font-medium leading-relaxed">{d.pricing.enterprise.desc}</p>
                         </div>
-                        <div className={`font-black mb-12 text-white relative z-10 uppercase transition-all ${(isAnnual ? d.pricing.enterprise.yearlyPrice : d.pricing.enterprise.price).length > 10 ? 'text-2xl' : 'text-5xl'
-                            }`}>
+                        <div className="text-5xl font-black mb-12 text-white tracking-tighter">
                             {isAnnual ? d.pricing.enterprise.yearlyPrice : d.pricing.enterprise.price}
-                            {!(isAnnual ? d.pricing.enterprise.yearlyPrice : d.pricing.enterprise.price).toLowerCase().includes('custom') &&
-                                !(isAnnual ? d.pricing.enterprise.yearlyPrice : d.pricing.enterprise.price).toLowerCase().includes('person') && (
-                                    <span className="text-lg text-slate-600 font-bold ml-1">/mo</span>
-                                )}
                         </div>
 
                         <a
                             href="mailto:aetherdigital.contact@gmail.com?subject=Relay Enterprise Inquiry"
-                            onClick={() => {
-                                navigator.clipboard.writeText('aetherdigital.contact@gmail.com');
-                                alert(d.pricing.alerts.contactCopied || "Email copied to clipboard!");
-                            }}
-                            className="w-full py-4 rounded-full bg-white text-black font-black text-center text-[10px] uppercase tracking-widest hover:bg-slate-200 hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-all mb-10 relative z-10 active:scale-[0.98] block"
+                            className="w-full h-[52px] rounded-full bg-white text-black font-black text-[10px] uppercase tracking-widest hover:bg-slate-200 hover:shadow-2xl transition-all flex items-center justify-center mb-12"
                         >
                             {d.pricing.contact}
                         </a>
 
-                        <ul className="space-y-4 mt-auto relative z-10 text-left">
+                        <ul className="space-y-5">
                             {d.pricing.enterprise.features.map((f: string, i: number) => (
-                                <li key={i} className="flex gap-3 text-sm font-medium text-slate-400 group">
-                                    <div className="w-5 h-5 rounded-md bg-amber-400/10 flex items-center justify-center shrink-0">
-                                        <Check className="text-amber-400 w-3 h-3" strokeWidth={3} />
+                                <li key={i} className="flex gap-4 text-sm font-medium text-slate-400 group">
+                                    <div className="w-6 h-6 rounded-lg bg-amber-400/10 border border-amber-400/20 flex items-center justify-center shrink-0">
+                                        <Check className="text-amber-400 w-3.5 h-3.5" strokeWidth={3} />
                                     </div>
                                     {f}
                                 </li>
@@ -615,8 +576,6 @@ export default function PricingPage() {
                         </ul>
                     </motion.div>
                 </div>
-
-
 
                 <Footer />
             </main>

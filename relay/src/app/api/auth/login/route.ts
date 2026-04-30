@@ -7,7 +7,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-for-dev-only-chang
 
 export async function POST(req: NextRequest) {
     try {
-        const { email, password } = await req.json();
+        const { email, password, totpCode } = await req.json();
 
         if (!email || !password) {
             return NextResponse.json({ error: 'Missing email or password' }, { status: 400 });
@@ -33,6 +33,21 @@ export async function POST(req: NextRequest) {
         const isMatch = await bcrypt.compare(password, user.password_hash);
         if (!isMatch) {
             return NextResponse.json({ error: 'Invalid login credentials' }, { status: 401 });
+        }
+
+        // 3.5 Check 2FA if enabled
+        if (user.is_2fa_enabled && user.totp_secret) {
+            if (!totpCode) {
+                // Return success false, but a flag indicating 2FA is required
+                return NextResponse.json({ require2FA: true }, { status: 200 }); // Or status 202/403, using 200 to handle gracefully on client
+            }
+
+            const { verifyTOTPCode } = await import('@/lib/2fa');
+            const { isValid } = await verifyTOTPCode(totpCode, user.totp_secret);
+
+            if (!isValid) {
+                return NextResponse.json({ error: 'Invalid 2FA code' }, { status: 401 });
+            }
         }
 
         // 4. Create JWT

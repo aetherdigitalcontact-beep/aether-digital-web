@@ -14,10 +14,10 @@ export async function POST(req: NextRequest) {
         const decoded = jwt.verify(token, JWT_SECRET) as any;
         const userId = decoded.id;
 
-        const { currentPassword, newPassword, lang = 'en' } = await req.json();
+        const { currentPassword, newPassword, code, lang = 'en' } = await req.json();
 
-        if (!currentPassword || !newPassword) {
-            return NextResponse.json({ error: 'Missing password fields' }, { status: 400 });
+        if (!currentPassword || !newPassword || !code) {
+            return NextResponse.json({ error: 'Missing required fields (password or verification code)' }, { status: 400 });
         }
 
         // Fetch current user
@@ -30,6 +30,27 @@ export async function POST(req: NextRequest) {
         if (fetchError || !user) {
             return NextResponse.json({ error: 'User not found' }, { status: 404 });
         }
+
+        // --- NEW: Verify Code ---
+        const { data: codeData, error: codeError } = await supabaseServer
+            .from('account_emails')
+            .select('verification_code, code_expires_at')
+            .eq('account_id', userId)
+            .eq('email', user.email)
+            .single();
+
+        if (codeError || !codeData) {
+            return NextResponse.json({ error: 'Verification code not found. Please request a new one.' }, { status: 400 });
+        }
+
+        if (codeData.verification_code !== code) {
+            return NextResponse.json({ error: 'Invalid verification code' }, { status: 401 });
+        }
+
+        if (new Date(codeData.code_expires_at) < new Date()) {
+            return NextResponse.json({ error: 'Verification code expired' }, { status: 401 });
+        }
+        // -----------------------
 
         // Verify current password
         const isValid = await bcrypt.compare(currentPassword, user.password_hash);

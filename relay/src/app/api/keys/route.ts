@@ -4,25 +4,20 @@ import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-for-dev-only-change-in-prod';
 
-async function getUserId(req: NextRequest) {
-    const token = req.cookies.get('relay_session')?.value;
-    if (!token) return null;
-    try {
-        const decoded = jwt.verify(token, JWT_SECRET) as any;
-        return decoded.id;
-    } catch (err) {
-        return null;
-    }
-}
+import { requireWorkspaceAccess } from '@/lib/server/requireWorkspaceAccess';
 
 export async function GET(req: NextRequest) {
-    const userId = await getUserId(req);
-    if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const { userId, workspaceId, error: wsError, status: wsStatus } = await requireWorkspaceAccess(req);
+    if (wsError) return NextResponse.json({ error: wsError }, { status: wsStatus || 401 });
+
+    const { searchParams } = new URL(req.url);
+    const env = searchParams.get('env') || 'development';
 
     const { data: keys, error } = await supabaseServer
         .from('api_keys')
         .select('*')
-        .eq('user_id', userId)
+        .eq('user_id', workspaceId)
+        .eq('environment', env)
         .order('created_at', { ascending: false });
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
@@ -44,25 +39,33 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-    const userId = await getUserId(req);
-    if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const { userId, workspaceId, error: wsError, status: wsStatus } = await requireWorkspaceAccess(req);
+    if (wsError) return NextResponse.json({ error: wsError }, { status: wsStatus || 401 });
 
-    const { label, key_hash } = await req.json();
+    const { label, key_hash, env = 'development' } = await req.json();
 
-    // 1. Get user plan (default to 'free' if column doesn't exist yet)
-    const { data: accountData, error: accountError } = await supabaseServer
+    // 1. Get user plan (Ensure account exists)
+    let { data: accountData, error: accountError } = await supabaseServer
         .from('accounts')
-        .select('plan')
+        .select('plan, email')
         .eq('id', userId)
         .single();
 
+    if (accountError || !accountData) {
+        console.warn(`[API-KEYS] Account missing for ${userId}, attempt just-in-time creation`);
+        // Fallback: This shouldn't happen if auth/sync works, but let's be safe.
+        // We might not have the email here though.
+        return NextResponse.json({ error: 'Uplink synchronization pending. Please refresh the dashboard.' }, { status: 403 });
+    }
+
     const plan = accountData?.plan || 'free';
 
-    // 2. Get current active key count
+    // 2. Get current active key count for THIS environment
     const { count } = await supabaseServer
         .from('api_keys')
         .select('*', { count: 'exact', head: true })
-        .eq('user_id', userId);
+        .eq('user_id', workspaceId)
+        .eq('environment', env);
 
     const currentKeys = count || 0;
 
@@ -79,7 +82,7 @@ export async function POST(req: NextRequest) {
 
     if (currentKeys >= maxKeys) {
         return NextResponse.json(
-            { error: `API Limit Reached. Your ${plan.toUpperCase()} plan only allows ${maxKeys} API Key(s). Upgrade for more limit.` },
+            { error: `API Limit Reached. Your ${plan.toUpperCase()} plan only allows ${maxKeys} API Key(s) per environment. Upgrade for more limit.` },
             { status: 403 }
         );
     }
@@ -87,10 +90,11 @@ export async function POST(req: NextRequest) {
     const { data, error } = await supabaseServer
         .from('api_keys')
         .insert({
-            user_id: userId,
+            user_id: workspaceId,
             label,
             key_hash,
-            is_active: true
+            is_active: true,
+            environment: env
         })
         .select()
         .single();
@@ -100,8 +104,8 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-    const userId = await getUserId(req);
-    if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const { userId, workspaceId, error: wsError, status: wsStatus } = await requireWorkspaceAccess(req);
+    if (wsError) return NextResponse.json({ error: wsError }, { status: wsStatus || 401 });
 
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
@@ -112,7 +116,7 @@ export async function DELETE(req: NextRequest) {
         .from('api_keys')
         .delete()
         .eq('id', id)
-        .eq('user_id', userId);
+        .eq('user_id', workspaceId);
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
     return NextResponse.json({ success: true });

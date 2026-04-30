@@ -49,7 +49,7 @@ export const dictionaries: Record<Language, any> = {
             title1: "Deliver alerts to any ",
             highlight: "channel",
             title2: " in 2 seconds.",
-            desc: "The most elegant notification API for high-performance developers. Route messages to Telegram, Discord, and WhatsApp with a single, clean payload.",
+            desc: "The most elegant notification API for high-performance developers. Route messages to Telegram, Discord, WhatsApp, SMS, Email, and Slack with a single, clean payload.",
             start: "Start your Project",
             viewDocs: "View API Docs",
             dashboardLink: "Go to Dashboard"
@@ -74,21 +74,21 @@ export const dictionaries: Record<Language, any> = {
                 price: "$0",
                 yearlyPrice: "$0",
                 desc: "Perfect for side projects.",
-                features: ["1 API Key", "100 alerts / month", "1 active channel", "Standard latency", "Community support"]
+                features: ["20 Active Workflows", "10,000 alerts / month", "1 active channel", "Standard latency", "Community support"]
             },
             starter: {
                 name: "Starter",
                 price: "$19",
                 yearlyPrice: "$15",
                 desc: "For growing side hustles.",
-                features: ["2 API Keys", "5,000 alerts / month", "2 active channels", "Standard latency", "Email support"]
+                features: ["50 Active Workflows", "50,000 alerts / month", "BYOP Support (WhatsApp & SMS)", "Standard latency", "Email support"]
             },
             pro: {
                 name: "Pro",
                 price: "$49",
                 yearlyPrice: "$39",
                 desc: "For serious developers.",
-                features: ["4 API Keys", "20,000 alerts / month", "All channels (TG, WA, Discord)", "Pro Analytics", "Priority Support"]
+                features: ["Unlimited Workflows", "200,000 alerts / month", "All channels (Inc. WhatsApp & SMS)", "Pro Analytics", "Priority Support"]
             },
             enterprise: {
                 name: "Enterprise",
@@ -140,6 +140,13 @@ export const dictionaries: Record<Language, any> = {
                 confirm: "Confirm Protocol Upgrade"
             }
         },
+        status_section: {
+            title: "Platform Integrity",
+            subtitle: "All systems are operational",
+            viewLive: "View Live Status",
+            globalUptime: "Global Uptime",
+            historical: "Historical Performance (Last 90 Days)"
+        },
 
         legal: {
             terms: "Terms of Service",
@@ -172,8 +179,8 @@ export const dictionaries: Record<Language, any> = {
         faq: {
             title: "Frequently Asked Questions",
             items: [
-                { q: "How do I start sending alerts?", a: "Simply create an API Key in the dashboard and send a POST request to our global uplink. Check the docs for code snippets." },
-                { q: "Is the Hobby tier really free?", a: "Yes, forever. You get 100 alerts per month and community support without paying a cent." },
+                { q: "How do I start sending alerts?", a: "Simply create a Project Key in the dashboard and send a POST request to our global uplink. Check the docs for code snippets." },
+                { q: "Is the Hobby tier really free?", a: "Yes, forever. You get 5,000 alerts per month and community support without paying a cent." },
                 { q: "Can I upgrade or downgrade?", a: "You can upgrade instantly. Downgrades take effect at the end of your current billing cycle to ensure you get what you paid for." },
                 { q: "Do you store my notification data?", a: "No. We only store metadata (timing, status) for your analytics. The message content is deleted immediately after delivery." }
             ]
@@ -221,9 +228,9 @@ export const dictionaries: Record<Language, any> = {
         dashboard: {
             quickstart: { "title": "Quick Start", "firstMsg": "# Relay your first message", "baseEndpoint": "Base Endpoint", "curlExample": "CURL Example", "desc": "Use any generated key from the list to authorize your terminal uplink.", "viewDocs": "VIEW FULL PROTOCOL DOCS" },
             sidebar: {
-                overview: "OVERVIEW",
+                overview: "SUMMARY",
                 analytics: "ANALYTICS",
-                apiKeys: "API KEYS",
+                apiKeys: "PROJECTS",
                 logs: "LOGS",
                 relayAi: "RELAY AI",
                 status: "STATUS",
@@ -231,8 +238,8 @@ export const dictionaries: Record<Language, any> = {
                 templates: "TEMPLATES",
                 webhooks: "WEBHOOKS",
                 domains: "DOMAINS",
-                scenarios: "SCENARIOS",
-                connectors: "CONNECTORS",
+                scenarios: "WORKFLOWS",
+                connectors: "WEBHOOKS",
                 settings: "SETTINGS"
             },
             status: {
@@ -244,7 +251,19 @@ export const dictionaries: Record<Language, any> = {
                 reports: "DIAGNOSTIC REPORTS",
                 stable: "STABLE",
                 degraded: "DEGRADED",
-                offline: "OFFLINE"
+                offline: "OFFLINE",
+                uptimeLabel: "uptime",
+                regions: {
+                    us: "United States",
+                    eu: "Europe"
+                },
+                services: {
+                    core: "Relay Core API",
+                    websocket: "WebSocket Uplink",
+                    webhook: "Webhook Dispatcher",
+                    analytics: "Analytics Engine",
+                    console: "Management Console"
+                }
             },
             webhooks: { "title": "Protocol Endpoints", "subtitle": "Configure HTTP callbacks for real-time delivery events", "createBtn": "Create Webhook", "colLabel": "Label / Status", "colDestUrl": "Destination URL", "colSecret": "Secret Token", "colActions": "Actions", "scanning": "SCANNING ENDPOINTS...", "empty": "No active webhooks configured for this account.", "unnamed": "Unnamed Webhook" },
             logs: { "title": "PROTOCOL LOGS", "subtitle": "REAL-TIME DELIVERY TELEMETRY AND DIAGNOSTIC REPORTING", "refresh": "REFRESH TELEMETRY", "colMethod": "METHOD / PLATFORM", "colKey": "AUTHENTICATORY KEY", "colStatus": "STATUS", "colTiming": "TIMING", "colSync": "SYNCHRONIZATION", "empty": "NULL ACTIVITY DETECTED ON THE RELAY UPLINK.", "diagTitle": "AUTOMATED DIAGNOSTIC PROTOCOL", "diagDesc": "Relay captures provider telemetry to decrease your MTTR (Mean-Time-to-Recovery) by identifying delivery faults instantly.", "telemetryActive": "TELEMETRY ACTIVE" },
@@ -392,7 +411,7 @@ export const dictionaries: Record<Language, any> = {
             title1: "Envía alertas a cualquier ",
             highlight: "canal",
             title2: " en 2 segundos.",
-            desc: "La API de notificaciones más elegante para desarrolladores de alto rendimiento. Enruta mensajes a Telegram, Discord y WhatsApp con un solo código limpio.",
+            desc: "La API de notificaciones más elegante para desarrolladores de alto rendimiento. Enruta mensajes a Telegram, Discord, WhatsApp, SMS, Email y Slack con un solo código limpio.",
             start: "Inicia tu Proyecto",
             viewDocs: "Ver Documentación",
             dashboardLink: "Ir al Dashboard"
@@ -417,21 +436,21 @@ export const dictionaries: Record<Language, any> = {
                 price: "$0",
                 yearlyPrice: "$0",
                 desc: "Perfecto para proyectos personales.",
-                features: ["1 API Key", "100 alertas / mes", "1 canal activo", "Latencia estándar", "Soporte comunitario"]
+                features: ["1 Proyecto Aislado", "5,000 alertas / mes", "1 canal activo", "Latencia estándar", "Soporte comunitario"]
             },
             starter: {
                 name: "Starter",
                 price: "$19",
                 yearlyPrice: "$15",
                 desc: "Para proyectos en crecimiento.",
-                features: ["2 API Keys", "5,000 alertas / mes", "2 canales activos", "Latencia estándar", "Soporte por email"]
+                features: ["3 Proyectos Aislados", "25,000 alertas / mes", "Soporte BYOP (WhatsApp y SMS)", "Latencia estándar", "Soporte por email"]
             },
             pro: {
                 name: "Pro",
                 price: "$49",
                 yearlyPrice: "$39",
                 desc: "Para desarrolladores serios.",
-                features: ["4 API Keys", "20,000 alertas / mes", "Todos los canales (TG, WA, Discord)", "Analíticas Pro", "Soporte Prioritario"]
+                features: ["10 Proyectos Aislados", "100,000 alertas / mes", "Todos los canales (Inc. WhatsApp y SMS)", "Analíticas Pro", "Soporte Prioritario"]
             },
             enterprise: {
                 name: "Enterprise",
@@ -511,11 +530,18 @@ export const dictionaries: Record<Language, any> = {
                     exceptionsDesc: "Las solicitudes de reembolso solo se revisarán en casos de fallas verificables del sistema que impidan el acceso a la terminal Relay por más de 24 horas."
                 }
             },
+            status_section: {
+                title: "Integridad de la Plataforma",
+                subtitle: "Todos los sistemas están operativos",
+                viewLive: "Ver estado en vivo",
+                globalUptime: "Tiempo de actividad global",
+                historical: "Rendimiento histórico (Últimos 90 días)"
+            },
             faq: {
                 title: "Preguntas Frecuentes",
                 items: [
-                    { q: "¿Cómo empiezo a enviar alertas?", a: "Simplemente creá una API Key en el dashboard y enviá una solicitud POST a nuestro uplink global. Mirá la documentación para ver ejemplos." },
-                    { q: "¿El plan Hobby es realmente gratis?", a: "Sí, para siempre. Tenés 100 alertas por mes y soporte comunitario sin pagar un centavo." },
+                    { q: "¿Cómo empiezo a enviar alertas?", a: "Simplemente creá una Project Key en el dashboard y enviá una solicitud POST a nuestro uplink global. Mirá la documentación para ver ejemplos." },
+                    { q: "¿El plan Hobby es realmente gratis?", a: "Sí, para siempre. Tenés 5,000 alertas por mes y soporte comunitario sin pagar un centavo." },
                     { q: "¿Puedo cambiar de plan?", a: "Podés subir de nivel al instante. Las bajas de plan se aplican al final del ciclo de facturación actual." },
                     { q: "¿Guardan los datos de mis notificaciones?", a: "No. Solo guardamos metadatos (hora, estado) para tus analíticas. El contenido del mensaje se borra tras la entrega." }
                 ]
@@ -566,7 +592,7 @@ export const dictionaries: Record<Language, any> = {
             sidebar: {
                 overview: "VISTA GENERAL",
                 analytics: "ANALÍTICA",
-                apiKeys: "CLAVES API",
+                apiKeys: "PROYECTOS",
                 logs: "LOGS",
                 relayAi: "RELAY AI",
                 status: "ESTADO",
@@ -574,20 +600,32 @@ export const dictionaries: Record<Language, any> = {
                 templates: "PLANTILLAS",
                 webhooks: "WEBHOOKS",
                 domains: "DOMINIOS",
-                scenarios: "ESCENARIOS",
-                connectors: "CONECTORES",
+                scenarios: "WORKFLOWS",
+                connectors: "WEBHOOKS",
                 settings: "AJUSTES"
             },
             status: {
                 title: "ESTADO DEL SISTEMA",
-                subtitle: "MONITOREO EN TIEMPO REAL DEL ENLACE RELAY Y SALUD DE PROVEEDORES",
+                subtitle: "MONITOREO EN TIEMPO REAL DE LA INFRAESTRUCTURA DE RELAY",
                 pulse: "PULSO DE RED: {status}",
                 latency: "LATENCIA PROM.",
                 uptime: "TIEMPO ACTIVO",
                 reports: "REPORTES DE DIAGNÓSTICO",
                 stable: "ESTABLE",
                 degraded: "DEGRADADO",
-                offline: "FUERA DE LÍNEA"
+                offline: "FUERA DE LÍNEA",
+                uptimeLabel: "disponibilidad",
+                regions: {
+                    us: "Estados Unidos",
+                    eu: "Europa"
+                },
+                services: {
+                    core: "Relay Core API",
+                    websocket: "Enlace WebSocket",
+                    webhook: "Despachador de Webhooks",
+                    analytics: "Motor de Analíticas",
+                    console: "Consola de Gestión"
+                }
             },
             webhooks: { "title": "Endpoints del Protocolo", "subtitle": "Configura callbacks HTTP para eventos de entrega en tiempo real", "createBtn": "Crear Webhook", "colLabel": "Etiqueta / Estado", "colDestUrl": "URL de Destino", "colSecret": "Token Secreto", "colActions": "Acciones", "scanning": "ESCANEANDO ENDPOINTS...", "empty": "No hay webhooks activos configurados para esta cuenta.", "unnamed": "Webhook sin nombre" },
             logs: { "title": "LOGS DEL PROTOCOLO", "subtitle": "TELEMETRÍA DE ENTREGA Y REPORTES DE DIAGNÓSTICO EN TIEMPO REAL", "refresh": "REFRESCAR TELEMETRÍA", "colMethod": "MÉTODO / PLATAFORMA", "colKey": "CLAVE DE AUTENTICACIÓN", "colStatus": "ESTADO", "colTiming": "TIEMPO", "colSync": "SINCRONIZACIÓN", "empty": "NO SE DETECTÓ ACTIVIDAD EN EL ENLACE RELAY.", "diagTitle": "PROTOCOLO DE DIAGNÓSTICO AUTOMATIZADO", "diagDesc": "Relay captura la telemetría del proveedor para disminuir tu TMR (Tiempo Medio de Recuperación) identificando fallos de entrega al instante.", "telemetryActive": "TELEMETRÍA ACTIVA" },
@@ -860,7 +898,7 @@ export const dictionaries: Record<Language, any> = {
             sidebar: {
                 overview: "GERAL",
                 analytics: "ANÁLISE",
-                apiKeys: "CHAVES API",
+                apiKeys: "PROJETOS",
                 logs: "LOGS",
                 relayAi: "RELAY AI",
                 status: "STATUS",
@@ -871,6 +909,24 @@ export const dictionaries: Record<Language, any> = {
                 scenarios: "CENÁRIOS",
                 connectors: "CONECTORES",
                 settings: "CONFIGURAÇÕES"
+            },
+            status: {
+                title: "STATUS DO SISTEMA",
+                subtitle: "MONITORAMENTO EM TEMPO REAL DA INFRAESTRUTURA RELAY",
+                pulse: "PULSO DA REDE: {status}",
+                latency: "LATÊNCIA MÉD.",
+                uptime: "TEMPO DE ATIVIDADE",
+                reports: "RELATÓRIOS DE DIAGNÓSTICO",
+                stable: "ESTÁVEL",
+                degraded: "DEGRADADO",
+                offline: "OFFLINE",
+                services: {
+                    core: "Relay Core API",
+                    websocket: "Uplink WebSocket",
+                    webhook: "Despachador de Webhooks",
+                    analytics: "Motor de Análise",
+                    console: "Console de Gestão"
+                }
             },
             webhooks: { "title": "Endpoints de Protocolo", "subtitle": "Configure callbacks HTTP para eventos de entrega em tempo real", "createBtn": "Criar Webhook", "colLabel": "Rótulo / Status", "colDestUrl": "URL de Destino", "colSecret": "Token Secreto", "colActions": "Ações", "scanning": "VERIFICANDO ENDPOINTS...", "empty": "Nenhum webhook ativo configurado para esta conta.", "unnamed": "Webhook sem nome" },
             logs: { "title": "LOGS DE PROTOCOLO", "subtitle": "TELEMETRIA DE ENTREGA EM TEMPO REAL E RELATÓRIOS DE DIAGNÓSTICO", "refresh": "ATUALIZAR TELEMETRIA", "colMethod": "MÉTODO / PLATAFORMA", "colKey": "CHAVE AUTENTICADORA", "colStatus": "STATUS", "colTiming": "TEMPO", "colSync": "SINCRONIZAÇÃO", "empty": "NENHUMA ATIVIDADE DETECTADA NO UPLINK RELAY.", "diagTitle": "PROTOCOLO DE DIAGNÓSTICO AUTOMATIZADO", "diagDesc": "Relay captura a telemetria do provedor para diminuir seu MTTR identificando instantaneamente falhas de entrega.", "telemetryActive": "TELEMETRIA ATIVA" },
@@ -1083,6 +1139,13 @@ export const dictionaries: Record<Language, any> = {
                 confirm: "Подтвердить обновление"
             }
         },
+        status_section: {
+            title: "Целостность платформы",
+            subtitle: "Все системы работают в штатном режиме",
+            viewLive: "Посмотреть статус",
+            globalUptime: "Глобальный аптайм",
+            historical: "История работы (Последние 90 дней)"
+        },
         legal: {
             terms: "Условия использования", privacy: "Политика конфиденциальности", refund: "Политика возврата", support: "Служба поддержки", sections: {
                 agreement: "Согласие с условиями",
@@ -1139,7 +1202,7 @@ export const dictionaries: Record<Language, any> = {
             sidebar: {
                 overview: "ОБЗОР",
                 analytics: "АНАЛИТИКА",
-                apiKeys: "КЛЮЧИ API",
+                apiKeys: "ПРОЕКТЫ",
                 logs: "ЛОГИ",
                 relayAi: "RELAY AI",
                 status: "СТАТУС",
@@ -1150,6 +1213,24 @@ export const dictionaries: Record<Language, any> = {
                 scenarios: "СЦЕНАРИИ",
                 connectors: "КОННЕКТОРЫ",
                 settings: "НАСТРОЙКИ"
+            },
+            status: {
+                title: "СТАТУС СИСТЕМЫ",
+                subtitle: "МОНИТОРИНГ ИНФРАСТРУКТУРЫ RELAY В РЕАЛЬНОМ ВРЕМЕНИ",
+                pulse: "ПУЛЬС СЕТИ: {status}",
+                latency: "СРЕД. ЗАДЕРЖКА",
+                uptime: "АПТАЙМ СИСТЕМЫ",
+                reports: "ДИАГНОСТИЧЕСКИЕ ОТЧЕТЫ",
+                stable: "СТАБИЛЬНО",
+                degraded: "ЗАМЕДЛЕНО",
+                offline: "ОФФЛАЙН",
+                services: {
+                    core: "Relay Core API",
+                    websocket: "WebSocket Uplink",
+                    webhook: "Webhook Dispatcher",
+                    analytics: "Analytics Engine",
+                    console: "Management Console"
+                }
             },
             webhooks: { "title": "Конечные точки протокола", "subtitle": "Настройка HTTP-колбэков для событий доставки в реальном времени", "createBtn": "Создать Webhook", "colLabel": "Метка / Статус", "colDestUrl": "URL назначения", "colSecret": "Секретный токен", "colActions": "Действия", "scanning": "СКАНИРОВАНИЕ КОНЕЧНЫХ ТОЧЕК...", "empty": "Для этой учетной записи не настроено активных веб-хуков.", "unnamed": "Безымянный Webhook" },
             logs: { "title": "ЖУРНАЛЫ ПРОТОКОЛА", "subtitle": "ТЕЛЕМЕТРИЯ ДОСТАВКИ В РЕАЛЬНОМ ВРЕМЕНИ И ОТЧЕТЫ ДИАГНОСТИКИ", "refresh": "ОБНОВИТЬ ТЕЛЕМЕТРИЮ", "colMethod": "МЕТОД / ПЛАТФОРМА", "colKey": "КЛЮЧ АУТЕНТИФИКАЦИИ", "colStatus": "СТАТУС", "colTiming": "ВРЕМЯ", "colSync": "СИНХРОНИЗАЦИЯ", "empty": "АКТИВНОСТЬ НЕ ОБНАРУЖЕНА НА КАНАЛЕ RELAY.", "diagTitle": "АВТОМАТИЗИРОВАННЫЙ ДИАГНОСТИЧЕСКИЙ ПРОТОКОЛ", "diagDesc": "Relay захватывает телеметрию провайдера для снижения MTTR.", "telemetryActive": "ТЕЛЕМЕТРИЯ АКТИВНА" },
@@ -1362,6 +1443,13 @@ export const dictionaries: Record<Language, any> = {
                 confirm: "Confirmer la Mise à Jour"
             }
         },
+        status_section: {
+            title: "Intégrité de la Plateforme",
+            subtitle: "Tous les systèmes sont opérationnels",
+            viewLive: "Voir l'état en direct",
+            globalUptime: "Uptime Global",
+            historical: "Performance Historique (90 derniers jours)"
+        },
         legal: {
             terms: "Conditions d'utilisation", privacy: "Politique de confidentialité", refund: "Politique de remboursement", support: "Contact Support", sections: {
                 agreement: "Acceptation des conditions",
@@ -1418,7 +1506,7 @@ export const dictionaries: Record<Language, any> = {
             sidebar: {
                 overview: "APERÇU",
                 analytics: "ANALYSE",
-                apiKeys: "CLÉS API",
+                apiKeys: "PROJETS",
                 logs: "LOGS",
                 relayAi: "RELAY AI",
                 status: "STATUT",
@@ -1429,6 +1517,24 @@ export const dictionaries: Record<Language, any> = {
                 scenarios: "SCÉNARIOS",
                 connectors: "CONNECTEURS",
                 settings: "PARAMÈTRES"
+            },
+            status: {
+                title: "STATUT DU SYSTÈME",
+                subtitle: "SURVEILLANCE EN TEMPS RÉEL DE L'INFRASTRUCTURE RELAY",
+                pulse: "POULS RÉSEAU: {status}",
+                latency: "LATENCE MOY.",
+                uptime: "TEMPS D'ACTIVITÉ",
+                reports: "RAPPORTS DE DIAGNOSTIC",
+                stable: "STABLE",
+                degraded: "DÉGRADÉ",
+                offline: "HORS LIGNE",
+                services: {
+                    core: "Relay Core API",
+                    websocket: "Uplink WebSocket",
+                    webhook: "Dispatcher Webhook",
+                    analytics: "Moteur d'Analyse",
+                    console: "Console de Gestion"
+                }
             },
             webhooks: { "title": "Points de terminaison du protocole", "subtitle": "Configurer les rappels HTTP pour les événements de livraison en temps réel", "createBtn": "Créer un Webhook", "colLabel": "Étiquette / Statut", "colDestUrl": "URL de destination", "colSecret": "Jeton Secret", "colActions": "Actions", "scanning": "ANALYSE DES POINTS DE TERMINAISON...", "empty": "Aucun webhook actif configuré pour ce compte.", "unnamed": "Webhook sans nom" },
             logs: { "title": "JOURNAUX DU PROTOCOLE", "subtitle": "TÉLÉMÉTRIE DE LIVRAISON EN TEMPS RÉEL ET RAPPORTS DE DIAGNOSTIC", "refresh": "ACTUALISER LA TÉLÉMÉTRIE", "colMethod": "MÉTHODE / PLATEFORME", "colKey": "CLÉ D'AUTHENTIFICATION", "colStatus": "STATUT", "colTiming": "TEMPS", "colSync": "SYNCHRONISATION", "empty": "AUCUNE ACTIVITÉ DÉTECTÉE SUR LA LIAISON RELAY.", "diagTitle": "PROTOCOLE DE DIAGNOSTIC AUTOMATISÉ", "diagDesc": "Relay capture la télémétrie du fournisseur pour réduire votre MTTR en identifiant instantanément les défaillances de livraison.", "telemetryActive": "TÉLÉMÉTRIE ACTIVE" },
@@ -1684,7 +1790,7 @@ export const dictionaries: Record<Language, any> = {
             sidebar: {
                 overview: "ÜBERSICHT",
                 analytics: "ANALYSE",
-                apiKeys: "API-SCHLÜSSEL",
+                apiKeys: "PROJEKTE",
                 logs: "PROTOKOLLE",
                 relayAi: "RELAY AI",
                 status: "STATUS",
@@ -1695,6 +1801,24 @@ export const dictionaries: Record<Language, any> = {
                 scenarios: "SZENARIEN",
                 connectors: "VERBINDUNGEN",
                 settings: "EINSTELLUNGEN"
+            },
+            status: {
+                title: "SYSTEMSTATUS",
+                subtitle: "ECHTZEIT-ÜBERWACHUNG DER RELAY-INFRASTRUKTUR",
+                pulse: "NETZWERKPULS: {status}",
+                latency: "DURCHSCHN. LATENZ",
+                uptime: "SYSTEM-UPTIME",
+                reports: "DIAGNOSEBERICHTE",
+                stable: "STABIL",
+                degraded: "REDUZIERT",
+                offline: "OFFLINE",
+                services: {
+                    core: "Relay Core API",
+                    websocket: "WebSocket Uplink",
+                    webhook: "Webhook Dispatcher",
+                    analytics: "Analyse-Engine",
+                    console: "Management-Konsole"
+                }
             },
             webhooks: { "title": "Protokoll-Endpunkte", "subtitle": "Konfigurieren Sie HTTP-Rückrufe für Echtzeit-Lieferereignisse", "createBtn": "Webhook Erstellen", "colLabel": "Etikett / Status", "colDestUrl": "Ziel-URL", "colSecret": "Geheimes Token", "colActions": "Aktionen", "scanning": "ENDPUNKTE SCANNEN...", "empty": "Für dieses Konto sind keine aktiven Webhooks konfiguriert.", "unnamed": "Unbenannter Webhook" },
             logs: { "title": "PROTOKOLL-PROTOKOLLE", "subtitle": "ECHTZEIT-LIEFERTELEMETRIE UND DIAGNOSTISCHE BERICHTERSTATTUNG", "refresh": "TELEMETRIE AKTUALISIEREN", "colMethod": "METHODE / PLATTFORM", "colKey": "AUTHENTIFIZIERUNGSSCHLÜSSEL", "colStatus": "STATUS", "colTiming": "ZEITMESSUNG", "colSync": "SYNCHRONISATION", "empty": "NULL AKTIVITÄT AUF DEM RELAY-UPLINK ENTDECKT.", "diagTitle": "AUTOMATISIERTES DIAGNOSEPROTOKOLL", "diagDesc": "Relay erfasst Anbieter-Telemetriedaten, um Ihre MTTR durch sofortige Identifizierung von Zustellungsfehlern zu reduzieren.", "telemetryActive": "TELEMETRIE AKTIV" },
@@ -1917,6 +2041,18 @@ export const dictionaries: Record<Language, any> = {
                 exceptionsDesc: "退款请求仅在可证实的系统故障导致无法访问 Relay 终端超过 24 小时的情况下进行审查。"
             }
         },
+        status_section: {
+            title: "网络完整性",
+            subtitle: "实时系统状态",
+            description: "Relay 使用专有的上行链路架构来确保跨地区的高可用性。我们的实时监控平台利用来自核心节点的直接遥测数据。",
+            verifiable: "边缘节点：已验证",
+            services: {
+                core: "Relay 核心 API",
+                uplink: "WebSocket 上行链路",
+                inspector: "流量检测器",
+                billing: "计费终端"
+            }
+        },
         faq: {
             title: "常见问题解答", items: [{
                 q: "如何开始发送警报？", a: "只需在仪表板中创建 API 密钥，然后向我们的全球上行链路发送 POST 请求。查看文档以获取代码段。"
@@ -1949,7 +2085,7 @@ export const dictionaries: Record<Language, any> = {
             sidebar: {
                 overview: "概览",
                 analytics: "分析",
-                apiKeys: "API 密钥",
+                apiKeys: "项目",
                 logs: "日志",
                 relayAi: "RELAY AI",
                 status: "状态",
@@ -1960,6 +2096,24 @@ export const dictionaries: Record<Language, any> = {
                 scenarios: "场景",
                 connectors: "连接器",
                 settings: "设置"
+            },
+            status: {
+                title: "系统状态",
+                subtitle: "RELAY 基础设施实时监控",
+                pulse: "网络脉搏: {status}",
+                latency: "平均延迟",
+                uptime: "运行时间",
+                reports: "诊断报告",
+                stable: "稳定",
+                degraded: "性能下降",
+                offline: "离线",
+                services: {
+                    core: "Relay 核心 API",
+                    websocket: "WebSocket 上行链路",
+                    webhook: "Webhook 分发器",
+                    analytics: "分析引擎",
+                    console: "管理控制台"
+                }
             },
             webhooks: { "title": "协议端点", "subtitle": "为实时传送事件配置HTTP回调", "createBtn": "创建 Webhook", "colLabel": "标签/状态", "colDestUrl": "目标URL", "colSecret": "秘密令牌", "colActions": "操作", "scanning": "正在扫描端点...", "empty": "此帐户没有配置活动 Webhook。", "unnamed": "未命名的Webhook" },
             logs: { "title": "协议日志", "subtitle": "实时传输遥测和诊断报告", "refresh": "刷新遥测", "colMethod": "方法 / 平台", "colKey": "身份验证密钥", "colStatus": "状态", "colTiming": "时间", "colSync": "同步", "empty": "在 RELAY 上行链路上未检测到活动。", "diagTitle": "自动诊断协议", "diagDesc": "Relay捕获提供商遥测数据，以通过即时识别传送故障来减少您的MTTR。", "telemetryActive": "遥测活动" },
@@ -2182,6 +2336,18 @@ export const dictionaries: Record<Language, any> = {
                 exceptionsDesc: "返金リクエストは、24時間以上にわたってRelayターミナルへのアクセスを妨げる実証可能なシステム障害が発生した場合にのみ審査されます。"
             }
         },
+        status_section: {
+            title: "ネットワークの整合性",
+            subtitle: "リアルタイムのシステムステータス",
+            description: "Relay は独自のアップリンクアーキテクチャを使用して、リージョンを越えた高い可用性を確保しています。当社のリアルタイム監視プラットフォームは、コアノードからの直接のテレメトリを活用しています。",
+            verifiable: "エッジノード：検証済み",
+            services: {
+                core: "Relay コア API",
+                uplink: "WebSocket アップリンク",
+                inspector: "トラフィックインスペクター",
+                billing: "請求ターミナル"
+            }
+        },
         faq: {
             title: "よくある質問", items: [{
                 q: "アラートの送信を開始するにはどうすればよいですか？", a: "ダッシュボードでAPIキーを作成し、グローバルアップリンクにPOSTリクエストを送信するだけです。詳細はドキュメントを確認してください。"
@@ -2214,7 +2380,7 @@ export const dictionaries: Record<Language, any> = {
             sidebar: {
                 overview: "概要",
                 analytics: "分析",
-                apiKeys: "APIキー",
+                apiKeys: "プロジェクト",
                 logs: "ログ",
                 relayAi: "RELAY AI",
                 status: "ステータス",
@@ -2225,6 +2391,24 @@ export const dictionaries: Record<Language, any> = {
                 scenarios: "シナリオ",
                 connectors: "コネクタ",
                 settings: "設定"
+            },
+            status: {
+                title: "システムステータス",
+                subtitle: "RELAY インフラストラクチャのリアルタイム監視",
+                pulse: "ネットワークパルス: {status}",
+                latency: "平均レイテンシ",
+                uptime: "稼働時間",
+                reports: "診断レポート",
+                stable: "安定",
+                degraded: "低下",
+                offline: "オフライン",
+                services: {
+                    core: "Relay コア API",
+                    websocket: "WebSocket アップリンク",
+                    webhook: "Webhook ディスパッチャー",
+                    analytics: "分析エンジン",
+                    console: "管理コンソール"
+                }
             },
             webhooks: { "title": "プロトコルエンドポイント", "subtitle": "リアルタイム配信イベントの HTTP コールバックを構成する", "createBtn": "Webhookを作成", "colLabel": "ラベル / ステータス", "colDestUrl": "宛先URL", "colSecret": "シークレットトークン", "colActions": "アクション", "scanning": "エンドポイントをスキャンしています...", "empty": "このアカウントにアクティブな Webhookは設定されていません。", "unnamed": "無名のWebhook" },
             logs: { "title": "プロトコルログ", "subtitle": "リアルタイム配信テレメトリと診断レポート", "refresh": "テレメトリを更新", "colMethod": "メソッド / プラットフォーム", "colKey": "認証キー", "colStatus": "ステータス", "colTiming": "タイミング", "colSync": "同期", "empty": "RELAY アップリンクでアクティビティが検出されませんでした。", "diagTitle": "自動診断プロトコル", "diagDesc": "Relayはプロバイダーのテレメトリをキャプチャし、配信障害を即座に特定することで、MTTRを短縮します。", "telemetryActive": "テレメトリアクティブ" },
@@ -2447,6 +2631,18 @@ export const dictionaries: Record<Language, any> = {
                 exceptionsDesc: "Le richieste di rimborso verranno esaminate solo in caso di guasto del sistema verificabile che impedisca l'accesso al terminale Relay per più di 24 ore."
             }
         },
+        status_section: {
+            title: "Integrità della Rete",
+            subtitle: "Stato del Sistema in Tempo Reale",
+            description: "Relay utilizza un'architettura di uplink proprietaria per garantire un'elevata disponibilità in tutte le regioni. La nostra piattaforma di monitoraggio in tempo reale sfrutta la telemetria diretta dai nodi principali.",
+            verifiable: "Nodo Edge: Verificato",
+            services: {
+                core: "Relay Core API",
+                uplink: "WebSocket Uplink",
+                inspector: "Ispettore del Traffico",
+                billing: "Terminale di Fatturazione"
+            }
+        },
         faq: {
             title: "Domande Frequenti", items: [{
                 q: "Come inizio a inviare avvisi?", a: "Crea un'API Key nella dashboard e invia una richiesta POST al nostro uplink globale. Consulta la documentazione per esempi."
@@ -2479,7 +2675,7 @@ export const dictionaries: Record<Language, any> = {
             sidebar: {
                 overview: "PANORAMICA",
                 analytics: "ANALITICA",
-                apiKeys: "CHIAVI API",
+                apiKeys: "PROGETTI",
                 logs: "LOG",
                 relayAi: "RELAY AI",
                 status: "STATO",
@@ -2490,6 +2686,24 @@ export const dictionaries: Record<Language, any> = {
                 scenarios: "SCENARI",
                 connectors: "CONNETTORI",
                 settings: "IMPOSTAZIONI"
+            },
+            status: {
+                title: "STATO DEL SISTEMA",
+                subtitle: "MONITORAGGIO IN TEMPO REALE DELL'INFRASTRUTTURA RELAY",
+                pulse: "PULSO DI RETE: {status}",
+                latency: "LATENZA MEDIA",
+                uptime: "UPTIME SISTEMA",
+                reports: "REPORT DIAGNOSTICI",
+                stable: "STABILE",
+                degraded: "DEGRADATO",
+                offline: "OFFLINE",
+                services: {
+                    core: "Relay Core API",
+                    websocket: "WebSocket Uplink",
+                    webhook: "Webhook Dispatcher",
+                    analytics: "Motore di Analisi",
+                    console: "Console di Gestione"
+                }
             },
             webhooks: { "title": "Endpoint del Protocollo", "subtitle": "Configura i callback HTTP per gli eventi di consegna in tempo reale", "createBtn": "Crea Webhook", "colLabel": "Etichetta / Stato", "colDestUrl": "URL di Destinazione", "colSecret": "Token Segreto", "colActions": "Azioni", "scanning": "SCANSIONE ENDPOINT...", "empty": "Nessun webhook attivo configurato per questo account.", "unnamed": "Webhook senza nome" },
             logs: { "title": "LOG DEL PROTOCOLLO", "subtitle": "TELEMETRIA DI CONSEGNA IN TEMPO REALE E REPORTISTICA DIAGNOSTICA", "refresh": "AGGIORNA TELEMETRIA", "colMethod": "METODO / PIATTAFORMA", "colKey": "CHIAVE DI AUTENTICAZIONE", "colStatus": "STATO", "colTiming": "TEMPO", "colSync": "SINCRONIZZAZIONE", "empty": "NESSUNA ATTIVITÀ RILEVATA SULL'UPLINK RELAY.", "diagTitle": "PROTOCOLLO DIAGNOSTICO AUTOMATIZZATO", "diagDesc": "Relay cattura la telemetria del provider per ridurre il tuo MTTR identificando istantaneamente gli errori di consegna.", "telemetryActive": "TELEMETRIA ATTIVA" },

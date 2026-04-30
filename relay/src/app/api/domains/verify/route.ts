@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET) as any;
-        const { id } = await req.json();
+        const { id, simulate } = await req.json();
 
         if (!id) return NextResponse.json({ error: 'ID is required' }, { status: 400 });
 
@@ -31,6 +31,17 @@ export async function POST(req: NextRequest) {
 
         if (domain.status === 'verified') {
             return NextResponse.json({ success: true, message: 'Already verified' });
+        }
+
+        // --- NEW: Simulation Bypass ---
+        if (simulate) {
+            const { error: updateError } = await supabaseServer
+                .from('domains')
+                .update({ status: 'verified' })
+                .eq('id', id);
+
+            if (updateError) throw updateError;
+            return NextResponse.json({ success: true, message: 'Verification successful (Simulated)' });
         }
 
         // 2. Perform DNS lookup

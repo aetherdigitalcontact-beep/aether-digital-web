@@ -18,13 +18,23 @@ export async function GET(req: NextRequest) {
             const decoded = jwt.verify(token, JWT_SECRET) as any;
 
             // Always fetch fresh data from DB
-            const { data: userData, error: userError } = await supabaseServer
+            const { data: userData } = await supabaseServer
                 .from('accounts')
                 .select('*')
                 .eq('id', decoded.id)
                 .single();
 
+            // Fetch identities from Supabase auth using admin (service role) to bypass token validation
+            const { data: { user: sbUser } } = await supabaseServer.auth.admin.getUserById(decoded.id);
+
+            // Fetch secondary emails
+            const { data: secondaryEmails } = await supabaseServer
+                .from('account_emails')
+                .select('email, is_verified')
+                .eq('account_id', decoded.id);
+
             const userEmail = (userData?.email || decoded.email || '');
+            console.log(`[AUTH-ME] User: ${userEmail}, 2FA: ${userData?.is_2fa_enabled}, Secret: ${userData?.totp_secret ? 'EXISTS' : 'NULL'}`);
             const isSuperuser = userEmail.trim().toLowerCase() === 'quiel.g538@gmail.com';
             const plan = (userData?.plan || 'free').toUpperCase();
 
@@ -40,7 +50,10 @@ export async function GET(req: NextRequest) {
                     is_admin: isSuperuser, // Grant admin flag
                     bot_name: userData?.bot_name || 'Relay Protocol',
                     bot_thumbnail: userData?.bot_thumbnail,
-                    created_at: userData?.created_at || decoded.created_at
+                    is_2fa_enabled: !!userData?.is_2fa_enabled,
+                    created_at: userData?.created_at || decoded.created_at,
+                    identities: sbUser?.identities || [],
+                    secondary_emails: secondaryEmails || []
                 }
             });
         } catch (err) {

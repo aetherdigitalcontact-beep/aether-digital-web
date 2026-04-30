@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { requireWorkspaceAccess } from '@/lib/server/requireWorkspaceAccess';
 
 const supabaseServer = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -8,78 +9,210 @@ const supabaseServer = createClient(
 
 export async function GET(req: NextRequest) {
     try {
-        const apiKey = req.headers.get('x-api-key') || req.headers.get('X-API-Key') || req.nextUrl.searchParams.get('api_key');
-        const limitParam = req.nextUrl.searchParams.get('limit') || '50';
-        const limit = parseInt(limitParam) || 50;
+        const { searchParams } = new URL(req.url);
+        const apiKey = req.headers.get('x-api-key');
+        const externalId = searchParams.get('subscriberId');
 
-        if (!apiKey) {
-            return NextResponse.json({ error: 'API Key is missing from headers or query' }, { status: 401, headers: { 'Access-Control-Allow-Origin': '*' } });
-        }
+        let targetProjectId = null;
+        let targetSubscriberId = null;
 
-        const { data: keyData, error: keyError } = await supabaseServer
-            .from('api_keys')
-            .select('id, user_id, is_active')
-            .eq('key_hash', apiKey)
-            .single();
-
-        if (keyError || !keyData || !keyData.is_active) {
-            return NextResponse.json({ error: 'Invalid or inactive API Key' }, { status: 401, headers: { 'Access-Control-Allow-Origin': '*' } });
-        }
-
-        // Fetch latest successful logs for this user to act as an inbox
-        const { data: logs, error: logsError } = await supabaseServer
-            .from('logs')
-            .select('id, platform, status_code, created_at, payload')
-            .eq('user_id', keyData.user_id)
-            // .eq('status_code', 200) // Uncomment to only show successful deliveries in inbox
-            .order('created_at', { ascending: false })
-            .limit(limit);
-
-        if (logsError) {
-            return NextResponse.json({ error: 'Failed to fetch inbox data' }, { status: 500, headers: { 'Access-Control-Allow-Origin': '*' } });
-        }
-
-        // Transform for a frontend SDK (In-App Inbox style like Novu)
-        const inboxReady = logs.map(log => {
-            const rawPayload = typeof log.payload === 'string' ? JSON.parse(log.payload) : (log.payload || {});
-
-            return {
-                id: log.id,
-                read: false, // Future proofing for read-receipts
-                platform: log.platform,
-                category: rawPayload.category || 'General',
-                title: rawPayload.category ? `Notification: ${rawPayload.category}` : 'System Alert',
-                message: rawPayload.message || 'You have a new message.',
-                received_at: log.created_at,
-                data: rawPayload // Contains the original webhook variables (e.g. order_id, amount)
-            };
-        });
-
-        return NextResponse.json({
-            success: true,
-            count: inboxReady.length,
-            notifications: inboxReady
-        }, {
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Cache-Control': 's-maxage=1, stale-while-revalidate'
+        // 1. Dual Authentication: Internal Dashboard vs External SDK
+        if (apiKey) {
+            if (!externalId) {
+                return NextResponse.json({ error: 'Missing Subscriber ID' }, { status: 400 });
             }
-        });
 
+            const { data: keyData, error: keyError } = await supabaseServer
+                .from('api_keys')
+                .select('user_id')
+                .eq('key_hash', apiKey)
+                .single();
+
+            if (keyError || !keyData) {
+                return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 });
+            }
+
+            targetProjectId = keyData.user_id;
+
+            const { data: subscriber, error: subError } = await supabaseServer
+                .from('subscribers')
+                .select('id')
+                .eq('user_id', targetProjectId)
+                .eq('external_id', externalId)
+                .single();
+
+            if (subError || !subscriber) {
+                return NextResponse.json({ messages: [] });
+            }
+            targetSubscriberId = subscriber.id;
+        } else {
+            // Dashboard Internal Access
+            const { workspaceId, error: wsError } = await requireWorkspaceAccess(req as any);
+            if (wsError || !workspaceId) return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 });
+            targetProjectId = workspaceId;
+        }
+
+        // 3. Fetch Messages with dynamic filters depending on mode
+        let messages = [];
+
+        if (targetSubscriberId) {
+            let query = supabaseServer
+                .from('inbox_messages')
+                .select('*')
+                .eq('project_id', targetProjectId)
+                .eq('subscriber_id', targetSubscriberId)
+                .order('created_at', { ascending: false })
+                .limit(50);
+
+            const platform = searchParams.get('platform');
+            const search = searchParams.get('search');
+
+            if (platform && platform !== 'all') {
+                query = query.eq('platform', platform);
+            }
+            if (search) {
+                query = query.or(`title.ilike.%${search}%,message.ilike.%${search}%,category.ilike.%${search}%`);
+            }
+
+            const { data, error: msgError } = await query;
+            if (msgError) throw msgError;
+            messages = data || [];
+        } else {
+            // Internal Dashboard Mode: Read from 'logs' to get a global view of all dispatched messages
+            let query = supabaseServer
+                .from('logs')
+                .select('*')
+                .eq('user_id', targetProjectId)
+                .eq('environment', searchParams.get('env') || 'development')
+                .eq('is_deleted', false)
+                .order('created_at', { ascending: false })
+                .limit(searchParams.get('search') ? 300 : 50); // Múltiplo ampliado si hay búsqueda para memory filtering
+
+            const platform = searchParams.get('platform');
+            const search = searchParams.get('search');
+
+            if (platform && platform !== 'all') {
+                query = query.eq('platform', platform);
+            }
+
+            const { data, error: logError } = await query;
+            if (logError) throw logError;
+
+            let rawLogs = data || [];
+
+            // In-memory deep payload search
+            if (search) {
+                const s = search.toLowerCase();
+                rawLogs = rawLogs.filter(log => JSON.stringify(log.payload || {}).toLowerCase().includes(s) || (log.error_message || '').toLowerCase().includes(s));
+            }
+
+            // Map logs to the format expected by InboxView.tsx
+            messages = rawLogs.map(log => {
+                const body = log.payload || {};
+
+                // Extract real interpolated message from variables if present (for better UX in Dashboard)
+                let realMessage = body.variables?.msg || body.variables?.message || body.message || log.error_message;
+
+                if (!realMessage) {
+                    const innerPayload = body.payload || body.variables;
+                    if (innerPayload && typeof innerPayload === 'object' && Object.keys(innerPayload).length > 0) {
+                        realMessage = Object.values(innerPayload)
+                            .map(v => (typeof v === 'string' || typeof v === 'number') ? String(v) : '')
+                            .filter(Boolean)
+                            .join(' • ');
+                    }
+                }
+
+                realMessage = realMessage || 'Content logged in telemetry payload.';
+
+                return {
+                    id: log.id,
+                    project_id: log.user_id,
+                    platform: log.platform,
+                    category: body.category || 'GENERAL',
+                    title: body.title || (log.status_code >= 400 ? 'Delivery Failure' : 'Uplink Event'),
+                    message: realMessage,
+                    content: realMessage,
+                    received_at: log.created_at,
+                    data: body,
+                    status: log.status_code < 400 ? 'delivered' : 'failed'
+                };
+            });
+        }
+
+        return NextResponse.json({ messages });
     } catch (error: any) {
-        console.error('Inbox API Error:', error);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500, headers: { 'Access-Control-Allow-Origin': '*' } });
+        return NextResponse.json({ error: 'Internal Error' }, { status: 500 });
     }
 }
 
-// Support CORS for client-side fetches (since SDKs run on the user's frontend domain)
-export async function OPTIONS() {
-    return new NextResponse(null, {
-        status: 204,
-        headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-api-key',
-        },
-    });
+export async function PATCH(req: NextRequest) {
+    try {
+        const body = await req.json();
+        const { messageId, readAll, subscriberId } = body;
+        const apiKey = req.headers.get('x-api-key');
+
+        if (!apiKey) return NextResponse.json({ error: 'Missing API Key' }, { status: 401 });
+
+        const { data: keyData } = await supabaseServer
+            .from('api_keys')
+            .select('user_id')
+            .eq('key_hash', apiKey)
+            .single();
+
+        if (!keyData) return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 });
+
+        if (readAll && subscriberId) {
+            // Mark all as read for this subscriber
+            const { data: subscriber } = await supabaseServer
+                .from('subscribers')
+                .select('id')
+                .eq('user_id', keyData.user_id)
+                .eq('external_id', subscriberId)
+                .single();
+
+            if (subscriber) {
+                await supabaseServer
+                    .from('inbox_messages')
+                    .update({ is_read: true, read_at: new Date().toISOString() })
+                    .eq('subscriber_id', subscriber.id)
+                    .eq('is_read', false);
+            }
+        } else if (messageId) {
+            // Mark specific message as read
+            await supabaseServer
+                .from('inbox_messages')
+                .update({ is_read: true, read_at: new Date().toISOString() })
+                .eq('id', messageId)
+                .eq('project_id', keyData.user_id);
+        }
+
+        return NextResponse.json({ success: true });
+    } catch (error: any) {
+        return NextResponse.json({ error: 'Internal Error' }, { status: 500 });
+    }
+}
+
+export async function DELETE(req: NextRequest) {
+    try {
+        const body = await req.json();
+        const { logIds, workspaceId } = body;
+
+        if (!workspaceId || !Array.isArray(logIds) || logIds.length === 0) {
+            return NextResponse.json({ error: 'Missing parameters' }, { status: 400 });
+        }
+
+        // Soft delete all matching logs explicitly for this workspace
+        const { error } = await supabaseServer
+            .from('logs')
+            .update({ is_deleted: true })
+            .in('id', logIds)
+            .eq('user_id', workspaceId);
+
+        if (error) throw error;
+
+        return NextResponse.json({ success: true, deletedCount: logIds.length });
+    } catch (error: any) {
+        return NextResponse.json({ error: 'Internal Error' }, { status: 500 });
+    }
 }

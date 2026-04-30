@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
   title: "Relay | Universal Notification API & Routing Engine",
   description: "Enterprise-grade notification routing for WhatsApp, Telegram, Discord, and Slack. Built for developers who need reliable, multi-channel delivery.",
   keywords: ["Notification API", "WhatsApp API", "Telegram Bot", "Discord Webhooks", "Notification Routing", "Developer Tools", "Real-time Alerts", "Relay Notify"],
@@ -45,7 +47,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <body className={inter.className} suppressHydrationWarning>
+      <body className={`${inter.variable} ${outfit.variable} font-sans`} suppressHydrationWarning>
         <div className="hero-glow top-0 left-0" />
         <div className="hero-glow bottom-0 right-0 opacity-50" />
         {children}

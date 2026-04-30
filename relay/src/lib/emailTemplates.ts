@@ -2,7 +2,7 @@ export interface EmailOptions {
     lang: 'en' | 'es';
     name?: string;
     url?: string;
-    type: 'confirm' | 'resend' | 'email_change' | 'password_alert' | 'reset' | 'relay';
+    type: 'confirm' | 'resend' | 'email_change' | 'password_alert' | 'reset' | 'relay' | 'verification_code';
     oldEmail?: string;
     fromName?: string;
 }
@@ -119,6 +119,24 @@ export function renderEmailTemplate({ lang, name, url, type }: EmailOptions) {
                 button: "Abrir Panel",
                 footer: "Autenticación confirmada. Entrega finalizada."
             }
+        },
+        verification_code: {
+            en: {
+                subject: "Your Verification Code - RELAY",
+                title: "Email Verification",
+                greeting: `Hello ${name || 'Developer'},`,
+                body: "To link this email to your account, please enter the following verification code in your dashboard. This code is valid for 10 minutes.",
+                button: url || "000000",
+                footer: "If you did not request this code, you can safely ignore this email."
+            },
+            es: {
+                subject: "Tu Código de Verificación - RELAY",
+                title: "Verificación de Email",
+                greeting: `Hola ${name || 'Desarrollador'},`,
+                body: "Para vincular este correo a tu cuenta, por favor ingresa el siguiente código de verificación en tu panel de control. El código es válido por 10 minutos.",
+                button: url || "000000",
+                footer: "Si no solicitaste este código, puedes ignorar este correo de forma segura."
+            }
         }
     }[type][isEs ? 'es' : 'en'];
 
@@ -156,13 +174,19 @@ export function renderEmailTemplate({ lang, name, url, type }: EmailOptions) {
                             <p style="margin: 0 0 24px 0; font-size: 16px; font-weight: 600; color: #f1f5f9;">${content.greeting}</p>
                             <p style="margin: 0 0 32px 0; font-size: 16px; color: #94a3b8; line-height: 1.6;">${content.body}</p>
 
-                            <!-- Button -->
+                            <!-- Button or Code -->
                             <table border="0" cellspacing="0" cellpadding="0">
                                 <tr>
-                                    <td align="center" bgcolor="#3b82f6" style="border-radius: 9999px;">
-                                        <a href="${url}" target="_blank" style="padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none; display: inline-block; letter-spacing: -0.01em;">
-                                            ${content.button}
-                                        </a>
+                                    <td align="center" bgcolor="#3b82f6" style="border-radius: ${type === 'verification_code' ? '16px' : '9999px'};">
+                                        ${type === 'verification_code' ? `
+                                            <div style="padding: 20px 40px; font-size: 32px; font-weight: 900; color: #ffffff; letter-spacing: 0.2em; font-family: monospace;">
+                                                ${content.button}
+                                            </div>
+                                        ` : `
+                                            <a href="${url}" target="_blank" style="padding: 16px 40px; font-size: 16px; font-weight: 700; color: #ffffff; text-decoration: none; display: inline-block; letter-spacing: -0.01em;">
+                                                ${content.button}
+                                            </a>
+                                        `}
                                     </td>
                                 </tr>
                             </table>
