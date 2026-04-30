@@ -489,11 +489,15 @@ export async function POST(req: NextRequest) {
 
                             if (!matchedSub) {
                                 // Auto-Upsert: Transparently create subscriber to ensure universal widget mirroring works
-                                const { data: newSub } = await supabaseServer
+                                const { data: newSub, error: insertErr } = await supabaseServer
                                     .from('subscribers')
-                                    .insert({ user_id: keyData.user_id, external_id: resolvedTarget, status: 'active' })
+                                    .insert({ user_id: keyData.user_id, external_id: resolvedTarget })
                                     .select('id, is_unsubscribed')
                                     .single();
+
+                                if (insertErr) {
+                                    console.error("[RelayAPI] Subscriber Upsert Error:", insertErr.message);
+                                }
                                 matchedSub = newSub;
                             }
 
