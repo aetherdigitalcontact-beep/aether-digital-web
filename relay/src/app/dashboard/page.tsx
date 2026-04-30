@@ -4976,8 +4976,8 @@ export default function DashboardPage() {
                     </AnimatePresence>
 
                     {/* Sidebar */}
-                    <aside className={group/sidebar `
-                        peer fixed lg:relative inset-y-0 left-0 bg-[#050505] border-r border-white/5 py-4 flex flex-col z-[70] transition-all duration-300 ease-in-out overflow-x-hidden overflow-y-auto scrollbar-hide group hover:shadow-[10px_0_40px_rgba(0,0,0,0.5)]
+                    <aside className={` group/sidebar 
+                        fixed lg:relative inset-y-0 left-0 bg-[#050505] border-r border-white/5 py-4 flex flex-col z-[70] transition-all duration-300 ease-in-out overflow-x-hidden overflow-y-auto scrollbar-hide group hover:shadow-[10px_0_40px_rgba(0,0,0,0.5)]
                         ${isSidebarMobileOpen ? 'translate-x-0 w-64 px-5' : '-translate-x-full lg:translate-x-0 lg:w-[68px] lg:hover:w-64 lg:px-2.5 lg:hover:px-5 w-64 px-5'}
                     `}>
 
@@ -5304,7 +5304,7 @@ export default function DashboardPage() {
                     </aside>
 
                     {/* Fixed Top Global Header */}
-                    <div className="fixed top-0 right-0 left-0 lg:left-[68px] peer-hover:lg:left-64 h-16 z-[60] flex items-center justify-between px-6 bg-[#050505]/80 backdrop-blur-xl border-b border-white/5 transition-all duration-300 ease-in-out">
+                    <div className="fixed top-0 right-0 left-0 lg:left-[68px] h-16 z-[60] flex items-center justify-between px-6 bg-[#050505]/80 backdrop-blur-xl border-b border-white/5 transition-all duration-300 ease-in-out">
                         <div className="flex items-center flex-1">
                             {/* Command Palette Target */}
                             <button onClick={() => setIsCommandPaletteOpen(true)} className="flex items-center gap-3 px-2.5 py-1.5 rounded-xl border border-white/10 hover:border-white/20 bg-[#050505] hover:bg-white/[0.02] transition-colors text-slate-400 group">
@@ -5364,7 +5364,7 @@ export default function DashboardPage() {
                     </div>
 
                     {/* Main Content */}
-                    <main className="flex-1 p-6 md:p-8 lg:p-12 pt-24 lg:pt-24 lg:ml-[68px] peer-hover:lg:ml-[256px] transition-all duration-300 ease-in-out overflow-y-auto scrollbar-hide h-screen w-full relative">
+                    <main className="flex-1 p-6 md:p-8 lg:p-12 pt-24 lg:pt-24 lg:ml-[68px] transition-all duration-300 ease-in-out overflow-y-auto scrollbar-hide h-screen w-full relative">
                         <header className="flex flex-col md:flex-row justify-between items-center md:items-end gap-3 md:gap-6 mb-6 md:mb-12 pr-6 lg:pr-10 relative z-40">
                             <motion.div
                                 initial={{ opacity: 0, x: -20 }}
