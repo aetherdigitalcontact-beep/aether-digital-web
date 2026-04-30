@@ -42,7 +42,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ key: str
 
         // 2. Fetch dynamic subscribers (those passing the JSON rules)
         if (topic.rules && Array.isArray(topic.rules) && topic.rules.length > 0) {
-            let query = supabaseServer
+            let query: any = supabaseServer
                 .from('subscribers')
                 .select(`
                     id,
@@ -75,7 +75,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ key: str
             if (dynSubs) {
                 // Merge avoiding duplicates
                 const existingIds = new Set(mappedSubscribers.map(s => s.id));
-                dynSubs.forEach(ds => {
+                dynSubs.forEach((ds: any) => {
                     if (!existingIds.has(ds.id)) {
                         mappedSubscribers.push(ds);
                     }

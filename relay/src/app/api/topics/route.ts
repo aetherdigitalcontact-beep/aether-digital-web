@@ -35,7 +35,7 @@ export async function GET(req: Request) {
             let totalCount = t.topic_subscribers?.[0]?.count || 0;
 
             if (t.rules && Array.isArray(t.rules) && t.rules.length > 0) {
-                let q = supabaseServer.from('subscribers').select('id', { count: 'exact', head: true })
+                let q: any = supabaseServer.from('subscribers').select('id', { count: 'exact', head: true })
                     .eq('user_id', workspaceId)
                     .eq('is_unsubscribed', false);
 

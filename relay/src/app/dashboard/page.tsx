@@ -3373,7 +3373,7 @@ export default function DashboardPage() {
 
                         <div className="flex items-center gap-2 w-full sm:w-auto">
                             <button
-                                onClick={() => handleDeleteScenario(scenario.id)}
+                                onClick={() => confirmDeleteScenario(scenario.id)}
                                 className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-slate-600 hover:text-rose-400 hover:bg-rose-500/10 hover:border-rose-500/20 transition-all group shrink-0"
                                 title={sc_t.deletePipeline || "Delete Pipeline"}
                             >
