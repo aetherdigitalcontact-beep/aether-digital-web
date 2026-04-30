@@ -4977,9 +4977,10 @@ export default function DashboardPage() {
 
                     {/* Sidebar */}
                     <aside className={`
-                        fixed lg:relative inset-y-0 left-0 w-64 bg-[#050505] border-r border-white/5 p-6 flex flex-col z-[50] transition-transform duration-500 ease-in-out overflow-y-auto scrollbar-hide
-                        ${isSidebarMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+                        peer fixed lg:relative inset-y-0 left-0 bg-[#050505] border-r border-white/5 py-4 flex flex-col z-[70] transition-all duration-300 ease-in-out overflow-x-hidden overflow-y-auto scrollbar-hide group hover:shadow-[10px_0_40px_rgba(0,0,0,0.5)]
+                        ${isSidebarMobileOpen ? 'translate-x-0 w-64 px-5' : '-translate-x-full lg:translate-x-0 lg:w-[68px] lg:hover:w-64 lg:px-2.5 lg:hover:px-5 w-64 px-5'}
                     `}>
+
                         <div className="lg:hidden absolute top-6 right-6">
                             <button
                                 onClick={() => setIsSidebarMobileOpen(false)}
@@ -5008,13 +5009,13 @@ export default function DashboardPage() {
                                     <div className={`w-7 h-7 rounded-[8px] ${envMode === 'Development' ? 'bg-violet-500/10 border-violet-500/20' : 'bg-accent/10 border-accent/20'} flex items-center justify-center shrink-0 border`}>
                                         <div className={`w-1.5 h-1.5 rounded-full ${envMode === 'Development' ? 'bg-violet-400' : 'bg-accent animate-pulse shadow-[0_0_10px_rgba(59,130,246,0.6)]'}`} />
                                     </div>
-                                    <div className="flex-1 min-w-0 flex flex-col items-start gap-0.5">
+                                    <div className="flex-1 min-w-0 flex flex-col items-start gap-0.5 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
                                         <p className="text-[11px] font-bold text-white truncate max-w-[80px] uppercase tracking-widest">
                                             {envMode}
                                         </p>
                                     </div>
                                 </div>
-                                <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${isEnvOpen ? 'rotate-180 text-white' : ''}`} />
+                                <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${isEnvOpen ? 'rotate-180 text-white' : ''} opacity-100 lg:opacity-0 lg:group-hover:opacity-100`} />
                             </div>
 
                             {/* Dropdown Menu */}
@@ -5084,8 +5085,8 @@ export default function DashboardPage() {
                                             return getInitials(activeWs?.name?.replace("'s Workspace", '') || user?.name || 'W', activeWs?.name || user?.full_name);
                                         })()}
                                     </div>
-                                    <div className="flex-1 min-w-0 flex flex-col items-start gap-0.5">
-                                        <p className="text-[11px] font-bold text-white truncate max-w-[80px]">
+                                    <div className="flex-1 min-w-0 flex flex-col items-start gap-0.5 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 w-[120px]">
+                                        <p className="text-[11px] font-bold text-white truncate w-full">
                                             {workspaces.find((w: any) => w.id === activeWorkspaceId)?.name?.replace("'s Workspace", '') || user?.name || 'Developer'}
                                         </p>
                                         <div className="bg-accent/20 px-1.5 py-[1px] rounded-[4px] text-[8px] font-black text-accent uppercase tracking-widest mt-0.5">
@@ -5093,7 +5094,7 @@ export default function DashboardPage() {
                                         </div>
                                     </div>
                                 </div>
-                                <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${isWorkspaceOpen ? 'rotate-180 text-white' : ''}`} />
+                                <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${isWorkspaceOpen ? 'rotate-180 text-white' : ''} opacity-100 lg:opacity-0 lg:group-hover:opacity-100`} />
                             </div>
 
                             {/* Dropdown Menu */}
@@ -5195,15 +5196,16 @@ export default function DashboardPage() {
                                             : "text-slate-500 hover:text-rose-400/70 hover:bg-white/[0.02]"
                                         }`}
                                 >
-                                    <div className={`${activeTab === item.id ? "text-rose-500" : item.disabled ? "text-slate-900" : "text-slate-600 group-hover:text-rose-400/70"} transition-colors`}>
+                                    <div className={`${activeTab === item.id ? "text-rose-500" : item.disabled ? "text-slate-900" : "text-slate-600 group-hover:text-rose-400/70"} transition-colors shrink-0`}>
                                         {item.icon}
                                     </div>
-                                    <span className="text-[11px] font-black uppercase tracking-widest flex items-center gap-2">
+                                    <span className="text-[11px] font-black uppercase tracking-widest flex items-center gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
                                         {item.label}
                                     </span>
                                     {activeTab === item.id && (
                                         <div className="absolute left-0 top-2 bottom-2 w-0.5 bg-rose-500 rounded-full" />
                                     )}
+
                                 </button>
                             ))}
                             <div className="text-[9px] font-black uppercase tracking-widest text-slate-500 px-3 mt-6 mb-2">Systems</div>
@@ -5233,10 +5235,10 @@ export default function DashboardPage() {
                                             : "text-slate-500 hover:text-white hover:bg-white/[0.02]"
                                         }`}
                                 >
-                                    <div className={`${activeTab === item.id ? "text-accent" : item.disabled ? "text-slate-900" : "text-slate-600 group-hover:text-slate-400"} transition-colors`}>
+                                    <div className={`${activeTab === item.id ? "text-accent" : item.disabled ? "text-slate-900" : "text-slate-600 group-hover:text-slate-400"} transition-colors shrink-0`}>
                                         {item.icon}
                                     </div>
-                                    <span className="text-[11px] font-black uppercase tracking-widest flex items-center gap-2">
+                                    <span className="text-[11px] font-black uppercase tracking-widest flex items-center gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
                                         {item.label}
                                     </span>
                                     {activeTab === item.id && (
@@ -5248,20 +5250,22 @@ export default function DashboardPage() {
 
                         {/* Language Switcher in Sidebar */}
                         <div className="mt-8 mb-4 relative z-50">
-                            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 px-2">Language</p>
+                            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 px-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Language</p>
                             <button
                                 onClick={() => setIsLangOpen(!isLangOpen)}
-                                className="w-full flex items-center justify-between px-4 py-3 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-all text-sm font-medium text-slate-300 hover:text-white cursor-pointer group"
+                                className="w-full flex items-center justify-between px-3 py-3 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-all text-sm font-medium text-slate-300 hover:text-white cursor-pointer group/lang"
                             >
                                 <div className="flex items-center gap-3">
-                                    <img
-                                        src={`https://flagcdn.com/w40/${languages.find(l => l.code === lang)?.flag || 'us'}.png`}
-                                        alt={lang}
-                                        className="w-5 h-auto rounded-sm"
-                                    />
-                                    <span className="truncate">{languages.find(l => l.code === lang)?.name || 'English'}</span>
+                                    <div className="shrink-0">
+                                        <img
+                                            src={`https://flagcdn.com/w40/${languages.find(l => l.code === lang)?.flag || 'us'}.png`}
+                                            alt={lang}
+                                            className="w-5 h-auto rounded-sm object-contain"
+                                        />
+                                    </div>
+                                    <span className="truncate opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">{languages.find(l => l.code === lang)?.name || 'English'}</span>
                                 </div>
-                                <ChevronDown className={`w-4 h-4 text-slate-500 group-hover:text-white transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''}`} />
+                                <ChevronDown className={`w-4 h-4 text-slate-500 group-hover/lang:text-white transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''} opacity-100 lg:opacity-0 lg:group-hover:opacity-100 shrink-0`} />
                             </button>
 
                             <AnimatePresence>
@@ -5300,7 +5304,7 @@ export default function DashboardPage() {
                     </aside>
 
                     {/* Fixed Top Global Header */}
-                    <div className="fixed top-0 right-0 left-0 lg:left-64 h-16 z-[60] flex items-center justify-between px-6 bg-[#050505]/80 backdrop-blur-xl border-b border-white/5">
+                    <div className="fixed top-0 right-0 left-0 lg:left-[68px] peer-hover:lg:left-64 h-16 z-[60] flex items-center justify-between px-6 bg-[#050505]/80 backdrop-blur-xl border-b border-white/5 transition-all duration-300 ease-in-out">
                         <div className="flex items-center flex-1">
                             {/* Command Palette Target */}
                             <button onClick={() => setIsCommandPaletteOpen(true)} className="flex items-center gap-3 px-2.5 py-1.5 rounded-xl border border-white/10 hover:border-white/20 bg-[#050505] hover:bg-white/[0.02] transition-colors text-slate-400 group">
@@ -5360,7 +5364,7 @@ export default function DashboardPage() {
                     </div>
 
                     {/* Main Content */}
-                    <main className="flex-1 p-6 md:p-8 lg:p-12 pt-24 lg:pt-24 overflow-y-auto scrollbar-hide">
+                    <main className="flex-1 p-6 md:p-8 lg:p-12 pt-24 lg:pt-24 lg:ml-[68px] peer-hover:lg:ml-[256px] transition-all duration-300 ease-in-out overflow-y-auto scrollbar-hide h-screen w-full relative">
                         <header className="flex flex-col md:flex-row justify-between items-center md:items-end gap-3 md:gap-6 mb-6 md:mb-12 pr-6 lg:pr-10 relative z-40">
                             <motion.div
                                 initial={{ opacity: 0, x: -20 }}
