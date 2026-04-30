@@ -5003,7 +5003,7 @@ export default function DashboardPage() {
 
                             <div
                                 onClick={() => setIsEnvOpen(!isEnvOpen)}
-                                className={`py-2.5 px-3 flex items-center justify-between gap-3 border ${isEnvOpen ? 'border-white/20 bg-white/[0.05]' : 'border-white/5 bg-white/[0.02]'} rounded-xl cursor-pointer hover:bg-white/[0.05] transition-all duration-200`}
+                                className={`py-2.5 px-3 flex items-center justify-between gap-3 border ${isEnvOpen ? 'border-white/20 bg-white/[0.05]' : 'border-white/5 bg-white/[0.02]'} rounded-xl cursor-pointer hover:bg-white/[0.05] transition-all duration-200 overflow-hidden`}
                             >
                                 <div className="flex items-center gap-3 min-w-0">
                                     <div className={`w-7 h-7 rounded-[8px] ${envMode === 'Development' ? 'bg-violet-500/10 border-violet-500/20' : 'bg-accent/10 border-accent/20'} flex items-center justify-center shrink-0 border`}>
@@ -5074,7 +5074,7 @@ export default function DashboardPage() {
                             <h4 className="text-[9px] font-black uppercase tracking-widest text-slate-500 mb-2 px-1 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">WORKSPACES</h4>
                             <div
                                 onClick={() => setIsWorkspaceOpen(!isWorkspaceOpen)}
-                                className={`py-2.5 px-3 flex items-center justify-between gap-3 border ${isWorkspaceOpen ? 'border-white/20 bg-white/[0.05]' : 'border-white/5 bg-white/[0.02]'} rounded-xl cursor-pointer hover:bg-white/[0.05] transition-all duration-200`}
+                                className={`py-2.5 px-3 flex items-center justify-between gap-3 border ${isWorkspaceOpen ? 'border-white/20 bg-white/[0.05]' : 'border-white/5 bg-white/[0.02]'} rounded-xl cursor-pointer hover:bg-white/[0.05] transition-all duration-200 overflow-hidden`}
                             >
                                 <div className="flex items-center gap-3 min-w-0">
                                     <div className="w-7 h-7 rounded-[8px] bg-white/5 flex items-center justify-center text-[9px] font-black text-white border border-white/10 shrink-0 overflow-hidden relative">
@@ -5157,17 +5157,17 @@ export default function DashboardPage() {
                                             setIsSidebarMobileOpen(false);
                                         }
                                     }}
-                                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 group relative ${activeTab === item.id
+                                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 group relative overflow-hidden ${activeTab === item.id
                                         ? "bg-white/[0.05] text-white"
                                         : item.disabled
                                             ? "text-slate-800 cursor-not-allowed opacity-40"
                                             : "text-slate-500 hover:text-white hover:bg-white/[0.02]"
                                         }`}
                                 >
-                                    <div className={`${activeTab === item.id ? "text-accent" : item.disabled ? "text-slate-900" : "text-slate-600 group-hover:text-slate-400"} transition-colors`}>
+                                    <div className={`${activeTab === item.id ? "text-accent" : item.disabled ? "text-slate-900" : "text-slate-600 group-hover:text-slate-400"} transition-colors shrink-0`}>
                                         {item.icon}
                                     </div>
-                                    <span className="text-[11px] font-black uppercase tracking-widest flex items-center gap-2">
+                                    <span className="text-[11px] font-black uppercase tracking-widest flex items-center gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
                                         {item.label}
                                     </span>
                                     {activeTab === item.id && (
@@ -5189,7 +5189,7 @@ export default function DashboardPage() {
                                             setIsSidebarMobileOpen(false);
                                         }
                                     }}
-                                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 group relative ${activeTab === item.id
+                                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 group relative overflow-hidden ${activeTab === item.id
                                         ? "bg-rose-500/[0.05] text-rose-400"
                                         : item.disabled
                                             ? "text-slate-800 cursor-not-allowed opacity-40"
@@ -5228,7 +5228,7 @@ export default function DashboardPage() {
                                             setIsSidebarMobileOpen(false);
                                         }
                                     }}
-                                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 group relative ${activeTab === item.id
+                                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 group relative overflow-hidden ${activeTab === item.id
                                         ? "bg-white/[0.05] text-white"
                                         : item.disabled
                                             ? "text-slate-800 cursor-not-allowed opacity-40"
