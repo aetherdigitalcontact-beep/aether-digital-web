@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence, useScroll, useTransform, useInView } from "framer-motion";
-import { Zap, Shield, Code2, ArrowRight, Terminal, ChevronDown, Sparkles, User, LogOut, Menu, X, BarChart3, Activity } from "lucide-react";
+import { Zap, Shield, Code2, ArrowRight, Check, Terminal, ChevronDown, Sparkles, User, LogOut, Menu, X, BarChart3, Activity } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import React, { useState, useEffect, useRef, useMemo, Suspense } from "react";
