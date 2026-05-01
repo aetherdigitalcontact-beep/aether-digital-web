@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
         // Insert into waitlist table
         const { error } = await supabaseServer
             .from('waitlist')
-            .insert([{ email, created_at: new Date().toISOString() }]);
+            .insert([{ email }]);
 
         if (error) {
             if (error.code === '23505') {

@@ -149,14 +149,28 @@ const WaitlistForm = () => {
             </div>
             <AnimatePresence>
                 {message && (
-                    <motion.p
+                    <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className={`text-[10px] md:text-xs font-medium mt-4 text-center ${status === 'success' ? 'text-emerald-400' : 'text-rose-400'}`}
+                        className="mt-4 flex flex-col items-center gap-2"
                     >
-                        {message}
-                    </motion.p>
+                        <p className={`text-[10px] md:text-xs font-medium text-center ${status === 'success' ? 'text-emerald-400' : 'text-rose-400'
+                            }`}>
+                            {status === 'error'
+                                ? "We couldn't save your email right now. If the error persists, contact support."
+                                : message
+                            }
+                        </p>
+                        {status === 'error' && (
+                            <a
+                                href="mailto:aetherdigital.contact@gmail.com"
+                                className="inline-flex items-center gap-1.5 text-[10px] md:text-xs font-bold text-white/50 hover:text-white border border-white/10 hover:border-white/20 rounded-full px-3 py-1 transition-all"
+                            >
+                                Contact Support
+                            </a>
+                        )}
+                    </motion.div>
                 )}
             </AnimatePresence>
         </form>
