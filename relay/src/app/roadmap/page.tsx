@@ -2,9 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronUp, Zap, Plus, X, Search, CheckCircle2, Clock, Circle, ArrowRight, Sparkles, Mail, Lock, LogIn, UserPlus, Sun, Moon, Camera, Trash2 } from "lucide-react";
+import { ChevronUp, Zap, Plus, X, Search, CheckCircle2, Clock, Circle, ArrowRight, Sparkles, Mail, Lock, LogIn, UserPlus, Sun, Moon, Camera, Trash2, Check } from "lucide-react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+
+// ─── Admin emails (hardcoded for security) ───────────────────
+const ADMIN_EMAILS = ['quiel.g538@gmail.com', 'aetherdigital.contact@gmail.com'];
 
 // ─── Google / GitHub SVG Icons ────────────────────────────
 const GoogleIcon = () => (
@@ -616,6 +619,22 @@ export default function RoadmapPage() {
         });
     };
 
+    const isAdmin = !!user && ADMIN_EMAILS.includes(user.email ?? '');
+
+    const handleDeleteRequest = async (id: string) => {
+        setRequests(prev => prev.filter(r => r.id !== id));
+        await fetch(`/api/feature-requests/${id}`, { method: 'DELETE' }).catch(() => { });
+    };
+
+    const handleCompleteRequest = async (id: string) => {
+        setRequests(prev => prev.map(r => r.id === id ? { ...r, status: 'Completed' } : r));
+        await fetch(`/api/feature-requests/${id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: 'Completed' }),
+        }).catch(() => { });
+    };
+
     const filtered = items.filter(item => {
         const matchSearch = !search || item.title.toLowerCase().includes(search.toLowerCase()) || item.description?.toLowerCase().includes(search.toLowerCase());
         const matchStatus = filterStatus === 'All' || item.status === filterStatus;
@@ -814,19 +833,54 @@ export default function RoadmapPage() {
                                         key={req.id}
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, x: -20 }}
                                         transition={{ delay: i * 0.05 }}
-                                        className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-all"
+                                        className={`p-4 rounded-2xl border transition-all ${req.status === 'Completed'
+                                                ? 'bg-emerald-500/5 border-emerald-500/15'
+                                                : 'bg-white/[0.02] border-white/5 hover:border-white/10'
+                                            }`}
                                     >
                                         <div className="flex items-start gap-3">
-                                            <div className={`text-[9px] font-black uppercase tracking-widest px-2 py-1 rounded-lg border mt-0.5 ${PRIORITY_COLORS[req.priority]}`}>
+                                            <div className={`text-[9px] font-black uppercase tracking-widest px-2 py-1 rounded-lg border mt-0.5 flex-shrink-0 ${PRIORITY_COLORS[req.priority]}`}>
                                                 {req.priority}
                                             </div>
-                                            <div className="flex-1">
-                                                <div className="text-white font-semibold text-sm">{req.title}</div>
+                                            <div className="flex-1 min-w-0">
+                                                <div className="flex items-center gap-2">
+                                                    <span className={`text-sm font-semibold ${req.status === 'Completed' ? 'text-emerald-400 line-through opacity-60' : 'text-white'
+                                                        }`}>{req.title}</span>
+                                                    {req.status === 'Completed' && (
+                                                        <span className="inline-flex items-center gap-1 text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+                                                            <CheckCircle2 className="w-2.5 h-2.5" /> Done
+                                                        </span>
+                                                    )}
+                                                </div>
                                                 {req.description && <p className="text-slate-500 text-xs mt-1 leading-relaxed">{req.description}</p>}
                                             </div>
-                                            <div className="text-[10px] text-slate-600 whitespace-nowrap">
-                                                {new Date(req.created_at).toLocaleDateString()}
+                                            <div className="flex items-center gap-2 flex-shrink-0">
+                                                <span className="text-[10px] text-slate-600 whitespace-nowrap">
+                                                    {new Date(req.created_at).toLocaleDateString()}
+                                                </span>
+                                                {/* Admin controls */}
+                                                {isAdmin && (
+                                                    <div className="flex items-center gap-1">
+                                                        {req.status !== 'Completed' && (
+                                                            <button
+                                                                onClick={() => handleCompleteRequest(req.id)}
+                                                                title="Mark as completed"
+                                                                className="w-7 h-7 flex items-center justify-center rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/25 transition-all"
+                                                            >
+                                                                <Check className="w-3.5 h-3.5" />
+                                                            </button>
+                                                        )}
+                                                        <button
+                                                            onClick={() => handleDeleteRequest(req.id)}
+                                                            title="Delete request"
+                                                            className="w-7 h-7 flex items-center justify-center rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 hover:bg-rose-500/25 transition-all"
+                                                        >
+                                                            <Trash2 className="w-3.5 h-3.5" />
+                                                        </button>
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                     </motion.div>
