@@ -384,49 +384,50 @@ function HomeContent({ initialUser, initialLang }: HomeClientProps) {
                     >
                         <CinematicBackground
                             videoSrc="/videos/The Global Routing Hub.mp4"
-                            opacity={0.3}
-                            blendMode="overlay"
+                            opacity={0.5}
+                            blendMode="screen"
                         />
+                        <StarField />
 
                         <motion.div
-                            initial={{ scale: 0.98, opacity: 0 }}
+                            initial={{ scale: 0.9, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
-                            transition={{ duration: 0.8, ease: "easeOut" }}
-                            className="relative z-10 max-w-2xl px-4"
+                            transition={{ duration: 1, ease: "easeOut" }}
+                            className="relative z-10 max-w-4xl flex flex-col items-center"
                         >
-                            <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-10 shadow-xl relative overflow-hidden">
-                                <Zap className="text-white w-8 h-8 z-10" fill="currentColor" />
-                                <div className="absolute inset-0 bg-gradient-to-tr from-white/0 to-white/20"></div>
+                            <div className="w-20 h-20 bg-accent rounded-3xl flex items-center justify-center mx-auto mb-12 shadow-[0_0_60px_rgba(16,185,129,0.6)] relative group">
+                                <Zap className="text-white w-10 h-10 z-10" fill="currentColor" />
+                                <div className="absolute inset-0 bg-white opacity-20 blur-xl animate-pulse rounded-3xl"></div>
                             </div>
 
                             <motion.h1
-                                initial={{ y: 15, opacity: 0 }}
+                                initial={{ y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.2 }}
-                                className="text-5xl md:text-7xl font-bold text-white tracking-tight mb-6 leading-tight"
+                                transition={{ delay: 0.3 }}
+                                className="text-6xl md:text-[8rem] lg:text-[10rem] font-black text-white tracking-tighter mb-8 leading-[0.8] text-center"
                             >
-                                <span className="text-white/40">Relay is</span><br />
-                                <span>Under Construction</span>
+                                <span className="block opacity-30 select-none">UNDER</span>
+                                <span className="block text-accent italic -mt-4 md:-mt-8 pr-4 md:pr-8">CONSTRUCTION</span>
                             </motion.h1>
 
                             <motion.p
-                                initial={{ y: 15, opacity: 0 }}
+                                initial={{ y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.4 }}
-                                className="text-lg md:text-xl text-slate-400 font-normal leading-relaxed mb-10 max-w-lg mx-auto"
+                                transition={{ delay: 0.5 }}
+                                className="text-lg md:text-xl text-slate-400 font-medium leading-relaxed mb-12 max-w-xl mx-auto px-6"
                             >
-                                We are developing a professional notification infrastructure for modern applications. Our official launch date will be announced soon.
+                                We are developing a professional notification infrastructure. The official Relay Protocol launch date will be announced very soon.
                             </motion.p>
 
                             <motion.div
-                                initial={{ y: 15, opacity: 0 }}
+                                initial={{ y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.6 }}
+                                transition={{ delay: 0.7 }}
                                 className="flex flex-col items-center gap-6"
                             >
-                                <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold uppercase tracking-[0.2em] text-blue-400">
-                                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
-                                    Relay Protocol Phase: ALPHA
+                                <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white/5 border border-white/10 text-[11px] font-black uppercase tracking-[0.3em] text-white">
+                                    <div className="w-2.5 h-2.5 bg-blue-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(59,130,246,0.8)]" />
+                                    RELAY PROTOCOL PHASE: ALPHA
                                 </div>
                             </motion.div>
                         </motion.div>
