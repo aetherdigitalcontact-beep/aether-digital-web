@@ -67,13 +67,7 @@ import {
     ChevronRight,
     Layers,
     Square,
-    Layout,
-    Linkedin,
-    Twitter,
-    Youtube,
-    Instagram,
-    Facebook,
-    Dribbble
+    Layout
 } from "lucide-react";
 import Link from "next/link";
 import { RelayInbox } from '@/components/external/RelayInbox';
