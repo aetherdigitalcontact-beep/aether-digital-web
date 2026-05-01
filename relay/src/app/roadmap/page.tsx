@@ -9,6 +9,10 @@ import { supabase } from "@/lib/supabase";
 // ─── Admin emails (hardcoded for security) ───────────────────
 const ADMIN_EMAILS = ['quiel.g538@gmail.com', 'aetherdigital.contact@gmail.com'];
 
+// Supabase OAuth users may have email in user_metadata instead of root email
+const getUserEmail = (user: any): string =>
+    (user?.email || user?.user_metadata?.email || '').toLowerCase();
+
 // ─── Google / GitHub SVG Icons ────────────────────────────
 const GoogleIcon = () => (
     <svg viewBox="0 0 24 24" className="w-4 h-4">
@@ -619,18 +623,27 @@ export default function RoadmapPage() {
         });
     };
 
-    const isAdmin = !!user && ADMIN_EMAILS.includes(user.email ?? '');
+    const isAdmin = !!user && ADMIN_EMAILS.includes(getUserEmail(user));
 
     const handleDeleteRequest = async (id: string) => {
+        const { data: { session } } = await supabase.auth.getSession();
+        const token = session?.access_token;
+        if (!token) return;
         setRequests(prev => prev.filter(r => r.id !== id));
-        await fetch(`/api/feature-requests/${id}`, { method: 'DELETE' }).catch(() => { });
+        await fetch(`/api/feature-requests/${id}`, {
+            method: 'DELETE',
+            headers: { Authorization: `Bearer ${token}` },
+        }).catch(() => { });
     };
 
     const handleCompleteRequest = async (id: string) => {
+        const { data: { session } } = await supabase.auth.getSession();
+        const token = session?.access_token;
+        if (!token) return;
         setRequests(prev => prev.map(r => r.id === id ? { ...r, status: 'Completed' } : r));
         await fetch(`/api/feature-requests/${id}`, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
             body: JSON.stringify({ status: 'Completed' }),
         }).catch(() => { });
     };
@@ -836,8 +849,8 @@ export default function RoadmapPage() {
                                         exit={{ opacity: 0, x: -20 }}
                                         transition={{ delay: i * 0.05 }}
                                         className={`p-4 rounded-2xl border transition-all ${req.status === 'Completed'
-                                                ? 'bg-emerald-500/5 border-emerald-500/15'
-                                                : 'bg-white/[0.02] border-white/5 hover:border-white/10'
+                                            ? 'bg-emerald-500/5 border-emerald-500/15'
+                                            : 'bg-white/[0.02] border-white/5 hover:border-white/10'
                                             }`}
                                     >
                                         <div className="flex items-start gap-3">
