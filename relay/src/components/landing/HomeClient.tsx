@@ -556,6 +556,32 @@ function HomeContent({ initialUser, initialLang }: HomeClientProps) {
                                 initial={false}
                             />
                         </motion.div>
+
+                        {/* Contact Support — top right */}
+                        <motion.a
+                            href="mailto:aetherdigital.contact@gmail.com"
+                            initial={{ opacity: 0, y: -12 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 1.2, duration: 0.5 }}
+                            whileHover={{ scale: 1.05, boxShadow: '0 0 28px rgba(99,102,241,0.5)' }}
+                            whileTap={{ scale: 0.97 }}
+                            className="absolute top-8 right-8 md:top-12 md:right-12 flex items-center gap-2.5 px-5 py-2.5 rounded-2xl font-bold text-sm text-white z-20 cursor-pointer select-none overflow-hidden"
+                            style={{ background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)', boxShadow: '0 0 16px rgba(99,102,241,0.35)' }}
+                        >
+                            {/* Animated shimmer */}
+                            <motion.span
+                                className="absolute inset-0 bg-white/10"
+                                animate={{ x: ['-100%', '200%'] }}
+                                transition={{ duration: 2.2, repeat: Infinity, repeatDelay: 2.5, ease: 'easeInOut' }}
+                                style={{ skewX: '-20deg' }}
+                            />
+                            {/* Pulse ring */}
+                            <span className="relative flex items-center justify-center w-4 h-4">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-300 opacity-50" />
+                                <span className="relative inline-flex rounded-full w-2.5 h-2.5 bg-white" />
+                            </span>
+                            <span className="relative">Contact Support</span>
+                        </motion.a>
                     </motion.div>
                 )}
             </AnimatePresence>
