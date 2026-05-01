@@ -641,7 +641,15 @@ function HomeContent({ initialUser, initialLang }: HomeClientProps) {
                         </svg>
                     </a>
                 </div>
-                <p className="text-[10px] text-slate-700">© {new Date().getFullYear()} Relay · Built by Aether Digital</p>
+                <div className="flex items-center gap-4 flex-wrap justify-center">
+                    <a href="/terms" className="text-[10px] text-slate-700 hover:text-slate-400 transition-colors">Terms of Service</a>
+                    <span className="text-slate-800">·</span>
+                    <a href="/privacy" className="text-[10px] text-slate-700 hover:text-slate-400 transition-colors">Privacy Policy</a>
+                    <span className="text-slate-800">·</span>
+                    <a href="/refund" className="text-[10px] text-slate-700 hover:text-slate-400 transition-colors">Refund Policy</a>
+                    <span className="text-slate-800">·</span>
+                    <p className="text-[10px] text-slate-700">© {new Date().getFullYear()} Relay · Built by Aether Digital</p>
+                </div>
             </footer>
 
             <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-[110] px-4 md:px-8 py-2 md:py-3 flex justify-between items-center glass border border-white/10 rounded-full w-[calc(100%-1.5rem)] md:w-[calc(100%-3rem)] max-w-5xl mx-auto shadow-2xl backdrop-blur-2xl">
