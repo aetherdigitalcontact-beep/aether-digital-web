@@ -1,36 +1,30 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { supabaseServer } from '@/lib/supabaseServer';
-import { requireWorkspaceAccess } from '@/lib/server/requireWorkspaceAccess';
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
 
-export async function PATCH(req: NextRequest, props: { params: Promise<{ id: string }> }) {
+export async function PATCH(
+    request: Request,
+    { params }: { params: { id: string } }
+) {
+    const { id } = await params;
+    const supabase = createRouteHandlerClient({ cookies });
+    const { is_unsubscribed } = await request.json();
+
     try {
-        const { id } = await props.params;
-        const { workspaceId, error: wsError } = await requireWorkspaceAccess(req as any);
-        if (wsError || !workspaceId) return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 });
-
-        const body = await req.json();
-        const { is_unsubscribed } = body;
-
-        if (typeof is_unsubscribed !== 'boolean') {
-            return NextResponse.json({ error: 'Invalid state provided. Expected boolean.' }, { status: 400 });
-        }
-
-        const { data, error } = await supabaseServer
+        const { data, error } = await supabase
             .from('subscribers')
             .update({ is_unsubscribed })
             .eq('id', id)
-            .eq('user_id', workspaceId)
-            .select()
-            .single();
+            .select();
 
-        if (error) {
-            console.error('[SUBSCRIBER-BLACKLIST] Failed to toggle unsubscribe:', error);
-            return NextResponse.json({ error: error.message }, { status: 500 });
-        }
+        if (error) throw error;
 
-        return NextResponse.json({ success: true, is_unsubscribed: data.is_unsubscribed });
-    } catch (err: any) {
-        console.error('[SUBSCRIBER-BLACKLIST] Exception handling blacklist request:', err.message);
+        return NextResponse.json({
+            success: true,
+            is_unsubscribed: data[0].is_unsubscribed
+        });
+    } catch (error) {
+        console.error('Error updating subscriber blacklist:', error);
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }

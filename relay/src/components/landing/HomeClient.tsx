@@ -3,7 +3,8 @@
 import { motion, AnimatePresence, useScroll, useTransform, useInView } from "framer-motion";
 import { Zap, Shield, Code2, ArrowRight, Terminal, ChevronDown, Sparkles, User, LogOut, Menu, X, BarChart3, Activity } from "lucide-react";
 import Link from "next/link";
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import { useSearchParams } from "next/navigation";
+import React, { useState, useEffect, useRef, useMemo, Suspense } from "react";
 import Footer from "@/components/layout/Footer";
 import { dictionaries, Language } from "@/lib/i18n";
 import dynamic from "next/dynamic";
@@ -149,10 +150,22 @@ const CinematicBackground = ({
 };
 
 export default function HomeClient({ initialUser, initialLang }: HomeClientProps) {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-[#020408]" />}>
+            <HomeContent initialUser={initialUser} initialLang={initialLang} />
+        </Suspense>
+    );
+}
+
+function HomeContent({ initialUser, initialLang }: HomeClientProps) {
+    const searchParams = useSearchParams();
+    const isDev = searchParams?.get('dev') === 'true';
+
     const [lang, setLang] = useState<Language>(initialLang);
     const [isLangOpen, setIsLangOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [user, setUser] = useState<any>(initialUser);
+    const [isMaintenanceMode, setIsMaintenanceMode] = useState(!isDev);
     const [openFaq, setOpenFaq] = useState<number | null>(null);
     const [stats, setStats] = useState({
         uptime: "99.99%",
@@ -360,6 +373,74 @@ export default function HomeClient({ initialUser, initialLang }: HomeClientProps
 
     return (
         <main ref={containerRef} className="w-full bg-[#020408] relative overflow-hidden">
+            {/* Maintenance Overlay */}
+            <AnimatePresence>
+                {isMaintenanceMode && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[200] bg-[#020408] flex items-center justify-center p-6 text-center overflow-hidden"
+                    >
+                        <CinematicBackground
+                            videoSrc="/videos/The Global Routing Hub.mp4"
+                            opacity={0.5}
+                            blendMode="screen"
+                        />
+                        <StarField />
+
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ duration: 1, ease: "easeOut" }}
+                            className="relative z-10 max-w-3xl"
+                        >
+                            <div className="w-20 h-20 bg-accent rounded-3xl flex items-center justify-center mx-auto mb-12 shadow-[0_0_60px_rgba(16,185,129,0.6)] relative group">
+                                <Zap className="text-white w-10 h-10 z-10" fill="currentColor" />
+                                <div className="absolute inset-0 bg-white opacity-20 blur-xl animate-pulse rounded-3xl"></div>
+                            </div>
+
+                            <motion.h1
+                                initial={{ y: 20, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ delay: 0.3 }}
+                                className="text-6xl md:text-9xl font-black text-white tracking-tighter mb-8 leading-[0.85] font-heading"
+                            >
+                                <span className="block opacity-50">UNDER</span>
+                                <span className="block text-accent italic underline decoration-white/5 underline-offset-8">CONSTRUCTION</span>
+                            </motion.h1>
+
+                            <motion.p
+                                initial={{ y: 20, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ delay: 0.5 }}
+                                className="text-xl md:text-2xl text-slate-400 font-medium leading-relaxed mb-12 max-w-xl mx-auto"
+                            >
+                                We are engineering something monumental. The official Relay Protocol launch date will be announced very soon.
+                            </motion.p>
+
+                            <motion.div
+                                initial={{ y: 20, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ delay: 0.7 }}
+                                className="flex flex-col items-center gap-6"
+                            >
+                                <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-[0.4em] text-white">
+                                    <div className="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.8)]" />
+                                    Launch Protocol Phase: ALPHA
+                                </div>
+                            </motion.div>
+                        </motion.div>
+
+                        {/* Top corner branding */}
+                        <div className="absolute top-10 left-10 flex items-center gap-3 opacity-30">
+                            <Zap className="text-white w-5 h-5" fill="currentColor" />
+                            <span className="font-black text-xl tracking-tighter text-white">RELAY</span>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             {/* Navbar */}
             <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-[110] px-4 md:px-8 py-2 md:py-3 flex justify-between items-center glass border border-white/10 rounded-full w-[calc(100%-1.5rem)] md:w-[calc(100%-3rem)] max-w-5xl mx-auto shadow-2xl backdrop-blur-2xl">
                 <Link href="/" className="flex items-center gap-3 active:scale-95 transition-transform">

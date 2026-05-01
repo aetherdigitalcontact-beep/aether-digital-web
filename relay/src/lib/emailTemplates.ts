@@ -1,3 +1,5 @@
+import { renderLayoutToHtml } from './layoutRenderer';
+
 export interface EmailOptions {
     lang: 'en' | 'es';
     name?: string;
@@ -5,9 +7,12 @@ export interface EmailOptions {
     type: 'confirm' | 'resend' | 'email_change' | 'password_alert' | 'reset' | 'relay' | 'verification_code';
     oldEmail?: string;
     fromName?: string;
+    customLayout?: any[]; // JSON block data
+    isEnterprise?: boolean;
 }
 
-export function renderEmailTemplate({ lang, name, url, type }: EmailOptions) {
+export function renderEmailTemplate(options: EmailOptions) {
+    const { lang, name, url, type } = options;
     const isEs = lang === 'es';
 
     // Content Dictionary
@@ -139,6 +144,27 @@ export function renderEmailTemplate({ lang, name, url, type }: EmailOptions) {
             }
         }
     }[type][isEs ? 'es' : 'en'];
+
+    // If a custom layout is provided (usually for 'relay' type), wrap the content
+    if (type === 'relay' && options.customLayout) {
+        const wrapOptions = {
+            corporateName: options.fromName || (isEs ? 'Aether Digital' : 'Aether Digital'),
+            isEnterprise: options.isEnterprise
+        };
+
+        // Find the 'variable' block in the layout where content should be injected
+        // or just append to text blocks if specifically marked? 
+        // In our current simple LayoutRenderer, we look for {{content}} placeholder.
+        const layoutHtml = renderLayoutToHtml(options.customLayout, wrapOptions);
+
+        // Replace the placeholder in the layout with our template body
+        const finalHtml = layoutHtml.replace(/\{\{\s*content\s*\}\}/g, content.body);
+
+        return {
+            subject: content.subject,
+            html: finalHtml
+        };
+    }
 
     return {
         subject: content.subject,

@@ -66,13 +66,21 @@ import {
     AlertCircle,
     ChevronRight,
     Layers,
-    Square
+    Square,
+    Layout,
+    Linkedin,
+    Twitter,
+    Youtube,
+    Instagram,
+    Facebook,
+    Dribbble
 } from "lucide-react";
 import Link from "next/link";
 import { RelayInbox } from '@/components/external/RelayInbox';
 import InboxView from "@/components/dashboard/InboxView";
 import TopicsView from "@/components/dashboard/TopicsView";
 import SubscribersView from "@/components/dashboard/SubscribersView";
+import EmailLayouts from "@/components/dashboard/EmailLayouts";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { dictionaries, Language } from "@/lib/i18n";
@@ -1419,7 +1427,6 @@ export default function DashboardPage() {
         setNotification({ message: 'Commencing permanent deletion...', type: 'loading' });
         try {
             const idStr = idArray.join(',');
-            console.log(`📡 Sending delete request for IDs: ${idStr}`);
             const res = await fetch(`/api/scenarios?ids=${idStr}`, { method: 'DELETE' });
             if (res.ok) {
                 setScenarios(prev => prev.filter(s => !idArray.includes(s.id)));
@@ -1440,6 +1447,11 @@ export default function DashboardPage() {
             setScenarioToDelete(null);
             setNotification({ message: `Network or System Error. Cannot reach Relay Engine.`, type: 'error' });
         }
+    };
+
+
+    const renderEmailLayouts = () => {
+        return <EmailLayouts activeWorkspaceId={activeWorkspaceId} user={user} whiteLabel={whiteLabel} />;
     };
 
     const handleCreateWebhook = async (url: string, label: string) => {
@@ -3932,69 +3944,76 @@ export default function DashboardPage() {
                                                     {editingNode.data.platform === 'email' && (
                                                         <div className="p-4 rounded-2xl bg-indigo-500/5 border border-indigo-500/10 mb-4 animate-in fade-in slide-in-from-top-2">
                                                             <label className="block text-[8px] font-black uppercase tracking-[0.3em] text-indigo-400 mb-3 flex items-center gap-2">
-                                                                <Globe className="w-2.5 h-2.5" /> Identity / From Domain
+                                                                <Globe className="w-2.5 h-2.5" /> Address Routing (Send As)
                                                             </label>
-                                                            <div className="flex flex-wrap gap-2">
-                                                                <button
-                                                                    onClick={() => setEditingNode({ ...editingNode, data: { ...editingNode.data, from_domain: 'relay.digital' } })}
-                                                                    className={`px-3 py-1.5 rounded-lg border text-[9px] font-black transition-all ${!editingNode.data.from_domain || editingNode.data.from_domain === 'relay.digital' ? 'bg-indigo-500 border-indigo-500 text-white' : 'bg-white/5 border-white/5 text-slate-500 hover:bg-white/10'}`}
-                                                                >
-                                                                    relay.digital (DEFAULT)
-                                                                </button>
-                                                                {domains.filter(d => d.status === 'verified').map(dom => (
-                                                                    <button
-                                                                        key={dom.id}
-                                                                        onClick={() => setEditingNode({ ...editingNode, data: { ...editingNode.data, from_domain: dom.hostname } })}
-                                                                        className={`px-3 py-1.5 rounded-lg border text-[9px] font-black transition-all ${editingNode.data.from_domain === dom.hostname ? 'bg-indigo-500 border-indigo-500 text-white' : 'bg-white/5 border-white/5 text-slate-500 hover:bg-white/10'}`}
+                                                            <div className="flex flex-col gap-2">
+                                                                <div className="relative">
+                                                                    <select
+                                                                        value={editingNode.data.fromEmail || 'default'}
+                                                                        onChange={(e) => setEditingNode({ ...editingNode, data: { ...editingNode.data, fromEmail: e.target.value === 'default' ? null : e.target.value } })}
+                                                                        className="w-full bg-black/40 border border-indigo-500/20 rounded-xl px-4 py-3 text-indigo-100 focus:outline-none focus:border-indigo-400 transition-all font-bold text-[11px] cursor-pointer appearance-none outline-none"
                                                                     >
-                                                                        {dom.hostname}
-                                                                    </button>
-                                                                ))}
-                                                                {domains.filter(d => d.status === 'verified').length === 0 && (
-                                                                    <span className="text-[8px] font-medium text-slate-600 italic">Verify a domain in the Identity Vault to enable whitelabeling.</span>
-                                                                )}
+                                                                        <option value="default" className="bg-slate-900 text-indigo-300">aetherdigital.contact@gmail.com (Default Relay)</option>
+                                                                        {userEmails.map((ue, idx) => (
+                                                                            <option key={idx} value={ue.email} className="bg-slate-900 text-white">
+                                                                                {ue.email} {ue.isPrimary ? '(Primary ID)' : '(Verified Alias)'}
+                                                                            </option>
+                                                                        ))}
+                                                                    </select>
+                                                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                                                                        <ChevronDown className="w-4 h-4 text-indigo-400/50" />
+                                                                    </div>
+                                                                </div>
+                                                                <p className="text-[9px] text-slate-500 font-medium italic mt-1 px-1">
+                                                                    Relay injects your selected email routing digitally into the "Reply-To" and explicit "Sender Name" fields of the transmission packet, ensuring direct responses.
+                                                                </p>
                                                             </div>
                                                         </div>
                                                     )}
 
-                                                    {editingNode.data.platform === 'discord' && (
-                                                        <div className="grid grid-cols-2 gap-3 animate-in fade-in slide-in-from-top-1 duration-300">
+                                                    {['discord', 'slack', 'email', 'teams'].includes(editingNode.data.platform || '') && (
+                                                        <div className={`grid ${editingNode.data.platform === 'email' || editingNode.data.platform === 'teams' ? 'grid-cols-1' : 'grid-cols-2'} gap-3 animate-in fade-in slide-in-from-top-1 duration-300`}>
                                                             <div>
-                                                                <label className="block text-[8px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2 flex items-center gap-1.5">Bot Name {!isEnterprise && <Lock className="w-2 h-2 text-amber-500/50" />}</label>
+                                                                <label className="block text-[8px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2 flex items-center gap-1.5">
+                                                                    {editingNode.data.platform === 'email' ? 'Sender Name' : 'Bot Name'}
+                                                                    {(!isEnterprise && editingNode.data.platform !== 'email') && <Lock className="w-2 h-2 text-amber-500/50" />}
+                                                                </label>
                                                                 <div className="relative group/lock">
                                                                     <input
                                                                         type="text"
-                                                                        placeholder={isEnterprise ? "Override Name" : "Enterprise Only"}
-                                                                        value={isEnterprise ? (editingNode.data.bot_name || '') : ''}
+                                                                        placeholder={isEnterprise ? (editingNode.data.platform === 'email' ? "Exequiel (Stripe Relay)" : "Override Name") : (editingNode.data.platform === 'email' ? 'Exequiel (Stripe Relay)' : 'Enterprise Only')}
+                                                                        value={(isEnterprise || editingNode.data.platform === 'email') ? (editingNode.data.bot_name || '') : ''}
                                                                         onChange={(e) => setEditingNode({ ...editingNode, data: { ...editingNode.data, bot_name: e.target.value } })}
-                                                                        disabled={!isEnterprise}
-                                                                        className={`w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-accent transition-all font-bold text-xs ${!isEnterprise ? 'opacity-30 cursor-not-allowed select-none' : ''}`}
+                                                                        disabled={!isEnterprise && editingNode.data.platform !== 'email'}
+                                                                        className={`w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-accent transition-all font-bold text-xs ${!isEnterprise && editingNode.data.platform !== 'email' ? 'opacity-30 cursor-not-allowed select-none' : ''}`}
                                                                     />
-                                                                    {!isEnterprise && (
+                                                                    {(!isEnterprise && editingNode.data.platform !== 'email') && (
                                                                         <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover/lock:opacity-100 transition-opacity bg-black/40 backdrop-blur-[1px] rounded-xl pointer-events-none">
                                                                             <span className="text-[7px] font-black uppercase tracking-widest text-amber-400">Enterprise Only</span>
                                                                         </div>
                                                                     )}
                                                                 </div>
                                                             </div>
-                                                            <div>
-                                                                <label className="block text-[8px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2 flex items-center gap-1.5">Bot Avatar {!isEnterprise && <Lock className="w-2 h-2 text-amber-500/50" />}</label>
-                                                                <div className="relative group/lock">
-                                                                    <input
-                                                                        type="text"
-                                                                        placeholder={isEnterprise ? "https://..." : "Enterprise Only"}
-                                                                        value={isEnterprise ? (editingNode.data.bot_avatar || '') : ''}
-                                                                        onChange={(e) => setEditingNode({ ...editingNode, data: { ...editingNode.data, bot_avatar: e.target.value } })}
-                                                                        disabled={!isEnterprise}
-                                                                        className={`w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-accent transition-all font-bold text-xs ${!isEnterprise ? 'opacity-30 cursor-not-allowed select-none' : ''}`}
-                                                                    />
-                                                                    {!isEnterprise && (
-                                                                        <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover/lock:opacity-100 transition-opacity bg-black/40 backdrop-blur-[1px] rounded-xl pointer-events-none">
-                                                                            <span className="text-[7px] font-black uppercase tracking-widest text-amber-400">Enterprise Only</span>
-                                                                        </div>
-                                                                    )}
+                                                            {['discord', 'slack'].includes(editingNode.data.platform || '') && (
+                                                                <div>
+                                                                    <label className="block text-[8px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2 flex items-center gap-1.5">Bot Avatar {!isEnterprise && <Lock className="w-2 h-2 text-amber-500/50" />}</label>
+                                                                    <div className="relative group/lock">
+                                                                        <input
+                                                                            type="text"
+                                                                            placeholder={isEnterprise ? "https://..." : "Enterprise Only"}
+                                                                            value={isEnterprise ? (editingNode.data.bot_avatar || '') : ''}
+                                                                            onChange={(e) => setEditingNode({ ...editingNode, data: { ...editingNode.data, bot_avatar: e.target.value } })}
+                                                                            disabled={!isEnterprise}
+                                                                            className={`w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-accent transition-all font-bold text-xs ${!isEnterprise ? 'opacity-30 cursor-not-allowed select-none' : ''}`}
+                                                                        />
+                                                                        {!isEnterprise && (
+                                                                            <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover/lock:opacity-100 transition-opacity bg-black/40 backdrop-blur-[1px] rounded-xl pointer-events-none">
+                                                                                <span className="text-[7px] font-black uppercase tracking-widest text-amber-400">Enterprise Only</span>
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
                                                                 </div>
-                                                            </div>
+                                                            )}
                                                         </div>
                                                     )}
 
@@ -5212,6 +5231,7 @@ export default function DashboardPage() {
                             {[
                                 { id: "scenarios", icon: <Network className="w-3.5 h-3.5" />, label: d.sidebar?.scenarios || "WORKFLOWS" },
                                 { id: "connectors", icon: <Zap className="w-3.5 h-3.5" />, label: d.sidebar?.connectors || "WEBHOOKS" },
+                                { id: "layouts", icon: <Layout className="w-3.5 h-3.5" />, label: "EMAIL LAYOUTS" },
                                 { id: "logs", icon: <BarChart3 className="w-3.5 h-3.5" />, label: "ANALYTICS" },
                                 { id: "domains", icon: <Globe className="w-3.5 h-3.5" />, label: "DOMAINS" },
                                 ...((user?.is_admin || user?.email?.trim().toLowerCase() === 'quiel.g538@gmail.com') ? [{ id: "admin", icon: <Shield className="w-3.5 h-3.5" />, label: "ADMIN" }] : [])
@@ -5877,6 +5897,7 @@ export default function DashboardPage() {
 
                         {activeTab === 'status' && renderStatus()}
                         {activeTab === 'templates' && renderTemplates()}
+                        {activeTab === 'layouts' && renderEmailLayouts()}
                         {activeTab === 'integration' && renderIntegration()}
                         {activeTab === 'test' && renderTestLab()}
                         {activeTab === 'connectors' && renderConnectors()}
@@ -8865,6 +8886,7 @@ export default function DashboardPage() {
                                                 { label: "Go to Co-pilot", id: "settings", subtab: "copilot", icon: <Bot /> },
                                                 { label: "Go to Workspace", id: "settings", subtab: "workspace", icon: <Settings /> },
                                                 { label: "Go to API & SDKs", id: "integration", icon: <Terminal /> },
+                                                { label: "Email Layouts", id: "layouts", icon: <Layout /> },
                                                 { label: "Recipients", id: "subscribers", icon: <Users /> },
                                                 { label: "Segments", id: "topics", icon: <Layers /> },
                                                 { label: "Analytics", id: "logs", icon: <BarChart3 /> }
