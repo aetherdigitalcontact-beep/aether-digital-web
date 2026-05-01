@@ -117,13 +117,12 @@ const WaitlistForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="relative group">
+        <form onSubmit={handleSubmit} noValidate className="relative group">
             <div className="flex flex-col md:flex-row items-stretch gap-3">
                 <div className="relative flex-1 group">
                     <input
                         type="email"
-                        required
-                        placeholder="Enter your professional email"
+                        placeholder="name@company.com"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         disabled={status === 'loading' || status === 'success'}
@@ -134,7 +133,7 @@ const WaitlistForm = () => {
                 <button
                     type="submit"
                     disabled={status === 'loading' || status === 'success'}
-                    className="h-14 px-8 bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800/50 text-white font-bold rounded-2xl transition-all active:scale-95 flex items-center justify-center gap-2 whitespace-nowrap min-w-[140px] shadow-lg shadow-blue-900/20"
+                    className="h-14 px-8 bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800/50 text-white font-bold rounded-2xl transition-all active:scale-95 flex items-center justify-center gap-2 whitespace-nowrap min-w-[160px] shadow-lg shadow-blue-900/20"
                 >
                     {status === 'loading' ? (
                         <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
