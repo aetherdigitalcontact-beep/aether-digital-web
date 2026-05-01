@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronUp, Zap, Plus, X, Search, CheckCircle2, Clock, Circle, ArrowRight, Sparkles, Mail, Lock, LogIn, UserPlus } from "lucide-react";
+import { ChevronUp, Zap, Plus, X, Search, CheckCircle2, Clock, Circle, ArrowRight, Sparkles, Mail, Lock, LogIn, UserPlus, Sun, Moon, Camera, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 
@@ -149,6 +149,162 @@ function AuthModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: () 
                 </form>
             </motion.div>
         </motion.div>
+    );
+}
+
+// ─── Profile Menu ──────────────────────────────────────────
+
+function ProfileMenu({ user }: { user: any }) {
+    const [open, setOpen] = useState(false);
+    const [avatarUrl, setAvatarUrl] = useState<string | null>(user?.user_metadata?.avatar_url || null);
+    const [uploading, setUploading] = useState(false);
+    const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+    const ref = React.useRef<HTMLDivElement>(null);
+
+    const displayName = user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email?.split('@')[0] || 'User';
+    const initials = displayName.slice(0, 2).toUpperCase();
+
+    // Close on outside click
+    useEffect(() => {
+        const handler = (e: MouseEvent) => {
+            if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+        };
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
+    }, []);
+
+    const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        setUploading(true);
+        const reader = new FileReader();
+        reader.onload = async (ev) => {
+            const base64 = ev.target?.result as string;
+            try {
+                const res = await fetch('/api/upload', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ image: base64, userId: user.id }),
+                });
+                const data = await res.json();
+                if (data.url) {
+                    await supabase.auth.updateUser({ data: { avatar_url: data.url } });
+                    setAvatarUrl(data.url);
+                }
+            } catch { }
+            setUploading(false);
+        };
+        reader.readAsDataURL(file);
+    };
+
+    const handleDeleteAvatar = async () => {
+        await supabase.auth.updateUser({ data: { avatar_url: null } });
+        setAvatarUrl(null);
+    };
+
+    const toggleTheme = () => {
+        const next = theme === 'dark' ? 'light' : 'dark';
+        setTheme(next);
+        document.documentElement.classList.toggle('light', next === 'light');
+    };
+
+    return (
+        <div ref={ref} className="relative">
+            {/* Avatar Button */}
+            <button
+                onClick={() => setOpen(o => !o)}
+                className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-white/10 hover:border-blue-500/60 transition-all focus:outline-none focus:border-blue-500 shadow-lg"
+            >
+                {avatarUrl ? (
+                    <img src={avatarUrl} alt={displayName} className="w-full h-full object-cover" />
+                ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-blue-600 to-violet-600 flex items-center justify-center text-white text-xs font-black">
+                        {initials}
+                    </div>
+                )}
+                <div className="absolute inset-0 bg-black/10 opacity-0 hover:opacity-100 transition-opacity" />
+            </button>
+
+            {/* Dropdown */}
+            <AnimatePresence>
+                {open && (
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9, y: -8 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.9, y: -8 }}
+                        transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                        className="absolute right-0 top-12 w-72 bg-[#0d1117] border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-[500]"
+                    >
+                        {/* Profile Section */}
+                        <div className="p-5 border-b border-white/5">
+                            {/* Avatar with upload controls */}
+                            <div className="flex items-center gap-4 mb-3">
+                                <div className="relative group flex-shrink-0">
+                                    <div className="w-14 h-14 rounded-2xl overflow-hidden border border-white/10">
+                                        {avatarUrl ? (
+                                            <img src={avatarUrl} alt={displayName} className="w-full h-full object-cover" />
+                                        ) : (
+                                            <div className="w-full h-full bg-gradient-to-br from-blue-600 to-violet-600 flex items-center justify-center text-white text-lg font-black">
+                                                {initials}
+                                            </div>
+                                        )}
+                                    </div>
+                                    {/* Upload overlay */}
+                                    <label className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 rounded-2xl cursor-pointer transition-all">
+                                        {uploading
+                                            ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                            : <Camera className="w-4 h-4 text-white" />
+                                        }
+                                        <input type="file" accept="image/*" onChange={handleUpload} className="hidden" />
+                                    </label>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <p className="text-white font-bold text-sm truncate">{displayName}</p>
+                                    <p className="text-slate-500 text-xs truncate">{user.email}</p>
+                                    {avatarUrl && (
+                                        <button
+                                            onClick={handleDeleteAvatar}
+                                            className="mt-1.5 inline-flex items-center gap-1 text-[10px] text-rose-400 hover:text-rose-300 font-semibold transition-colors"
+                                        >
+                                            <Trash2 className="w-3 h-3" /> Remove photo
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Actions */}
+                        <div className="p-2">
+                            {/* Theme toggle */}
+                            <button
+                                onClick={toggleTheme}
+                                className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/5 transition-colors text-sm text-slate-300 hover:text-white group"
+                            >
+                                <div className="flex items-center gap-2.5">
+                                    {theme === 'dark'
+                                        ? <Moon className="w-4 h-4 text-slate-400 group-hover:text-blue-400 transition-colors" />
+                                        : <Sun className="w-4 h-4 text-slate-400 group-hover:text-amber-400 transition-colors" />
+                                    }
+                                    <span className="font-medium">{theme === 'dark' ? 'Dark mode' : 'Light mode'}</span>
+                                </div>
+                                <div className={`w-9 h-5 rounded-full transition-colors relative ${theme === 'light' ? 'bg-blue-600' : 'bg-white/10'}`}>
+                                    <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-all ${theme === 'light' ? 'left-4' : 'left-0.5'}`} />
+                                </div>
+                            </button>
+
+                            {/* Sign out */}
+                            <button
+                                onClick={() => { supabase.auth.signOut(); setOpen(false); }}
+                                className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-rose-500/10 transition-colors text-sm text-slate-400 hover:text-rose-400 group mt-0.5"
+                            >
+                                <LogIn className="w-4 h-4 rotate-180 group-hover:text-rose-400 transition-colors" />
+                                <span className="font-medium">Sign out</span>
+                            </button>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
     );
 }
 
@@ -462,32 +618,31 @@ export default function RoadmapPage() {
 
             {/* Header */}
             <header className="sticky top-0 z-50 border-b border-white/5 bg-[#060810]/80 backdrop-blur-xl">
-                <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-                    <Link href="/" className="flex items-center gap-2.5 group">
-                        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-md group-hover:shadow-blue-500/30 transition-all">
-                            <Zap className="text-white w-4 h-4" fill="currentColor" />
-                        </div>
-                        <span className="font-black text-lg tracking-tighter">RELAY</span>
-                        <span className="text-xs text-slate-500 font-medium hidden sm:block">/ Roadmap</span>
-                    </Link>
+                <div className="max-w-5xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
+                    {/* LEFT: Logo + New Request */}
+                    <div className="flex items-center gap-4">
+                        <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
+                            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-md group-hover:shadow-blue-500/30 transition-all">
+                                <Zap className="text-white w-4 h-4" fill="currentColor" />
+                            </div>
+                            <span className="font-black text-lg tracking-tighter">RELAY</span>
+                            <span className="text-xs text-slate-500 font-medium hidden sm:block">/ Roadmap</span>
+                        </Link>
 
-                    {user ? (
-                        <div className="flex items-center gap-3">
-                            <span className="text-xs text-slate-500 hidden sm:block">{user.email}</span>
+                        {user && (
                             <button
                                 onClick={() => setShowModal(true)}
-                                className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold rounded-xl transition-all active:scale-95"
+                                className="flex items-center gap-1.5 px-3.5 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold rounded-xl transition-all active:scale-95"
                             >
                                 <Plus className="w-4 h-4" />
-                                New Request
+                                <span className="hidden sm:block">New Request</span>
                             </button>
-                            <button
-                                onClick={() => supabase.auth.signOut()}
-                                className="text-xs text-slate-500 hover:text-white transition-colors px-3 py-2 rounded-xl hover:bg-white/5"
-                            >
-                                Sign out
-                            </button>
-                        </div>
+                        )}
+                    </div>
+
+                    {/* RIGHT: Profile or Sign In */}
+                    {user ? (
+                        <ProfileMenu user={user} />
                     ) : (
                         <button
                             onClick={() => setShowAuthModal(true)}
