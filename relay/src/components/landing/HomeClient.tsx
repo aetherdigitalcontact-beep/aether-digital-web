@@ -142,7 +142,7 @@ const WaitlistForm = () => {
                         <Check className="w-5 h-5" />
                     ) : (
                         <>
-                            <span>Join Alpha</span>
+                            <span>Keep me updated</span>
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </>
                     )}
@@ -511,21 +511,19 @@ function HomeContent({ initialUser, initialLang }: HomeClientProps) {
                                 initial={{ y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
                                 transition={{ delay: 0.8 }}
-                                className="mt-16 pt-8 border-t border-white/5 w-full max-w-2xl mx-auto"
+                                className="mt-10 flex items-center justify-center gap-4 flex-wrap"
                             >
-                                <div className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30 mb-8">Engineering Roadmap</div>
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                    {[
-                                        { phase: '01', title: 'Alpha', status: 'In Progress', active: true },
-                                        { phase: '02', title: 'Beta', status: 'Q3 2026', active: false },
-                                        { phase: '03', title: 'Global', status: 'Q4 2026', active: false }
-                                    ].map((step, i) => (
-                                        <div key={i} className={`text-left p-4 rounded-2xl border ${step.active ? 'bg-blue-500/5 border-blue-500/20' : 'bg-white/[0.02] border-white/5'}`}>
-                                            <div className={`text-[10px] font-black mb-1 ${step.active ? 'text-blue-400' : 'text-slate-600'}`}>{step.phase}</div>
-                                            <div className="text-white font-bold text-sm mb-1">{step.title}</div>
-                                            <div className="text-[9px] font-medium uppercase tracking-wider text-slate-500">{step.status}</div>
-                                        </div>
-                                    ))}
+                                <Link
+                                    href="/roadmap"
+                                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:border-white/20 hover:bg-white/10 text-sm font-bold text-white/70 hover:text-white transition-all group"
+                                >
+                                    <Sparkles className="w-4 h-4 text-blue-400" />
+                                    View Engineering Roadmap
+                                    <ArrowRight className="w-4 h-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
+                                </Link>
+                                <div className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white/5 border border-white/10 text-[11px] font-black uppercase tracking-[0.25em] text-white">
+                                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
+                                    Relay Protocol Phase: ALPHA
                                 </div>
                             </motion.div>
                         </motion.div>
