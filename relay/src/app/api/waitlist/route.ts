@@ -28,21 +28,19 @@ export async function POST(req: NextRequest) {
         // Insert into waitlist table
         const { error } = await supabaseServer
             .from('waitlist')
-            .insert([{
-                email,
-                source: 'maint_landing',
-                created_at: new Date().toISOString()
-            }]);
+            .insert([{ email, created_at: new Date().toISOString() }]);
 
         if (error) {
             if (error.code === '23505') {
                 return NextResponse.json({
                     success: true,
-                    message: 'You are already on our list! We will notify you at launch.'
+                    message: "You're already on our list! We'll notify you at launch."
                 });
             }
             console.error('[WAITLIST] DB Error:', error);
-            return NextResponse.json({ error: 'Failed to join waitlist' }, { status: 500 });
+            return NextResponse.json({
+                error: "We couldn't save your email right now. Please try again in a moment."
+            }, { status: 500 });
         }
 
         // Notify admin

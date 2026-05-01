@@ -205,8 +205,27 @@ function ProfileMenu({ user }: { user: any }) {
     const toggleTheme = () => {
         const next = theme === 'dark' ? 'light' : 'dark';
         setTheme(next);
-        document.documentElement.classList.toggle('light', next === 'light');
+        // Apply to <html> so CSS can respond to it
+        if (next === 'light') {
+            document.documentElement.style.setProperty('--page-bg', '#f1f5f9');
+            document.documentElement.style.setProperty('--page-text', '#0f172a');
+            document.documentElement.style.filter = 'invert(1) hue-rotate(180deg)';
+        } else {
+            document.documentElement.style.removeProperty('--page-bg');
+            document.documentElement.style.removeProperty('--page-text');
+            document.documentElement.style.filter = '';
+        }
+        localStorage.setItem('roadmap-theme', next);
     };
+
+    // Restore theme on mount
+    useEffect(() => {
+        const saved = localStorage.getItem('roadmap-theme') as 'dark' | 'light' | null;
+        if (saved === 'light') {
+            setTheme('light');
+            document.documentElement.style.filter = 'invert(1) hue-rotate(180deg)';
+        }
+    }, []);
 
     return (
         <div ref={ref} className="relative">
@@ -249,7 +268,7 @@ function ProfileMenu({ user }: { user: any }) {
                                             </div>
                                         )}
                                     </div>
-                                    {/* Upload overlay */}
+                                    {/* Upload overlay (camera icon) */}
                                     <label className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 rounded-2xl cursor-pointer transition-all">
                                         {uploading
                                             ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -257,18 +276,20 @@ function ProfileMenu({ user }: { user: any }) {
                                         }
                                         <input type="file" accept="image/*" onChange={handleUpload} className="hidden" />
                                     </label>
+                                    {/* X delete button top-right */}
+                                    {avatarUrl && (
+                                        <button
+                                            onClick={e => { e.stopPropagation(); handleDeleteAvatar(); }}
+                                            className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-rose-500 hover:bg-rose-400 border-2 border-[#0d1117] rounded-full flex items-center justify-center transition-colors z-10 opacity-0 group-hover:opacity-100"
+                                            title="Remove photo"
+                                        >
+                                            <X className="w-2.5 h-2.5 text-white" />
+                                        </button>
+                                    )}
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <p className="text-white font-bold text-sm truncate">{displayName}</p>
                                     <p className="text-slate-500 text-xs truncate">{user.email}</p>
-                                    {avatarUrl && (
-                                        <button
-                                            onClick={handleDeleteAvatar}
-                                            className="mt-1.5 inline-flex items-center gap-1 text-[10px] text-rose-400 hover:text-rose-300 font-semibold transition-colors"
-                                        >
-                                            <Trash2 className="w-3 h-3" /> Remove photo
-                                        </button>
-                                    )}
                                 </div>
                             </div>
                         </div>
