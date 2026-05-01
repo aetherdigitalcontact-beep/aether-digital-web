@@ -85,6 +85,85 @@ const StarField = () => {
     );
 };
 
+const WaitlistForm = () => {
+    const [email, setEmail] = useState("");
+    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+    const [message, setMessage] = useState("");
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!email || !email.includes('@')) return;
+        setStatus('loading');
+        try {
+            const res = await fetch('/api/waitlist', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email }),
+            });
+            const data = await res.json();
+            if (data.success) {
+                setStatus('success');
+                setMessage(data.message);
+                setEmail("");
+                setTimeout(() => setMessage(""), 5000);
+            } else {
+                setStatus('error');
+                setMessage(data.error || "Something went wrong.");
+            }
+        } catch (err) {
+            setStatus('error');
+            setMessage("Connection error. Try again later.");
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit} className="relative group">
+            <div className="flex flex-col md:flex-row items-stretch gap-3">
+                <div className="relative flex-1 group">
+                    <input
+                        type="email"
+                        required
+                        placeholder="Enter your professional email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        disabled={status === 'loading' || status === 'success'}
+                        className="w-full h-14 bg-white/[0.03] border border-white/10 rounded-2xl px-6 outline-none focus:border-blue-500/50 focus:bg-white/[0.05] transition-all text-white placeholder:text-white/20 disabled:opacity-50"
+                    />
+                    <div className="absolute inset-0 rounded-2xl bg-blue-500/5 opacity-0 group-focus-within:opacity-100 pointer-events-none transition-opacity blur-xl"></div>
+                </div>
+                <button
+                    type="submit"
+                    disabled={status === 'loading' || status === 'success'}
+                    className="h-14 px-8 bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800/50 text-white font-bold rounded-2xl transition-all active:scale-95 flex items-center justify-center gap-2 whitespace-nowrap min-w-[140px] shadow-lg shadow-blue-900/20"
+                >
+                    {status === 'loading' ? (
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    ) : status === 'success' ? (
+                        <Check className="w-5 h-5" />
+                    ) : (
+                        <>
+                            <span>Join Alpha</span>
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </>
+                    )}
+                </button>
+            </div>
+            <AnimatePresence>
+                {message && (
+                    <motion.p
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className={`text-[10px] md:text-xs font-medium mt-4 text-center ${status === 'success' ? 'text-emerald-400' : 'text-rose-400'}`}
+                    >
+                        {message}
+                    </motion.p>
+                )}
+            </AnimatePresence>
+        </form>
+    );
+};
+
 const CinematicBackground = ({
     videoSrc,
     opacity = 0.5,
@@ -422,21 +501,50 @@ function HomeContent({ initialUser, initialLang }: HomeClientProps) {
                             <motion.div
                                 initial={{ y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.7 }}
-                                className="flex flex-col items-center gap-6"
+                                transition={{ delay: 0.6 }}
+                                className="w-full max-w-md mx-auto"
                             >
-                                <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white/5 border border-white/10 text-[11px] font-black uppercase tracking-[0.3em] text-white">
-                                    <div className="w-2.5 h-2.5 bg-blue-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(59,130,246,0.8)]" />
-                                    RELAY PROTOCOL PHASE: ALPHA
+                                <WaitlistForm />
+                            </motion.div>
+
+                            <motion.div
+                                initial={{ y: 20, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ delay: 0.8 }}
+                                className="mt-16 pt-8 border-t border-white/5 w-full max-w-2xl mx-auto"
+                            >
+                                <div className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30 mb-8">Engineering Roadmap</div>
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    {[
+                                        { phase: '01', title: 'Alpha', status: 'In Progress', active: true },
+                                        { phase: '02', title: 'Beta', status: 'Q3 2026', active: false },
+                                        { phase: '03', title: 'Global', status: 'Q4 2026', active: false }
+                                    ].map((step, i) => (
+                                        <div key={i} className={`text-left p-4 rounded-2xl border ${step.active ? 'bg-blue-500/5 border-blue-500/20' : 'bg-white/[0.02] border-white/5'}`}>
+                                            <div className={`text-[10px] font-black mb-1 ${step.active ? 'text-blue-400' : 'text-slate-600'}`}>{step.phase}</div>
+                                            <div className="text-white font-bold text-sm mb-1">{step.title}</div>
+                                            <div className="text-[9px] font-medium uppercase tracking-wider text-slate-500">{step.status}</div>
+                                        </div>
+                                    ))}
                                 </div>
                             </motion.div>
                         </motion.div>
 
                         {/* Top corner branding */}
-                        <div className="absolute top-10 left-10 flex items-center gap-3 opacity-30">
-                            <Zap className="text-white w-5 h-5" fill="currentColor" />
-                            <span className="font-black text-xl tracking-tighter text-white">RELAY</span>
-                        </div>
+                        <motion.div
+                            whileHover={{ scale: 1.05, opacity: 1 }}
+                            className="absolute top-8 left-8 md:top-12 md:left-12 flex items-center gap-3 opacity-50 cursor-default group transition-opacity"
+                        >
+                            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-blue-500/20 transition-all">
+                                <Zap className="text-white w-4 h-4" fill="currentColor" />
+                            </div>
+                            <span className="font-black text-xl tracking-tighter text-white group-hover:text-blue-400 transition-colors">RELAY</span>
+
+                            <motion.div
+                                className="absolute -inset-2 bg-blue-500/10 blur-xl opacity-0 group-hover:opacity-100 rounded-full transition-opacity"
+                                initial={false}
+                            />
+                        </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>
