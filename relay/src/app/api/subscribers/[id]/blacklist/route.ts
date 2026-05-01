@@ -1,17 +1,20 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseServer = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
 export async function PATCH(
-    request: Request,
+    request: NextRequest,
     { params }: { params: { id: string } }
 ) {
     const { id } = await params;
-    const supabase = createRouteHandlerClient({ cookies });
     const { is_unsubscribed } = await request.json();
 
     try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseServer
             .from('subscribers')
             .update({ is_unsubscribed })
             .eq('id', id)
