@@ -37,9 +37,10 @@ interface EmailLayout {
 interface EmailLayoutsProps {
     user: any;
     whiteLabel: any;
+    activeWorkspaceId: string | null;
 }
 
-export default function EmailLayouts({ user, whiteLabel }: EmailLayoutsProps) {
+export default function EmailLayouts({ user, whiteLabel, activeWorkspaceId }: EmailLayoutsProps) {
     const [layouts, setLayouts] = useState<EmailLayout[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [view, setView] = useState<'list' | 'editor'>('list');
