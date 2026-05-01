@@ -46,6 +46,9 @@ const STATIC_ROADMAP: RoadmapItem[] = [
     { id: 's10', title: 'Visual Scenario Builder', description: 'Build notification automation flows with drag-and-drop nodes (Digest, Delay, Condition).', phase: 'Alpha', status: 'In Progress', priority: 'High', votes: 0, category: 'Core' },
     { id: 's11', title: 'Activity Log & Telemetry', description: 'Complete delivery log with status codes, latency and error inspection per notification.', phase: 'Alpha', status: 'In Progress', priority: 'Medium', votes: 0, category: 'Analytics' },
     { id: 's12', title: 'Community Roadmap', description: 'This very page — public roadmap with upvoting and feature requests.', phase: 'Alpha', status: 'In Progress', priority: 'Low', votes: 0, category: 'Platform' },
+    { id: 's31', title: 'Notification Providers Dashboard', description: 'Connect and configure your own notification providers (Resend, SendGrid, Twilio, Meta WhatsApp, Slack) directly from the dashboard — no code required.', phase: 'Alpha', status: 'In Progress', priority: 'High', votes: 0, category: 'Core' },
+    { id: 's32', title: 'Provider Health & Fallback', description: 'Monitor channel provider uptime and automatically failover to a secondary provider when the primary fails.', phase: 'Alpha', status: 'Planned', priority: 'High', votes: 0, category: 'Infra' },
+    { id: 's33', title: 'Per-Workspace Provider Config', description: 'Isolate provider credentials per workspace so each project runs on its own sending infrastructure.', phase: 'Alpha', status: 'Planned', priority: 'Medium', votes: 0, category: 'Core' },
     { id: 's13', title: 'Billing & Subscription Plans', description: 'Paid tiers with Lemon Squeezy, usage metering and automatic quota enforcement.', phase: 'Alpha', status: 'Planned', priority: 'High', votes: 0, category: 'Platform' },
 
     // Beta
