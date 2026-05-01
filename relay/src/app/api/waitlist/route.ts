@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
         // Notify admin
         try {
             await transporter.sendMail({
-                from: `"Relay Notifications ⚡" <${process.env.EMAIL_USER}>`,
+                from: `"New Subscriber to Relay ⚡" <${process.env.EMAIL_USER}>`,
                 to: 'aetherdigital.contact@gmail.com',
                 subject: `🎉 New Waitlist Registration — ${email}`,
                 html: `
