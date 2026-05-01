@@ -725,6 +725,29 @@ export default function RoadmapPage() {
                     </motion.div>
                 </div>
 
+                {/* Stats Bar */}
+                <motion.div
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="flex items-center justify-center gap-2 flex-wrap mb-12"
+                >
+                    {[
+                        { label: 'Shipped', count: STATIC_ROADMAP.filter(i => i.status === 'Completed').length, color: 'text-emerald-400', dot: 'bg-emerald-400' },
+                        { label: 'In Progress', count: STATIC_ROADMAP.filter(i => i.status === 'In Progress').length, color: 'text-blue-400', dot: 'bg-blue-400' },
+                        { label: 'Planned', count: STATIC_ROADMAP.filter(i => i.status === 'Planned' || i.status === 'Backlog').length, color: 'text-slate-400', dot: 'bg-slate-500' },
+                    ].map(({ label, count, color, dot }, i) => (
+                        <React.Fragment key={label}>
+                            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06]">
+                                <span className={`w-1.5 h-1.5 rounded-full ${dot}`} />
+                                <span className={`text-sm font-black tabular-nums ${color}`}>{count}</span>
+                                <span className="text-xs font-medium text-slate-500">{label}</span>
+                            </div>
+                            {i < 2 && <div className="w-px h-4 bg-white/[0.06]" />}
+                        </React.Fragment>
+                    ))}
+                </motion.div>
+
                 {/* Tabs */}
                 <div className="flex items-center gap-1 mb-8 bg-white/[0.03] border border-white/5 rounded-2xl p-1 w-fit mx-auto">
                     {(['roadmap', 'requests'] as const).map(t => (
