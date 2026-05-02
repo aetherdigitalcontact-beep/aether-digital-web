@@ -218,27 +218,22 @@ const CinematicBackground = ({
     className?: string
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const isInView = useInView(containerRef, { amount: 0.1 });
 
     return (
         <div ref={containerRef} className={`absolute inset-0 pointer-events-none overflow-hidden h-full z-0 ${className}`}>
             {videoSrc ? (
                 <div className="relative w-full h-full flex items-center justify-center bg-black">
-                    {isInView ? (
-                        <video
-                            autoPlay
-                            loop
-                            muted
-                            playsInline
-                            preload="none"
-                            className={`absolute inset-0 w-full h-full object-cover saturate-[1.1] transition-opacity duration-1000 scale-105`}
-                            style={{ opacity, mixBlendMode: blendMode as any }}
-                        >
-                            <source src={encodeURI(videoSrc)} type="video/mp4" />
-                        </video>
-                    ) : (
-                        <div className="absolute inset-0 bg-black opacity-100" />
-                    )}
+                    <video
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        preload="auto"
+                        className={`absolute inset-0 w-full h-full object-cover saturate-[1.1] transition-opacity duration-1000 scale-105`}
+                        style={{ opacity, mixBlendMode: blendMode as any }}
+                    >
+                        <source src={encodeURI(videoSrc)} type="video/mp4" />
+                    </video>
                     {/* Panoramic Vignette & Blur */}
                     <div className="absolute inset-0 bg-gradient-to-b from-[#020408] via-transparent to-[#020408] opacity-100" />
                     <div className="absolute inset-0 bg-gradient-to-r from-[#020408] via-transparent to-[#020408] opacity-50" />
