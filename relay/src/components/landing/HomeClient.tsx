@@ -594,6 +594,8 @@ function HomeContent({ initialUser, initialLang }: HomeClientProps) {
                         <span className="text-slate-800 text-[9px]">·</span>
                         <a href="/refund" className="text-[9px] text-slate-700 hover:text-slate-400 transition-colors">Refund</a>
                         <span className="text-slate-800 text-[9px]">·</span>
+                        <a href="/dpa" className="text-[9px] text-slate-700 hover:text-slate-400 transition-colors">DPA</a>
+                        <span className="text-slate-800 text-[9px]">·</span>
                         <span className="text-[9px] text-slate-700">© {new Date().getFullYear()} Relay</span>
                     </div>
                 </div>

@@ -129,6 +129,7 @@ export default function Footer() {
                         <li><Link href="/terms" className="text-sm text-slate-500 hover:text-white transition-colors">{d.legal?.terms || "Terms of Service"}</Link></li>
                         <li><Link href="/privacy" className="text-sm text-slate-500 hover:text-white transition-colors">{d.legal?.privacy || "Privacy Policy"}</Link></li>
                         <li><Link href="/refund" className="text-sm text-slate-500 hover:text-white transition-colors">{d.legal?.refund || "Refund Policy"}</Link></li>
+                        <li><Link href="/dpa" className="text-sm text-slate-500 hover:text-white transition-colors">DPA</Link></li>
                     </ul>
                 </div>
             </div>
