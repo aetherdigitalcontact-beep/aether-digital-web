@@ -711,7 +711,7 @@ export default function RoadmapPage() {
             <main className="relative z-10 max-w-5xl mx-auto px-6 py-16">
                 {/* Hero */}
                 <div className="mb-16 text-center">
-                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+                    <div>
                         <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-widest">
                             <Sparkles className="w-3.5 h-3.5" />
                             Public Roadmap
@@ -722,16 +722,11 @@ export default function RoadmapPage() {
                         <p className="text-slate-400 text-lg max-w-xl mx-auto leading-relaxed">
                             Vote on features you need most and submit your own ideas. We build in the open.
                         </p>
-                    </motion.div>
+                    </div>
                 </div>
 
                 {/* Stats Bar */}
-                <motion.div
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="flex items-center justify-center gap-2 flex-wrap mb-12"
-                >
+                <div className="flex items-center justify-center gap-2 flex-wrap mb-12">
                     {[
                         { label: 'Shipped', count: STATIC_ROADMAP.filter(i => i.status === 'Completed').length, color: 'text-emerald-400', dot: 'bg-emerald-400' },
                         { label: 'In Progress', count: STATIC_ROADMAP.filter(i => i.status === 'In Progress').length, color: 'text-blue-400', dot: 'bg-blue-400' },
@@ -746,7 +741,7 @@ export default function RoadmapPage() {
                             {i < 2 && <div className="w-px h-4 bg-white/[0.06]" />}
                         </React.Fragment>
                     ))}
-                </motion.div>
+                </div>
 
                 {/* Tabs */}
                 <div className="flex items-center gap-1 mb-8 bg-white/[0.03] border border-white/5 rounded-2xl p-1 w-fit mx-auto">
@@ -816,7 +811,7 @@ export default function RoadmapPage() {
                                 if (!phaseItems?.length) return null;
                                 const meta = PHASE_META[phase];
                                 return (
-                                    <motion.section key={phase} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                                    <section key={phase}>
                                         <div className="flex items-center gap-4 mb-6">
                                             <div>
                                                 <div className={`text-[10px] font-black uppercase tracking-[0.3em] mb-0.5 ${meta.color}`}>{meta.label}</div>
@@ -828,18 +823,13 @@ export default function RoadmapPage() {
                                             </div>
                                         </div>
                                         <div className="space-y-2">
-                                            {phaseItems.sort((a, b) => b.votes - a.votes).map((item, i) => (
-                                                <motion.div
-                                                    key={item.id}
-                                                    initial={{ opacity: 0, y: 10 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    transition={{ delay: i * 0.03 }}
-                                                >
+                                            {phaseItems.sort((a, b) => b.votes - a.votes).map((item) => (
+                                                <div key={item.id}>
                                                     <ItemCard item={item} onVote={handleVote} />
-                                                </motion.div>
+                                                </div>
                                             ))}
                                         </div>
-                                    </motion.section>
+                                    </section>
                                 );
                             })}
                         </div>
