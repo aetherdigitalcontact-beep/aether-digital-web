@@ -11,6 +11,7 @@ const ALLOWED_PATHS = [
     '/privacy',
     '/terms',
     '/refund',
+    '/dpa',
     '/roadmap',
 ];
 
