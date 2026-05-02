@@ -4,12 +4,23 @@ import bcrypt from 'bcryptjs';
 import { sendEmail } from '@/lib/email';
 import crypto from 'crypto';
 
+// Invite-only: only these emails may register
+const DASHBOARD_WHITELIST = [
+    'quiel.g538@gmail.com',
+    'aetherdigital.contact@gmail.com',
+];
+
 export async function POST(req: NextRequest) {
     try {
         const { name, company, email, password, lang = 'en' } = await req.json();
 
         if (!name || !email || !password) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+        }
+
+        // Invite-only: block registrations from non-whitelisted emails
+        if (!DASHBOARD_WHITELIST.map(e => e.toLowerCase()).includes(email.trim().toLowerCase())) {
+            return NextResponse.json({ error: 'Registration is currently invite-only.' }, { status: 403 });
         }
 
         // 1. Check if user already exists

@@ -5,12 +5,23 @@ import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-for-dev-only-change-in-prod';
 
+// Only these accounts may access the dashboard
+const DASHBOARD_WHITELIST = [
+    'quiel.g538@gmail.com',
+    'aetherdigital.contact@gmail.com',
+];
+
 export async function POST(req: NextRequest) {
     try {
         const { email, password, totpCode } = await req.json();
 
         if (!email || !password) {
             return NextResponse.json({ error: 'Missing email or password' }, { status: 400 });
+        }
+
+        // Whitelist check — only authorized emails can obtain a session
+        if (!DASHBOARD_WHITELIST.map(e => e.toLowerCase()).includes(email.trim().toLowerCase())) {
+            return NextResponse.json({ error: 'Invalid login credentials' }, { status: 401 });
         }
 
         // 1. Find user
