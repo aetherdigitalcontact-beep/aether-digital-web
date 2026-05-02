@@ -509,22 +509,12 @@ function HomeContent({ initialUser, initialLang }: HomeClientProps) {
                 <CinematicBackground videoSrc="/videos/The Global Routing Hub.mp4" opacity={0.5} blendMode="screen" />
                 <StarField />
 
-                <motion.div
-                    initial={{ scale: 0.95, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="relative z-10 max-w-4xl flex flex-col items-center pb-24"
-                >
+                <div className="relative z-10 max-w-4xl flex flex-col items-center pb-24">
                     {/* ALPHA badge — above logo */}
-                    <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-white/5 border border-white/10 text-[11px] font-black uppercase tracking-[0.25em] text-white mb-6"
-                    >
+                    <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-white/5 border border-white/10 text-[11px] font-black uppercase tracking-[0.25em] text-white mb-6">
                         <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
                         Relay Protocol Phase: ALPHA
-                    </motion.div>
+                    </div>
 
                     {/* Logo */}
                     <div className="w-20 h-20 bg-accent rounded-3xl flex items-center justify-center mx-auto mb-12 shadow-[0_0_60px_rgba(16,185,129,0.6)] relative group">
@@ -532,41 +522,21 @@ function HomeContent({ initialUser, initialLang }: HomeClientProps) {
                         <div className="absolute inset-0 bg-white opacity-20 blur-xl animate-pulse rounded-3xl"></div>
                     </div>
 
-                    <motion.h1
-                        initial={{ y: 20, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.3 }}
-                        className="text-6xl md:text-[8rem] lg:text-[10rem] font-black text-white tracking-tighter mb-8 leading-[0.8] text-center"
-                    >
+                    <h1 className="text-6xl md:text-[8rem] lg:text-[10rem] font-black text-white tracking-tighter mb-8 leading-[0.8] text-center">
                         <span className="block opacity-30 select-none">UNDER</span>
                         <span className="block text-accent italic -mt-4 md:-mt-8 pr-4 md:pr-8">CONSTRUCTION</span>
-                    </motion.h1>
+                    </h1>
 
-                    <motion.p
-                        initial={{ y: 20, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.5 }}
-                        className="text-lg md:text-xl text-slate-400 font-medium leading-relaxed mb-12 max-w-xl mx-auto px-6"
-                    >
+                    <p className="text-lg md:text-xl text-slate-400 font-medium leading-relaxed mb-12 max-w-xl mx-auto px-6">
                         We are developing a professional notification infrastructure. The official Relay Protocol launch date will be announced very soon.
-                    </motion.p>
+                    </p>
 
-                    <motion.div
-                        initial={{ y: 20, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.6 }}
-                        className="w-full max-w-md mx-auto"
-                    >
+                    <div className="w-full max-w-md mx-auto">
                         <WaitlistForm />
-                    </motion.div>
+                    </div>
 
                     {/* Roadmap button — centered, larger */}
-                    <motion.div
-                        initial={{ y: 20, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.8 }}
-                        className="mt-10 flex items-center justify-center"
-                    >
+                    <div className="mt-10 flex items-center justify-center">
                         <Link
                             href="/roadmap"
                             className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white/5 border border-white/10 hover:border-white/25 hover:bg-white/10 text-base font-bold text-white/80 hover:text-white transition-all group"
@@ -575,8 +545,8 @@ function HomeContent({ initialUser, initialLang }: HomeClientProps) {
                             View Engineering Roadmap
                             <ArrowRight className="w-5 h-5 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                         </Link>
-                    </motion.div>
-                </motion.div>
+                    </div>
+                </div>
 
                 {/* Top corner branding */}
                 <motion.div
