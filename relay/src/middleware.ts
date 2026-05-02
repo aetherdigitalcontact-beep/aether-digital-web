@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-// ─── Maintenance Mode Config ───────────────────────────────────
-// Set NEXT_PUBLIC_MAINTENANCE_MODE=false in Vercel env vars to disable
-const MAINTENANCE_MODE = process.env.NEXT_PUBLIC_MAINTENANCE_MODE !== 'false';
+// ─── Maintenance Mode ──────────────────────────────────────────
+// Set to false (or delete this file) when ready to launch
+const MAINTENANCE_MODE = true;
 
 // Routes that are ALWAYS accessible, even in maintenance mode
 const ALLOWED_PATHS = [
