@@ -22,20 +22,29 @@ async function getAdminEmail(req: NextRequest): Promise<string | null> {
     return ADMIN_EMAILS.includes(email) ? email : null;
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+// Next.js 14+ — params is a Promise, must be awaited
+export async function DELETE(
+    req: NextRequest,
+    context: { params: Promise<{ id: string }> }
+) {
+    const { id } = await context.params;
     const admin = await getAdminEmail(req);
     if (!admin) return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
 
     const { error } = await supabaseAdmin
         .from('feature_requests')
         .delete()
-        .eq('id', params.id);
+        .eq('id', id);
 
     if (error) return NextResponse.json({ error: 'Failed to delete' }, { status: 500 });
     return NextResponse.json({ success: true });
 }
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(
+    req: NextRequest,
+    context: { params: Promise<{ id: string }> }
+) {
+    const { id } = await context.params;
     const admin = await getAdminEmail(req);
     if (!admin) return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
 
@@ -45,7 +54,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     const { error } = await supabaseAdmin
         .from('feature_requests')
         .update({ status })
-        .eq('id', params.id);
+        .eq('id', id);
 
     if (error) return NextResponse.json({ error: 'Failed to update' }, { status: 500 });
     return NextResponse.json({ success: true });
