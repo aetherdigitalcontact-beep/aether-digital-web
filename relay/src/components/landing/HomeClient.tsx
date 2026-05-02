@@ -316,7 +316,7 @@ function HomeContent({ initialUser, initialLang }: HomeClientProps) {
     };
     const chartDays = getChartDays();
     const containerRef = useRef(null);
-    const { scrollYProgress } = useScroll({ target: containerRef });
+    const { scrollYProgress } = useScroll();
 
     const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
 
