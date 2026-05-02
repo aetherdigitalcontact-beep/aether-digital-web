@@ -362,6 +362,16 @@ function HomeContent({ initialUser, initialLang }: HomeClientProps) {
         return () => clearInterval(interval);
     }, []);
 
+    // Bfcache fix: when browser restores page from cache, Framer Motion
+    // animations stay frozen at opacity:0. Reload to get a fresh render.
+    useEffect(() => {
+        const handlePageshow = (e: PageTransitionEvent) => {
+            if (e.persisted) window.location.reload();
+        };
+        window.addEventListener('pageshow', handlePageshow);
+        return () => window.removeEventListener('pageshow', handlePageshow);
+    }, []);
+
     const [selectedSdk, setSelectedSdk] = useState('Node.js');
 
     const sdkSnippets: Record<string, { install: any, code: any, lang: string }> = {
@@ -500,10 +510,10 @@ function HomeContent({ initialUser, initialLang }: HomeClientProps) {
                 <StarField />
 
                 <motion.div
-                    initial={{ scale: 0.9, opacity: 0 }}
+                    initial={{ scale: 0.95, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 1, ease: "easeOut" }}
-                    className="relative z-10 max-w-4xl flex flex-col items-center"
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="relative z-10 max-w-4xl flex flex-col items-center pb-24"
                 >
                     {/* ALPHA badge — above logo */}
                     <motion.div
