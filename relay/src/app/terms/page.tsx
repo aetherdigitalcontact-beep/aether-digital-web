@@ -76,7 +76,7 @@ export default function TermsOfService() {
                         <section id="general">
                             <SectionHeading label="A." title="General" />
                             <div className="space-y-4">
-                                <p>These Terms of Service (<strong className="text-white">"Terms"</strong>) constitute a legally binding agreement between you and Aether Digital (<strong className="text-white">"Relay"</strong>, <strong className="text-white">"we"</strong>, <strong className="text-white">"us"</strong>, or <strong className="text-white">"our"</strong>) governing your access to and use of the Relay website located at <a href="https://relay.aetherdigital.dev" className="text-blue-400 hover:underline">relay.aetherdigital.dev</a> and the Relay notification infrastructure platform (together, the <strong className="text-white">"Services"</strong>). By accessing, browsing, or making any use of the Services, you acknowledge that you have read, understood, and agree to be bound by these Terms in full. If you do not agree to any part of these Terms, you must immediately discontinue all use of the Services.</p>
+                                <p>These Terms of Service (<strong className="text-white">"Terms"</strong>) constitute a legally binding agreement between you and Aether Digital (<strong className="text-white">"Relay"</strong>, <strong className="text-white">"we"</strong>, <strong className="text-white">"us"</strong>, or <strong className="text-white">"our"</strong>) governing your access to and use of the Relay website located at <a href="https://relay-notify.com" className="text-blue-400 hover:underline">relay-notify.com</a> and the Relay notification infrastructure platform (together, the <strong className="text-white">"Services"</strong>). By accessing, browsing, or making any use of the Services, you acknowledge that you have read, understood, and agree to be bound by these Terms in full. If you do not agree to any part of these Terms, you must immediately discontinue all use of the Services.</p>
                                 <p>Relay reserves the right to revise, update, or replace these Terms at any time and entirely at our discretion, with or without advance notice. The date of the most recent revision appears at the top of this document. Your continued use of the Services following any modification constitutes your unconditional acceptance of the updated Terms. We encourage you to review this page periodically.</p>
                                 <p>In the event of any inconsistency or conflict between these Terms and any other content, promotional materials, or communications published in connection with the Services, the provisions of these Terms shall take precedence.</p>
                             </div>
@@ -275,8 +275,8 @@ export default function TermsOfService() {
                                         document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
                                     }}
                                     className={`block text-sm py-1.5 px-3 rounded-lg transition-all duration-200 ${activeId === id
-                                            ? 'bg-blue-500/10 text-blue-400 font-semibold border-l-2 border-blue-500'
-                                            : 'text-slate-500 hover:text-slate-300 border-l-2 border-transparent'
+                                        ? 'bg-blue-500/10 text-blue-400 font-semibold border-l-2 border-blue-500'
+                                        : 'text-slate-500 hover:text-slate-300 border-l-2 border-transparent'
                                         }`}
                                 >
                                     {label}
