@@ -492,160 +492,144 @@ function HomeContent({ initialUser, initialLang }: HomeClientProps) {
         visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
     };
 
+    // ── Maintenance mode: early return so the real page NEVER renders ──────
+    if (isMaintenanceMode) {
+        return (
+            <div className="fixed inset-0 bg-[#020408] flex items-center justify-center p-6 text-center overflow-hidden">
+                <CinematicBackground videoSrc="/videos/The Global Routing Hub.mp4" opacity={0.5} blendMode="screen" />
+                <StarField />
+
+                <motion.div
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                    className="relative z-10 max-w-4xl flex flex-col items-center"
+                >
+                    {/* ALPHA badge — above logo */}
+                    <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                        className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-white/5 border border-white/10 text-[11px] font-black uppercase tracking-[0.25em] text-white mb-6"
+                    >
+                        <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
+                        Relay Protocol Phase: ALPHA
+                    </motion.div>
+
+                    {/* Logo */}
+                    <div className="w-20 h-20 bg-accent rounded-3xl flex items-center justify-center mx-auto mb-12 shadow-[0_0_60px_rgba(16,185,129,0.6)] relative group">
+                        <Zap className="text-white w-10 h-10 z-10" fill="currentColor" />
+                        <div className="absolute inset-0 bg-white opacity-20 blur-xl animate-pulse rounded-3xl"></div>
+                    </div>
+
+                    <motion.h1
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.3 }}
+                        className="text-6xl md:text-[8rem] lg:text-[10rem] font-black text-white tracking-tighter mb-8 leading-[0.8] text-center"
+                    >
+                        <span className="block opacity-30 select-none">UNDER</span>
+                        <span className="block text-accent italic -mt-4 md:-mt-8 pr-4 md:pr-8">CONSTRUCTION</span>
+                    </motion.h1>
+
+                    <motion.p
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.5 }}
+                        className="text-lg md:text-xl text-slate-400 font-medium leading-relaxed mb-12 max-w-xl mx-auto px-6"
+                    >
+                        We are developing a professional notification infrastructure. The official Relay Protocol launch date will be announced very soon.
+                    </motion.p>
+
+                    <motion.div
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.6 }}
+                        className="w-full max-w-md mx-auto"
+                    >
+                        <WaitlistForm />
+                    </motion.div>
+
+                    {/* Roadmap button — centered, larger */}
+                    <motion.div
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.8 }}
+                        className="mt-10 flex items-center justify-center"
+                    >
+                        <Link
+                            href="/roadmap"
+                            className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white/5 border border-white/10 hover:border-white/25 hover:bg-white/10 text-base font-bold text-white/80 hover:text-white transition-all group"
+                        >
+                            <Sparkles className="w-5 h-5 text-blue-400" />
+                            View Engineering Roadmap
+                            <ArrowRight className="w-5 h-5 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                        </Link>
+                    </motion.div>
+                </motion.div>
+
+                {/* Top corner branding */}
+                <motion.div
+                    whileHover={{ scale: 1.05, opacity: 1 }}
+                    className="absolute top-8 left-8 md:top-12 md:left-12 flex items-center gap-3 opacity-50 cursor-default group transition-opacity"
+                >
+                    <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-blue-500/20 transition-all">
+                        <Zap className="text-white w-4 h-4" fill="currentColor" />
+                    </div>
+                    <span className="font-black text-xl tracking-tighter text-white group-hover:text-blue-400 transition-colors">RELAY</span>
+                    <motion.div className="absolute -inset-2 bg-blue-500/10 blur-xl opacity-0 group-hover:opacity-100 rounded-full transition-opacity" initial={false} />
+                </motion.div>
+
+                {/* Contact Support — top right */}
+                <motion.a
+                    href="mailto:aetherdigital.contact@gmail.com"
+                    initial={{ opacity: 0, y: -12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.2, duration: 0.5 }}
+                    whileHover={{ scale: 1.05, boxShadow: '0 0 28px rgba(99,102,241,0.5)' }}
+                    whileTap={{ scale: 0.97 }}
+                    className="absolute top-8 right-8 md:top-12 md:right-12 flex items-center gap-2.5 px-5 py-2.5 rounded-2xl font-bold text-sm text-white z-20 cursor-pointer select-none overflow-hidden"
+                    style={{ background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)', boxShadow: '0 0 16px rgba(99,102,241,0.35)' }}
+                >
+                    <motion.span className="absolute inset-0 bg-white/10" animate={{ x: ['-100%', '200%'] }} transition={{ duration: 2.2, repeat: Infinity, repeatDelay: 2.5, ease: 'easeInOut' }} style={{ skewX: '-20deg' }} />
+                    <span className="relative flex items-center justify-center w-4 h-4">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-300 opacity-50" />
+                        <span className="relative inline-flex rounded-full w-2.5 h-2.5 bg-white" />
+                    </span>
+                    <span className="relative">Contact Support</span>
+                </motion.a>
+
+                {/* Footer: social + policy */}
+                <div className="absolute bottom-0 left-0 right-0 z-20 flex flex-col items-center gap-2 py-4 border-t border-white/[0.05]">
+                    <div className="flex items-center gap-3">
+                        <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-700">Follow us</span>
+                        <div className="h-px w-8 bg-white/[0.07]" />
+                        <a href="https://www.linkedin.com/in/aether-digital/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.03] border border-white/[0.07] text-slate-600 hover:text-[#0A66C2] hover:border-[#0A66C2]/40 hover:bg-[#0A66C2]/10 transition-all">
+                            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
+                        </a>
+                        <a href="https://github.com/aetherdigitalcontact-beep" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.03] border border-white/[0.07] text-slate-600 hover:text-white hover:border-white/30 hover:bg-white/10 transition-all">
+                            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.011-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.298 24 12c0-6.627-5.373-12-12-12z" /></svg>
+                        </a>
+                        <a href="https://x.com/Relaynotify" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.03] border border-white/[0.07] text-slate-600 hover:text-white hover:border-white/30 hover:bg-white/10 transition-all">
+                            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 5.84zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
+                        </a>
+                    </div>
+                    <div className="flex items-center gap-3 flex-wrap justify-center">
+                        <a href="/terms" className="text-[9px] text-slate-700 hover:text-slate-400 transition-colors">Terms</a>
+                        <span className="text-slate-800 text-[9px]">·</span>
+                        <a href="/privacy" className="text-[9px] text-slate-700 hover:text-slate-400 transition-colors">Privacy</a>
+                        <span className="text-slate-800 text-[9px]">·</span>
+                        <a href="/refund" className="text-[9px] text-slate-700 hover:text-slate-400 transition-colors">Refund</a>
+                        <span className="text-slate-800 text-[9px]">·</span>
+                        <span className="text-[9px] text-slate-700">© {new Date().getFullYear()} Relay</span>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <main ref={containerRef} className="w-full bg-[#020408] relative overflow-hidden">
-            {/* Maintenance Overlay */}
-            <AnimatePresence>
-                {isMaintenanceMode && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[200] bg-[#020408] flex items-center justify-center p-6 text-center overflow-hidden"
-                    >
-                        <CinematicBackground
-                            videoSrc="/videos/The Global Routing Hub.mp4"
-                            opacity={0.5}
-                            blendMode="screen"
-                        />
-                        <StarField />
-
-                        <motion.div
-                            initial={{ scale: 0.9, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            transition={{ duration: 1, ease: "easeOut" }}
-                            className="relative z-10 max-w-4xl flex flex-col items-center"
-                        >
-                            <div className="w-20 h-20 bg-accent rounded-3xl flex items-center justify-center mx-auto mb-12 shadow-[0_0_60px_rgba(16,185,129,0.6)] relative group">
-                                <Zap className="text-white w-10 h-10 z-10" fill="currentColor" />
-                                <div className="absolute inset-0 bg-white opacity-20 blur-xl animate-pulse rounded-3xl"></div>
-                            </div>
-
-                            <motion.h1
-                                initial={{ y: 20, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.3 }}
-                                className="text-6xl md:text-[8rem] lg:text-[10rem] font-black text-white tracking-tighter mb-8 leading-[0.8] text-center"
-                            >
-                                <span className="block opacity-30 select-none">UNDER</span>
-                                <span className="block text-accent italic -mt-4 md:-mt-8 pr-4 md:pr-8">CONSTRUCTION</span>
-                            </motion.h1>
-
-                            <motion.p
-                                initial={{ y: 20, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.5 }}
-                                className="text-lg md:text-xl text-slate-400 font-medium leading-relaxed mb-12 max-w-xl mx-auto px-6"
-                            >
-                                We are developing a professional notification infrastructure. The official Relay Protocol launch date will be announced very soon.
-                            </motion.p>
-
-                            <motion.div
-                                initial={{ y: 20, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.6 }}
-                                className="w-full max-w-md mx-auto"
-                            >
-                                <WaitlistForm />
-                            </motion.div>
-
-                            <motion.div
-                                initial={{ y: 20, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.8 }}
-                                className="mt-10 flex items-center justify-center gap-4 flex-wrap"
-                            >
-                                <Link
-                                    href="/roadmap"
-                                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:border-white/20 hover:bg-white/10 text-sm font-bold text-white/70 hover:text-white transition-all group"
-                                >
-                                    <Sparkles className="w-4 h-4 text-blue-400" />
-                                    View Engineering Roadmap
-                                    <ArrowRight className="w-4 h-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
-                                </Link>
-                                <div className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white/5 border border-white/10 text-[11px] font-black uppercase tracking-[0.25em] text-white">
-                                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
-                                    Relay Protocol Phase: ALPHA
-                                </div>
-                            </motion.div>
-                        </motion.div>
-
-                        {/* Top corner branding */}
-                        <motion.div
-                            whileHover={{ scale: 1.05, opacity: 1 }}
-                            className="absolute top-8 left-8 md:top-12 md:left-12 flex items-center gap-3 opacity-50 cursor-default group transition-opacity"
-                        >
-                            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-blue-500/20 transition-all">
-                                <Zap className="text-white w-4 h-4" fill="currentColor" />
-                            </div>
-                            <span className="font-black text-xl tracking-tighter text-white group-hover:text-blue-400 transition-colors">RELAY</span>
-
-                            <motion.div
-                                className="absolute -inset-2 bg-blue-500/10 blur-xl opacity-0 group-hover:opacity-100 rounded-full transition-opacity"
-                                initial={false}
-                            />
-                        </motion.div>
-
-                        {/* Contact Support — top right */}
-                        <motion.a
-                            href="mailto:aetherdigital.contact@gmail.com"
-                            initial={{ opacity: 0, y: -12 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 1.2, duration: 0.5 }}
-                            whileHover={{ scale: 1.05, boxShadow: '0 0 28px rgba(99,102,241,0.5)' }}
-                            whileTap={{ scale: 0.97 }}
-                            className="absolute top-8 right-8 md:top-12 md:right-12 flex items-center gap-2.5 px-5 py-2.5 rounded-2xl font-bold text-sm text-white z-20 cursor-pointer select-none overflow-hidden"
-                            style={{ background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)', boxShadow: '0 0 16px rgba(99,102,241,0.35)' }}
-                        >
-                            {/* Animated shimmer */}
-                            <motion.span
-                                className="absolute inset-0 bg-white/10"
-                                animate={{ x: ['-100%', '200%'] }}
-                                transition={{ duration: 2.2, repeat: Infinity, repeatDelay: 2.5, ease: 'easeInOut' }}
-                                style={{ skewX: '-20deg' }}
-                            />
-                            {/* Pulse ring */}
-                            <span className="relative flex items-center justify-center w-4 h-4">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-300 opacity-50" />
-                                <span className="relative inline-flex rounded-full w-2.5 h-2.5 bg-white" />
-                            </span>
-                            <span className="relative">Contact Support</span>
-                        </motion.a>
-
-                        {/* ── Footer: social + policy ── */}
-                        <div className="absolute bottom-0 left-0 right-0 z-20 flex flex-col items-center gap-2 py-4 border-t border-white/[0.05]">
-                            <div className="flex items-center gap-3">
-                                <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-700">Follow us</span>
-                                <div className="h-px w-8 bg-white/[0.07]" />
-                                {/* LinkedIn */}
-                                <a href="https://www.linkedin.com/in/aether-digital/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
-                                    className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.03] border border-white/[0.07] text-slate-600 hover:text-[#0A66C2] hover:border-[#0A66C2]/40 hover:bg-[#0A66C2]/10 transition-all">
-                                    <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
-                                </a>
-                                {/* GitHub */}
-                                <a href="https://github.com/aetherdigitalcontact-beep" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
-                                    className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.03] border border-white/[0.07] text-slate-600 hover:text-white hover:border-white/30 hover:bg-white/10 transition-all">
-                                    <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.011-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.298 24 12c0-6.627-5.373-12-12-12z" /></svg>
-                                </a>
-                                {/* X */}
-                                <a href="https://x.com/Relaynotify" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"
-                                    className="flex items-center justify-center w-7 h-7 rounded-lg bg-white/[0.03] border border-white/[0.07] text-slate-600 hover:text-white hover:border-white/30 hover:bg-white/10 transition-all">
-                                    <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 5.84zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
-                                </a>
-                            </div>
-                            <div className="flex items-center gap-3 flex-wrap justify-center">
-                                <a href="/terms" className="text-[9px] text-slate-700 hover:text-slate-400 transition-colors">Terms</a>
-                                <span className="text-slate-800 text-[9px]">·</span>
-                                <a href="/privacy" className="text-[9px] text-slate-700 hover:text-slate-400 transition-colors">Privacy</a>
-                                <span className="text-slate-800 text-[9px]">·</span>
-                                <a href="/refund" className="text-[9px] text-slate-700 hover:text-slate-400 transition-colors">Refund</a>
-                                <span className="text-slate-800 text-[9px]">·</span>
-                                <span className="text-[9px] text-slate-700">© {new Date().getFullYear()} Relay</span>
-                            </div>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
 
             <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-[110] px-4 md:px-8 py-2 md:py-3 flex justify-between items-center glass border border-white/10 rounded-full w-[calc(100%-1.5rem)] md:w-[calc(100%-3rem)] max-w-5xl mx-auto shadow-2xl backdrop-blur-2xl">
                 <Link href="/" className="flex items-center gap-3 active:scale-95 transition-transform">
@@ -1583,6 +1567,6 @@ function HomeContent({ initialUser, initialLang }: HomeClientProps) {
             </section>
 
             <Footer />
-        </main>
+        </main >
     );
 }
