@@ -539,7 +539,7 @@ function HomeContent({ initialUser, initialLang }: HomeClientProps) {
                 </div>
 
                 {/* ── Center content (scrollable on small screens) ── */}
-                <div className="relative z-10 flex-1 overflow-y-auto flex items-center justify-center">
+                <div className="relative z-10 flex-1 overflow-y-auto overflow-x-hidden flex items-center justify-center">
                     <div className="w-full max-w-4xl flex flex-col items-center text-center px-4 sm:px-6 py-6 sm:py-10">
 
                         {/* ALPHA badge */}
@@ -556,13 +556,13 @@ function HomeContent({ initialUser, initialLang }: HomeClientProps) {
 
                         {/* Heading — fluid responsive sizing */}
                         <h1
-                            className="font-black text-white tracking-tighter mb-6 sm:mb-8 leading-[0.85] w-full"
-                            style={{ fontSize: 'clamp(2.2rem, 13vw, 10rem)' }}
+                            className="font-black text-white tracking-tighter mb-6 sm:mb-8 leading-[0.85] w-full overflow-hidden"
+                            style={{ fontSize: 'clamp(1.75rem, 8.5vw, 10rem)' }}
                         >
                             <span className="block opacity-30 select-none">UNDER</span>
                             <span
                                 className="block text-accent italic"
-                                style={{ marginTop: 'clamp(-0.6rem, -2vw, -2rem)', paddingRight: 'clamp(0.25rem, 1vw, 2rem)' }}
+                                style={{ marginTop: 'clamp(-0.4rem, -1.5vw, -2rem)', paddingRight: 'clamp(0.25rem, 1vw, 2rem)' }}
                             >CONSTRUCTION</span>
                         </h1>
 
